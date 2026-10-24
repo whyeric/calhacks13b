@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "owner_only",
+    "message": "Only the owner can approve or reject a hedge; send actor \"owner\".",
+    "detail": {
+      "actor": "desk"
+    }
+  }
+}

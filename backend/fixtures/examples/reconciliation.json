@@ -1,0 +1,34 @@
+{
+  "business_id": "taxi",
+  "as_of": "2026-10-23",
+  "simulated": true,
+  "matches": [
+    {
+      "hedge_id": "hdg_s01",
+      "ticker": "KXHIGHNY-26OCT14-T70",
+      "expected": "45.00",
+      "kalshi_ledger": "45.00",
+      "bank": "45.00"
+    }
+  ],
+  "mismatches": [
+    {
+      "hedge_id": "hdg_s02",
+      "ticker": "KXRAINNYC-26OCT16",
+      "expected": "60.00",
+      "kalshi_ledger": "60.00",
+      "bank": "58.95",
+      "difference": "-1.05",
+      "source_pair": "kalshi_ledger_vs_bank",
+      "explanation": "Bank deposit is $1.05 short of the Kalshi payout; equals the $1.05 fee recorded for hdg_s02.",
+      "likely_cause": "fee_deducted_from_deposit",
+      "action": "ask_owner",
+      "question": "Did you authorize the $1.05 fee to be netted from this withdrawal?"
+    }
+  ],
+  "summary": {
+    "n_matched": 1,
+    "n_mismatched": 1,
+    "total_difference": "-1.05"
+  }
+}

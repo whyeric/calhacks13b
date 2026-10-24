@@ -1,0 +1,62 @@
+{
+  "id": "dec_01",
+  "status": "proposed",
+  "checks": [
+    {
+      "code": "no_market",
+      "passed": true,
+      "metric": {
+        "n_candidates": 4
+      }
+    },
+    {
+      "code": "illiquid",
+      "passed": true,
+      "metric": {
+        "n_target": 180,
+        "n_filled": 150,
+        "fill_ratio": "0.8333",
+        "partial": true
+      }
+    },
+    {
+      "code": "overpriced",
+      "passed": true,
+      "metric": {
+        "avg_price": "0.4260",
+        "fair": "0.38",
+        "overpay": "0.0460"
+      }
+    },
+    {
+      "code": "basis_too_loose",
+      "passed": true,
+      "metric": {
+        "r2": "0.84",
+        "beta_s": "-180.00",
+        "beta": "-210.00",
+        "h": "0.8571",
+        "resized": true
+      }
+    },
+    {
+      "code": "too_expensive",
+      "passed": true,
+      "metric": {
+        "expected_cost": "9.47",
+        "swing": "210.00",
+        "ratio": "0.0451"
+      }
+    },
+    {
+      "code": "over_budget",
+      "passed": true,
+      "metric": {
+        "premium": "66.47",
+        "remaining": "250.00"
+      }
+    }
+  ],
+  "reasons": [],
+  "summary": "Proposed: 150 YES contracts on NYC topping 65°F on Oct 28 for $66.47. The book filled 150 of the 180 wanted, and the Central Park reading tracks your zone well enough to size at 0.8571 of the exposure."
+}

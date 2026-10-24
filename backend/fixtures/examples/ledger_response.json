@@ -1,0 +1,153 @@
+{
+  "entries": [
+    {
+      "id": "le_0001",
+      "business_id": "taxi",
+      "date": "2026-10-12",
+      "kind": "opening_deposit",
+      "narration": "[SIMULATED] Opening deposit to Kalshi",
+      "postings": [
+        {
+          "account": "Assets:Kalshi:Cash",
+          "amount": "500.00"
+        },
+        {
+          "account": "Assets:Bank:Checking",
+          "amount": "-500.00"
+        }
+      ],
+      "meta": null,
+      "simulated": true
+    },
+    {
+      "id": "le_0002",
+      "business_id": "taxi",
+      "date": "2026-10-15",
+      "kind": "payout",
+      "narration": "[SIMULATED] Payout: KXHIGHNY-26OCT14-T70 NO x 45",
+      "postings": [
+        {
+          "account": "Assets:Kalshi:Cash",
+          "amount": "45.00"
+        },
+        {
+          "account": "Income:Hedging:Payouts",
+          "amount": "-45.00"
+        }
+      ],
+      "meta": {
+        "hedge_id": "hdg_s01",
+        "ticker": "KXHIGHNY-26OCT14-T70",
+        "decision_id": "dec_s01",
+        "approved_by": "owner"
+      },
+      "simulated": true
+    },
+    {
+      "id": "le_0003",
+      "business_id": "taxi",
+      "date": "2026-10-17",
+      "kind": "payout",
+      "narration": "[SIMULATED] Payout: KXRAINNYC-26OCT16 NO x 60",
+      "postings": [
+        {
+          "account": "Assets:Kalshi:Cash",
+          "amount": "60.00"
+        },
+        {
+          "account": "Income:Hedging:Payouts",
+          "amount": "-60.00"
+        }
+      ],
+      "meta": {
+        "hedge_id": "hdg_s02",
+        "ticker": "KXRAINNYC-26OCT16",
+        "decision_id": "dec_s02",
+        "approved_by": "owner"
+      },
+      "simulated": true
+    },
+    {
+      "id": "le_0004",
+      "business_id": "taxi",
+      "date": "2026-10-20",
+      "kind": "withdrawal",
+      "narration": "[SIMULATED] Withdrawal to bank: hdg_s01, hdg_s02",
+      "postings": [
+        {
+          "account": "Assets:Bank:Checking",
+          "amount": "105.00"
+        },
+        {
+          "account": "Assets:Kalshi:Cash",
+          "amount": "-105.00"
+        }
+      ],
+      "meta": null,
+      "simulated": true
+    },
+    {
+      "id": "le_0005",
+      "business_id": "taxi",
+      "date": "2026-10-24",
+      "kind": "premium",
+      "narration": "Premium: KXHIGHNY-26OCT28-T65 YES x 150",
+      "postings": [
+        {
+          "account": "Expenses:Hedging:Premiums",
+          "amount": "63.90"
+        },
+        {
+          "account": "Expenses:Hedging:Fees",
+          "amount": "2.57"
+        },
+        {
+          "account": "Assets:Kalshi:Cash",
+          "amount": "-66.47"
+        }
+      ],
+      "meta": {
+        "hedge_id": "hdg_01",
+        "ticker": "KXHIGHNY-26OCT28-T65",
+        "decision_id": "dec_01",
+        "approved_by": "owner"
+      },
+      "simulated": false
+    }
+  ],
+  "reconciliation": {
+    "business_id": "taxi",
+    "as_of": "2026-10-23",
+    "simulated": true,
+    "matches": [
+      {
+        "hedge_id": "hdg_s01",
+        "ticker": "KXHIGHNY-26OCT14-T70",
+        "expected": "45.00",
+        "kalshi_ledger": "45.00",
+        "bank": "45.00"
+      }
+    ],
+    "mismatches": [
+      {
+        "hedge_id": "hdg_s02",
+        "ticker": "KXRAINNYC-26OCT16",
+        "expected": "60.00",
+        "kalshi_ledger": "60.00",
+        "bank": "58.95",
+        "difference": "-1.05",
+        "source_pair": "kalshi_ledger_vs_bank",
+        "explanation": "Bank deposit is $1.05 short of the Kalshi payout; equals the $1.05 fee recorded for hdg_s02.",
+        "likely_cause": "fee_deducted_from_deposit",
+        "action": "ask_owner",
+        "question": "Did you authorize the $1.05 fee to be netted from this withdrawal?"
+      }
+    ],
+    "summary": {
+      "n_matched": 1,
+      "n_mismatched": 1,
+      "total_difference": "-1.05"
+    }
+  },
+  "simulated": true
+}

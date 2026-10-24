@@ -1,3 +1,23 @@
 /data/
 .DS_Store
 .env
+
+# Secrets and local data
+.naming-denylist
+*.db
+*.db-wal
+*.db-shm
+ledgers/*.beancount
+backend/ledgers/*.beancount
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+# Frontend
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo

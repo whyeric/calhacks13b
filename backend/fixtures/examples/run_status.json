@@ -1,0 +1,9 @@
+{
+  "run_id": "run_0007",
+  "business_id": "taxi",
+  "status": "done",
+  "agent": "claude",
+  "started_at": "2026-10-24T15:00:00Z",
+  "finished_at": "2026-10-24T15:00:41Z",
+  "error": null
+}

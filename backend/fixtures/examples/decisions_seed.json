@@ -1,0 +1,442 @@
+[
+  {
+    "log_id": "log_0001",
+    "business_id": "taxi",
+    "kind": "approval",
+    "created_at": "2026-10-12T15:02:00Z",
+    "actor": "owner",
+    "agent": null,
+    "hedge_id": "hdg_s02",
+    "decision_id": "dec_s02",
+    "run_id": null,
+    "status": "approved",
+    "checks": [],
+    "reasons": [],
+    "numbers": {
+      "n_filled": 60,
+      "premium": "29.85",
+      "fee": "1.05"
+    },
+    "summary": "Owner approved hdg_s02: 60 NO contracts for $29.85."
+  },
+  {
+    "log_id": "log_0002",
+    "business_id": "taxi",
+    "kind": "booking",
+    "created_at": "2026-10-12T15:02:01Z",
+    "actor": "system",
+    "agent": null,
+    "hedge_id": "hdg_s02",
+    "decision_id": "dec_s02",
+    "run_id": null,
+    "status": "approved",
+    "checks": [],
+    "reasons": [],
+    "numbers": {
+      "premium": "28.80",
+      "fee": "1.05",
+      "total": "29.85"
+    },
+    "summary": "Booked $28.80 premium and $1.05 fee to Expenses:Hedging; Assets:Kalshi:Cash credited $29.85."
+  },
+  {
+    "log_id": "log_0003",
+    "business_id": "taxi",
+    "kind": "reconciliation",
+    "created_at": "2026-10-23T13:00:00Z",
+    "actor": "system",
+    "agent": null,
+    "hedge_id": null,
+    "decision_id": null,
+    "run_id": null,
+    "status": null,
+    "checks": [],
+    "reasons": [],
+    "numbers": {
+      "n_matched": 1,
+      "n_mismatched": 1,
+      "difference": "-1.05",
+      "fee": "1.05"
+    },
+    "summary": "Reconciled 1 hedge cleanly; flagged 1 bank deposit $1.05 short, equal to the hdg_s02 fee. Asking the owner."
+  },
+  {
+    "log_id": "log_0004",
+    "business_id": "taxi",
+    "kind": "proposal",
+    "created_at": "2026-10-24T15:00:10Z",
+    "actor": "desk",
+    "agent": "claude",
+    "hedge_id": "hdg_01",
+    "decision_id": "dec_01",
+    "run_id": "run_0007",
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 4
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 180,
+          "n_filled": 150,
+          "fill_ratio": "0.8333",
+          "partial": true
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.4260",
+          "fair": "0.38",
+          "overpay": "0.0460"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.84",
+          "beta_s": "-180.00",
+          "beta": "-210.00",
+          "h": "0.8571",
+          "resized": true
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "9.47",
+          "swing": "210.00",
+          "ratio": "0.0451"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "66.47",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [],
+    "numbers": {
+      "n_candidates": 4,
+      "n_target": 180,
+      "n_filled": 150,
+      "fill_ratio": "0.8333",
+      "avg_price": "0.4260",
+      "fair": "0.38",
+      "overpay": "0.0460",
+      "r2": "0.84",
+      "beta_s": "-180.00",
+      "beta": "-210.00",
+      "h": "0.8571",
+      "expected_cost": "9.47",
+      "swing": "210.00",
+      "ratio": "0.0451",
+      "premium": "66.47",
+      "remaining": "250.00",
+      "floor_strike": "65",
+      "unhedged_swing": "210.00",
+      "hedged_swing": "60.00"
+    },
+    "summary": "Proposed: 150 YES contracts on NYC topping 65°F on Oct 28 for $66.47. The book filled 150 of the 180 wanted, and the Central Park reading tracks your zone well enough to size at 0.8571 of the exposure."
+  },
+  {
+    "log_id": "log_0005",
+    "business_id": "taxi",
+    "kind": "proposal",
+    "created_at": "2026-10-24T15:00:20Z",
+    "actor": "desk",
+    "agent": "claude",
+    "hedge_id": "hdg_02",
+    "decision_id": "dec_02",
+    "run_id": "run_0007",
+    "status": "pending_approval",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 2
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 1240,
+          "n_filled": 1240,
+          "fill_ratio": "1",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.7471",
+          "fair": "0.73",
+          "overpay": "0.0171"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.91",
+          "beta_s": "1265.00",
+          "beta": "1240.00",
+          "h": "1",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "37.60",
+          "swing": "1240.00",
+          "ratio": "0.0303"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": false,
+        "metric": {
+          "premium": "942.80",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [
+      "over_budget"
+    ],
+    "numbers": {
+      "n_candidates": 2,
+      "n_target": 1240,
+      "n_filled": 1240,
+      "fill_ratio": "1",
+      "avg_price": "0.7471",
+      "fair": "0.73",
+      "overpay": "0.0171",
+      "r2": "0.91",
+      "beta_s": "1265.00",
+      "beta": "1240.00",
+      "h": "1",
+      "expected_cost": "37.60",
+      "swing": "1240.00",
+      "ratio": "0.0303",
+      "premium": "942.80",
+      "remaining": "250.00",
+      "alt_n_filled": 331,
+      "alt_premium": "249.40"
+    },
+    "summary": "Needs your approval: full protection costs $942.80 against $250.00 left this week. A within-budget version buys 331 contracts for $249.40."
+  },
+  {
+    "log_id": "log_0006",
+    "business_id": "restaurant",
+    "kind": "decline",
+    "created_at": "2026-10-24T15:05:10Z",
+    "actor": "desk",
+    "agent": "claude",
+    "hedge_id": "hdg_03",
+    "decision_id": "dec_03",
+    "run_id": "run_0008",
+    "status": "declined",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 2
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 900,
+          "n_filled": 900,
+          "fill_ratio": "1",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": false,
+        "metric": {
+          "avg_price": "0.62",
+          "fair": "0.27",
+          "overpay": "0.35"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.55",
+          "beta_s": "-930.00",
+          "beta": "-900.00",
+          "h": "1",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": false,
+        "metric": {
+          "expected_cost": "329.85",
+          "swing": "900.00",
+          "ratio": "0.3665"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": false,
+        "metric": {
+          "premium": "572.85",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [
+      "overpriced",
+      "too_expensive"
+    ],
+    "numbers": {
+      "n_candidates": 2,
+      "n_target": 900,
+      "n_filled": 900,
+      "fill_ratio": "1",
+      "avg_price": "0.62",
+      "fair": "0.27",
+      "overpay": "0.35",
+      "r2": "0.55",
+      "beta_s": "-930.00",
+      "beta": "-900.00",
+      "h": "1",
+      "expected_cost": "329.85",
+      "swing": "900.00",
+      "ratio": "0.3665",
+      "premium": "572.85",
+      "remaining": "250.00"
+    },
+    "summary": "Declined: the rain contract costs 62¢ against a 27% historical rain rate, and the hedge would cost 37% of the swing it removes."
+  },
+  {
+    "log_id": "log_0007",
+    "business_id": "restaurant",
+    "kind": "proposal",
+    "created_at": "2026-10-24T15:05:20Z",
+    "actor": "desk",
+    "agent": "fallback",
+    "hedge_id": "hdg_04",
+    "decision_id": "dec_04",
+    "run_id": "run_0008",
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 1
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 420,
+          "n_filled": 420,
+          "fill_ratio": "1",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.5057",
+          "fair": "0.48",
+          "overpay": "0.0257"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "skipped": "no_basis_needed",
+          "h": "1",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "18.15",
+          "swing": "420.00",
+          "ratio": "0.0432"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "219.75",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [],
+    "numbers": {
+      "n_candidates": 1,
+      "n_target": 420,
+      "n_filled": 420,
+      "fill_ratio": "1",
+      "avg_price": "0.5057",
+      "fair": "0.48",
+      "overpay": "0.0257",
+      "h": "1",
+      "expected_cost": "18.15",
+      "swing": "420.00",
+      "ratio": "0.0432",
+      "premium": "219.75",
+      "remaining": "250.00",
+      "unhedged_swing": "420.00",
+      "hedged_swing": "0.00"
+    },
+    "summary": "Proposed: buy 420 NO contracts for $219.75. Unhedged swing $420.00, hedged swing $0.00."
+  },
+  {
+    "log_id": "log_0008",
+    "business_id": "restaurant",
+    "kind": "chat",
+    "created_at": "2026-10-24T15:12:00Z",
+    "actor": "desk",
+    "agent": "claude",
+    "hedge_id": "hdg_03",
+    "decision_id": "dec_03",
+    "run_id": null,
+    "status": null,
+    "checks": [],
+    "reasons": [],
+    "numbers": {
+      "avg_price": "0.62",
+      "fair": "0.27",
+      "overpay": "0.35"
+    },
+    "summary": "Q: Why no rain insurance this week? A: The contract costs 62¢ but it has rained on 27% of comparable days, so you'd overpay by 35¢ per contract."
+  }
+]

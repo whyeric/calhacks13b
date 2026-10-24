@@ -1,0 +1,23 @@
+{
+  "id": "exp_home_win",
+  "business_id": "taxi",
+  "event": "home_win",
+  "effect_usd": "95.00",
+  "ci90": [
+    "-60.00",
+    "250.00"
+  ],
+  "se": "94.22",
+  "p_value": 0.31,
+  "n_events_train": 27,
+  "direction": "positive",
+  "hedge_side": "no",
+  "settlement_var": "home_win",
+  "hedgeable": false,
+  "reasons": [
+    "below_size",
+    "not_significant"
+  ],
+  "strike": null,
+  "beta_settlement": null
+}

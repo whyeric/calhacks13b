@@ -1,0 +1,9 @@
+{
+  "code": "overpriced",
+  "passed": false,
+  "metric": {
+    "avg_price": "0.62",
+    "fair": "0.27",
+    "overpay": "0.35"
+  }
+}

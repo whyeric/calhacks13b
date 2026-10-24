@@ -1,0 +1,123 @@
+{
+  "id": "hdg_04",
+  "business_id": "restaurant",
+  "exposure_id": "exp_home_win",
+  "week_of": "2026-10-26",
+  "status": "proposed",
+  "ticker": "KXNBAGAME-26OCT28BOSNYK-NYK",
+  "market_title": "Boston at New York: will the Knicks win on Oct 28, 2026?",
+  "market_url": "https://kalshi.com/markets/kxnbagame",
+  "close_time": "2026-10-29T03:00:00Z",
+  "side": "no",
+  "match_reason": "Most liquid candidate (fallback pick).",
+  "h": "1",
+  "n_target": 420,
+  "n_filled": 420,
+  "n_unfilled": 0,
+  "partial": false,
+  "resized": false,
+  "fills": [
+    {
+      "price": "0.50",
+      "count": 300
+    },
+    {
+      "price": "0.52",
+      "count": 120
+    }
+  ],
+  "avg_price": "0.5057",
+  "cost": "212.40",
+  "fee": "7.35",
+  "premium": "219.75",
+  "fair": "0.48",
+  "expected_cost": "18.15",
+  "fee_unverified": false,
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "420.00",
+      "contract_payout": "0.00",
+      "premium": "-219.75",
+      "net_vs_base": "200.25"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "420.00",
+      "premium": "-219.75",
+      "net_vs_base": "200.25"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "420.00",
+    "hedged_swing": "0.00",
+    "cost": "219.75"
+  },
+  "decision": {
+    "id": "dec_04",
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 1
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 420,
+          "n_filled": 420,
+          "fill_ratio": "1",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.5057",
+          "fair": "0.48",
+          "overpay": "0.0257"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "skipped": "no_basis_needed",
+          "h": "1",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "18.15",
+          "swing": "420.00",
+          "ratio": "0.0432"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "219.75",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [],
+    "summary": "Proposed: buy 420 NO contracts for $219.75. Unhedged swing $420.00, hedged swing $0.00."
+  },
+  "alternative": null,
+  "agent": "fallback",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T15:00:00Z",
+  "decided_by": null,
+  "decided_at": null
+}
