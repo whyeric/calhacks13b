@@ -1,0 +1,122 @@
+{
+  "id": null,
+  "business_id": "restaurant",
+  "exposure_id": "exp_rain",
+  "week_of": null,
+  "ticker": "KXRAIN-26OCT25-NYC",
+  "side": "yes",
+  "match_reason": "Illustrative book.",
+  "h": "1",
+  "resized": false,
+  "n_target": 100,
+  "n_filled": 70,
+  "n_unfilled": 30,
+  "partial": true,
+  "fills": [
+    {
+      "price": "0.2",
+      "count": 40
+    },
+    {
+      "price": "0.22",
+      "count": 30
+    }
+  ],
+  "avg_price": "0.2086",
+  "cost": "14.60",
+  "fee": "0.81",
+  "premium": "15.41",
+  "fair": "0.27",
+  "expected_cost": "-3.49",
+  "fee_unverified": false,
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "-100.00",
+      "contract_payout": "70.00",
+      "premium": "-15.41",
+      "net_vs_base": "-45.41"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "0.00",
+      "premium": "-15.41",
+      "net_vs_base": "-15.41"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "100.00",
+    "hedged_swing": "30.00",
+    "cost": "15.41"
+  },
+  "decision": {
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 1
+        },
+        "skipped": null
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 100,
+          "n_filled": 70,
+          "fill_ratio": "0.70",
+          "partial": true
+        },
+        "skipped": null
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.2086",
+          "fair": "0.27",
+          "overpay": "-0.0614"
+        },
+        "skipped": null
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.81",
+          "beta_s": "-900.00",
+          "beta": "-100.00",
+          "h": "1.0000",
+          "resized": false
+        },
+        "skipped": null
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "-3.49",
+          "swing": "100.00",
+          "ratio": "-0.03"
+        },
+        "skipped": null
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "15.41",
+          "remaining": "250.00"
+        },
+        "skipped": null
+      }
+    ],
+    "reasons": [],
+    "summary": null
+  },
+  "status": "proposed",
+  "agent": "fallback"
+}
