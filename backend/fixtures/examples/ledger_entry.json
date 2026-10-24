@@ -1,0 +1,28 @@
+{
+  "id": "le_0005",
+  "business_id": "taxi",
+  "date": "2026-10-24",
+  "kind": "premium",
+  "narration": "Premium: KXHIGHNY-26OCT28-T65 YES x 150",
+  "postings": [
+    {
+      "account": "Expenses:Hedging:Premiums",
+      "amount": "63.90"
+    },
+    {
+      "account": "Expenses:Hedging:Fees",
+      "amount": "2.57"
+    },
+    {
+      "account": "Assets:Kalshi:Cash",
+      "amount": "-66.47"
+    }
+  ],
+  "meta": {
+    "hedge_id": "hdg_01",
+    "ticker": "KXHIGHNY-26OCT28-T65",
+    "decision_id": "dec_01",
+    "approved_by": "owner"
+  },
+  "simulated": false
+}

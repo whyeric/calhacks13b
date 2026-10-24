@@ -1,0 +1,30 @@
+{
+  "h": "0.2669",
+  "n_target": 331,
+  "n_filled": 331,
+  "avg_price": "0.74",
+  "cost": "244.94",
+  "fee": "4.46",
+  "premium": "249.40",
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "1240.00",
+      "contract_payout": "0.00",
+      "premium": "-249.40",
+      "net_vs_base": "990.60"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "331.00",
+      "premium": "-249.40",
+      "net_vs_base": "81.60"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "1240.00",
+    "hedged_swing": "909.00",
+    "cost": "249.40"
+  }
+}

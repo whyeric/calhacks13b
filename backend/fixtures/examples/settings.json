@@ -1,0 +1,14 @@
+{
+  "thresholds": {
+    "min_size_usd": "150.00",
+    "min_support": 10,
+    "overpay_max": "0.15",
+    "cost_ratio_max": "0.35",
+    "fill_decline": "0.5",
+    "fill_full": "1.0",
+    "max_slip": "0.05",
+    "basis_r2_min": 0.5,
+    "max_tool_calls": 12
+  },
+  "weekly_budget": "250.00"
+}
