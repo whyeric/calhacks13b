@@ -202,3 +202,23 @@ Test dir: `backend/tests/markets/`. Hand-built fixtures under `fixtures/markets_
 | G13 | Cache staleness: orderbooks drift. | Online mode always refetches books/markets and overwrites cache; series list cached per day. Offline serves latest file. `fetched_at` shown in UI with "cached" label (I6). |
 | G14 | Whether `window_days=8` is counted from `now` or week start. | From `now` (UTC), per spec "closes within 8 days"; test boundary in A23. |
 | G15 | Kalshi rate limits / auth for public endpoints. | Cap concurrency at 4 requests; retry on 429 honoring `Retry-After`; if unauthenticated reads are rejected, fall back to cache and flag in C1. |
+
+## C1 inventory (live public API, no key, 2026-10-24 23:10 UTC)
+
+Cache: `fixtures/kalshi_cache/` (re-warm: `cd backend && python -m scripts.warm_kalshi_cache`). Both `external-api.kalshi.com` and `api.elections.kalshi.com` answer unauthenticated reads. Asks are derived from the book (`1 − best opposite bid`).
+
+| Exposure | Series | Open tickers in 8-day window | Close (UTC) | YES ask | NO ask | Go? |
+|---|---|---|---|---|---|---|
+| rain | `KXRAIN` (multi-city; NYC = `-NYC` suffix). `KXRAINNYC`/`KXRAINDNYC` have nothing open | `KXRAIN-26OCT24-NYC`, `KXRAIN-26OCT25-NYC` | Oct 25 05:00, Oct 26 05:00 | 0.01, 0.01 | none (no YES bids) | **GO** (YES side only today) |
+| hot | `KXHIGHNY`, `strike_type="greater"` only | `KXHIGHNY-26OCT24-T66`, `KXHIGHNY-26OCT25-T71` | Oct 25 05:00, Oct 26 05:00 | 0.01, 0.01 | none (no YES bids) | **GO** (YES side only today) |
+| home_win | `KXNBAGAME` (NYK home), `KXNHLGAME` (NYR home) | `KXNBAGAME-26OCT25ORLNYK-NYK`, `KXNHLGAME-26OCT26LANYR-NYR`, `KXNBAGAME-26OCT27DETNYK-NYK` | Oct 27 23:00, Oct 28 23:00, Oct 30 00:00 | 0.76, 0.57, 0.69 | 0.26, 0.47, 0.36 | **GO** |
+
+Findings that affect other chunks:
+- Daily weather markets list only ~1 day ahead (created ~09:30 UTC for the next day), so the 8-day window holds today + tomorrow only.
+- `KXHIGHNY` resolves YES iff Central Park (CLINYC) max temp is **strictly greater than** `floor_strike` (T71 = "72° or above"). Spec §5 says `hot = tmax ≥ strike`: C2 should use `tmax > floor_strike`.
+- `KXRAIN-…-NYC` resolves YES iff CLINYC precipitation is strictly > 0 in, per The Weather Company.
+- NBA/NHL series have `fee_type: "quadratic_with_maker_fees"` (weather: `"quadratic"`), both with multiplier 1. #43's `fee_unverified = fee_type != "quadratic"` would flag every game hedge.
+- Game tickers read `<date><AWAY><HOME>-<YES team>`; `close_time` is ~2 days after tip-off (`occurrence_datetime`).
+- Book shape (G1): `{"orderbook_fp": {"yes_dollars": [[price, size]], "no_dollars": [...]}}`, ascending, sizes fractional (`"1334302.28"`, floored to whole contracts), empty side = `[]`.
+- `status=open` queries return markets with `status: "active"`; `status=settled` returns `"finalized"`.
+- Candles for markets settled before `GET /historical/cutoff` (2026-08-25) 404 on the live path and come from `/historical/markets/{t}/candlesticks`.

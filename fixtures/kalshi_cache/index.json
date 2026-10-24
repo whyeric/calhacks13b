@@ -1,0 +1,323 @@
+{
+ "205e50915f787858a1dfce8e6347f87ac73afdea": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "series_ticker": "KXNHLGAME",
+   "status": "open"
+  },
+  "fetched_at": "2026-10-24T23:09:45.969621+00:00"
+ },
+ "301f7e48fef7922e39d203ca2c11795dcb820bac": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "max_close_ts": "1792883384",
+   "min_close_ts": "1791673784",
+   "series_ticker": "KXHIGHNY",
+   "status": "settled"
+  },
+  "fetched_at": "2026-10-24T23:09:47.167494+00:00"
+ },
+ "7b1be2497a3441ae9af39b2f57b1c4d55ab8e0a7": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "series_ticker": "KXRAIN",
+   "status": "open"
+  },
+  "fetched_at": "2026-10-24T23:09:44.739156+00:00"
+ },
+ "9f04165883c3501fa57dae1d72909cdbd986960e": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "max_close_ts": "1792883384",
+   "min_close_ts": "1791673784",
+   "series_ticker": "KXNHLGAME",
+   "status": "settled"
+  },
+  "fetched_at": "2026-10-24T23:09:49.156405+00:00"
+ },
+ "c350f0f41853f98e49d6022de44cae87af5bc2e8": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "series_ticker": "KXHIGHNY",
+   "status": "open"
+  },
+  "fetched_at": "2026-10-24T23:09:45.351786+00:00"
+ },
+ "cdbba88edf26ae3b65e021552292231d88271a71": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "series_ticker": "KXNBAGAME",
+   "status": "open"
+  },
+  "fetched_at": "2026-10-24T23:09:45.803551+00:00"
+ },
+ "faa79a80418e2a0102689e085a505e5f9fe3f9cd": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "max_close_ts": "1792883384",
+   "min_close_ts": "1791673784",
+   "series_ticker": "KXRAIN",
+   "status": "settled"
+  },
+  "fetched_at": "2026-10-24T23:09:46.649904+00:00"
+ },
+ "fe21a5f8930767d03237d51a1cd95026642d378e": {
+  "path": "/markets",
+  "params": {
+   "limit": "1000",
+   "max_close_ts": "1792883384",
+   "min_close_ts": "1791673784",
+   "series_ticker": "KXNBAGAME",
+   "status": "settled"
+  },
+  "fetched_at": "2026-10-24T23:09:47.695152+00:00"
+ },
+ "cdcd99092bff5fbc828e4558da7b1295a4069683": {
+  "path": "/markets/KXHIGHNY-26OCT24-T66",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.516500+00:00"
+ },
+ "aaa733d8b320191dc46e5785d1470eec2622076f": {
+  "path": "/markets/KXHIGHNY-26OCT24-T66/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.434653+00:00"
+ },
+ "874e47d1d3fc09d6c176e0b92deec21a434666e2": {
+  "path": "/markets/KXHIGHNY-26OCT25-T71",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.594938+00:00"
+ },
+ "fe3ed84d99a9bf1d2839c58a3eb616fec55ec0ec": {
+  "path": "/markets/KXHIGHNY-26OCT25-T71/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.430724+00:00"
+ },
+ "8670b4d77decad806abe6da5c2178805977e9fcb": {
+  "path": "/markets/KXNBAGAME-26OCT25ORLNYK-NYK",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:46.478654+00:00"
+ },
+ "ba7d4f6eb5440c303ea39e594feff937e2ec6a50": {
+  "path": "/markets/KXNBAGAME-26OCT25ORLNYK-NYK/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:46.052565+00:00"
+ },
+ "c353a0905ea95996810743518d41e8865c595958": {
+  "path": "/markets/KXNBAGAME-26OCT27DETNYK-NYK",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:46.396753+00:00"
+ },
+ "b04eda9342e3f8df8001df4b775809c61e74f78b": {
+  "path": "/markets/KXNBAGAME-26OCT27DETNYK-NYK/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:46.050151+00:00"
+ },
+ "bde31bc78bbda59dd56d1c6ea5fe80afc61bea1d": {
+  "path": "/markets/KXNHLGAME-26OCT26LANYR-NYR",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:46.316129+00:00"
+ },
+ "35ed3501fc00b3d55e065adf96f9b1e9d5c2f3a1": {
+  "path": "/markets/KXNHLGAME-26OCT26LANYR-NYR/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:46.239204+00:00"
+ },
+ "c449eecdf5e18bfd61a0e0f191573e5a7ca486e4": {
+  "path": "/markets/KXRAIN-26OCT24-NYC",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.050181+00:00"
+ },
+ "6eb6ffe7914c500ed5803a4ceff145c177f1f099": {
+  "path": "/markets/KXRAIN-26OCT24-NYC/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:44.973042+00:00"
+ },
+ "1aa6b908ef397cd058f1f40a89add3272a139aa9": {
+  "path": "/markets/KXRAIN-26OCT25-NYC",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.189948+00:00"
+ },
+ "593c7c64cfc2e3d288b19f2577da47eddd5e346d": {
+  "path": "/markets/KXRAIN-26OCT25-NYC/orderbook",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:44.816573+00:00"
+ },
+ "12b70e9932a1e4d9739b8414c3e6ba3f9834915a": {
+  "path": "/series",
+  "params": {
+   "category": "Climate and Weather"
+  },
+  "fetched_at": "2026-10-24T23:09:44.490211+00:00"
+ },
+ "c86176ed215c0b68db0aba2178e281849fd15242": {
+  "path": "/series/KXHIGHNY",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.267238+00:00"
+ },
+ "c75e276624f2ba56e3a53d2993c832675e98ce76": {
+  "path": "/series/KXHIGHNY/markets/KXHIGHNY-26OCT19-T67/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.606353+00:00"
+ },
+ "2f872dfc54f960329e92759d1f51803d31b5f089": {
+  "path": "/series/KXHIGHNY/markets/KXHIGHNY-26OCT20-T72/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.524204+00:00"
+ },
+ "f2cb3e966c5b8f1b8e59e2c9d322d76ab6d9e1bc": {
+  "path": "/series/KXHIGHNY/markets/KXHIGHNY-26OCT21-T66/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.445719+00:00"
+ },
+ "e3ec2e4ed02056fc5c024f4844e5d1c5b4ec1506": {
+  "path": "/series/KXHIGHNY/markets/KXHIGHNY-26OCT22-T70/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.365132+00:00"
+ },
+ "80db722de572a119c078e0e1231db71d588423a3": {
+  "path": "/series/KXHIGHNY/markets/KXHIGHNY-26OCT23-T64/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.285600+00:00"
+ },
+ "515984b11ae0a4d457e0aad14feddd4488709672": {
+  "path": "/series/KXNBAGAME",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.713237+00:00"
+ },
+ "1430da89989dcb35e6e6bfe6fc247d773b1fbcb0": {
+  "path": "/series/KXNBAGAME/markets/KXNBAGAME-26OCT12MINNYK-NYK/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.979804+00:00"
+ },
+ "1743f4bbb43ff0bfd701c4cf20d56695d938b135": {
+  "path": "/series/KXNBAGAME/markets/KXNBAGAME-26OCT15TORNYK-NYK/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.899628+00:00"
+ },
+ "51e63c3d6a3a3419e04b7a125e743c3a7b1784f6": {
+  "path": "/series/KXNBAGAME/markets/KXNBAGAME-26OCT20PHINYK-NYK/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.813280+00:00"
+ },
+ "34ce573609abf4febb26fabcf3c864b2a438509c": {
+  "path": "/series/KXNHLGAME",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:45.882232+00:00"
+ },
+ "1675f31f949279f98a80577575f785f84dc36181": {
+  "path": "/series/KXNHLGAME/markets/KXNHLGAME-26OCT11VANNYR-NYR/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:49.475228+00:00"
+ },
+ "fbdd7313889b13a79cba950e3245622a8af29b58": {
+  "path": "/series/KXNHLGAME/markets/KXNHLGAME-26OCT13TBNYR-NYR/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:49.383546+00:00"
+ },
+ "22d4ef283126885967fae4f3d26e41e71b4ecf68": {
+  "path": "/series/KXNHLGAME/markets/KXNHLGAME-26OCT19ANANYR-NYR/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:49.244163+00:00"
+ },
+ "6d89dd740ecc87a93010c5b999ff1bad964615df": {
+  "path": "/series/KXRAIN",
+  "params": {},
+  "fetched_at": "2026-10-24T23:09:44.573270+00:00"
+ },
+ "f063341fba604374f1bc876e6be3217934a86f60": {
+  "path": "/series/KXRAIN/markets/KXRAIN-26OCT19-NYC/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.080686+00:00"
+ },
+ "a4d80f24823556714202398e9fe6e548357cc4c2": {
+  "path": "/series/KXRAIN/markets/KXRAIN-26OCT20-NYC/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:47.003433+00:00"
+ },
+ "f110af8177e19927c7cff5d2f636318a9b77d6f4": {
+  "path": "/series/KXRAIN/markets/KXRAIN-26OCT21-NYC/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:46.925352+00:00"
+ },
+ "2192aca10a21bc388384acb0811ac59e422bbe4f": {
+  "path": "/series/KXRAIN/markets/KXRAIN-26OCT22-NYC/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:46.845182+00:00"
+ },
+ "ad73cec8ba545e420bb27c2356389a46e4767be1": {
+  "path": "/series/KXRAIN/markets/KXRAIN-26OCT23-NYC/candlesticks",
+  "params": {
+   "end_ts": "1792883384",
+   "period_interval": "1440",
+   "start_ts": "1791673784"
+  },
+  "fetched_at": "2026-10-24T23:09:46.762449+00:00"
+ }
+}
