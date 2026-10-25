@@ -1,0 +1,81 @@
+{
+  "std_unhedged": "3312.64",
+  "std_hedged": "2064.16",
+  "reduction_pct": 37.7,
+  "worst_week_unhedged": {
+    "week_start": "2025-10-27",
+    "income": "35120.00"
+  },
+  "worst_week_hedged": {
+    "week_start": "2025-10-27",
+    "income": "38530.70"
+  },
+  "total_premium": "1684.55",
+  "n_hedges": 31,
+  "n_declined": 9,
+  "priced_real_pct": 0.645,
+  "per_exposure": {
+    "exp_rain": {
+      "reduction_pct": 38.2,
+      "total_premium": "1214.60",
+      "ineffective": false
+    },
+    "exp_hot": {
+      "reduction_pct": 4.1,
+      "total_premium": "469.95",
+      "ineffective": true
+    }
+  },
+  "weekly": [
+    {
+      "week_start": "2025-10-06",
+      "unhedged": "41250.00",
+      "hedged": "43070.00",
+      "premium": "212.40"
+    },
+    {
+      "week_start": "2025-10-13",
+      "unhedged": "38410.00",
+      "hedged": "38211.25",
+      "premium": "198.75"
+    },
+    {
+      "week_start": "2025-10-20",
+      "unhedged": "44980.00",
+      "hedged": "43339.90",
+      "premium": "240.10"
+    },
+    {
+      "week_start": "2025-10-27",
+      "unhedged": "35120.00",
+      "hedged": "38530.70",
+      "premium": "185.30"
+    },
+    {
+      "week_start": "2025-11-03",
+      "unhedged": "42060.00",
+      "hedged": "41839.95",
+      "premium": "220.05"
+    },
+    {
+      "week_start": "2025-11-10",
+      "unhedged": "39870.00",
+      "hedged": "40410.40",
+      "premium": "205.60"
+    },
+    {
+      "week_start": "2025-11-17",
+      "unhedged": "43310.00",
+      "hedged": "42178.10",
+      "premium": "231.90"
+    },
+    {
+      "week_start": "2025-11-24",
+      "unhedged": "36940.00",
+      "hedged": "38999.55",
+      "premium": "190.45"
+    }
+  ],
+  "pricing_tier": "mixed",
+  "estimated": true
+}

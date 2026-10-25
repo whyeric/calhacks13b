@@ -28,8 +28,15 @@
             "$ref": "#/components/schemas/ModelCheck"
           },
           "r2_holdout": {
-            "title": "R2 Holdout",
-            "type": "number"
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "R2 Holdout"
           }
         },
         "required": [
@@ -39,6 +46,89 @@
           "r2_holdout"
         ],
         "title": "AnalyzeResponse",
+        "type": "object"
+      },
+      "BacktestResult": {
+        "additionalProperties": false,
+        "properties": {
+          "std_unhedged": {
+            "title": "Std Unhedged",
+            "type": "string"
+          },
+          "std_hedged": {
+            "title": "Std Hedged",
+            "type": "string"
+          },
+          "reduction_pct": {
+            "title": "Reduction Pct",
+            "type": "number"
+          },
+          "worst_week_unhedged": {
+            "$ref": "#/components/schemas/WeekIncome"
+          },
+          "worst_week_hedged": {
+            "$ref": "#/components/schemas/WeekIncome"
+          },
+          "total_premium": {
+            "title": "Total Premium",
+            "type": "string"
+          },
+          "n_hedges": {
+            "title": "N Hedges",
+            "type": "integer"
+          },
+          "n_declined": {
+            "title": "N Declined",
+            "type": "integer"
+          },
+          "priced_real_pct": {
+            "title": "Priced Real Pct",
+            "type": "number"
+          },
+          "per_exposure": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PerExposure"
+            },
+            "title": "Per Exposure",
+            "type": "object"
+          },
+          "weekly": {
+            "items": {
+              "$ref": "#/components/schemas/WeeklyRow"
+            },
+            "title": "Weekly",
+            "type": "array"
+          },
+          "pricing_tier": {
+            "enum": [
+              "real",
+              "mixed",
+              "frequency"
+            ],
+            "title": "Pricing Tier",
+            "type": "string"
+          },
+          "estimated": {
+            "title": "Estimated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "std_unhedged",
+          "std_hedged",
+          "reduction_pct",
+          "worst_week_unhedged",
+          "worst_week_hedged",
+          "total_premium",
+          "n_hedges",
+          "n_declined",
+          "priced_real_pct",
+          "per_exposure",
+          "weekly",
+          "pricing_tier",
+          "estimated"
+        ],
+        "title": "BacktestResult",
         "type": "object"
       },
       "Budget": {
@@ -166,6 +256,28 @@
           "budget"
         ],
         "title": "Business",
+        "type": "object"
+      },
+      "ChatReply": {
+        "additionalProperties": false,
+        "properties": {
+          "reply": {
+            "title": "Reply",
+            "type": "string"
+          },
+          "tool_calls": {
+            "items": {
+              "$ref": "#/components/schemas/ToolCall"
+            },
+            "title": "Tool Calls",
+            "type": "array"
+          }
+        },
+        "required": [
+          "reply",
+          "tool_calls"
+        ],
+        "title": "ChatReply",
         "type": "object"
       },
       "Check": {
@@ -443,6 +555,35 @@
           "cost"
         ],
         "title": "Headline",
+        "type": "object"
+      },
+      "Health": {
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "const": "ok",
+            "title": "Status",
+            "type": "string"
+          },
+          "offline": {
+            "title": "Offline",
+            "type": "boolean"
+          },
+          "anthropic": {
+            "enum": [
+              "configured",
+              "fallback"
+            ],
+            "title": "Anthropic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "offline",
+          "anthropic"
+        ],
+        "title": "Health",
         "type": "object"
       },
       "Hedge": {
@@ -836,6 +977,136 @@
         "title": "HedgeLite",
         "type": "object"
       },
+      "LedgerEntry": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "premium",
+              "payout",
+              "withdrawal",
+              "opening_deposit"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "narration": {
+            "title": "Narration",
+            "type": "string"
+          },
+          "postings": {
+            "items": {
+              "$ref": "#/components/schemas/Posting"
+            },
+            "title": "Postings",
+            "type": "array"
+          },
+          "meta": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LedgerMeta"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "simulated": {
+            "title": "Simulated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "business_id",
+          "date",
+          "kind",
+          "narration",
+          "postings",
+          "meta",
+          "simulated"
+        ],
+        "title": "LedgerEntry",
+        "type": "object"
+      },
+      "LedgerMeta": {
+        "additionalProperties": false,
+        "properties": {
+          "hedge_id": {
+            "title": "Hedge Id",
+            "type": "string"
+          },
+          "ticker": {
+            "title": "Ticker",
+            "type": "string"
+          },
+          "decision_id": {
+            "title": "Decision Id",
+            "type": "string"
+          },
+          "approved_by": {
+            "const": "owner",
+            "title": "Approved By",
+            "type": "string"
+          }
+        },
+        "required": [
+          "hedge_id",
+          "ticker",
+          "decision_id",
+          "approved_by"
+        ],
+        "title": "LedgerMeta",
+        "type": "object"
+      },
+      "LedgerResponse": {
+        "additionalProperties": false,
+        "description": "GET /businesses/{id}/ledger (R10).",
+        "properties": {
+          "entries": {
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntry"
+            },
+            "title": "Entries",
+            "type": "array"
+          },
+          "reconciliation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReconResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "simulated": {
+            "const": true,
+            "title": "Simulated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "entries",
+          "reconciliation",
+          "simulated"
+        ],
+        "title": "LedgerResponse",
+        "type": "object"
+      },
       "Level": {
         "additionalProperties": false,
         "properties": {
@@ -881,7 +1152,8 @@
               "nudge",
               "threshold_changed",
               "chat",
-              "run_failed"
+              "run_failed",
+              "refusal"
             ],
             "title": "Kind",
             "type": "string"
@@ -1155,6 +1427,224 @@
         "title": "PayoffRow",
         "type": "object"
       },
+      "PerExposure": {
+        "additionalProperties": false,
+        "properties": {
+          "reduction_pct": {
+            "title": "Reduction Pct",
+            "type": "number"
+          },
+          "total_premium": {
+            "title": "Total Premium",
+            "type": "string"
+          },
+          "ineffective": {
+            "title": "Ineffective",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "reduction_pct",
+          "total_premium",
+          "ineffective"
+        ],
+        "title": "PerExposure",
+        "type": "object"
+      },
+      "Posting": {
+        "additionalProperties": false,
+        "properties": {
+          "account": {
+            "title": "Account",
+            "type": "string"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "string"
+          }
+        },
+        "required": [
+          "account",
+          "amount"
+        ],
+        "title": "Posting",
+        "type": "object"
+      },
+      "ReconMatch": {
+        "additionalProperties": false,
+        "properties": {
+          "hedge_id": {
+            "title": "Hedge Id",
+            "type": "string"
+          },
+          "ticker": {
+            "title": "Ticker",
+            "type": "string"
+          },
+          "expected": {
+            "title": "Expected",
+            "type": "string"
+          },
+          "kalshi_ledger": {
+            "title": "Kalshi Ledger",
+            "type": "string"
+          },
+          "bank": {
+            "title": "Bank",
+            "type": "string"
+          }
+        },
+        "required": [
+          "hedge_id",
+          "ticker",
+          "expected",
+          "kalshi_ledger",
+          "bank"
+        ],
+        "title": "ReconMatch",
+        "type": "object"
+      },
+      "ReconMismatch": {
+        "additionalProperties": false,
+        "properties": {
+          "hedge_id": {
+            "title": "Hedge Id",
+            "type": "string"
+          },
+          "ticker": {
+            "title": "Ticker",
+            "type": "string"
+          },
+          "expected": {
+            "title": "Expected",
+            "type": "string"
+          },
+          "kalshi_ledger": {
+            "title": "Kalshi Ledger",
+            "type": "string"
+          },
+          "bank": {
+            "title": "Bank",
+            "type": "string"
+          },
+          "difference": {
+            "title": "Difference",
+            "type": "string"
+          },
+          "source_pair": {
+            "enum": [
+              "expected_vs_kalshi_ledger",
+              "kalshi_ledger_vs_bank",
+              "expected_vs_bank"
+            ],
+            "title": "Source Pair",
+            "type": "string"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "likely_cause": {
+            "title": "Likely Cause",
+            "type": "string"
+          },
+          "action": {
+            "const": "ask_owner",
+            "title": "Action",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "hedge_id",
+          "ticker",
+          "expected",
+          "kalshi_ledger",
+          "bank",
+          "difference",
+          "source_pair",
+          "explanation",
+          "likely_cause",
+          "action",
+          "question"
+        ],
+        "title": "ReconMismatch",
+        "type": "object"
+      },
+      "ReconResult": {
+        "additionalProperties": false,
+        "description": "C5 shape everywhere (R9); the `reconcile` tool returns it unchanged.",
+        "properties": {
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "simulated": {
+            "const": true,
+            "title": "Simulated",
+            "type": "boolean"
+          },
+          "matches": {
+            "items": {
+              "$ref": "#/components/schemas/ReconMatch"
+            },
+            "title": "Matches",
+            "type": "array"
+          },
+          "mismatches": {
+            "items": {
+              "$ref": "#/components/schemas/ReconMismatch"
+            },
+            "title": "Mismatches",
+            "type": "array"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/ReconSummary"
+          }
+        },
+        "required": [
+          "business_id",
+          "as_of",
+          "simulated",
+          "matches",
+          "mismatches",
+          "summary"
+        ],
+        "title": "ReconResult",
+        "type": "object"
+      },
+      "ReconSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "n_matched": {
+            "title": "N Matched",
+            "type": "integer"
+          },
+          "n_mismatched": {
+            "title": "N Mismatched",
+            "type": "integer"
+          },
+          "total_difference": {
+            "title": "Total Difference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "n_matched",
+          "n_mismatched",
+          "total_difference"
+        ],
+        "title": "ReconSummary",
+        "type": "object"
+      },
       "RunAccepted": {
         "additionalProperties": false,
         "description": "202 body of POST /businesses/{id}/desk/run.",
@@ -1259,6 +1749,154 @@
           "error"
         ],
         "title": "RunStatus",
+        "type": "object"
+      },
+      "Settings": {
+        "additionalProperties": false,
+        "description": "GET/PUT /businesses/{id}/settings (R14).",
+        "properties": {
+          "thresholds": {
+            "$ref": "#/components/schemas/ThresholdSettings"
+          },
+          "weekly_budget": {
+            "title": "Weekly Budget",
+            "type": "string"
+          }
+        },
+        "required": [
+          "thresholds",
+          "weekly_budget"
+        ],
+        "title": "Settings",
+        "type": "object"
+      },
+      "ThresholdSettings": {
+        "additionalProperties": false,
+        "description": "Mirrors `config.Thresholds` field for field.",
+        "properties": {
+          "min_size_usd": {
+            "title": "Min Size Usd",
+            "type": "string"
+          },
+          "min_support": {
+            "title": "Min Support",
+            "type": "integer"
+          },
+          "overpay_max": {
+            "title": "Overpay Max",
+            "type": "string"
+          },
+          "cost_ratio_max": {
+            "title": "Cost Ratio Max",
+            "type": "string"
+          },
+          "fill_decline": {
+            "title": "Fill Decline",
+            "type": "string"
+          },
+          "fill_full": {
+            "title": "Fill Full",
+            "type": "string"
+          },
+          "max_slip": {
+            "title": "Max Slip",
+            "type": "string"
+          },
+          "basis_r2_min": {
+            "title": "Basis R2 Min",
+            "type": "number"
+          },
+          "max_tool_calls": {
+            "title": "Max Tool Calls",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "min_size_usd",
+          "min_support",
+          "overpay_max",
+          "cost_ratio_max",
+          "fill_decline",
+          "fill_full",
+          "max_slip",
+          "basis_r2_min",
+          "max_tool_calls"
+        ],
+        "title": "ThresholdSettings",
+        "type": "object"
+      },
+      "ToolCall": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "input": {
+            "additionalProperties": true,
+            "title": "Input",
+            "type": "object"
+          },
+          "output": {
+            "title": "Output"
+          }
+        },
+        "required": [
+          "name",
+          "input",
+          "output"
+        ],
+        "title": "ToolCall",
+        "type": "object"
+      },
+      "WeekIncome": {
+        "additionalProperties": false,
+        "properties": {
+          "week_start": {
+            "format": "date",
+            "title": "Week Start",
+            "type": "string"
+          },
+          "income": {
+            "title": "Income",
+            "type": "string"
+          }
+        },
+        "required": [
+          "week_start",
+          "income"
+        ],
+        "title": "WeekIncome",
+        "type": "object"
+      },
+      "WeeklyRow": {
+        "additionalProperties": false,
+        "properties": {
+          "week_start": {
+            "format": "date",
+            "title": "Week Start",
+            "type": "string"
+          },
+          "unhedged": {
+            "title": "Unhedged",
+            "type": "string"
+          },
+          "hedged": {
+            "title": "Hedged",
+            "type": "string"
+          },
+          "premium": {
+            "title": "Premium",
+            "type": "string"
+          }
+        },
+        "required": [
+          "week_start",
+          "unhedged",
+          "hedged",
+          "premium"
+        ],
+        "title": "WeeklyRow",
         "type": "object"
       }
     }

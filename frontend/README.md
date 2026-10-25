@@ -1,7 +1,12 @@
 # Dashboard development
 
 Issue #24 owns the header, exposures, model check, hedge cards and decision log.
-Backtest, books, chat and settings remain in #28.
+Issue #28 adds the bottom tabs (backtest; books and reconciliation), the chat
+drawer ("why?" with expandable tool calls) and the settings drawer. Saving
+settings PUTs strings, the server re-runs its rules, and the page refetches
+analyze/hedges/decisions/budget and lists which decisions flipped. A "Sample
+week" banner shows when `/health.sample_businesses` includes the selected
+business (or a hedge carries `sample_week: true`); missing fields mean live.
 
 Run `npm ci`, then `npm run dev`. Set `NEXT_PUBLIC_API_URL` to the API origin
 (default `http://localhost:8000`). The API must allow the frontend origin via CORS.

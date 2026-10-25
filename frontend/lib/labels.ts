@@ -18,6 +18,8 @@ export const labels: Record<string, string> = {
   below_size: "Effect too small to protect",
   not_significant: "Evidence is not strong enough",
   thin_support: "Too few event days",
+  reconciliation: "Reconciliation",
+  threshold_changed: "Settings changed",
 };
 export const label = (value: string) =>
   labels[value] ?? value.replaceAll("_", " ");
