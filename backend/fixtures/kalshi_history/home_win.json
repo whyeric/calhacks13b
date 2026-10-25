@@ -1,0 +1,2833 @@
+{
+ "var": "home_win",
+ "series": [
+  "KXNBAGAME",
+  "KXNHLGAME"
+ ],
+ "window": [
+  "2024-10-01",
+  "2026-08-31"
+ ],
+ "fetched_at": "2026-10-25T02:56:24+00:00",
+ "markets": {
+  "2025-04-19": {
+   "ticker": "KXNBAGAME-25APR19DETNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-21": {
+   "ticker": "KXNBAGAME-25APR21DETNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-29": {
+   "ticker": "KXNBAGAME-25APR29DETNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-10": {
+   "ticker": "KXNBAGAME-25MAY10BOSNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-12": {
+   "ticker": "KXNBAGAME-25MAY12BOSNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-16": {
+   "ticker": "KXNBAGAME-25MAY16BOSNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-21": {
+   "ticker": "KXNBAGAME-25MAY21INDNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-23": {
+   "ticker": "KXNBAGAME-25MAY23INDNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-29": {
+   "ticker": "KXNBAGAME-25MAY29INDNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-10-02": {
+   "ticker": "KXNHLGAME-25OCT02NJNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759291200,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.3500",
+     "price_close": "0.6000",
+     "volume": "8.00"
+    },
+    {
+     "end_period_ts": 1759377600,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.6900",
+     "volume": "42.00"
+    },
+    {
+     "end_period_ts": 1759464000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "18929.00"
+    }
+   ]
+  },
+  "2025-10-07": {
+   "ticker": "KXNHLGAME-25OCT07PITNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759723200,
+     "yes_ask_close": "0.6600",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.6600",
+     "volume": "148.00"
+    },
+    {
+     "end_period_ts": 1759809600,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6800",
+     "volume": "21012.00"
+    },
+    {
+     "end_period_ts": 1759896000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "800880.00"
+    }
+   ]
+  },
+  "2025-10-12": {
+   "ticker": "KXNHLGAME-25OCT12WSHNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760155200,
+     "yes_ask_close": "0.5900",
+     "yes_bid_close": "0.3300",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1760241600,
+     "yes_ask_close": "0.5300",
+     "yes_bid_close": "0.5000",
+     "price_close": "0.5300",
+     "volume": "2266.00"
+    },
+    {
+     "end_period_ts": 1760328000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "421105.00"
+    }
+   ]
+  },
+  "2025-10-13": {
+   "ticker": "KXNBAGAME-25OCT13WASNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760328000,
+     "yes_ask_close": "0.8100",
+     "yes_bid_close": "0.3300",
+     "price_close": "0.8200",
+     "volume": "60.00"
+    },
+    {
+     "end_period_ts": 1760414400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "88576.00"
+    }
+   ]
+  },
+  "2025-10-14": {
+   "ticker": "KXNHLGAME-25OCT14EDMNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760328000,
+     "yes_ask_close": "0.6700",
+     "yes_bid_close": "0.3000",
+     "price_close": "0.5600",
+     "volume": "15.00"
+    },
+    {
+     "end_period_ts": 1760414400,
+     "yes_ask_close": "0.4600",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4600",
+     "volume": "1466.00"
+    },
+    {
+     "end_period_ts": 1760500800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "381321.00"
+    }
+   ]
+  },
+  "2025-10-17": {
+   "ticker": "KXNBAGAME-25OCT17CHANYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1760673600,
+     "yes_ask_close": "0.6300",
+     "yes_bid_close": "0.5800",
+     "price_close": "0.6400",
+     "volume": "97.00"
+    },
+    {
+     "end_period_ts": 1760760000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "111973.00"
+    }
+   ]
+  },
+  "2025-10-20": {
+   "ticker": "KXNHLGAME-25OCT20MINNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760846400,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.5900",
+     "volume": "227.00"
+    },
+    {
+     "end_period_ts": 1760932800,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5600",
+     "volume": "2596.00"
+    },
+    {
+     "end_period_ts": 1761019200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "383614.00"
+    }
+   ]
+  },
+  "2025-10-22": {
+   "ticker": "KXNBAGAME-25OCT22CLENYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1760932800,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.5900",
+     "price_close": "0.6100",
+     "volume": "80.00"
+    },
+    {
+     "end_period_ts": 1761019200,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.5800",
+     "volume": "4400.00"
+    },
+    {
+     "end_period_ts": 1761105600,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4800",
+     "price_close": "0.5000",
+     "volume": "74988.00"
+    },
+    {
+     "end_period_ts": 1761192000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4555818.00"
+    }
+   ]
+  },
+  "2025-10-23": {
+   "ticker": "KXNHLGAME-25OCT23SJNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761105600,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.7200",
+     "volume": "1822.00"
+    },
+    {
+     "end_period_ts": 1761192000,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.7200",
+     "price_close": "0.7300",
+     "volume": "12716.00"
+    },
+    {
+     "end_period_ts": 1761278400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "516722.00"
+    }
+   ]
+  },
+  "2025-10-24": {
+   "ticker": "KXNBAGAME-25OCT24BOSNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1761278400,
+     "yes_ask_close": "0.6700",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6700",
+     "volume": "11577.00"
+    },
+    {
+     "end_period_ts": 1761364800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1694503.00"
+    }
+   ]
+  },
+  "2025-11-02": {
+   "ticker": "KXNBAGAME-25NOV02CHINYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1761969600,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.7700",
+     "volume": "118.00"
+    },
+    {
+     "end_period_ts": 1762056000,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.6800",
+     "price_close": "0.6900",
+     "volume": "39975.00"
+    },
+    {
+     "end_period_ts": 1762142400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1284583.00"
+    }
+   ]
+  },
+  "2025-11-03": {
+   "ticker": "KXNBAGAME-25NOV03WASNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762056000,
+     "yes_ask_close": "0.8300",
+     "yes_bid_close": "0.3500",
+     "price_close": "0.8000",
+     "volume": "70.00"
+    },
+    {
+     "end_period_ts": 1762142400,
+     "yes_ask_close": "0.8600",
+     "yes_bid_close": "0.8400",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1762232400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "630774.00"
+    }
+   ]
+  },
+  "2025-11-04": {
+   "ticker": "KXNHLGAME-25NOV04CARNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1762142400,
+     "yes_ask_close": "0.4600",
+     "yes_bid_close": "0.4100",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1762232400,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.4600",
+     "volume": "13227.00"
+    },
+    {
+     "end_period_ts": 1762318800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "240403.00"
+    }
+   ]
+  },
+  "2025-11-05": {
+   "ticker": "KXNBAGAME-25NOV05MINNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762232400,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.5100",
+     "price_close": "0.6100",
+     "volume": "64.00"
+    },
+    {
+     "end_period_ts": 1762318800,
+     "yes_ask_close": "0.6700",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6700",
+     "volume": "10981.00"
+    },
+    {
+     "end_period_ts": 1762405200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2689942.00"
+    }
+   ]
+  },
+  "2025-11-08": {
+   "ticker": "KXNHLGAME-25NOV08NYINYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1762491600,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.6000",
+     "volume": "57.00"
+    },
+    {
+     "end_period_ts": 1762578000,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.6100",
+     "volume": "4590.00"
+    },
+    {
+     "end_period_ts": 1762664400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "142381.00"
+    }
+   ]
+  },
+  "2025-11-09": {
+   "ticker": "KXNBAGAME-25NOV09BKNNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762578000,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.8500",
+     "price_close": "0.9000",
+     "volume": "2322.00"
+    },
+    {
+     "end_period_ts": 1762664400,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.8900",
+     "price_close": "0.9000",
+     "volume": "9677.00"
+    },
+    {
+     "end_period_ts": 1762750800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "550128.00"
+    }
+   ]
+  },
+  "2025-11-10": {
+   "ticker": "KXNHLGAME-25NOV10NSHNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762664400,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.6500",
+     "volume": "57.00"
+    },
+    {
+     "end_period_ts": 1762750800,
+     "yes_ask_close": "0.6300",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.6300",
+     "volume": "2867.00"
+    },
+    {
+     "end_period_ts": 1762837200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "203185.00"
+    }
+   ]
+  },
+  "2025-11-11": {
+   "ticker": "KXNBAGAME-25NOV11MEMNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762750800,
+     "yes_ask_close": "0.8000",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.8000",
+     "volume": "1143.00"
+    },
+    {
+     "end_period_ts": 1762837200,
+     "yes_ask_close": "0.7900",
+     "yes_bid_close": "0.7800",
+     "price_close": "0.7900",
+     "volume": "19569.00"
+    },
+    {
+     "end_period_ts": 1762923600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1365503.00"
+    }
+   ]
+  },
+  "2025-11-12": {
+   "ticker": "KXNBAGAME-25NOV12ORLNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1762837200,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.7000",
+     "volume": "189.00"
+    },
+    {
+     "end_period_ts": 1762923600,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.5900",
+     "price_close": "0.6100",
+     "volume": "58361.00"
+    },
+    {
+     "end_period_ts": 1763010000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4324998.00"
+    }
+   ]
+  },
+  "2025-11-14": {
+   "ticker": "KXNBAGAME-25NOV14MIANYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763010000,
+     "yes_ask_close": "0.5700",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5700",
+     "volume": "780.00"
+    },
+    {
+     "end_period_ts": 1763096400,
+     "yes_ask_close": "0.6600",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6600",
+     "volume": "61528.00"
+    },
+    {
+     "end_period_ts": 1763182800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2394050.00"
+    }
+   ]
+  },
+  "2025-11-16": {
+   "ticker": "KXNHLGAME-25NOV16DETNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763182800,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.6200",
+     "volume": "9.00"
+    },
+    {
+     "end_period_ts": 1763269200,
+     "yes_ask_close": "0.5700",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.5700",
+     "volume": "9235.00"
+    },
+    {
+     "end_period_ts": 1763355600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "256634.00"
+    }
+   ]
+  },
+  "2025-11-24": {
+   "ticker": "KXNHLGAME-25NOV24STLNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763874000,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.5700",
+     "price_close": "0.5600",
+     "volume": "1315.00"
+    },
+    {
+     "end_period_ts": 1763960400,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5800",
+     "volume": "3990.00"
+    },
+    {
+     "end_period_ts": 1764046800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "268339.00"
+    }
+   ]
+  },
+  "2025-11-28": {
+   "ticker": "KXNBAGAME-25NOV28MILNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764219600,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7300",
+     "volume": "1209.00"
+    },
+    {
+     "end_period_ts": 1764306000,
+     "yes_ask_close": "0.7400",
+     "yes_bid_close": "0.7300",
+     "price_close": "0.7400",
+     "volume": "15265.00"
+    },
+    {
+     "end_period_ts": 1764392400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1811546.00"
+    }
+   ]
+  },
+  "2025-11-29": {
+   "ticker": "KXNHLGAME-25NOV29TBNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764219600,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.5600",
+     "volume": "3.00"
+    },
+    {
+     "end_period_ts": 1764306000,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.5100",
+     "volume": "10.00"
+    },
+    {
+     "end_period_ts": 1764392400,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.5000",
+     "price_close": "0.5100",
+     "volume": "1549.00"
+    },
+    {
+     "end_period_ts": 1764478800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "183608.00"
+    }
+   ]
+  },
+  "2025-11-30": {
+   "ticker": "KXNBAGAME-25NOV30TORNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764392400,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.7400",
+     "volume": "51.00"
+    },
+    {
+     "end_period_ts": 1764478800,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.7200",
+     "price_close": "0.7400",
+     "volume": "2612.00"
+    },
+    {
+     "end_period_ts": 1764565200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1775241.00"
+    }
+   ]
+  },
+  "2025-12-02": {
+   "ticker": "KXNHLGAME-25DEC02DALNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764565200,
+     "yes_ask_close": "0.4300",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.4300",
+     "volume": "1191.00"
+    },
+    {
+     "end_period_ts": 1764651600,
+     "yes_ask_close": "0.4600",
+     "yes_bid_close": "0.4400",
+     "price_close": "0.4600",
+     "volume": "1596.00"
+    },
+    {
+     "end_period_ts": 1764738000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "328476.00"
+    }
+   ]
+  },
+  "2025-12-03": {
+   "ticker": "KXNBAGAME-25DEC03CHANYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764651600,
+     "yes_ask_close": "0.8400",
+     "yes_bid_close": "0.8300",
+     "price_close": "0.8300",
+     "volume": "723.00"
+    },
+    {
+     "end_period_ts": 1764738000,
+     "yes_ask_close": "0.7900",
+     "yes_bid_close": "0.7700",
+     "price_close": "0.7900",
+     "volume": "5418.00"
+    },
+    {
+     "end_period_ts": 1764824400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1511468.00"
+    }
+   ]
+  },
+  "2025-12-05": {
+   "ticker": "KXNBAGAME-25DEC05UTANYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764824400,
+     "yes_ask_close": "0.8500",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.8500",
+     "volume": "2954.00"
+    },
+    {
+     "end_period_ts": 1764910800,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.8800",
+     "price_close": "0.8900",
+     "volume": "11567.00"
+    },
+    {
+     "end_period_ts": 1764997200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "424673.00"
+    }
+   ]
+  },
+  "2025-12-06": {
+   "ticker": "KXNHLGAME-25DEC06COLNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764824400,
+     "yes_ask_close": "0.4100",
+     "yes_bid_close": "0.3100",
+     "price_close": "0.4100",
+     "volume": "14.00"
+    },
+    {
+     "end_period_ts": 1764910800,
+     "yes_ask_close": "0.4000",
+     "yes_bid_close": "0.3500",
+     "price_close": "0.4000",
+     "volume": "1202.00"
+    },
+    {
+     "end_period_ts": 1764997200,
+     "yes_ask_close": "0.4000",
+     "yes_bid_close": "0.3800",
+     "price_close": "0.4000",
+     "volume": "11617.00"
+    },
+    {
+     "end_period_ts": 1765083600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "305499.00"
+    }
+   ]
+  },
+  "2025-12-07": {
+   "ticker": "KXNBAGAME-25DEC07ORLNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764997200,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.6100",
+     "price_close": "0.6200",
+     "volume": "2240.00"
+    },
+    {
+     "end_period_ts": 1765083600,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.6100",
+     "volume": "46571.00"
+    },
+    {
+     "end_period_ts": 1765170000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3194431.00"
+    }
+   ]
+  },
+  "2025-12-13": {
+   "ticker": "KXNHLGAME-25DEC13MTLNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1765515600,
+     "yes_ask_close": "0.5900",
+     "yes_bid_close": "0.3100",
+     "price_close": "0.5900",
+     "volume": "17.00"
+    },
+    {
+     "end_period_ts": 1765602000,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5500",
+     "volume": "3066.00"
+    },
+    {
+     "end_period_ts": 1765688400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "867787.00"
+    }
+   ]
+  },
+  "2025-12-15": {
+   "ticker": "KXNHLGAME-25DEC15ANANYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765688400,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.3800",
+     "price_close": "0.5500",
+     "volume": "156.00"
+    },
+    {
+     "end_period_ts": 1765774800,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5400",
+     "volume": "4086.00"
+    },
+    {
+     "end_period_ts": 1765861200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "427923.00"
+    }
+   ]
+  },
+  "2025-12-16": {
+   "ticker": "KXNHLGAME-25DEC16VANNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765774800,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.5300",
+     "price_close": "0.5300",
+     "volume": "56.00"
+    },
+    {
+     "end_period_ts": 1765861200,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5500",
+     "volume": "859.00"
+    },
+    {
+     "end_period_ts": 1765947600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "450991.00"
+    }
+   ]
+  },
+  "2025-12-19": {
+   "ticker": "KXNBAGAME-25DEC19PHINYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1766034000,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7300",
+     "volume": "264.00"
+    },
+    {
+     "end_period_ts": 1766120400,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.6700",
+     "price_close": "0.6900",
+     "volume": "14205.00"
+    },
+    {
+     "end_period_ts": 1766206800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4210617.00"
+    }
+   ]
+  },
+  "2025-12-20": {
+   "ticker": "KXNHLGAME-25DEC20PHINYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766034000,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.1100",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1766120400,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5500",
+     "volume": "26.00"
+    },
+    {
+     "end_period_ts": 1766206800,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5500",
+     "volume": "3165.00"
+    },
+    {
+     "end_period_ts": 1766293200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "645978.00"
+    }
+   ]
+  },
+  "2025-12-21": {
+   "ticker": "KXNBAGAME-25DEC21MIANYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766206800,
+     "yes_ask_close": "0.6700",
+     "yes_bid_close": "0.6400",
+     "price_close": "0.6900",
+     "volume": "1361.00"
+    },
+    {
+     "end_period_ts": 1766293200,
+     "yes_ask_close": "0.7400",
+     "yes_bid_close": "0.7300",
+     "price_close": "0.7400",
+     "volume": "3461.00"
+    },
+    {
+     "end_period_ts": 1766379600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2163502.00"
+    }
+   ]
+  },
+  "2025-12-25": {
+   "ticker": "KXNBAGAME-25DEC25CLENYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766466000,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6800",
+     "volume": "1.00"
+    },
+    {
+     "end_period_ts": 1766552400,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6800",
+     "volume": "6269.00"
+    },
+    {
+     "end_period_ts": 1766638800,
+     "yes_ask_close": "0.6600",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6600",
+     "volume": "286919.00"
+    },
+    {
+     "end_period_ts": 1766725200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "11594561.00"
+    }
+   ]
+  },
+  "2026-01-02": {
+   "ticker": "KXNBAGAME-26JAN02ATLNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767243600,
+     "yes_ask_close": "0.7500",
+     "yes_bid_close": "0.7200",
+     "price_close": "0.7500",
+     "volume": "718.00"
+    },
+    {
+     "end_period_ts": 1767330000,
+     "yes_ask_close": "0.7400",
+     "yes_bid_close": "0.7300",
+     "price_close": "0.7400",
+     "volume": "7609.00"
+    },
+    {
+     "end_period_ts": 1767416400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "2907524.00"
+    }
+   ]
+  },
+  "2026-01-03": {
+   "ticker": "KXNBAGAME-26JAN03PHINYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767330000,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.6600",
+     "volume": "642.00"
+    },
+    {
+     "end_period_ts": 1767416400,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.5900",
+     "price_close": "0.6100",
+     "volume": "16439.00"
+    },
+    {
+     "end_period_ts": 1767502800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3514336.00"
+    }
+   ]
+  },
+  "2026-01-05": {
+   "ticker": "KXNHLGAME-26JAN05UTANYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767502800,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.4500",
+     "price_close": "0.5700",
+     "volume": "40.00"
+    },
+    {
+     "end_period_ts": 1767589200,
+     "yes_ask_close": "0.5300",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5300",
+     "volume": "7743.00"
+    },
+    {
+     "end_period_ts": 1767675600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "961757.00"
+    }
+   ]
+  },
+  "2026-01-07": {
+   "ticker": "KXNBAGAME-26JAN07LACNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767675600,
+     "yes_ask_close": "0.6600",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.6500",
+     "volume": "360.00"
+    },
+    {
+     "end_period_ts": 1767762000,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "19557.00"
+    },
+    {
+     "end_period_ts": 1767848400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2324280.00"
+    }
+   ]
+  },
+  "2026-01-08": {
+   "ticker": "KXNHLGAME-26JAN08BUFNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767762000,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.4400",
+     "price_close": "0.5100",
+     "volume": "167.00"
+    },
+    {
+     "end_period_ts": 1767848400,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.4900",
+     "volume": "737.00"
+    },
+    {
+     "end_period_ts": 1767934800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "217912.00"
+    }
+   ]
+  },
+  "2026-01-12": {
+   "ticker": "KXNHLGAME-26JAN12SEANYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768107600,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.5800",
+     "volume": "543.00"
+    },
+    {
+     "end_period_ts": 1768194000,
+     "yes_ask_close": "0.5700",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5700",
+     "volume": "526.00"
+    },
+    {
+     "end_period_ts": 1768280400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "290546.00"
+    }
+   ]
+  },
+  "2026-01-14": {
+   "ticker": "KXNHLGAME-26JAN14OTTNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768280400,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.4500",
+     "price_close": "0.5600",
+     "volume": "74.00"
+    },
+    {
+     "end_period_ts": 1768366800,
+     "yes_ask_close": "0.5200",
+     "yes_bid_close": "0.5100",
+     "price_close": "0.5200",
+     "volume": "826.00"
+    },
+    {
+     "end_period_ts": 1768453200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "189523.00"
+    }
+   ]
+  },
+  "2026-01-17": {
+   "ticker": "KXNBAGAME-26JAN17PHXNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768539600,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.5800",
+     "volume": "36.00"
+    },
+    {
+     "end_period_ts": 1768626000,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.5800",
+     "price_close": "0.6100",
+     "volume": "7869.00"
+    },
+    {
+     "end_period_ts": 1768712400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3366271.00"
+    }
+   ]
+  },
+  "2026-01-19": {
+   "ticker": "KXNBAGAME-26JAN19DALNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768712400,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.7100",
+     "price_close": "0.6200",
+     "volume": "2675.00"
+    },
+    {
+     "end_period_ts": 1768798800,
+     "yes_ask_close": "0.7900",
+     "yes_bid_close": "0.7800",
+     "price_close": "0.7900",
+     "volume": "12423.00"
+    },
+    {
+     "end_period_ts": 1768885200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3730535.00"
+    }
+   ]
+  },
+  "2026-01-21": {
+   "ticker": "KXNBAGAME-26JAN21BKNNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1768885200,
+     "yes_ask_close": "0.8000",
+     "yes_bid_close": "0.7500",
+     "price_close": "0.7900",
+     "volume": "458.00"
+    },
+    {
+     "end_period_ts": 1768971600,
+     "yes_ask_close": "0.8300",
+     "yes_bid_close": "0.8200",
+     "price_close": "0.8300",
+     "volume": "5642.00"
+    },
+    {
+     "end_period_ts": 1769058000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "698475.00"
+    }
+   ]
+  },
+  "2026-01-26": {
+   "ticker": "KXNHLGAME-26JAN26BOSNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769317200,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4500",
+     "price_close": "0.5100",
+     "volume": "96.00"
+    },
+    {
+     "end_period_ts": 1769403600,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.4700",
+     "volume": "6844.00"
+    },
+    {
+     "end_period_ts": 1769490000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "358472.00"
+    }
+   ]
+  },
+  "2026-01-27": {
+   "ticker": "KXNBAGAME-26JAN27SACNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769403600,
+     "yes_ask_close": "0.8200",
+     "yes_bid_close": "0.7800",
+     "price_close": "0.7800",
+     "volume": "2205.00"
+    },
+    {
+     "end_period_ts": 1769490000,
+     "yes_ask_close": "0.8500",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.8500",
+     "volume": "12411.00"
+    },
+    {
+     "end_period_ts": 1769576400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1948502.00"
+    }
+   ]
+  },
+  "2026-01-29": {
+   "ticker": "KXNHLGAME-26JAN29NYINYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769576400,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4800",
+     "price_close": "0.4800",
+     "volume": "111.00"
+    },
+    {
+     "end_period_ts": 1769662800,
+     "yes_ask_close": "0.4500",
+     "yes_bid_close": "0.4400",
+     "price_close": "0.4500",
+     "volume": "7445.00"
+    },
+    {
+     "end_period_ts": 1769749200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "175450.00"
+    }
+   ]
+  },
+  "2026-01-30": {
+   "ticker": "KXNBAGAME-26JAN30PORNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769662800,
+     "yes_ask_close": "0.7000",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7000",
+     "volume": "597.00"
+    },
+    {
+     "end_period_ts": 1769749200,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.7100",
+     "price_close": "0.7200",
+     "volume": "6434.00"
+    },
+    {
+     "end_period_ts": 1769835600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2017286.00"
+    }
+   ]
+  },
+  "2026-02-01": {
+   "ticker": "KXNBAGAME-26FEB01LALNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769835600,
+     "yes_ask_close": "0.8700",
+     "yes_bid_close": "0.1300",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1769922000,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.6300",
+     "price_close": "0.6500",
+     "volume": "21832.00"
+    },
+    {
+     "end_period_ts": 1770008400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4021904.00"
+    }
+   ]
+  },
+  "2026-02-04": {
+   "ticker": "KXNBAGAME-26FEB04DENNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1770094800,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.6400",
+     "price_close": "0.7100",
+     "volume": "645.00"
+    },
+    {
+     "end_period_ts": 1770181200,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.6400",
+     "price_close": "0.6500",
+     "volume": "18406.00"
+    },
+    {
+     "end_period_ts": 1770267600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "7352917.00"
+    }
+   ]
+  },
+  "2026-02-05": {
+   "ticker": "KXNHLGAME-26FEB05CARNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770181200,
+     "yes_ask_close": "0.3400",
+     "yes_bid_close": "0.3100",
+     "price_close": "0.3100",
+     "volume": "95.00"
+    },
+    {
+     "end_period_ts": 1770267600,
+     "yes_ask_close": "0.3300",
+     "yes_bid_close": "0.3200",
+     "price_close": "0.3300",
+     "volume": "1109.00"
+    },
+    {
+     "end_period_ts": 1770354000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "184060.00"
+    }
+   ]
+  },
+  "2026-02-10": {
+   "ticker": "KXNBAGAME-26FEB10INDNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770613200,
+     "yes_ask_close": "0.8200",
+     "yes_bid_close": "0.8000",
+     "price_close": "0.8200",
+     "volume": "1629.00"
+    },
+    {
+     "end_period_ts": 1770699600,
+     "yes_ask_close": "0.8400",
+     "yes_bid_close": "0.8300",
+     "price_close": "0.8400",
+     "volume": "14193.00"
+    },
+    {
+     "end_period_ts": 1770786000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "10162918.00"
+    }
+   ]
+  },
+  "2026-02-19": {
+   "ticker": "KXNBAGAME-26FEB19DETNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1771304400,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.6100",
+     "price_close": "0.6200",
+     "volume": "11804.00"
+    },
+    {
+     "end_period_ts": 1771390800,
+     "yes_ask_close": "0.6300",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.6300",
+     "volume": "13685.00"
+    },
+    {
+     "end_period_ts": 1771477200,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.6200",
+     "volume": "30752.00"
+    },
+    {
+     "end_period_ts": 1771563600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4417396.00"
+    }
+   ]
+  },
+  "2026-02-21": {
+   "ticker": "KXNBAGAME-26FEB21HOUNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771563600,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.5800",
+     "price_close": "0.6100",
+     "volume": "734.00"
+    },
+    {
+     "end_period_ts": 1771650000,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.5900",
+     "price_close": "0.6000",
+     "volume": "16541.00"
+    },
+    {
+     "end_period_ts": 1771736400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "7858567.00"
+    }
+   ]
+  },
+  "2026-02-26": {
+   "ticker": "KXNHLGAME-26FEB26PHINYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1771909200,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.5500",
+     "volume": "8.00"
+    },
+    {
+     "end_period_ts": 1771995600,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5400",
+     "volume": "163.00"
+    },
+    {
+     "end_period_ts": 1772082000,
+     "yes_ask_close": "0.5300",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5300",
+     "volume": "145.00"
+    },
+    {
+     "end_period_ts": 1772168400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "336949.00"
+    }
+   ]
+  },
+  "2026-02-28": {
+   "ticker": "KXNHLGAME-26FEB28PITNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772082000,
+     "yes_ask_close": "0.6400",
+     "yes_bid_close": "0.4000",
+     "price_close": "0.4300",
+     "volume": "56.00"
+    },
+    {
+     "end_period_ts": 1772168400,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.5000",
+     "volume": "4588.00"
+    },
+    {
+     "end_period_ts": 1772254800,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.4800",
+     "volume": "8663.00"
+    },
+    {
+     "end_period_ts": 1772341200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "454542.00"
+    }
+   ]
+  },
+  "2026-03-01": {
+   "ticker": "KXNBAGAME-26MAR01SASNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772254800,
+     "yes_ask_close": "0.4300",
+     "yes_bid_close": "0.4000",
+     "price_close": "0.4100",
+     "volume": "3102.00"
+    },
+    {
+     "end_period_ts": 1772341200,
+     "yes_ask_close": "0.4400",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4400",
+     "volume": "59591.00"
+    },
+    {
+     "end_period_ts": 1772427600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "5629167.00"
+    }
+   ]
+  },
+  "2026-03-02": {
+   "ticker": "KXNHLGAME-26MAR02CBJNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772254800,
+     "yes_ask_close": "0.4300",
+     "yes_bid_close": "0.1100",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1772341200,
+     "yes_ask_close": "0.4500",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4300",
+     "volume": "177.00"
+    },
+    {
+     "end_period_ts": 1772427600,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4500",
+     "price_close": "0.4700",
+     "volume": "6972.00"
+    },
+    {
+     "end_period_ts": 1772514000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "741667.00"
+    }
+   ]
+  },
+  "2026-03-04": {
+   "ticker": "KXNBAGAME-26MAR04OKCNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772514000,
+     "yes_ask_close": "0.4100",
+     "yes_bid_close": "0.3900",
+     "price_close": "0.4100",
+     "volume": "1170.00"
+    },
+    {
+     "end_period_ts": 1772600400,
+     "yes_ask_close": "0.3700",
+     "yes_bid_close": "0.3500",
+     "price_close": "0.3700",
+     "volume": "47229.00"
+    },
+    {
+     "end_period_ts": 1772686800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7704432.00"
+    }
+   ]
+  },
+  "2026-03-05": {
+   "ticker": "KXNHLGAME-26MAR05TORNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772514000,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.2100",
+     "price_close": "0.5800",
+     "volume": "5.00"
+    },
+    {
+     "end_period_ts": 1772600400,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5300",
+     "price_close": "0.5500",
+     "volume": "122.00"
+    },
+    {
+     "end_period_ts": 1772686800,
+     "yes_ask_close": "0.5200",
+     "yes_bid_close": "0.5100",
+     "price_close": "0.5200",
+     "volume": "743.00"
+    },
+    {
+     "end_period_ts": 1772773200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "182524.00"
+    }
+   ]
+  },
+  "2026-03-10": {
+   "ticker": "KXNHLGAME-26MAR10CGYNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772946000,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.1000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1773032400,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.5000",
+     "price_close": "0.5600",
+     "volume": "18.00"
+    },
+    {
+     "end_period_ts": 1773115200,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5500",
+     "volume": "1760.00"
+    },
+    {
+     "end_period_ts": 1773201600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "99577.00"
+    }
+   ]
+  },
+  "2026-03-15": {
+   "ticker": "KXNBAGAME-26MAR15GSWNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773460800,
+     "yes_ask_close": "0.7400",
+     "yes_bid_close": "0.7300",
+     "price_close": "0.7400",
+     "volume": "2175.00"
+    },
+    {
+     "end_period_ts": 1773547200,
+     "yes_ask_close": "0.8700",
+     "yes_bid_close": "0.8600",
+     "price_close": "0.8700",
+     "volume": "25086.00"
+    },
+    {
+     "end_period_ts": 1773633600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "10089383.00"
+    }
+   ]
+  },
+  "2026-03-16": {
+   "ticker": "KXNHLGAME-26MAR16LANYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773460800,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.1100",
+     "price_close": "0.5200",
+     "volume": "105.00"
+    },
+    {
+     "end_period_ts": 1773547200,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4400",
+     "price_close": "0.4800",
+     "volume": "497.00"
+    },
+    {
+     "end_period_ts": 1773633600,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.4900",
+     "volume": "5897.00"
+    },
+    {
+     "end_period_ts": 1773720000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "368972.00"
+    }
+   ]
+  },
+  "2026-03-17": {
+   "ticker": "KXNBAGAME-26MAR17INDNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773633600,
+     "yes_ask_close": "0.8700",
+     "yes_bid_close": "0.8500",
+     "price_close": "0.8800",
+     "volume": "6422.00"
+    },
+    {
+     "end_period_ts": 1773720000,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.9000",
+     "price_close": "0.9100",
+     "volume": "13674.00"
+    },
+    {
+     "end_period_ts": 1773806400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "911640.00"
+    }
+   ]
+  },
+  "2026-03-18": {
+   "ticker": "KXNHLGAME-26MAR18NJNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773633600,
+     "yes_ask_close": "0.5200",
+     "yes_bid_close": "0.4100",
+     "price_close": "0.5200",
+     "volume": "9.00"
+    },
+    {
+     "end_period_ts": 1773720000,
+     "yes_ask_close": "0.5300",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5200",
+     "volume": "727.00"
+    },
+    {
+     "end_period_ts": 1773806400,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4800",
+     "price_close": "0.4900",
+     "volume": "705.00"
+    },
+    {
+     "end_period_ts": 1773892800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "309200.00"
+    }
+   ]
+  },
+  "2026-03-22": {
+   "ticker": "KXNBAGAME-26MAR22WASNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774065600,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.9000",
+     "price_close": "0.9100",
+     "volume": "1275.00"
+    },
+    {
+     "end_period_ts": 1774152000,
+     "yes_ask_close": "0.9500",
+     "yes_bid_close": "0.9400",
+     "price_close": "0.9500",
+     "volume": "3994.00"
+    },
+    {
+     "end_period_ts": 1774238400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "542382.00"
+    }
+   ]
+  },
+  "2026-03-23": {
+   "ticker": "KXNHLGAME-26MAR23OTTNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774065600,
+     "yes_ask_close": "0.3900",
+     "yes_bid_close": "0.3300",
+     "price_close": "0.3900",
+     "volume": "15.00"
+    },
+    {
+     "end_period_ts": 1774152000,
+     "yes_ask_close": "0.3900",
+     "yes_bid_close": "0.3400",
+     "price_close": "0.3800",
+     "volume": "186.00"
+    },
+    {
+     "end_period_ts": 1774238400,
+     "yes_ask_close": "0.3800",
+     "yes_bid_close": "0.3700",
+     "price_close": "0.3800",
+     "volume": "7135.00"
+    },
+    {
+     "end_period_ts": 1774324800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "323714.00"
+    }
+   ]
+  },
+  "2026-03-24": {
+   "ticker": "KXNBAGAME-26MAR24NOPNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774238400,
+     "yes_ask_close": "0.7700",
+     "yes_bid_close": "0.7600",
+     "price_close": "0.7700",
+     "volume": "4763.00"
+    },
+    {
+     "end_period_ts": 1774324800,
+     "yes_ask_close": "0.7800",
+     "yes_bid_close": "0.7700",
+     "price_close": "0.7800",
+     "volume": "26668.00"
+    },
+    {
+     "end_period_ts": 1774411200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "6033884.00"
+    }
+   ]
+  },
+  "2026-03-27": {
+   "ticker": "KXNHLGAME-26MAR27CHINYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774411200,
+     "yes_ask_close": "0.6300",
+     "yes_bid_close": "0.1400",
+     "price_close": "0.6400",
+     "volume": "1.00"
+    },
+    {
+     "end_period_ts": 1774497600,
+     "yes_ask_close": "0.5900",
+     "yes_bid_close": "0.5700",
+     "price_close": "0.5700",
+     "volume": "832.00"
+    },
+    {
+     "end_period_ts": 1774584000,
+     "yes_ask_close": "0.5900",
+     "yes_bid_close": "0.5800",
+     "price_close": "0.5900",
+     "volume": "2289.00"
+    },
+    {
+     "end_period_ts": 1774670400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "182800.00"
+    }
+   ]
+  },
+  "2026-03-29": {
+   "ticker": "KXNHLGAME-26MAR29FLANYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774584000,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.3600",
+     "price_close": "0.2600",
+     "volume": "1.00"
+    },
+    {
+     "end_period_ts": 1774670400,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.4800",
+     "price_close": "0.5100",
+     "volume": "1154.00"
+    },
+    {
+     "end_period_ts": 1774756800,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.5700",
+     "price_close": "0.5800",
+     "volume": "6082.00"
+    },
+    {
+     "end_period_ts": 1774843200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "278121.00"
+    }
+   ]
+  },
+  "2026-03-31": {
+   "ticker": "KXNHLGAME-26MAR31NJNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774756800,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.3100",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1774843200,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.4800",
+     "volume": "101.00"
+    },
+    {
+     "end_period_ts": 1774929600,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.4700",
+     "volume": "426.00"
+    },
+    {
+     "end_period_ts": 1775016000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "79094.00"
+    }
+   ]
+  },
+  "2026-04-02": {
+   "ticker": "KXNHLGAME-26APR02MTLNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774929600,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.3300",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1775016000,
+     "yes_ask_close": "0.4400",
+     "yes_bid_close": "0.4000",
+     "price_close": "0.4400",
+     "volume": "181.00"
+    },
+    {
+     "end_period_ts": 1775102400,
+     "yes_ask_close": "0.4400",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4300",
+     "volume": "1640.00"
+    },
+    {
+     "end_period_ts": 1775188800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "145997.00"
+    }
+   ]
+  },
+  "2026-04-03": {
+   "ticker": "KXNBAGAME-26APR03CHINYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775102400,
+     "yes_ask_close": "0.8800",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.8800",
+     "volume": "2892.00"
+    },
+    {
+     "end_period_ts": 1775188800,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.9000",
+     "price_close": "0.9100",
+     "volume": "3444.00"
+    },
+    {
+     "end_period_ts": 1775275200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "484163.00"
+    }
+   ]
+  },
+  "2026-04-04": {
+   "ticker": "KXNHLGAME-26APR04DETNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775102400,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.3400",
+     "price_close": "0.4500",
+     "volume": "127.00"
+    },
+    {
+     "end_period_ts": 1775188800,
+     "yes_ask_close": "0.4600",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.4600",
+     "volume": "684.00"
+    },
+    {
+     "end_period_ts": 1775275200,
+     "yes_ask_close": "0.4400",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4400",
+     "volume": "2024.00"
+    },
+    {
+     "end_period_ts": 1775361600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "371604.00"
+    }
+   ]
+  },
+  "2026-04-05": {
+   "ticker": "KXNHLGAME-26APR05WSHNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775188800,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.5500",
+     "volume": "6.00"
+    },
+    {
+     "end_period_ts": 1775275200,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.4500",
+     "price_close": "0.4500",
+     "volume": "39.00"
+    },
+    {
+     "end_period_ts": 1775361600,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.4900",
+     "price_close": "0.5000",
+     "volume": "419.00"
+    },
+    {
+     "end_period_ts": 1775448000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "276684.00"
+    }
+   ]
+  },
+  "2026-04-08": {
+   "ticker": "KXNHLGAME-26APR08BUFNYR-NYR",
+   "series": "KXNHLGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775448000,
+     "yes_ask_close": "0.4500",
+     "yes_bid_close": "0.3800",
+     "price_close": "0.5000",
+     "volume": "6.00"
+    },
+    {
+     "end_period_ts": 1775534400,
+     "yes_ask_close": "0.4300",
+     "yes_bid_close": "0.4000",
+     "price_close": "0.4000",
+     "volume": "862.00"
+    },
+    {
+     "end_period_ts": 1775620800,
+     "yes_ask_close": "0.4200",
+     "yes_bid_close": "0.4100",
+     "price_close": "0.4200",
+     "volume": "957.00"
+    },
+    {
+     "end_period_ts": 1775707200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "389089.00"
+    }
+   ]
+  },
+  "2026-04-09": {
+   "ticker": "KXNBAGAME-26APR09BOSNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775620800,
+     "yes_ask_close": "0.4700",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4700",
+     "volume": "1555.00"
+    },
+    {
+     "end_period_ts": 1775707200,
+     "yes_ask_close": "0.6100",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.6100",
+     "volume": "13834.00"
+    },
+    {
+     "end_period_ts": 1775793600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "8032816.00"
+    }
+   ]
+  },
+  "2026-04-10": {
+   "ticker": "KXNBAGAME-26APR10TORNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775707200,
+     "yes_ask_close": "0.6400",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.6200",
+     "volume": "1207.00"
+    },
+    {
+     "end_period_ts": 1775793600,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.6800",
+     "price_close": "0.6900",
+     "volume": "29875.00"
+    },
+    {
+     "end_period_ts": 1775880000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "2303375.00"
+    }
+   ]
+  },
+  "2026-04-12": {
+   "ticker": "KXNBAGAME-26APR12CHANYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775880000,
+     "yes_ask_close": "0.3200",
+     "yes_bid_close": "0.2800",
+     "price_close": "0.3000",
+     "volume": "85657.00"
+    },
+    {
+     "end_period_ts": 1775966400,
+     "yes_ask_close": "0.1500",
+     "yes_bid_close": "0.1400",
+     "price_close": "0.1500",
+     "volume": "932750.00"
+    },
+    {
+     "end_period_ts": 1776052800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3425870.00"
+    }
+   ]
+  },
+  "2026-04-18": {
+   "ticker": "KXNBAGAME-26APR18ATLNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776225600,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "11407.00"
+    },
+    {
+     "end_period_ts": 1776312000,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "18899.00"
+    },
+    {
+     "end_period_ts": 1776398400,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "81420.32"
+    },
+    {
+     "end_period_ts": 1776484800,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6700",
+     "price_close": "0.6800",
+     "volume": "41031.95"
+    },
+    {
+     "end_period_ts": 1776571200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "9623718.48"
+    }
+   ]
+  },
+  "2026-04-20": {
+   "ticker": "KXNBAGAME-26APR20ATLNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1776398400,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6700",
+     "price_close": "0.6800",
+     "volume": "736.36"
+    },
+    {
+     "end_period_ts": 1776484800,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "1521.13"
+    },
+    {
+     "end_period_ts": 1776571200,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6700",
+     "price_close": "0.6800",
+     "volume": "32818.98"
+    },
+    {
+     "end_period_ts": 1776657600,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.6800",
+     "price_close": "0.6900",
+     "volume": "119341.65"
+    },
+    {
+     "end_period_ts": 1776744000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "14575878.22"
+    }
+   ]
+  },
+  "2026-04-28": {
+   "ticker": "KXNBAGAME-26APR28ATLNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777176000,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7100",
+     "volume": "2840.44"
+    },
+    {
+     "end_period_ts": 1777262400,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.7100",
+     "price_close": "0.7100",
+     "volume": "17224.79"
+    },
+    {
+     "end_period_ts": 1777348800,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.7000",
+     "price_close": "0.7100",
+     "volume": "30394.44"
+    },
+    {
+     "end_period_ts": 1777435200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "6645621.44"
+    }
+   ]
+  },
+  "2026-05-04": {
+   "ticker": "KXNBAGAME-26MAY04PHINYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777780800,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.7100",
+     "price_close": "0.7200",
+     "volume": "3150.50"
+    },
+    {
+     "end_period_ts": 1777867200,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.7000",
+     "price_close": "0.7000",
+     "volume": "198300.51"
+    },
+    {
+     "end_period_ts": 1777953600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "6371418.03"
+    }
+   ]
+  },
+  "2026-05-06": {
+   "ticker": "KXNBAGAME-26MAY06PHINYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777780800,
+     "yes_ask_close": "0.8300",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.8200",
+     "volume": "860.72"
+    },
+    {
+     "end_period_ts": 1777867200,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "3339.48"
+    },
+    {
+     "end_period_ts": 1777953600,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.7000",
+     "price_close": "0.7200",
+     "volume": "26067.70"
+    },
+    {
+     "end_period_ts": 1778040000,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.7100",
+     "price_close": "0.7200",
+     "volume": "131918.48"
+    },
+    {
+     "end_period_ts": 1778126400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "11726264.77"
+    }
+   ]
+  },
+  "2026-05-19": {
+   "ticker": "KXNBAGAME-26MAY19CLENYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779076800,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.7000",
+     "price_close": "0.7100",
+     "volume": "2221.37"
+    },
+    {
+     "end_period_ts": 1779163200,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.7000",
+     "price_close": "0.7100",
+     "volume": "195919.53"
+    },
+    {
+     "end_period_ts": 1779249600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "35833909.55"
+    }
+   ]
+  },
+  "2026-05-21": {
+   "ticker": "KXNBAGAME-26MAY21CLENYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779076800,
+     "yes_ask_close": "0.8100",
+     "yes_bid_close": "0.5700",
+     "price_close": "0.5600",
+     "volume": "22.47"
+    },
+    {
+     "end_period_ts": 1779163200,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7300",
+     "volume": "5519.49"
+    },
+    {
+     "end_period_ts": 1779249600,
+     "yes_ask_close": "0.6800",
+     "yes_bid_close": "0.6600",
+     "price_close": "0.6800",
+     "volume": "41731.02"
+    },
+    {
+     "end_period_ts": 1779336000,
+     "yes_ask_close": "0.6900",
+     "yes_bid_close": "0.6800",
+     "price_close": "0.6900",
+     "volume": "151407.23"
+    },
+    {
+     "end_period_ts": 1779422400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "12894998.87"
+    }
+   ]
+  },
+  "2026-06-08": {
+   "ticker": "KXNBAGAME-26JUN08SASNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780632000,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5500",
+     "volume": "66007.97"
+    },
+    {
+     "end_period_ts": 1780718400,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5600",
+     "volume": "1408107.20"
+    },
+    {
+     "end_period_ts": 1780804800,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5500",
+     "volume": "1629796.60"
+    },
+    {
+     "end_period_ts": 1780891200,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5400",
+     "price_close": "0.5500",
+     "volume": "1867616.30"
+    },
+    {
+     "end_period_ts": 1780977600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "64818988.23"
+    }
+   ]
+  },
+  "2026-06-10": {
+   "ticker": "KXNBAGAME-26JUN10SASNYK-NYK",
+   "series": "KXNBAGAME",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1780804800,
+     "yes_ask_close": "0.5900",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.5900",
+     "volume": "177477.71"
+    },
+    {
+     "end_period_ts": 1780891200,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5600",
+     "volume": "169964.89"
+    },
+    {
+     "end_period_ts": 1780977600,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.5300",
+     "price_close": "0.5400",
+     "volume": "968036.05"
+    },
+    {
+     "end_period_ts": 1781064000,
+     "yes_ask_close": "0.5400",
+     "yes_bid_close": "0.5300",
+     "price_close": "0.5400",
+     "volume": "1294911.58"
+    },
+    {
+     "end_period_ts": 1781150400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "109067728.93"
+    }
+   ]
+  }
+ }
+}
