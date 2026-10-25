@@ -95,9 +95,10 @@ def template_summary(hedge: Hedge, budget: Budget | None = None) -> str:
     head = hedge.headline
     if d.status == "pending_approval":
         ob = metrics.get("over_budget", {})
-        text = (
-            f"Waiting on you: {_contracts(hedge)} cost {usd(hedge.premium)}, more than the "
-            f"{usd(ob.get('remaining', budget.remaining if budget else 0))} left in this week's budget"
+        left = Decimal(str(ob.get("remaining", budget.remaining if budget else 0)))
+        text = f"Waiting on you: {_contracts(hedge)} cost {usd(hedge.premium)}, " + (
+            f"more than the {usd(left)} left in this week's budget" if left > 0
+            else "with nothing left in this week's budget"
         )
         if budget is not None:
             text += f" of {usd(budget.budget)}"

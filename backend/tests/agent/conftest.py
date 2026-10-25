@@ -94,7 +94,6 @@ def happy_script(exposure_id: str, ticker: str, hedge_id: str, summary: str = No
         lambda kw: [tool_use("log_decision", {"hedge_id": hedge_id, "summary": summary or (
             f"{last_tool_result(kw)['status'].replace('_', ' ').capitalize()}: the desk checked this market "
             "and explains it in plain words.")})],
-        [text("Logged.")],
     ]
 
 
