@@ -1,0 +1,16 @@
+S1: Rain on a Saturday empties the shop.
+S2: A home game packs the street, or it doesn't.
+S3: Either way, your week swings, and you can't plan around it.
+S4: Offset measures that swing in real dollars, from your own revenue.
+S5: Then it finds a Kalshi contract that pays when it hits. And you decide.
+S6: Here's a bike shop: fictional sales, real weather. Upload its daily revenue.
+S7: Rain costs it about $1,956 a day, and that held up on data the model never saw.
+S8: Knicks games? Nothing there. And a planted test effect lands inside the model's interval, so the check is honest.
+S9: The desk matches Kalshi's Central Park rain contract, the same station we measured.
+S10: It sizes protection to the measured loss and never more: 1,955 contracts, with the full premium shown up front.
+S11: But not every risk gets a hedge. For a taxi fleet, rain looked big last year, then almost vanished. So the desk says no, and shows you why.
+S12: And nothing happens until the owner approves.
+S13: Every proposal, decline and approval gets a receipt in the log.
+S14: Approved hedges are booked to a real ledger, and reconciliation catches a deposit that came in short, and names the fee as the cause.
+S15: The desk never approves its own hedge. Every number comes from a tool, not the AI. And anything estimated or simulated says so.
+S16: Offset. Steadier weeks. Your call.

@@ -1,0 +1,106 @@
+{
+  "source": "ai-tts",
+  "voice": "Samantha",
+  "rate_wpm": 185,
+  "gap": 0.35,
+  "scenes": [
+    {
+      "scene": "S1",
+      "file": "vo/S1.m4a",
+      "duration": 1.889,
+      "start": 0.0
+    },
+    {
+      "scene": "S2",
+      "file": "vo/S2.m4a",
+      "duration": 2.412,
+      "start": 2.239
+    },
+    {
+      "scene": "S3",
+      "file": "vo/S3.m4a",
+      "duration": 3.236,
+      "start": 5.001
+    },
+    {
+      "scene": "S4",
+      "file": "vo/S4.m4a",
+      "duration": 3.487,
+      "start": 8.587
+    },
+    {
+      "scene": "S5",
+      "file": "vo/S5.m4a",
+      "duration": 3.889,
+      "start": 12.425
+    },
+    {
+      "scene": "S6",
+      "file": "vo/S6.m4a",
+      "duration": 4.745,
+      "start": 16.663
+    },
+    {
+      "scene": "S7",
+      "file": "vo/S7.m4a",
+      "duration": 6.138,
+      "start": 21.759
+    },
+    {
+      "scene": "S8",
+      "file": "vo/S8.m4a",
+      "duration": 6.288,
+      "start": 28.247
+    },
+    {
+      "scene": "S9",
+      "file": "vo/S9.m4a",
+      "duration": 4.68,
+      "start": 34.885
+    },
+    {
+      "scene": "S10",
+      "file": "vo/S10.m4a",
+      "duration": 7.776,
+      "start": 39.915
+    },
+    {
+      "scene": "S11",
+      "file": "vo/S11.m4a",
+      "duration": 8.562,
+      "start": 48.042
+    },
+    {
+      "scene": "S12",
+      "file": "vo/S12.m4a",
+      "duration": 2.273,
+      "start": 56.954
+    },
+    {
+      "scene": "S13",
+      "file": "vo/S13.m4a",
+      "duration": 3.411,
+      "start": 59.576
+    },
+    {
+      "scene": "S14",
+      "file": "vo/S14.m4a",
+      "duration": 7.01,
+      "start": 63.337
+    },
+    {
+      "scene": "S15",
+      "file": "vo/S15.m4a",
+      "duration": 7.42,
+      "start": 70.697
+    },
+    {
+      "scene": "S16",
+      "file": "vo/S16.m4a",
+      "duration": 2.558,
+      "start": 78.467
+    }
+  ],
+  "full": "vo/full.m4a",
+  "total": 81.025
+}

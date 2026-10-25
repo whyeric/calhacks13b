@@ -1,0 +1,12 @@
+# Renders and QA output (regenerate with record.mjs / finish.sh)
+out/
+# Audio render cache and regenerable music bed (python3 audio/music.py)
+audio/.cache/
+audio/music.wav
+audio/preview.m4a
+__pycache__/
+.venv/
+# Raw capture extras (regenerate with capture/run.sh)
+assets/earlier/
+assets/rec-*.mp4
+assets/rec-*.webm
