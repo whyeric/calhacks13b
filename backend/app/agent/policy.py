@@ -72,15 +72,15 @@ def classify(premium: Decimal, remaining_budget: Decimal) -> str:
     return "within" if premium <= remaining_budget else "over_budget"
 
 
-def _fee(fills: list[tuple[Decimal, int]]) -> Decimal:
-    raw = sum((Decimal("0.07") * c * p * (1 - p) for p, c in fills), Decimal(0))
+def _fee(fills: list[tuple[Decimal, int]], rate: Decimal = Decimal("0.07")) -> Decimal:
+    raw = sum((rate * c * p * (1 - p) for p, c in fills), Decimal(0))
     return raw.quantize(Decimal("0.01"), rounding=ROUND_CEILING)
 
 
 def within_budget_alternative(hedge: Hedge, remaining_budget: Decimal) -> HedgeLite | None:
     """Largest smaller hedge on the same market whose premium fits `remaining_budget` (G10).
 
-    Re-uses the hedge's own fills (cheapest levels first) and Kalshi's taker-fee formula, so
+    Re-uses the hedge's own fills (cheapest levels first) and the venue's taker-fee formula, so
     every figure is computed here from the sizing tool's output. None if nothing fits."""
     if remaining_budget <= 0 or not hedge.fills or hedge.payoff is None or hedge.headline is None:
         return None
@@ -97,7 +97,7 @@ def within_budget_alternative(hedge: Hedge, remaining_budget: Decimal) -> HedgeL
             take.append((p, k))
             left -= k
         cost = sum((p * k for p, k in take), Decimal(0)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        fee = _fee(take)
+        fee = _fee(take) if hedge.fee_rate is None else _fee(take, hedge.fee_rate)
         premium = cost + fee
         if premium <= remaining_budget:
             best = (n, take, cost, fee, premium)

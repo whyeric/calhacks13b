@@ -1,0 +1,79 @@
+{
+ "3ea35958adedbbfacfbcbd64d666e70ad482c14e": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-30-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.418306+00:00"
+ },
+ "5997d1dcd775f46dc6dba1dc70dde51627518e4c": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-november-1-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.486391+00:00"
+ },
+ "613811bd2e434138a345a4246fc02e3ed372ffde": {
+  "path": "/events",
+  "params": {
+   "slug": "nhl-lak-nyr-2026-10-26"
+  },
+  "fetched_at": "2026-10-25T08:15:35.553534+00:00"
+ },
+ "7e440c7a83070c6dad5f7a59de7a62ca56a4fca7": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-26-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.271037+00:00"
+ },
+ "83b98c770ec22aa8bab6bf40f7bc29cc086762c5": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-28-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.338159+00:00"
+ },
+ "96fd9d6a677b0eeb6e1941fc6f39f1cbb1c4af6a": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-27-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.304350+00:00"
+ },
+ "a774ef0c488bdde7b1434fc272640b963e5ecb6f": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-31-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.451541+00:00"
+ },
+ "bc3d1b4ec04112827d2c5c2e50bb56166ef26064": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-25-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:32.768459+00:00"
+ },
+ "c4e348c989bc39c7a3290bea53beda065c159f21": {
+  "path": "/events",
+  "params": {
+   "slug": "nhl-edm-nyr-2026-11-01"
+  },
+  "fetched_at": "2026-10-25T08:15:35.960374+00:00"
+ },
+ "d01bfe3902675b978faa92720f0533ed67656ba5": {
+  "path": "/events",
+  "params": {
+   "slug": "where-will-it-rain-on-october-29-2026"
+  },
+  "fetched_at": "2026-10-25T08:15:33.382870+00:00"
+ },
+ "f27d5f85de1737233b14f34aedf5988dab7718ee": {
+  "path": "/events",
+  "params": {
+   "slug": "nba-det-nyk-2026-10-27"
+  },
+  "fetched_at": "2026-10-25T08:15:35.124064+00:00"
+ }
+}

@@ -130,5 +130,7 @@
   "decided_at": null,
   "leg_label": null,
   "group_total_premium": null,
-  "estimated": true
+  "estimated": true,
+  "venue": "kalshi",
+  "fee_rate": null
 }

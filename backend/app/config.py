@@ -24,6 +24,7 @@ FALLBACK_MARKUP = Decimal("0.02")
 # overpriced check notes that the market is pricing the current forecast.
 FORECAST_NOTE_GAP = Decimal("0.10")
 KALSHI_MARKET_URL = "https://kalshi.com/markets/{series}"  # "Open on Kalshi" link, series lowercased
+POLYMARKET_EVENT_URL = "https://polymarket.com/event/{slug}"  # "Open on Polymarket" link
 
 # Data paths: repo-root data/ holds raw Dewey exports (gitignored); backend/fixtures/ holds
 # the tracked daily aggregates. Distinct from the backend/app/data/ code package.
@@ -111,6 +112,11 @@ class Settings(BaseSettings):
     anthropic_api_key: str | None = None  # unset -> deterministic fallback agent
     anthropic_model: str | None = None  # pinned id from .env; never defaulted here
     kalshi_base_url: str = "https://external-api.kalshi.com/trade-api/v2"
+    # Second venue, scanned next to Kalshi (read-only public data; markets/polymarket.py). Offline it
+    # replays fixtures/polymarket_cache/; a miss means "no Polymarket candidates", never a failure.
+    polymarket_enabled: bool = True
+    polymarket_gamma_url: str = "https://gamma-api.polymarket.com"
+    polymarket_clob_url: str = "https://clob.polymarket.com"
     demo_offline: bool = False  # True blocks all outbound HTTP
     # Seed the example week (fixtures/examples/week_seed.json) into an empty db, marked as sample
     # data: /health reports `sample_week`, and a real desk run replaces that business/week's sample

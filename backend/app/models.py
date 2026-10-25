@@ -105,6 +105,7 @@ class Contract(BaseModel):
 
 Event = Literal["rain", "hot", "home_win", "playoff_home"]
 Side = Literal["yes", "no"]
+Venue = Literal["kalshi", "polymarket"]
 Agent = Literal["claude", "fallback"]
 Actor = Literal["desk", "owner", "system"]
 CheckCode = Literal[
@@ -406,6 +407,10 @@ class Hedge(Contract):
     # I6: true when the business's dollars are estimated (the restaurant: visits x assumed check)
     # or the exposure is a pooled estimate. Defaults keep older payloads valid.
     estimated: bool = False
+    # Where the contract trades (markets/polymarket.py is the second venue). `fee_rate` is the
+    # venue's taker rate in fee = rate x C x P x (1 - P); null means Kalshi's 0.07.
+    venue: Venue = "kalshi"
+    fee_rate: Price | None = None
 
     @model_validator(mode="after")
     def _consistent(self) -> "Hedge":

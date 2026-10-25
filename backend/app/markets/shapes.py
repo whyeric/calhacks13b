@@ -47,6 +47,9 @@ class Sizing(BaseModel):
     fee_unverified: bool
     payoff: list[PayoffRow]
     headline: Headline
+    venue: Literal["kalshi", "polymarket"] = "kalshi"
+    market_url: str | None = None  # None: the Kalshi series page
+    fee_rate: Decimal | None = None  # None: Kalshi's 0.07 x multiplier
 
 
 def field(obj: Any, name: str) -> Any:

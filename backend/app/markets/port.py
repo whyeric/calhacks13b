@@ -4,6 +4,8 @@ Two implementations behind one interface:
 
 - `KalshiMarkets`: the real C3 pipeline (`app.markets.kalshi/match/sizing/rules`, PR #48):
   candidates -> deterministic pick -> size -> evaluate. Offline it reads `fixtures/kalshi_cache/`.
+  It also scans Polymarket (`app.markets.polymarket`, offline `fixtures/polymarket_cache/`) for
+  the same event and picks across both venues; `POLYMARKET_ENABLED=0` scans Kalshi only.
 - `FixtureMarkets`: the example hedges in `fixtures/examples/hedge_*.json`, re-keyed to this
   business/week and re-judged with this business's thresholds and budget. Used until #48
   lands, and whenever `MARKETS_BACKEND=fixture`.
@@ -35,13 +37,19 @@ class MarketsPort(Protocol):
 
 def no_market_hedge(
     exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent, remaining: Decimal,
-    thresholds: Thresholds | None = None,
+    thresholds: Thresholds | None = None, scanned_venues: bool = False,
 ) -> Hedge:
     """Declined with `no_market`; the market checks are skipped (I3: shown, not hidden).
-    `unstable` doesn't need a market, so it is still judged."""
-    from app.markets.rules import check_unstable
+    `unstable` doesn't need a market, so it is still judged. `scanned_venues` records that both
+    Kalshi and Polymarket were searched (per-venue counts on the no_market check)."""
+    from app.markets.rules import check_no_market, check_unstable
 
-    checks = [Check(code="no_market", passed=False, metric={"n_candidates": 0})]
+    note = "" if scanned_venues and get_settings().polymarket_enabled else None
+    if note is not None and exposure.settlement_var == "hot":
+        from app.markets.polymarket import HOT_SKIP_NOTE
+
+        note = HOT_SKIP_NOTE
+    checks = [check_no_market([], note)]
     checks += [Check(code=c, passed=None, metric={"skipped": "no_market"}) for c in CHECK_ORDER[1:-2]]
     checks.append(check_unstable(exposure, thresholds or get_thresholds()))
     checks.append(Check(code="over_budget", passed=True, metric={"premium": Decimal("0.00"), "remaining": remaining}))
@@ -196,7 +204,7 @@ class KalshiMarkets:
         return await _cached_season_quotes(offline=get_settings().demo_offline)
 
     async def candidates(self, exposure: Exposure, now: datetime) -> list[dict]:
-        """Tool-facing candidate rows for Claude's pick (agent #45)."""
+        """Tool-facing candidate rows for Claude's pick (agent #45), Kalshi and Polymarket together."""
         if exposure.event == "playoff_home":
             return await _season_candidates(self, exposure)
         from app.markets.kalshi import KalshiClient
@@ -204,8 +212,10 @@ class KalshiMarkets:
 
         from app import clock
 
+        week = clock.desk_week(now)
         async with KalshiClient(offline=get_settings().demo_offline) as k:
-            cands = await build_candidates(k, exposure, now, week_of=clock.desk_week(now))
+            cands = await build_candidates(k, exposure, now, week_of=week)
+        pm_cands, _, _ = await _polymarket_candidates(exposure.settlement_var, now, week)
 
         def p(x):
             return None if x is None else str(x)
@@ -215,7 +225,8 @@ class KalshiMarkets:
             "yes_ask": p(c.yes_ask), "no_ask": p(c.no_ask), "yes_bid": p(c.yes_bid), "no_bid": p(c.no_bid),
             "depth_yes": c.depth_within_5c.yes, "depth_no": c.depth_within_5c.no,
             "rules_primary": c.rules_primary, "floor_strike": p(c.floor_strike),
-        } for c in cands]
+            "venue": c.venue, "settlement_source": c.settlement_source, "fee_rate": p(c.fee_rate),
+        } for c in cands + pm_cands]
 
     async def hedge_for(
         self, exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent,
@@ -234,18 +245,55 @@ class KalshiMarkets:
         try:
             async with KalshiClient(offline=get_settings().demo_offline) as k:
                 cands = await build_candidates(k, exposure, now, week_of=week_of)
+                pm_cands, pm_books, pm_note = await _polymarket_candidates(exposure.settlement_var, now, week_of)
+                cands = cands + pm_cands
                 chosen = [c for c in cands if c.ticker == ticker]  # Claude's validated pick, if any
                 pick = chosen[0] if chosen else deterministic_pick(cands, exposure.hedge_side)
                 if pick is not None:
                     h = resolve_h(basis, exposure.effect_usd, thresholds) or Decimal(1)
-                    series = await k.get_series(pick.series_ticker)
-                    book = await k.get_orderbook(pick.ticker)
-                    sizing = size_hedge(exposure, pick, book, h, p_hat, series, thresholds.max_slip)
+                    if pick.venue == "polymarket":
+                        fees, book = pick, pm_books[pick.ticker]  # the candidate carries its fee schedule
+                    else:
+                        fees, book = await k.get_series(pick.series_ticker), await k.get_orderbook(pick.ticker)
+                    sizing = size_hedge(exposure, pick, book, h, p_hat, fees, thresholds.max_slip)
         except CacheMiss:
             return no_market_hedge(exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
-                                   remaining=remaining, thresholds=thresholds)
-        decision = evaluate(exposure, cands, sizing, basis, remaining, thresholds, decision_id=f"dec_{hedge_id}")
-        return to_hedge(exposure, sizing, decision, hedge_id=hedge_id, week_of=week_of, created_at=now, agent=agent)
+                                   remaining=remaining, thresholds=thresholds, scanned_venues=True)
+        decision = evaluate(exposure, cands, sizing, basis, remaining, thresholds, decision_id=f"dec_{hedge_id}",
+                            venue_note=pm_note)
+        reason = venue_comparison(cands, sizing.ticker, exposure.hedge_side) if sizing is not None else None
+        return to_hedge(exposure, sizing, decision, hedge_id=hedge_id, week_of=week_of, created_at=now, agent=agent,
+                        match_reason=reason)
+
+
+async def _polymarket_candidates(settlement_var: str, now: datetime, week_of: date | None):
+    """Polymarket's candidates for the desk week, or ([], {}, None) when the venue is switched off."""
+    if not get_settings().polymarket_enabled:
+        return [], {}, None
+    from app.markets import polymarket
+
+    async with polymarket.PolymarketClient() as pm:
+        cands, books, note = await polymarket.build_candidates(pm, settlement_var, now, week_of=week_of)
+    return cands, books, note or ""  # "" (not None): scanned, so the no_market check counts per venue
+
+
+VENUE_NAMES = {"kalshi": "Kalshi", "polymarket": "Polymarket"}
+
+
+def venue_comparison(cands: list, picked: str, side: str) -> str:
+    """One line per scanned market, the pick first: venue, ticker, ask and depth on the side we buy."""
+    def line(c) -> str:
+        ask = getattr(c, f"{side}_ask")
+        depth = getattr(c.depth_within_5c, side)
+        price = "no asks" if ask is None else f"{side.upper()} ask {ask}"
+        return f"{VENUE_NAMES[c.venue]} {c.ticker} ({price}, {depth:,} within 5¢)"
+
+    pick = next(c for c in cands if c.ticker == picked)
+    others = [c for c in cands if c.ticker != picked]
+    text = f"Picked {line(pick)}."
+    if others:
+        text += " Also scanned: " + "; ".join(line(c) for c in others[:4]) + "."
+    return text
 
 
 def kalshi_available() -> bool:

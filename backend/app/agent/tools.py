@@ -230,7 +230,8 @@ class DeskContext:
             hid = self.hedge_id(exposure_id)
             b = self.budget_excluding(hid)
             hedge = no_market_hedge(e, hedge_id=hid, week_of=self.week_of, now=self.now, agent=self.agent,
-                                    remaining=b.remaining, thresholds=self.thresholds)
+                                    remaining=b.remaining, thresholds=self.thresholds,
+                                    scanned_venues=e.event != "playoff_home")
             st = self._store(e, hedge, b)
             out["hedge_id"] = hid
             out["decision"] = st.hedge.decision.model_dump(mode="json", exclude={"summary"})
@@ -260,7 +261,9 @@ class DeskContext:
             thresholds=self.thresholds, ticker=ticker,
         )
         reason = self.matched[exposure_id][1]
-        hedge = Hedge.model_validate({**hedge.model_dump(), "match_reason": reason or hedge.match_reason})
+        # The pick's reason (Claude's or the fallback's), then the code's venue comparison.
+        why = " ".join(t for t in (reason, hedge.match_reason) if t) or None
+        hedge = Hedge.model_validate({**hedge.model_dump(), "match_reason": why})
         st = self.states.get(hid) or HedgeState(exposure=e)
         st.hedge, st.budget, st.evaluated, st.agent = hedge, b, False, self.agent
         self.states[hid] = st

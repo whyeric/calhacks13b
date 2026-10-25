@@ -260,6 +260,10 @@ class KalshiClient:
             raise KalshiError(f"GET {path} failed: {last}", status=r.status_code, path=path)
         raise KalshiError(f"GET {path} failed after {TRIES} tries: {last}", path=path)
 
+    async def get_json(self, path: str, params: dict[str, Any] | None = None, *, daily: bool = False) -> tuple[Any, datetime]:
+        """Any cached GET on this client's base URL (the Polymarket client reuses the cache this way)."""
+        return await self._get(path, params, daily=daily)
+
     async def _paged(self, path: str, params: dict[str, Any], field: str) -> list[dict]:
         out: list[dict] = []
         cursor = None

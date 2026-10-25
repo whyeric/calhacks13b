@@ -22,6 +22,7 @@ from app import db
 from app.books.ledger import (
     BANK,
     CASH,
+    VENUE_CASH,
     PAYOUTS,
     BookingError,
     cents,
@@ -126,7 +127,8 @@ def book_settlement(
             date=rec.settled_on,
             kind="payout",
             narration=f"[SIMULATED] Payout: {rec.ticker} {rec.side.upper()} x {rec.n_filled}",
-            postings=[Posting(account=CASH, amount=rec.payout), Posting(account=PAYOUTS, amount=-rec.payout)],
+            postings=[Posting(account=VENUE_CASH[hedge.venue], amount=rec.payout),
+                      Posting(account=PAYOUTS, amount=-rec.payout)],
             meta=hedge_meta(hedge),
             simulated=True,
         )
@@ -172,8 +174,9 @@ def book_withdrawal(
     *,
     engine: Engine | None = None,
     ledger_dir: Path | None = None,
+    venue: str = "kalshi",
 ) -> LedgerEntry:
-    """Simulated transfer of Kalshi cash to the bank: debit Bank:Checking, credit Kalshi:Cash."""
+    """Simulated transfer of venue cash to the bank: debit Bank:Checking, credit the venue's cash."""
     amount = cents(amount)
     entry_id = withdrawal_entry_id(business_id, on, hedge_ids)
     existing = get_entry(business_id, entry_id, engine)
@@ -185,7 +188,7 @@ def book_withdrawal(
         date=on,
         kind="withdrawal",
         narration=f"[SIMULATED] Withdrawal to bank: {', '.join(hedge_ids)}",
-        postings=[Posting(account=BANK, amount=amount), Posting(account=CASH, amount=-amount)],
+        postings=[Posting(account=BANK, amount=amount), Posting(account=VENUE_CASH[venue], amount=-amount)],
         meta=None,
         simulated=True,
     )
