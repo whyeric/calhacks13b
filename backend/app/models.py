@@ -712,6 +712,86 @@ class ErrorBody(Contract):
     error: ErrorDetail
 
 
+# --- Research (live upload) ---------------------------------------------------
+# POST /research (stats/research.py): the protocol run live on an uploaded CSV. Stateless.
+
+ResearchReason = Literal[
+    "thin_support", "not_significant", "failed_bh", "placebo_fired", "did_not_replicate", "sign_flipped"
+]
+
+
+class ResearchEstimate(Contract):
+    """One fit of one flag on one period. `pct` is exp(b) − 1 in percent (a stat); the dollars
+    are that share of the period's mean daily revenue (`mean_revenue`)."""
+
+    pct: float
+    effect_usd: Money
+    ci90: tuple[Money, Money]
+    ci_excludes_zero: bool
+    p_value: float
+    n_event_days: int
+    n_days: int
+    start: date
+    end: date
+    mean_revenue: Money
+
+    @model_validator(mode="after")
+    def _consistent(self) -> "ResearchEstimate":
+        if self.ci90[0] > self.ci90[1]:
+            raise ValueError("ci90 must be [low, high]")
+        return self
+
+
+class ResearchHypothesis(Contract):
+    id: str
+    label: str
+    rule: str
+    mechanism: str  # pre-registered, written before the fit
+    train: ResearchEstimate | None  # None when the flag can't be fitted (no event days)
+    holdout: ResearchEstimate | None
+    placebo_p: float | None
+    bh_q: float
+    verdict: Literal["FOUND", "NOT FOUND"]
+    reasons: list[ResearchReason]
+    direction: Literal["positive", "negative"] | None
+    upside: bool  # FOUND and positive: no protection needed
+    venue: str  # where (if anywhere) a contract settles on this event
+    sendable: bool  # FOUND downside the desk can price
+
+    @model_validator(mode="after")
+    def _verdict(self) -> "ResearchHypothesis":
+        if (self.verdict == "FOUND") == bool(self.reasons):
+            raise ValueError("FOUND has no reasons; NOT FOUND has at least one")
+        if self.sendable and (self.verdict != "FOUND" or self.direction != "negative"):
+            raise ValueError("only a FOUND downside is sendable")
+        return self
+
+
+class ResearchPeriod(Contract):
+    start: date
+    end: date
+
+
+class ResearchReport(Contract):
+    """POST /research. Every figure comes from `stats.research.run`; `summary` is templated."""
+
+    name: str | None
+    n_rows: int
+    n_days: int  # rows used: inside the weather record, revenue > 0
+    n_closed_days: int  # zero-revenue days, left out
+    n_outside_window: int
+    first: date
+    last: date
+    train: ResearchPeriod
+    holdout: ResearchPeriod
+    station: str
+    protocol: list[str]
+    notes: list[str]  # the file's own `#` lines (e.g. "SYNTHETIC demo data"), shown verbatim (I6)
+    hypotheses: list[ResearchHypothesis]
+    summary: str
+    plot_max_usd: Money  # largest |CI end| across rows: forest-plot geometry only
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -720,5 +800,6 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         LogEntry, BacktestResult, LedgerEntry, ReconResult, LedgerResponse, Settings,
         AnalyzeRequest, AnalyzeResponse, DeskRunRequest, RunAccepted, RunStatus,
         ApproveRequest, RejectRequest, ChatRequest, ChatReply, Health, ErrorBody,
+        ResearchReport,
     )
 }
