@@ -66,7 +66,8 @@ def check_no_market(candidates: list[Candidate]) -> Check:
 
 def check_illiquid(n_target: int, n_filled: int, th: Thresholds) -> Check:
     ratio = Decimal(n_filled) / Decimal(n_target)
-    passed = ratio >= th.fill_decline
+    # Nothing filled is never a hedge, whatever fill_decline says (a 0-contract, $0 proposal).
+    passed = n_filled > 0 and ratio >= th.fill_decline
     return Check(code="illiquid", passed=passed, metric={
         "n_target": n_target, "n_filled": n_filled,
         # Rounded down so a failing 0.495 never displays as a passing "0.50".

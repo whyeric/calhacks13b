@@ -211,3 +211,21 @@ def test_unstable_rejudged_when_toggle_changes():
     c = check_unstable(TAXI_RAIN, TH)
     assert _rejudge(c, replace(TH, decline_unstable=False), None).passed is True
     assert _rejudge(_rejudge(c, replace(TH, decline_unstable=False), None), TH, None).passed is False
+
+
+# ---- a zero fill never becomes a proposal, whatever fill_decline says (e2e C8-A9 bug)
+
+
+def test_zero_fill_declines_even_with_fill_decline_zero():
+    d = run(sizing(n_filled=0), th=replace(TH, fill_decline=D("0")))
+    assert d.status == "declined" and d.reasons == ["illiquid"]
+
+
+def test_rejudge_keeps_zero_fill_illiquid_when_fill_decline_is_loosened():
+    from app.hedge_rules import _rejudge
+
+    zero = check_illiquid(900, 0, TH)
+    assert zero.passed is False
+    assert _rejudge(zero, replace(TH, fill_decline=D("0")), None).passed is False
+    some = check_illiquid(900, 100, TH)
+    assert some.passed is False and _rejudge(some, replace(TH, fill_decline=D("0.1")), None).passed is True
