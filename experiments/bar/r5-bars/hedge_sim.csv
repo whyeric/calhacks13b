@@ -1,0 +1,4 @@
+series,R_usd,mean_unhedged,sd_unhedged,p5_unhedged,mean_hedged,sd_hedged,p5_hedged,sd_ratio
+bars_all,1.438e+04,-3699,1729,-6073,-3749,863.6,-5213,0.4994
+bars_le0p5km,1.998e+04,925.8,676.6,-26.52,925.4,681.5,-29.57,1.007
+fullsvc_le0p5km,9380,4572,2157,1599,4524,1263,2686,0.5857

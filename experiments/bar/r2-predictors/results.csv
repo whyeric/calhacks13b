@@ -1,0 +1,93 @@
+series,predictor,n_ev_train,b_train,lo_train,hi_train,p_train,n_ev_holdout,b_holdout,lo_holdout,hi_holdout,p_holdout,binary,q_train,train_sig,ho_rep,support,contract,settleable,found
+taxi,snow_day,13,-5785,-9572,-1998,0.01198,13,-9547,-1.824e+04,-851.6,0.0709,True,0.1002,True,True,True,NYC snowfall (CP CLI SNOW); Kalshi lists monthly/seasonal NYC snow totals,True,False
+taxi,snow_depth_1in,22,-2537,-6634,1559,0.3083,43,1726,-5061,8512,0.6757,True,0.6417,False,False,True,"none direct (snow depth is reported on CP CLI, no Kalshi market)",False,False
+taxi,freezing_tmax_lt32,13,-2563,-6754,1627,0.3143,19,-5362,-1.141e+04,689,0.1449,True,0.6417,False,False,True,KXHIGHNY bottom bracket / 'below' strike at 32F,True,False
+taxi,precip_log1p_mm,365,1026,207.2,1844,0.03926,335,258.3,-1041,1558,0.7437,False,0.2007,True,False,True,KXRAIN only settles >=0.01in; intensity needs a monthly-total (KXRAINNYCM) proxy,False,False
+taxi,rain_ge_0.25in,47,2499,163.3,4834,0.07841,44,325.6,-3172,3824,0.8783,True,0.3065,True,False,True,no daily 0.25in contract; monthly rain total market only,False,False
+taxi,cdd,365,385.8,147.5,624.1,0.007751,335,-91.27,-490.7,308.2,0.707,False,0.07924,True,False,True,KXHIGHNY strike ladder (CDD is a smooth fn of tmax),True,False
+taxi,hdd,365,128.4,-38.23,295.1,0.2049,335,229.8,-14.45,474,0.1217,False,0.5713,False,False,True,KXHIGHNY strike ladder,True,False
+taxi,gust_gt25mph,2,4712,-4497,1.392e+04,0.3999,3,-1828,-1.188e+04,8223,0.7648,True,0.6571,False,False,False,none,False,False
+taxi,heat_index_ge90,45,5862,2911,8813,0.001085,35,-1294,-5013,2425,0.5671,True,0.03328,True,False,True,none (proxy: KXHIGHNY > 85/90),False,False
+taxi,humid_rh_ge80,70,1188,-1065,3441,0.3859,68,1481,-920.9,3882,0.3105,True,0.6571,False,False,True,none,False,False
+taxi,first_nice_day,4,4091,-4588,1.277e+04,0.4381,2,-2719,-7386,1948,0.3378,True,0.7071,False,False,False,KXHIGHNY > 60 (path-dependent; not a single contract),False,False
+taxi,tmax_gt80,81,640.2,-2165,3445,0.7073,75,-830.4,-3339,1678,0.5861,True,0.9103,False,False,True,KXHIGHNY > 80F,True,False
+taxi,tmax_gt85,37,4871,2199,7543,0.002712,29,108.3,-4704,4921,0.9705,True,0.05032,True,False,True,KXHIGHNY > 85F,True,False
+taxi,tmax_gt90,10,6394,2757,1.003e+04,0.003829,9,-2934,-1.279e+04,6922,0.6243,True,0.05032,True,False,True,KXHIGHNY > 90F,True,False
+taxi,bracket_0_40,49,534,-4165,5233,0.8517,53,2234,-2656,7124,0.4523,True,0.9173,False,False,True,KXHIGHNY bracket,True,False
+taxi,bracket_40_50,41,-232,-3030,2566,0.8915,53,2323,-1138,5783,0.2696,True,0.9173,False,False,True,KXHIGHNY bracket,True,False
+taxi,bracket_50_60,57,1480,-1069,4029,0.3395,56,-3718,-7181,-255.7,0.07732,True,0.6417,False,False,True,KXHIGHNY bracket,True,False
+taxi,bracket_70_80,74,-708.6,-2814,1397,0.5798,43,499.3,-1741,2740,0.7139,True,0.8095,False,False,True,KXHIGHNY bracket,True,False
+taxi,bracket_80_90,72,-1422,-3884,1039,0.3418,73,462.8,-1886,2812,0.7458,True,0.6417,False,False,True,KXHIGHNY bracket,True,False
+taxi,bracket_90_up,14,5979,2981,8976,0.001033,12,-1467,-9348,6414,0.7594,True,0.03328,True,False,True,KXHIGHNY bracket,True,False
+taxi,payday_1st_15th,24,3841,412,7270,0.06538,22,-1894,-4415,626.9,0.2165,True,0.3007,True,False,True,"calendar, not an event (no contract needed/possible)",False,False
+taxi,month_start_1to3,36,-1772,-5962,2417,0.4865,33,-2886,-6923,1151,0.2396,True,0.746,False,False,True,calendar,False,False
+taxi,school_break,27,-3303,-8301,1695,0.277,28,-1404,-5564,2756,0.5788,True,0.6389,False,False,True,calendar,False,False
+taxi,school_summer,69,-6234,-1.115e+04,-1322,0.03682,66,5326,-3893,1.455e+04,0.3419,True,0.1992,True,False,True,calendar,False,False
+taxi,dst_week,14,-716.6,-8629,7196,0.8816,14,1217,-7430,9864,0.8169,True,0.9173,False,False,True,calendar,False,False
+taxi,rain,114,2402,645.9,4158,0.02445,127,814.5,-1201,2830,0.5063,True,0.1607,True,False,True,KXRAIN (CP >= 0.01in),True,False
+taxi,rain_x_weekend,33,-1638,-5327,2051,0.4651,42,-2139,-6408,2131,0.4099,True,0.7377,False,False,True,KXRAIN bought only for Sat/Sun dates,True,False
+taxi,rain_lag1,114,853.4,-804.2,2511,0.397,126,-1272,-3101,558.2,0.253,True,0.6571,False,False,True,KXRAIN for the date 1 day(s) earlier,True,False
+taxi,rain_lag2,115,338.8,-1603,2281,0.7741,125,-307.6,-2249,1634,0.7944,True,0.9158,False,False,True,KXRAIN for the date 2 day(s) earlier,True,False
+taxi,rain_lag3,115,-116.2,-1758,1526,0.9073,126,797.4,-944.4,2539,0.4514,True,0.9173,False,False,True,KXRAIN for the date 3 day(s) earlier,True,False
+taxi,msg_nongame_spike,46,3763,1557,5970,0.005023,27,5366,1839,8893,0.01233,True,0.05776,True,True,True,none (no concert-attendance contract),False,False
+bar,snow_day,13,-157.1,-1573,1259,0.8551,13,-1012,-2615,591.5,0.2992,True,0.9173,False,False,True,NYC snowfall (CP CLI SNOW); Kalshi lists monthly/seasonal NYC snow totals,True,False
+bar,snow_depth_1in,22,-2032,-3165,-898.8,0.003182,43,188.3,-1738,2114,0.8722,True,0.05032,True,False,True,"none direct (snow depth is reported on CP CLI, no Kalshi market)",False,False
+bar,freezing_tmax_lt32,13,-407.3,-1344,529.6,0.4745,19,-1462,-2933,8.634,0.102,True,0.7399,False,False,True,KXHIGHNY bottom bracket / 'below' strike at 32F,True,False
+bar,precip_log1p_mm,365,-59.45,-446.7,327.8,0.8006,335,-103.3,-459.4,252.8,0.6332,False,0.917,False,False,True,KXRAIN only settles >=0.01in; intensity needs a monthly-total (KXRAINNYCM) proxy,False,False
+bar,rain_ge_0.25in,47,170.8,-750.3,1092,0.7604,44,104.5,-1116,1325,0.888,True,0.9158,False,False,True,no daily 0.25in contract; monthly rain total market only,False,False
+bar,cdd,365,21.06,-40.81,82.92,0.5755,335,-49.65,-143.9,44.65,0.3864,False,0.8095,False,False,True,KXHIGHNY strike ladder (CDD is a smooth fn of tmax),True,False
+bar,hdd,365,-37.16,-104,29.65,0.3603,335,27.92,-15.96,71.8,0.2953,False,0.6456,False,False,True,KXHIGHNY strike ladder,True,False
+bar,gust_gt25mph,2,1215,-74.45,2504,0.1211,3,789.8,-1239,2819,0.522,True,0.392,False,False,False,none,False,False
+bar,heat_index_ge90,45,1303,105.6,2501,0.07344,35,-1017,-2008,-25.94,0.0914,True,0.3065,True,False,True,none (proxy: KXHIGHNY > 85/90),False,False
+bar,humid_rh_ge80,70,771.2,-302.4,1845,0.2373,68,-1137,-1997,-277.4,0.02957,True,0.6065,False,False,True,none,False,False
+bar,first_nice_day,4,-260.5,-2758,2237,0.8638,2,614.6,-562.6,1792,0.3904,True,0.9173,False,False,False,KXHIGHNY > 60 (path-dependent; not a single contract),False,False
+bar,tmax_gt80,81,-181,-953.3,591.2,0.6998,75,-332.1,-1537,872.9,0.6503,True,0.9103,False,False,True,KXHIGHNY > 80F,True,False
+bar,tmax_gt85,37,116.4,-907.6,1140,0.8517,29,-602.6,-1730,524.6,0.3792,True,0.9173,False,False,True,KXHIGHNY > 85F,True,False
+bar,tmax_gt90,10,-531.8,-1519,455.3,0.3755,9,-157.7,-2085,1770,0.893,True,0.6518,False,False,True,KXHIGHNY > 90F,True,False
+bar,bracket_0_40,49,-746.2,-1694,201.5,0.1952,53,-756.1,-2505,992.9,0.477,True,0.5613,False,False,True,KXHIGHNY bracket,True,False
+bar,bracket_40_50,41,-568.2,-1442,305.6,0.2847,53,1915,408.9,3422,0.03648,True,0.6389,False,False,True,KXHIGHNY bracket,True,False
+bar,bracket_50_60,57,1133,88.25,2178,0.07444,56,-511,-1696,674.1,0.4781,True,0.3065,True,False,True,KXHIGHNY bracket,True,False
+bar,bracket_70_80,74,419.9,-830.7,1670,0.5807,43,551.5,-556.4,1659,0.4129,True,0.8095,False,False,True,KXHIGHNY bracket,True,False
+bar,bracket_80_90,72,-60.63,-895.6,774.4,0.9049,73,-449.5,-1579,680,0.5127,True,0.9173,False,False,True,KXHIGHNY bracket,True,False
+bar,bracket_90_up,14,251,-782.7,1285,0.6896,12,-475.8,-2234,1283,0.6563,True,0.9103,False,False,True,KXHIGHNY bracket,True,False
+bar,payday_1st_15th,24,-755.4,-1516,4.963,0.1022,22,718.8,-1174,2612,0.5322,True,0.3701,False,False,True,"calendar, not an event (no contract needed/possible)",False,False
+bar,month_start_1to3,36,-948.6,-1638,-259.4,0.02356,33,-793.8,-2292,704.6,0.3835,True,0.1607,True,False,True,calendar,False,False
+bar,school_break,27,-382.7,-1640,874.9,0.6166,28,-1566,-2742,-389.8,0.02851,True,0.8467,False,True,True,calendar,False,False
+bar,school_summer,69,1781,539.1,3023,0.01832,66,116.3,-3033,3265,0.9515,True,0.1404,True,False,True,calendar,False,False
+bar,dst_week,14,1122,-751.5,2996,0.3245,14,-213.5,-1656,1229,0.8076,True,0.6417,False,False,True,calendar,False,False
+bar,rain,114,-418,-1051,214.5,0.277,127,310.4,-593,1214,0.5719,True,0.6389,False,False,True,KXRAIN (CP >= 0.01in),True,False
+bar,rain_x_weekend,33,-1788,-3468,-108.3,0.07994,42,-727.5,-2415,960.2,0.4783,True,0.3065,True,False,True,KXRAIN bought only for Sat/Sun dates,True,False
+bar,rain_lag1,114,-153.1,-836.6,530.3,0.7124,126,-647.6,-1463,167.7,0.1913,True,0.9103,False,False,True,KXRAIN for the date 1 day(s) earlier,True,False
+bar,rain_lag2,115,257.8,-487.2,1003,0.5692,125,775.1,-100.6,1651,0.1454,True,0.8095,False,False,True,KXRAIN for the date 2 day(s) earlier,True,False
+bar,rain_lag3,115,440.1,-264,1144,0.3039,126,-483.8,-1404,436.6,0.3872,True,0.6417,False,False,True,KXRAIN for the date 3 day(s) earlier,True,False
+bar,msg_nongame_spike,46,1103,-75.26,2282,0.1236,27,2488,1.994,4975,0.0997,True,0.392,False,True,True,none (no concert-attendance contract),False,False
+msg_visits,snow_day,13,-2402,-5575,770.7,0.213,13,-4522,-8350,-693.8,0.052,True,0.5763,False,True,True,NYC snowfall (CP CLI SNOW); Kalshi lists monthly/seasonal NYC snow totals,True,False
+msg_visits,snow_depth_1in,22,-467.8,-3818,2882,0.8183,43,-3686,-7342,-30.45,0.09718,True,0.9173,False,True,True,"none direct (snow depth is reported on CP CLI, no Kalshi market)",False,False
+msg_visits,freezing_tmax_lt32,13,-1881,-4770,1008,0.2842,19,-5446,-9438,-1454,0.02484,True,0.6389,False,True,True,KXHIGHNY bottom bracket / 'below' strike at 32F,True,False
+msg_visits,precip_log1p_mm,365,94.54,-523,712.1,0.8012,335,-223.2,-721.8,275.3,0.4614,False,0.917,False,False,True,KXRAIN only settles >=0.01in; intensity needs a monthly-total (KXRAINNYCM) proxy,False,False
+msg_visits,rain_ge_0.25in,47,277.1,-1328,1882,0.7764,44,-264.1,-1702,1174,0.7625,True,0.9158,False,False,True,no daily 0.25in contract; monthly rain total market only,False,False
+msg_visits,cdd,365,174,-3.956,351.9,0.1077,335,35.8,-152.6,224.2,0.7547,False,0.3701,False,False,True,KXHIGHNY strike ladder (CDD is a smooth fn of tmax),True,False
+msg_visits,hdd,365,66.25,-50.68,183.2,0.3513,335,-105.3,-240.9,30.42,0.2019,False,0.6456,False,False,True,KXHIGHNY strike ladder,True,False
+msg_visits,gust_gt25mph,2,3032,-1134,7199,0.2312,3,2620,-4184,9424,0.5265,True,0.6065,False,False,False,none,False,False
+msg_visits,heat_index_ge90,45,3415,858.8,5971,0.02797,35,-865.4,-2830,1099,0.4687,True,0.1716,True,False,True,none (proxy: KXHIGHNY > 85/90),False,False
+msg_visits,humid_rh_ge80,70,-4.481,-1554,1545,0.9962,68,862.8,-468.2,2194,0.2863,True,0.9962,False,False,True,none,False,False
+msg_visits,first_nice_day,4,2155,-4176,8486,0.5755,2,1566,-1502,4634,0.4012,True,0.8095,False,False,False,KXHIGHNY > 60 (path-dependent; not a single contract),False,False
+msg_visits,tmax_gt80,81,335.6,-1521,2192,0.7661,75,1313,-298.5,2924,0.1802,True,0.9158,False,False,True,KXHIGHNY > 80F,True,False
+msg_visits,tmax_gt85,37,2184,-55.19,4422,0.1086,29,21.36,-1952,1995,0.9858,True,0.3701,False,False,True,KXHIGHNY > 85F,True,False
+msg_visits,tmax_gt90,10,3937,-734.4,8609,0.1656,9,-2445,-6096,1206,0.2707,True,0.5079,False,False,True,KXHIGHNY > 90F,True,False
+msg_visits,bracket_0_40,49,-1779,-4390,832.3,0.2624,53,-2785,-5761,191.3,0.1237,True,0.6389,False,False,True,KXHIGHNY bracket,True,False
+msg_visits,bracket_40_50,41,-1229,-2715,256.8,0.1736,53,1555,-12.09,3121,0.1026,True,0.5152,False,False,True,KXHIGHNY bracket,True,False
+msg_visits,bracket_50_60,57,4228,2851,5605,4.375e-07,56,596.6,-1003,2196,0.5394,True,4.025e-05,True,False,True,KXHIGHNY bracket,True,False
+msg_visits,bracket_70_80,74,-2953,-4627,-1280,0.003686,43,-562.7,-2182,1057,0.5676,True,0.05032,True,False,True,KXHIGHNY bracket,True,False
+msg_visits,bracket_80_90,72,-275.9,-2137,1586,0.8074,73,1319,-144.1,2782,0.1381,True,0.917,False,False,True,KXHIGHNY bracket,True,False
+msg_visits,bracket_90_up,14,2396,-1616,6407,0.326,12,-1268,-4959,2423,0.572,True,0.6417,False,False,True,KXHIGHNY bracket,True,False
+msg_visits,payday_1st_15th,24,449,-1466,2364,0.6996,22,561.1,-1250,2372,0.6103,True,0.9103,False,False,True,"calendar, not an event (no contract needed/possible)",False,False
+msg_visits,month_start_1to3,36,-2403,-3956,-849.2,0.01095,33,-1517,-3200,164.9,0.1379,True,0.1002,True,False,True,calendar,False,False
+msg_visits,school_break,27,1614,-1107,4335,0.3292,28,1956,-608.1,4519,0.2095,True,0.6417,False,False,True,calendar,False,False
+msg_visits,school_summer,69,1275,-1900,4449,0.509,66,3125,-1457,7708,0.2619,True,0.7676,False,False,True,calendar,False,False
+msg_visits,dst_week,14,5489,1203,9774,0.03514,14,2600,-2251,7451,0.378,True,0.1992,True,False,True,calendar,False,False
+msg_visits,rain,114,695.6,-567.3,1958,0.3649,127,-384,-1452,684,0.5542,True,0.6456,False,False,True,KXRAIN (CP >= 0.01in),True,False
+msg_visits,rain_x_weekend,33,-2779,-5104,-454.4,0.04924,42,-3183,-5745,-620.7,0.04101,True,0.2384,True,True,True,KXRAIN bought only for Sat/Sun dates,True,False
+msg_visits,rain_lag1,114,-213.6,-1437,1010,0.774,126,-5.39,-927.7,916.9,0.9923,True,0.9158,False,False,True,KXRAIN for the date 1 day(s) earlier,True,False
+msg_visits,rain_lag2,115,89.83,-1116,1296,0.9025,125,475.5,-533.5,1484,0.4382,True,0.9173,False,False,True,KXRAIN for the date 2 day(s) earlier,True,False
+msg_visits,rain_lag3,115,-259.3,-1629,1110,0.7555,126,-148.3,-960.2,663.6,0.7638,True,0.9158,False,False,True,KXRAIN for the date 3 day(s) earlier,True,False

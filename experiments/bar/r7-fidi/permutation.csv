@@ -1,0 +1,7 @@
+basket,term,split,perm_p
+fidi,fomc_nosurp,train,0.1
+fidi,fomc_nosurp,holdout,0.403
+mideast,fomc_nosurp,train,0.05
+mideast,fomc_nosurp,holdout,0.997
+mideast,fomc_surp,train,0.593
+mideast,fomc_surp,holdout,0.833

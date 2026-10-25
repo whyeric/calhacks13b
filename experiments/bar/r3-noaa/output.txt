@@ -1,0 +1,102 @@
+panel358: 358 venues, 2024-01-01..2026-09-27, 358351 venue-days
+zip710: 710 balanced MSG-ZIP stores
+
+BASIS (share of days the flags agree; corr)
+  P train   2024-10-01..2025-09-30: OM-MSG vs NOAA agree 0.874 corr 0.744 | OM-CP vs NOAA agree 0.877 | wet-day rate OM 0.405 NOAA 0.312 | OM-only 40 NOAA-only 6
+  P holdout 2025-10-01..2026-08-31: OM-MSG vs NOAA agree 0.854 corr 0.716 | OM-CP vs NOAA agree 0.863 | wet-day rate OM 0.472 NOAA 0.379 | OM-only 40 NOAA-only 9
+  A train   2024-01-01..2025-03-31: OM-MSG vs NOAA agree 0.893 corr 0.779 | OM-CP vs NOAA agree 0.897 | wet-day rate OM 0.401 NOAA 0.329 | OM-only 41 NOAA-only 8
+  A holdout 2025-04-01..2026-09-27: OM-MSG vs NOAA agree 0.850 corr 0.710 | OM-CP vs NOAA agree 0.853 | wet-day rate OM 0.473 NOAA 0.371 | OM-only 69 NOAA-only 13
+
+BH family (train): 32 tests = 24 grid cells + 8 round-1 refits
+
+GRID: rain effect, % change in visits [90% CI]
+    unit    source season split  n_tr  pct_tr  lo_tr  hi_tr  p_tr  bh_tr  n_ho  pct_ho  lo_ho  hi_ho  p_ho  bh_ho  found
+panel358 openmeteo   harm     P   148  -0.198 -1.552  1.174 0.811  0.895   158  -0.947 -2.546  0.678 0.336  0.351  False
+panel358 openmeteo   harm     A   183  -0.485 -1.839  0.889 0.560  0.792   258  -0.525 -1.719  0.683 0.473  0.473  False
+panel358 openmeteo   ymfe     P   148  -1.141 -1.959 -0.317 0.023  0.081   158  -1.338 -2.334 -0.332 0.029  0.046   True
+panel358 openmeteo   ymfe     A   183  -1.284 -2.085 -0.477 0.009  0.048   258  -1.192 -1.899 -0.481 0.006  0.016   True
+panel358      noaa   harm     P   114   0.457 -1.073  2.010 0.625  0.834   127  -1.410 -2.889  0.092 0.122  0.173  False
+panel358      noaa   harm     A   150   0.063 -1.446  1.594 0.946  0.946   202  -0.973 -2.079  0.146 0.152  0.203  False
+panel358      noaa   ymfe     P   114  -0.953 -1.776 -0.123 0.059  0.118   127  -1.812 -2.869 -0.745 0.005  0.016  False
+panel358      noaa   ymfe     A   150  -1.048 -1.876 -0.213 0.039  0.089   202  -1.524 -2.265 -0.777 0.001  0.004   True
+  sum358 openmeteo   harm     P   148  -0.607 -2.341  1.158 0.569  0.792   158  -1.507 -3.390  0.414 0.196  0.247  False
+  sum358 openmeteo   harm     A   183  -1.268 -3.008  0.503 0.238  0.447   258  -0.989 -2.516  0.561 0.292  0.340  False
+  sum358 openmeteo   ymfe     P   148  -1.772 -3.055 -0.471 0.025  0.081   158  -1.841 -3.099 -0.567 0.018  0.036   True
+  sum358 openmeteo   ymfe     A   183  -2.168 -3.324 -0.997 0.002  0.020   258  -1.891 -2.861 -0.910 0.002  0.005   True
+  sum358      noaa   harm     P   114   0.160 -1.800  2.159 0.894  0.923   127  -2.525 -4.107 -0.917 0.010  0.024  False
+  sum358      noaa   harm     A   150  -0.705 -2.654  1.283 0.557  0.792   202  -1.869 -3.208 -0.511 0.024  0.044  False
+  sum358      noaa   ymfe     P   114  -1.629 -2.838 -0.406 0.029  0.081   127  -2.919 -4.294 -1.523 0.001  0.004   True
+  sum358      noaa   ymfe     A   150  -2.117 -3.238 -0.984 0.002  0.020   202  -2.559 -3.546 -1.562 0.000  0.000   True
+  zip710 openmeteo   harm     P   148  -0.354 -2.051  1.371 0.734  0.839   158  -1.156 -2.983  0.705 0.305  0.340  False
+  zip710 openmeteo   harm     A   183  -0.889 -2.605  0.857 0.400  0.641   258  -0.882 -2.301  0.557 0.312  0.340  False
+  zip710 openmeteo   ymfe     P   148  -1.405 -2.529 -0.268 0.042  0.090   158  -1.622 -2.678 -0.555 0.013  0.028   True
+  zip710 openmeteo   ymfe     A   183  -1.926 -2.943 -0.899 0.002  0.020   258  -1.650 -2.471 -0.822 0.001  0.004   True
+  zip710      noaa   harm     P   114   0.436 -1.503  2.413 0.714  0.839   127  -2.022 -3.499 -0.523 0.027  0.046  False
+  zip710      noaa   harm     A   150  -0.451 -2.378  1.513 0.703  0.839   202  -1.629 -2.862 -0.381 0.032  0.048  False
+  zip710      noaa   ymfe     P   114  -1.387 -2.453 -0.310 0.034  0.085   127  -2.502 -3.707 -1.281 0.001  0.004   True
+  zip710      noaa   ymfe     A   150  -2.011 -3.001 -1.010 0.001  0.020   202  -2.238 -3.120 -1.349 0.000  0.000   True
+
+FACTOR MEANS (avg % over the other factors; share of cells FOUND)
+           pct_tr  pct_ho  found
+source                          
+noaa       -0.766  -1.998  0.417
+openmeteo  -1.125  -1.295  0.500 
+
+        pct_tr  pct_ho  found
+season                       
+harm     -0.32  -1.370  0.000
+ymfe     -1.57  -1.924  0.917 
+
+       pct_tr  pct_ho  found
+split                       
+A      -1.191  -1.493  0.500
+P      -0.699  -1.800  0.417 
+
+          pct_tr  pct_ho  found
+unit                           
+panel358  -0.574  -1.215  0.375
+sum358    -1.263  -2.012  0.500
+zip710    -0.998  -1.713  0.500 
+
+DIAGNOSTIC: rain decomposed by source agreement, ymfe, A split (train | holdout)
+  zip710 train   both n=142 -2.21% [-3.31,-1.10]  om_only n=41 -1.25% [-2.58,+0.09]  noaa_only n=8 -1.87% [-5.29,+1.67]
+  zip710 holdout both n=189 -2.33% [-3.28,-1.37]  om_only n=69 +0.46% [-0.51,+1.44]  noaa_only n=13 +0.57% [-1.30,+2.48]
+  sum358 train   both n=142 -2.41% [-3.65,-1.15]  om_only n=41 -1.54% [-3.18,+0.12]  noaa_only n=8 -1.18% [-4.93,+2.72]
+  sum358 holdout both n=189 -2.67% [-3.76,-1.56]  om_only n=69 +0.49% [-0.68,+1.67]  noaa_only n=13 +0.53% [-1.88,+3.00]
+
+DIAGNOSTIC: harmonic-model residuals by month (NOAA rain), and harmonics + linear trend
+  zip710 P train  : SD of monthly mean resid 6.1% (daily resid SD 8.1%), corr(month wet share, month resid) +0.37; harm+trend rain +0.64% [-1.27,+2.58]
+  zip710 P holdout: SD of monthly mean resid 7.0% (daily resid SD 9.2%), corr(month wet share, month resid) +0.25; harm+trend rain -2.27% [-3.71,-0.81]
+  zip710 A train  : SD of monthly mean resid 7.0% (daily resid SD 9.0%), corr(month wet share, month resid) +0.32; harm+trend rain -0.63% [-2.51,+1.29]
+  zip710 A holdout: SD of monthly mean resid 7.5% (daily resid SD 9.2%), corr(month wet share, month resid) +0.19; harm+trend rain -2.19% [-3.20,-1.16]
+  sum358 P train  : SD of monthly mean resid 5.7% (daily resid SD 8.4%), corr(month wet share, month resid) +0.40; harm+trend rain +0.31% [-1.63,+2.29]
+  sum358 P holdout: SD of monthly mean resid 6.8% (daily resid SD 9.8%), corr(month wet share, month resid) +0.21; harm+trend rain -2.78% [-4.32,-1.22]
+  sum358 A train  : SD of monthly mean resid 6.9% (daily resid SD 9.4%), corr(month wet share, month resid) +0.29; harm+trend rain -0.94% [-2.83,+0.99]
+  sum358 A holdout: SD of monthly mean resid 7.9% (daily resid SD 10.1%), corr(month wet share, month resid) +0.21; harm+trend rain -2.51% [-3.58,-1.42]
+
+ROUND 1 REFITS ($/day, HC3, exposure.build_design + fit_ols)
+  business         source   split    event  n_days  n_event     usd      lo     hi      p      first       last  bh_tr
+restaurant repo_openmeteo   train     rain     365      148  -345.0  -992.0  301.0 0.3797 2024-10-01 2025-09-30 0.6396
+restaurant repo_openmeteo   train      hot     365       55  -118.0 -1205.0  969.0 0.8582 2024-10-01 2025-09-30 0.9154
+restaurant repo_openmeteo   train home_win     365       49 -2026.0 -4351.0  299.0 0.1517 2024-10-01 2025-09-30    NaN
+restaurant repo_openmeteo holdout     rain     335      158  -291.0 -1277.0  694.0 0.6266 2025-10-01 2026-08-31    NaN
+restaurant repo_openmeteo holdout      hot     335       45  -837.0 -2156.0  482.0 0.2964 2025-10-01 2026-08-31    NaN
+restaurant repo_openmeteo holdout home_win     335       51   588.0 -1303.0 2480.0 0.6088 2025-10-01 2026-08-31    NaN
+restaurant           noaa   train     rain     365      114  -442.0 -1104.0  221.0 0.2728 2024-10-01 2025-09-30 0.4850
+restaurant           noaa   train      hot     365       37   237.0  -744.0 1218.0 0.6911 2024-10-01 2025-09-30 0.8387
+restaurant           noaa   train home_win     365       49 -2025.0 -4341.0  291.0 0.1504 2024-10-01 2025-09-30    NaN
+restaurant           noaa holdout     rain     335      127   281.0  -697.0 1259.0 0.6365 2025-10-01 2026-08-31    NaN
+restaurant           noaa holdout      hot     335       29  -731.0 -2127.0  666.0 0.3893 2025-10-01 2026-08-31    NaN
+restaurant           noaa holdout home_win     335       51   577.0 -1308.0 2463.0 0.6145 2025-10-01 2026-08-31    NaN
+      taxi repo_openmeteo   train     rain     365      148  2212.0   533.0 3890.0 0.0302 2024-10-01 2025-09-30 0.0805
+      taxi repo_openmeteo   train      hot     365       55  3967.0  1281.0 6654.0 0.0151 2024-10-01 2025-09-30 0.0692
+      taxi repo_openmeteo   train home_win     365       49   522.0 -2610.0 3654.0 0.7841 2024-10-01 2025-09-30    NaN
+      taxi repo_openmeteo holdout     rain     335      158   303.0 -1823.0 2430.0 0.8145 2025-10-01 2026-08-31    NaN
+      taxi repo_openmeteo holdout      hot     335       45  -965.0 -3872.0 1941.0 0.5849 2025-10-01 2026-08-31    NaN
+      taxi repo_openmeteo holdout home_win     335       51   147.0 -4094.0 4387.0 0.9546 2025-10-01 2026-08-31    NaN
+      taxi           noaa   train     rain     365      114  2489.0   765.0 4212.0 0.0176 2024-10-01 2025-09-30 0.0702
+      taxi           noaa   train      hot     365       37  5490.0  2389.0 8591.0 0.0036 2024-10-01 2025-09-30 0.0229
+      taxi           noaa   train home_win     365       49   524.0 -2589.0 3637.0 0.7820 2024-10-01 2025-09-30    NaN
+      taxi           noaa holdout     rain     335      127   774.0 -1359.0 2907.0 0.5504 2025-10-01 2026-08-31    NaN
+      taxi           noaa holdout      hot     335       29  -157.0 -3455.0 3140.0 0.9374 2025-10-01 2026-08-31    NaN
+      taxi           noaa holdout home_win     335       51   120.0 -4096.0 4336.0 0.9626 2025-10-01 2026-08-31    NaN

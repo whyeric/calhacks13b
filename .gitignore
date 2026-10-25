@@ -27,3 +27,6 @@ next-env.d.ts
 .python-tools/
 playwright-report/
 test-results/
+
+# Claude Code agent worktrees and local settings
+.claude/

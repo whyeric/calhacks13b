@@ -1,0 +1,4 @@
+KXHIGHAUS (USW00013904): 390 markets on 65 days 2026-08-17..2026-10-20; market agreement 1.0000; days fully consistent 1.0000 (mismatch days 0)
+KXHIGHTHOU (USW00012918): 390 markets on 65 days 2026-08-17..2026-10-20; market agreement 1.0000; days fully consistent 1.0000 (mismatch days 0)
+KXHIGHTDAL (USW00003927): 390 markets on 65 days 2026-08-17..2026-10-20; market agreement 1.0000; days fully consistent 1.0000 (mismatch days 0)
+KXHIGHTSATX (USW00012921): 390 markets on 65 days 2026-08-17..2026-10-20; market agreement 1.0000; days fully consistent 1.0000 (mismatch days 0)

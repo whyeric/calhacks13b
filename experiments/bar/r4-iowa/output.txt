@@ -1,0 +1,44 @@
+/Users/main/calhacks13b/backend/../experiments/bar/r4-iowa/iowa.py:165: Pandas4Warning: DatetimeIndex.dayofweek is deprecated and will be removed in a future version. Use DatetimeIndex.day_of_week instead.
+  dow = pd.get_dummies(pd.Series(y.index.dayofweek, index=y.index), prefix="dow", drop_first=True, dtype=float)
+/Users/main/calhacks13b/backend/../experiments/bar/r4-iowa/iowa.py:165: Pandas4Warning: DatetimeIndex.dayofweek is deprecated and will be removed in a future version. Use DatetimeIndex.day_of_week instead.
+  dow = pd.get_dummies(pd.Series(y.index.dayofweek, index=y.index), prefix="dow", drop_first=True, dtype=float)
+daily rows 27438, 2012-01-03..2017-10-31, $1.47B
+       home           win             n         
+team   Iowa Iowa St. Iowa Iowa St. Iowa Iowa St.
+season                                          
+2012      7        7    4        6   12       12
+2013      7        6    8        3   12       12
+2014      7        7    7        2   12       12
+2015      7        6   12        3   13       12
+2016      7        7    8        3   12       12
+2017      7        6    7        7   12       12
+
+18 tests (each fitted on train and on holdout)
+      family              unit          event  tr_beta   tr_lo   tr_hi  tr_n_ev  tr_n  ho_beta   ho_lo   ho_hi  ho_n_ev  ho_n   bh_q  FOUND
+0   football          ICY/rest        home_L0  -0.0751 -0.1365 -0.0137       28   208   0.0411 -0.0196  0.1018       12    96 0.2652  False
+1   football          ICY/rest        home_L1  -0.0387 -0.1210  0.0436       28   208  -0.0028 -0.0787  0.0731       12    96 0.6085  False
+2   football          ICY/rest  homewin_post1  -0.0950 -0.2457  0.0557       17   208  -0.0523 -0.1824  0.0778        7    96 0.6085  False
+3   football          ICY/rest      win_post1  -0.2770 -0.4102 -0.1438       31   208  -0.0136 -0.0716  0.0444       12    96 0.0112  False
+4   football   state[ICY team]        home_L0   0.0345 -0.0896  0.1586       28   208  -0.0200 -0.0949  0.0549       12    96 0.7769  False
+5   football   state[ICY team]      win_post1   0.1098 -0.0158  0.2354       31   208   0.0025 -0.0767  0.0816       12    96 0.4554  False
+6   football         AMES/rest        home_L0   0.0863 -0.0128  0.1853       26   208   0.1434  0.0019  0.2849       12    96 0.4554  False
+7   football         AMES/rest        home_L1   0.0559 -0.0240  0.1358       26   208   0.0643 -0.0511  0.1798       12    96 0.6085  False
+8   football         AMES/rest  homewin_post1   0.0974 -0.1053  0.3001        8   208   0.1201 -0.1115  0.3517        4    96 0.6085  False
+9   football         AMES/rest      win_post1  -0.0643 -0.1884  0.0597       14   208   0.0392 -0.0998  0.1782        8    96 0.6085  False
+10  football  state[AMES team]        home_L0  -0.0011 -0.0954  0.0931       26   208  -0.0641 -0.1377  0.0096       12    96 0.9840  False
+11  football  state[AMES team]      win_post1  -0.0530 -0.2019  0.0958       14   208  -0.1004 -0.1772 -0.0236        8    96 0.7174  False
+12   weather      state/DSM wx           rain  -0.0248 -0.0652  0.0156      247   849   0.0118 -0.0134  0.0371      144   445 0.6085  False
+13   weather      state/DSM wx           snow   0.0083 -0.0513  0.0679       25   849   0.0542  0.0114  0.0969       10   445 0.8668  False
+14   weather      state/DSM wx            hot   0.0197 -0.0179  0.0573       69   849   0.0312 -0.0102  0.0726       36   445 0.6085  False
+15   weather      state/DSM wx      snow_lag1  -0.1653 -0.3204 -0.0102       25   848  -0.0147 -0.0721  0.0428       10   445 0.3580  False
+16   weather   ICY/rest ICY wx           rain  -0.3419 -0.5933 -0.0906      268   849   0.2704 -0.1878  0.7286      133   444 0.2269  False
+17   weather   ICY/rest ICY wx           snow   0.2317 -0.8651  1.3286       18   848   0.4094 -1.0270  1.8457        3   445 0.8192  False
+
+basis: DSM flag vs Kalshi-city station flag (phi)
+    vs  flag  corr     n
+0  MSP  rain 0.366  2131
+1  MSP  snow 0.191  2131
+2  MSP   hot 0.522  2131
+3  CHI  rain 0.333  2124
+4  CHI  snow   NaN     0
+5  CHI   hot 0.494  2129

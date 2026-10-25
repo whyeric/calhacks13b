@@ -1,0 +1,218 @@
+MSG playoff home games (ESPN):
+                 n       first        last                                                    rounds
+team    season                                                                                      
+knicks  2023     5  2023-04-21  2023-05-10                           East 1st Round, East Semifinals
+        2024     7  2024-04-20  2024-05-19                           East 1st Round, East Semifinals
+        2025     9  2025-04-19  2025-05-29              East 1st Round, East Semifinals, East Finals
+        2026     9  2026-04-18  2026-06-10  East 1st Round, East Semifinals, East Finals, NBA Finals
+rangers 2022    10  2022-05-03  2022-06-09                East 1st Round, East 2nd Round, East Final
+        2023     3  2023-04-22  2023-04-29                                            East 1st Round
+        2024     8  2024-04-21  2024-05-30                East 1st Round, East 2nd Round, East Final
+
+PART A: 24 fits (12 per period), BH within period
+         series          test  holdout_hi  train_hi  holdout_lo  train_lo  holdout_n_ev  train_n_ev  holdout_pct  train_pct  holdout_q  train_q  found
+0   dewey_0p5km            po       8.096     7.408       3.350     4.025            18          15        5.696      5.703      0.000    0.000   True
+1   dewey_0p5km  po_minus_reg       6.580     5.532       0.439     1.219            18          15        3.464      3.353      0.118    0.022   True
+2   dewey_0p5km           reg       4.331     3.967       0.029     0.609            87         126        2.157      2.274      0.143    0.036   True
+3     dewey_zip            po       4.186     4.041       1.654     1.860            18          15        2.912      2.945      0.000    0.000   True
+4     dewey_zip  po_minus_reg       3.916     3.475       0.145     0.481            18          15        2.013      1.967      0.130    0.039   True
+5     dewey_zip           reg       2.398     2.167      -0.613    -0.234            87         126        0.881      0.959      0.445    0.224  False
+6      mta_post            po      42.793    32.792      23.065    23.507            12          15       32.563     28.065      0.000    0.000   True
+7      mta_post  po_minus_reg       8.872     3.849      -7.012    -5.043            12          15        0.617     -0.697      0.898    0.797  False
+8      mta_post           reg      36.812    32.681      26.875    25.351            71         137       31.750     28.964      0.000    0.000   True
+9       taxi186            po      14.266     1.220     -17.996    -3.830             9           9       -3.200     -1.338      0.815    0.422  False
+10      taxi186  po_minus_reg       8.336    -1.925     -22.803    -8.900             9           9       -8.550     -5.477      0.463    0.024  False
+11      taxi186           reg      10.322     7.593       1.558     1.261            79          81        5.849      4.379      0.057    0.034   True
+
+Per team-season playoff effect (full sample per series, % vs a non-game day):
+         series             term  n_ev     pct      lo      hi      p   beta     se        base
+0   dewey_0p5km   po_knicks_2024     7   6.777   4.503   9.102  0.000  0.066  0.013   79835.193
+1   dewey_0p5km   po_knicks_2025     9   7.842   4.750  11.025  0.000  0.075  0.018   79835.193
+2   dewey_0p5km   po_knicks_2026     9   3.747   0.932   6.640  0.028  0.037  0.017   79835.193
+3   dewey_0p5km  po_rangers_2024     8   4.926   2.332   7.585  0.002  0.048  0.015   79835.193
+4   dewey_0p5km        pooled_po    33   5.752   4.176   7.351  0.000  0.056  0.009   79835.193
+5   dewey_0p5km       pooled_reg   213   2.272   0.952   3.610  0.004  0.022  0.008   79835.193
+6     dewey_zip   po_knicks_2024     7   4.187   2.907   5.483  0.000  0.041  0.008  193030.257
+7     dewey_zip   po_knicks_2025     9   4.218   2.860   5.595  0.000  0.041  0.008  193030.257
+8     dewey_zip   po_knicks_2026     9   1.637  -0.049   3.352  0.110  0.016  0.010  193030.257
+9     dewey_zip  po_rangers_2024     8   1.824  -0.132   3.818  0.125  0.018  0.012  193030.257
+10    dewey_zip        pooled_po    33   2.906   2.028   3.791  0.000  0.029  0.005  193030.257
+11    dewey_zip       pooled_reg   213   0.979   0.043   1.923  0.085  0.010  0.006  193030.257
+12     mta_post   po_knicks_2023     3  33.892  24.823  43.619  0.000  0.292  0.043    7728.440
+13     mta_post   po_knicks_2024     6  42.145  34.068  50.709  0.000  0.352  0.036    7728.440
+14     mta_post  po_rangers_2022     9  22.097  17.406  26.976  0.000  0.200  0.024    7728.440
+15     mta_post  po_rangers_2023     3  38.056  30.077  46.525  0.000  0.322  0.036    7728.440
+16     mta_post  po_rangers_2024     6  21.894  13.915  30.431  0.000  0.198  0.041    7728.440
+17     mta_post        pooled_po    27  29.368  24.608  34.309  0.000  0.257  0.023    7728.440
+18     mta_post       pooled_reg   208  29.648  26.728  32.634  0.000  0.260  0.014    7728.440
+19      taxi186   po_knicks_2025     9  -1.107  -3.751   1.610  0.499 -0.011  0.016   67473.661
+20      taxi186   po_knicks_2026     9  -3.799 -18.965  14.204  0.710 -0.039  0.104   67473.661
+21      taxi186        pooled_po    18  -2.502 -10.839   6.616  0.641 -0.025  0.054   67473.661
+22      taxi186       pooled_reg   160   5.227   2.584   7.938  0.001  0.051  0.015   67473.661
+
+PART B: $ per playoff home game
+  dewey 0.5 km basket: 277 balanced stores, 288.2 panel visits/store/day on non-game days
+  pooled playoff uplift +5.8% -> +16.58 panel visits/store/game -> $+580/store/game at $35 check; scenario bar (300 covers x $35 = $10,500/night): $+604/game
+  lo     playoff uplift +4.2% -> +12.04 panel visits/store/game -> $+421/store/game at $35 check; scenario bar (300 covers x $35 = $10,500/night): $+438/game
+  hi     playoff uplift +7.4% -> +21.19 panel visits/store/game -> $+742/store/game at $35 check; scenario bar (300 covers x $35 = $10,500/night): $+772/game
+  taxi186 (zone 186 fares): playoff -2.5% of $67,474/day -> $-1,688/game
+  -> hedge sizing uses u = $604 per playoff home game (scenario bar, pooled dewey 0.5 km uplift)
+
+  Best-of-7 (2-2-1-1-1) expected home games E[H] by series-win prob P and home court:
+    P=0.30 per-game p=0.405  E[H|HCA]=3.13  E[H|no HCA]=2.58
+    P=0.50 per-game p=0.500  E[H|HCA]=3.19  E[H|no HCA]=2.62
+    P=0.70 per-game p=0.595  E[H|HCA]=3.13  E[H|no HCA]=2.58
+    P=0.85 per-game p=0.682  E[H|HCA]=2.98  E[H|no HCA]=2.47
+    $ lost if eliminated in round 1 (later home games, FUT_P=0.5): E=5.09 games = $3,072
+    $ lost if eliminated in round 2 (later home games, FUT_P=0.5): E=4.36 games = $2,633
+    $ lost if eliminated in round 3 (later home games, FUT_P=0.5): E=2.91 games = $1,755
+    $ lost if eliminated in round 4 (later home games, FUT_P=0.5): E=0.00 games = $0
+
+PART C: Kalshi NY markets (series, result, candles, volume):
+              series                              ticker result        open       close  n_candles       volume
+0              KXNBA                        KXNBA-27-NYK         2026-06-14  2029-07-30        133         0.00
+1              KXNBA                        KXNBA-26-NYK    yes  2025-07-12  2026-06-14        337  72136810.47
+2              KXNBA                        KXNBA-25-NYK     no  2025-01-23  2025-06-23        113   6742838.00
+3          KXNBAEAST                    KXNBAEAST-27-NYK         2026-06-16  2029-06-29        131         0.00
+4          KXNBAEAST                    KXNBAEAST-26-NYK    yes  2025-07-12  2026-05-26        318   9410186.09
+5          KXNBAEAST                    KXNBAEAST-25-NYK     no  2025-01-23  2025-06-01        112   6891752.00
+6       KXNBAECFQUAL                 KXNBAECFQUAL-27-NYK         2026-09-17  2027-07-07         18         0.00
+7       KXNBAPLAYOFF                 KXNBAPLAYOFF-27-NYK         2026-06-15  2027-06-01        127         0.00
+8       KXNBAPLAYOFF                 KXNBAPLAYOFF-26-NYK    yes  2025-07-10  2026-04-05        239       844.00
+9       KXNBAPLAYOFF                 KXNBAPLAYOFF-25-NYK    yes  2025-03-28  2025-03-31          4         0.00
+10  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-9    yes  2026-04-16  2026-05-20         34      4436.05
+11  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-8    yes  2026-04-16  2026-05-10         25      5766.65
+12  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-7    yes  2026-04-16  2026-05-09         24      3364.53
+13  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-6    yes  2026-04-16  2026-05-08         23      6124.86
+14  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-5    yes  2026-04-16  2026-05-05         21      4267.18
+15  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-4    yes  2026-04-16  2026-05-01         13      7244.65
+16  KXNBAPLAYOFFWINS            KXNBAPLAYOFFWINS-26NYK-2    yes  2026-04-16  2026-04-27         10      1318.00
+17  KXNBAPLAYOFFWINS           KXNBAPLAYOFFWINS-26NYK-15    yes  2026-04-16  2026-06-12         55    290475.08
+18  KXNBAPLAYOFFWINS           KXNBAPLAYOFFWINS-26NYK-14    yes  2026-04-16  2026-06-06         48     72186.31
+19  KXNBAPLAYOFFWINS           KXNBAPLAYOFFWINS-26NYK-13    yes  2026-04-16  2026-06-04         48     99172.58
+20  KXNBAPLAYOFFWINS           KXNBAPLAYOFFWINS-26NYK-12    yes  2026-04-16  2026-05-26         39     70596.57
+21  KXNBAPLAYOFFWINS           KXNBAPLAYOFFWINS-26NYK-11    yes  2026-04-16  2026-05-24         37      4570.46
+22  KXNBAPLAYOFFWINS           KXNBAPLAYOFFWINS-26NYK-10    yes  2026-04-16  2026-05-22         32      1989.71
+23       KXNBASERIES          KXNBASERIES-26PHINYKR2-PHI     no  2026-05-03  2026-05-10          9   3144584.66
+24       KXNBASERIES          KXNBASERIES-26PHINYKR2-NYK    yes  2026-05-03  2026-05-10          9   1515429.14
+25       KXNBASERIES          KXNBASERIES-26ATLNYKR1-NYK    yes  2026-04-13  2026-05-01         19   1630092.13
+26       KXNBASERIES          KXNBASERIES-26ATLNYKR1-ATL     no  2026-04-13  2026-05-01         19    895305.57
+27       KXNBASERIES            KXNBASERIES-25NYKBOS-NYK    yes  2025-05-02  2025-05-17         15  10650409.00
+28       KXNBASERIES            KXNBASERIES-25NYKBOS-BOS     no  2025-05-02  2025-05-17         15   7621494.00
+29       KXNBASERIES            KXNBASERIES-25DETNYK-NYK    yes  2025-04-18  2025-05-02         14   2019056.00
+30       KXNBASERIES            KXNBASERIES-25DETNYK-DET     no  2025-04-18  2025-05-02         14   2988961.00
+31  KXNBASERIESGAMES      KXNBASERIESGAMES-26NYKSASFIN-7     no  2026-05-31  2026-06-14         16    203678.24
+32  KXNBASERIESGAMES      KXNBASERIESGAMES-26NYKSASFIN-6     no  2026-05-31  2026-06-14         16    570759.97
+33  KXNBASERIESGAMES      KXNBASERIESGAMES-26NYKSASFIN-5    yes  2026-05-31  2026-06-09         10    411261.04
+34  KXNBASERIESGAMES      KXNBASERIESGAMES-26CLENYKECF-7     no  2026-05-18  2026-05-26          9      3773.92
+35  KXNBASERIESGAMES      KXNBASERIESGAMES-26CLENYKECF-6     no  2026-05-18  2026-05-26          9     19325.70
+36  KXNBASERIESGAMES      KXNBASERIESGAMES-26CLENYKECF-5     no  2026-05-18  2026-05-26          9     10669.58
+37  KXNBASERIESGAMES       KXNBASERIESGAMES-26PHINYKR2-7     no  2026-05-03  2026-05-10          8      3509.26
+38  KXNBASERIESGAMES       KXNBASERIESGAMES-26PHINYKR2-6     no  2026-05-03  2026-05-10          8     24867.47
+39  KXNBASERIESGAMES       KXNBASERIESGAMES-26PHINYKR2-5     no  2026-05-03  2026-05-10          8     13188.83
+40  KXNBASERIESGAMES       KXNBASERIESGAMES-26ATLNYKR1-7     no  2026-04-14  2026-05-01         17      1395.33
+41  KXNBASERIESGAMES       KXNBASERIESGAMES-26ATLNYKR1-6    yes  2026-04-14  2026-04-26         12      2133.24
+42  KXNBASERIESGAMES       KXNBASERIESGAMES-26ATLNYKR1-5    yes  2026-04-14  2026-04-21          7       398.87
+43  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-SAS43     no  2026-05-31  2026-06-14         16   1837901.12
+44  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-SAS42     no  2026-05-31  2026-06-11         12   3080106.40
+45  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-SAS41     no  2026-05-31  2026-06-06          7    984896.78
+46  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-SAS40     no  2026-05-31  2026-06-04          5    682162.32
+47  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-NYK43     no  2026-05-31  2026-06-14         16   1598724.21
+48  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-NYK42     no  2026-05-31  2026-06-14         16   2432738.50
+49  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-NYK41    yes  2026-05-31  2026-06-14         16   3482287.30
+50  KXNBASERIESSCORE  KXNBASERIESSCORE-26NYKSASFIN-NYK40     no  2026-05-31  2026-06-09         10   3280952.47
+51  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-NYK43     no  2026-05-18  2026-05-26          9     35844.72
+52  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-NYK42     no  2026-05-18  2026-05-26          9    158974.82
+53  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-NYK41     no  2026-05-18  2026-05-26          9    142881.63
+54  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-NYK40    yes  2026-05-18  2026-05-26          9    272172.28
+55  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-CLE43     no  2026-05-18  2026-05-26          9     78344.90
+56  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-CLE42     no  2026-05-18  2026-05-24          7     22889.08
+57  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-CLE41     no  2026-05-18  2026-05-22          5     11181.99
+58  KXNBASERIESSCORE  KXNBASERIESSCORE-26CLENYKECF-CLE40     no  2026-05-18  2026-05-20          3     21859.51
+59  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-PHI43     no  2026-05-03  2026-05-10          8     33223.50
+60  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-PHI42     no  2026-05-03  2026-05-09          6     28677.74
+61  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-PHI41     no  2026-05-03  2026-05-07          4     15827.84
+62  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-PHI40     no  2026-05-03  2026-05-05          2     18958.43
+63  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-NYK43     no  2026-05-03  2026-05-10          8     26895.37
+64  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-NYK42     no  2026-05-03  2026-05-10          8     88228.88
+65  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-NYK41     no  2026-05-03  2026-05-10          8     94050.52
+66  KXNBASERIESSCORE   KXNBASERIESSCORE-26PHINYKR2-NYK40    yes  2026-05-03  2026-05-10          8    121114.60
+67  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-NYK43     no  2026-04-14  2026-05-01         17     42438.15
+68  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-NYK42    yes  2026-04-14  2026-05-01         17     83579.31
+69  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-NYK41     no  2026-04-14  2026-04-24         10     17856.47
+70  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-NYK40     no  2026-04-14  2026-04-21          7     16914.64
+71  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-ATL43     no  2026-04-14  2026-05-01         17     27426.17
+72  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-ATL42     no  2026-04-14  2026-04-29         15     25467.45
+73  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-ATL41     no  2026-04-14  2026-04-26         12     16342.49
+74  KXNBASERIESSCORE   KXNBASERIESSCORE-26ATLNYKR1-ATL40     no  2026-04-14  2026-04-19          5      3485.35
+75             KXNHL                        KXNHL-27-NYR         2026-06-15  2029-06-30        130         0.00
+76             KXNHL                        KXNHL-26-NYR     no  2025-09-25  2026-04-09        194    108842.00
+77             KXNHL                        KXNHL-25-NYR     no  2025-01-23  2025-06-18         37     34554.00
+78         KXNHLEAST                    KXNHLEAST-27-NYR         2026-07-06  2027-07-15        100         0.00
+79         KXNHLEAST                    KXNHLEAST-26-NYR     no  2025-09-26  2026-04-09        180      5394.00
+80         KXNHLEAST                    KXNHLEAST-25-NYR     no  2025-03-28  2025-05-29         11         4.00
+81      KXNHLPLAYOFF                 KXNHLPLAYOFF-27-NYR         2026-08-18  2027-04-25         66         0.00
+82      KXNHLPLAYOFF                 KXNHLPLAYOFF-26-NYR     no  2025-09-29  2026-04-06        182     25724.00
+83      KXNHLPLAYOFF                 KXNHLPLAYOFF-25-NYR     no  2025-03-28  2025-04-13          6         0.00
+
+Rounds of each MSG playoff run, with the pre-round price of 'NY wins this round':
+       team  season            round  opp          g1  games  home_games    hca    won                      ticker  kalshi_last  kalshi_bid  kalshi_ask      P    P_src
+0    knicks    2023   East 1st Round  CLE  2023-04-15      5           2  False   True                                      NaN         NaN         NaN  0.250  assumed
+1    knicks    2023  East Semifinals  MIA  2023-04-30      6           3   True  False                                      NaN         NaN         NaN  0.750  assumed
+2    knicks    2024   East 1st Round  PHI  2024-04-20      6           3   True   True                                      NaN         NaN         NaN  0.750  assumed
+3    knicks    2024  East Semifinals  IND  2024-05-06      7           4   True  False                                      NaN         NaN         NaN  0.750  assumed
+4    knicks    2025   East 1st Round  DET  2025-04-19      6           3   True   True    KXNBASERIES-25DETNYK-NYK         0.79        0.78        0.79  0.785   kalshi
+5    knicks    2025  East Semifinals  BOS  2025-05-05      6           3  False   True    KXNBASERIES-25NYKBOS-NYK         0.15        0.14        0.15  0.145   kalshi
+6    knicks    2025      East Finals  IND  2025-05-21      6           3   True  False            KXNBAEAST-25-NYK         0.60        0.59        0.60  0.595   kalshi
+7    knicks    2026   East 1st Round  ATL  2026-04-18      6           3   True   True  KXNBASERIES-26ATLNYKR1-NYK         0.73        0.72        0.73  0.725   kalshi
+8    knicks    2026  East Semifinals  PHI  2026-05-04      4           2   True   True  KXNBASERIES-26PHINYKR2-NYK         0.71        0.70        0.71  0.705   kalshi
+9    knicks    2026      East Finals  CLE  2026-05-19      4           2   True   True            KXNBAEAST-26-NYK         0.71        0.70        0.71  0.705   kalshi
+10   knicks    2026       NBA Finals   SA  2026-06-03      5           2  False   True                KXNBA-26-NYK         0.37        0.36        0.37  0.365   kalshi
+11  rangers    2024   East 1st Round  WSH  2024-04-21      4           2   True   True                                      NaN         NaN         NaN  0.600  assumed
+12  rangers    2024   East 2nd Round  CAR  2024-05-05      6           3   True   True                                      NaN         NaN         NaN  0.600  assumed
+13  rangers    2024       East Final  FLA  2024-05-22      6           3   True  False                                      NaN         NaN         NaN  0.600  assumed
+
+PART D: realised runs, hedge = buy 'NY loses round' before each round, sized to later home games:
+      team  season  home_games  rounds_won  revenue_unhedged  hedge_pnl  revenue_hedged  premium_paid
+0   knicks    2023           5           1            3020.0     -404.0          2616.0        3037.0
+1   knicks    2024           7           1            4227.0     1132.0          5359.0        1501.0
+2   knicks    2025           9           2            5435.0    -1993.0          3442.0        3748.0
+3   knicks    2026           9           4            5435.0    -2284.0          3151.0        2284.0
+4  rangers    2024           8           2            4831.0    -1354.0          3477.0        3109.0
+  across runs: SD unhedged $1,011 -> hedged $1,037; min $3,020 -> $2,616; total hedge P&L $-4,903
+
+Monte Carlo (20k seasons per run, fair prices + fee):
+      team  season  mean_unhedged  mean_hedged  sd_unhedged  sd_hedged  p5_unhedged  p5_hedged
+0   knicks    2023         2510.0       2449.0       1896.0      547.0       1208.0     1935.0
+1   knicks    2024         4754.0       4659.0       2049.0      660.0       1812.0     3573.0
+2   knicks    2025         3348.0       3295.0       1333.0      776.0       1812.0     2078.0
+3   knicks    2026         4780.0       4691.0       2183.0      692.0       1812.0     3793.0
+4  rangers    2024         4137.0       4044.0       2239.0      629.0       1812.0     2999.0
+
+Season playoff revenue by outcome (rounds won), Monte Carlo:
+       team  season  rounds_won   prob  mean_home_games  mean_revenue  mean_revenue_hedged
+0    knicks    2023           0  0.750            2.500      1509.839             2237.409
+1    knicks    2023           1  0.061            6.046      3651.619             3247.657
+2    knicks    2023           2  0.093            8.592      5189.097             2999.256
+3    knicks    2023           3  0.049           11.568      6986.172             3041.167
+4    knicks    2023           4  0.047           11.611      7012.303             3067.298
+5    knicks    2024           0  0.251            3.317      2002.927             4266.266
+6    knicks    2024           1  0.184            6.296      3802.195             4934.002
+7    knicks    2024           2  0.281            8.936      5396.921             4742.848
+8    knicks    2024           3  0.142           11.827      7142.586             4733.349
+9    knicks    2024           4  0.143           11.858      7161.246             4752.009
+10   knicks    2025           0  0.216            3.346      2020.721             4395.590
+11   knicks    2025           1  0.670            5.392      3256.168             2918.400
+12   knicks    2025           2  0.046            8.969      5416.412             3460.615
+13   knicks    2025           3  0.035           11.717      7076.320             3365.359
+14   knicks    2025           4  0.033           11.793      7122.304             3411.343
+15   knicks    2026           0  0.275            3.299      1992.565             4176.562
+16   knicks    2026           1  0.214            6.322      3817.870             4748.088
+17   knicks    2026           2  0.147            9.387      5669.257             5178.568
+18   knicks    2026           3  0.232           11.709      7071.286             4825.433
+19   knicks    2026           4  0.132           11.816      7136.035             4890.181
+20  rangers    2024           0  0.403            3.226      1948.503             3739.824
+21  rangers    2024           1  0.233            6.365      3843.939             4099.140
+22  rangers    2024           2  0.146            9.466      5716.766             4362.833
+23  rangers    2024           3  0.109           12.304      7430.740             4321.643
+24  rangers    2024           4  0.108           12.340      7452.525             4343.428

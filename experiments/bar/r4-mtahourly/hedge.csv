@@ -1,0 +1,3 @@
+event,outcome,beta_usd_day,price,sd_unhedged,sd_hedged,sd_change_pct,p5_unhedged,p5_hedged,mean_cost_day
+KXRAIN daily flag,sys_PM,-104054,0.356,209242,208842,-0.19,-301476,-286525,-3323
+KXRAIN daily flag,sys_EVE,-49426,0.356,77968,76828,-1.46,-148302,-135828,-1578

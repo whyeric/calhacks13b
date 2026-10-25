@@ -1,0 +1,31 @@
+  m["resid"] = sm.OLS(np.log(m.gross), X).fit().resid
+     split                                    check     beta       lo        hi  perm_p
+0    train                       baseline log_gross -0.02163  -0.0359 -0.007356     NaN
+1    train               + log performances control -0.02285 -0.03687 -0.008817     NaN
+2    train                     y = log performances 0.003474 -0.00392   0.01087     NaN
+3    train                    drop 3 snowiest weeks -0.02265 -0.03837 -0.006937     NaN
+4    train  permutation placebo (500, within month) 0.000746 -0.01521   0.01705    0.02
+5  holdout                       baseline log_gross -0.02486 -0.04392 -0.005797     NaN
+6  holdout               + log performances control -0.01665 -0.03268 -0.000616     NaN
+7  holdout                     y = log performances -0.01008 -0.02074 0.0005884     NaN
+8  holdout                    drop 3 snowiest weeks -0.03203 -0.05126  -0.01279     NaN
+9  holdout  permutation placebo (500, within month) 0.001446 -0.01495   0.01706   0.016
+   strike_in  train_freq  corr_snowdays_train  corr_snowdays_holdout  gap_snowdays
+0          2       0.551                0.645                  0.568         1.774
+1          4       0.435                0.682                  0.617         1.882
+2          6       0.348                0.692                  0.653         1.989
+3          8       0.304                0.708                  0.625         2.104
+4         10       0.188                0.660                  0.616         2.309
+5         12       0.116                0.608                  0.601         2.598
+           strike_in: 8
+               price: 0.3243
+                 fee: 0.01534
+           contracts: 1.502e+06
+              months: 71
+  yes_months_holdout: 27
+         sd_unhedged: 6.562e+06
+           sd_hedged: 6.584e+06
+         p5_unhedged: -1.031e+07
+           p5_hedged: -1.059e+07
+           mean_cost: 6.097e+04
+   corr_resid_payout: -0.02646

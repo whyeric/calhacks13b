@@ -1,0 +1,138 @@
+=== main grid: 32 tests (elasticity of weekly trips wrt gas price; CI90) ===
+             unit gas spec  tr_n   tr_b  tr_lo  tr_hi  tr_p  tr_sdx  ho_n   ho_b  ho_lo  ho_hi  ho_p  ho_sdx  bh_q  found
+      divvy_trips chi    A   102  0.660  0.063  1.257 0.069   0.046   103 -0.281 -0.475 -0.087 0.017   0.061 0.138  False
+      divvy_trips chi    B   102  1.059  0.291  1.826 0.023   0.041   103 -0.544 -1.024 -0.064 0.062   0.032 0.071  False
+      divvy_trips chi    C    50 -0.627 -1.339  0.085 0.147   0.060    51 -0.089 -0.249  0.071 0.361   0.113 0.236  False
+      divvy_trips  us    A   102  1.336  0.500  2.172 0.009   0.032   103 -0.292 -0.526 -0.057 0.041   0.038 0.046  False
+      divvy_trips  us    B   102  3.001  2.145  3.856 0.000   0.024   103 -0.335 -1.327  0.658 0.579   0.017 0.000  False
+      divvy_trips  us    C    50 -0.577 -1.128 -0.025 0.085   0.048    51 -0.132 -0.399  0.136 0.418   0.071 0.161  False
+     austin_trips  tx    A   103 -0.478 -1.543  0.587 0.460   0.038    72 -0.861 -1.761  0.038 0.115   0.048 0.508  False
+     austin_trips  tx    B   103 -0.144 -1.419  1.131 0.852   0.025    72  0.067 -1.235  1.368 0.933   0.019 0.880  False
+     austin_trips  us    A   103 -0.585 -1.676  0.505 0.377   0.036    72 -0.586 -1.548  0.376 0.316   0.044 0.431  False
+     austin_trips  us    B   103  0.096 -1.195  1.386 0.903   0.023    72  1.840  0.568  3.112 0.017   0.016 0.903  False
+citibike_jc_trips nyc    A    52  1.357 -0.268  2.982 0.169   0.015   104  0.137 -0.184  0.458 0.482   0.033 0.239  False
+citibike_jc_trips nyc    B    52  1.357 -0.268  2.982 0.169   0.015   104  0.599 -0.192  1.389 0.213   0.015 0.239  False
+citibike_jc_trips  us    A    52  0.934 -0.209  2.077 0.179   0.018   104  0.178 -0.245  0.601 0.489   0.025 0.239  False
+citibike_jc_trips  us    B    52  0.934 -0.209  2.077 0.179   0.018   104  1.293 -0.393  2.979 0.207   0.010 0.239  False
+        fhv_trips nyc    A   104  0.047 -0.038  0.131 0.364   0.060   104  0.195  0.061  0.329 0.017   0.033 0.431  False
+        fhv_trips nyc    B   104  0.454  0.106  0.803 0.032   0.023   104  0.141 -0.260  0.543 0.562   0.015 0.079  False
+        fhv_trips nyc    C    52 -0.047 -0.109  0.016 0.219   0.115    52  0.186  0.112  0.260 0.000   0.060 0.270  False
+        fhv_trips  us    A   104  0.091 -0.028  0.210 0.210   0.053   104  0.234  0.087  0.380 0.009   0.025 0.268  False
+        fhv_trips  us    B   104  0.566  0.146  0.986 0.027   0.021   104  0.237 -0.277  0.750 0.449   0.010 0.071  False
+        fhv_trips  us    C    52 -0.030 -0.111  0.052 0.550   0.101    52  0.255  0.145  0.365 0.000   0.046 0.586  False
+ fhv_usd_per_trip nyc    A   104  0.143  0.082  0.203 0.000   0.060   104 -0.012 -0.112  0.087 0.838   0.033 0.001  False
+ fhv_usd_per_trip nyc    B   104  0.374  0.216  0.531 0.000   0.023   104  0.160 -0.140  0.460 0.380   0.015 0.001  False
+ fhv_usd_per_trip nyc    C    52  0.106  0.038  0.175 0.010   0.115    52 -0.047 -0.129  0.034 0.339   0.060 0.046  False
+ fhv_usd_per_trip  us    A   104  0.149  0.066  0.232 0.003   0.053   104 -0.051 -0.189  0.087 0.546   0.025 0.021  False
+ fhv_usd_per_trip  us    B   104  0.400  0.190  0.610 0.002   0.021   104  0.222 -0.153  0.596 0.330   0.010 0.014  False
+ fhv_usd_per_trip  us    C    52  0.097  0.016  0.177 0.047   0.101    52 -0.044 -0.162  0.074 0.537   0.046 0.101  False
+     yellow_trips nyc    A   102  0.243  0.074  0.413 0.018   0.059   104 -0.133 -0.397  0.130 0.405   0.033 0.070  False
+     yellow_trips nyc    B   102  0.659  0.170  1.148 0.027   0.023   104  0.450 -0.504  1.404 0.438   0.015 0.071  False
+     yellow_trips nyc    C    50  0.115 -0.011  0.242 0.134   0.111    52 -0.301 -0.466 -0.137 0.003   0.060 0.229  False
+     yellow_trips  us    A   102  0.276  0.059  0.493 0.036   0.052   104 -0.097 -0.373  0.179 0.563   0.025 0.082  False
+     yellow_trips  us    B   102  0.745  0.220  1.270 0.020   0.021   104  0.754 -0.338  1.847 0.256   0.010 0.070  False
+     yellow_trips  us    C    50  0.136 -0.014  0.287 0.136   0.097    52 -0.283 -0.617  0.052 0.165   0.046 0.229  False
+
+=== placebo: lead4 gas (spec A, local gas) ===
+             unit period  lead_only_b  lead_only_lo  lead_only_hi  joint_cur_b  joint_cur_lo  joint_cur_hi  joint_lead_b  joint_lead_lo  joint_lead_hi
+      divvy_trips  train        0.368        -0.122         0.859        0.640         0.072         1.209         0.329         -0.090          0.749
+      divvy_trips   hold       -0.004        -0.271         0.263       -0.330        -0.592        -0.068         0.129         -0.191          0.450
+     austin_trips  train       -0.732        -1.838         0.375        0.046        -1.348         1.441        -0.755         -2.087          0.577
+     austin_trips   hold       -1.564        -2.321        -0.806        0.020        -1.070         1.110        -1.576         -2.646         -0.505
+citibike_jc_trips  train        1.554        -1.383         4.490        1.430        -0.152         3.012         1.689         -1.099          4.476
+citibike_jc_trips   hold       -0.133        -0.548         0.281        0.380        -0.130         0.890        -0.383         -0.999          0.234
+        fhv_trips  train       -0.049        -0.119         0.022        0.105        -0.002         0.212        -0.106         -0.203         -0.009
+        fhv_trips   hold        0.191         0.073         0.310        0.126        -0.131         0.382         0.109         -0.136          0.354
+ fhv_usd_per_trip  train        0.101         0.017         0.186        0.125         0.072         0.177         0.033         -0.057          0.123
+ fhv_usd_per_trip   hold       -0.130        -0.255        -0.005        0.120        -0.035         0.276        -0.209         -0.389         -0.029
+     yellow_trips  train        0.061        -0.106         0.228        0.296         0.113         0.479        -0.096         -0.288          0.095
+     yellow_trips   hold       -0.161        -0.484         0.162       -0.054        -0.596         0.489        -0.126         -0.724          0.473
+
+=== basis: local EIA vs US EIA ===
+2014-2017 chi : level r=0.981  weekly dlog r=0.677 (R2 0.46)  monthly dlog r=0.781 (R2 0.61) beta=1.09  spread mean +0.143 sd 0.130 $/gal
+2014-2017 tx  : level r=0.998  weekly dlog r=0.908 (R2 0.82)  monthly dlog r=0.966 (R2 0.93) beta=1.12  spread mean -0.231 sd 0.037 $/gal
+2014-2017 nyc : level r=0.990  weekly dlog r=0.827 (R2 0.68)  monthly dlog r=0.900 (R2 0.81) beta=0.89  spread mean +0.020 sd 0.079 $/gal
+2022-2025 chi : level r=0.963  weekly dlog r=0.717 (R2 0.51)  monthly dlog r=0.889 (R2 0.79) beta=1.20  spread mean +0.352 sd 0.183 $/gal
+2022-2025 tx  : level r=0.981  weekly dlog r=0.805 (R2 0.65)  monthly dlog r=0.926 (R2 0.86) beta=1.13  spread mean -0.455 sd 0.086 $/gal
+2022-2025 nyc : level r=0.978  weekly dlog r=0.812 (R2 0.66)  monthly dlog r=0.881 (R2 0.78) beta=0.95  spread mean -0.073 sd 0.098 $/gal
+2014-2025 chi : level r=0.984  weekly dlog r=0.701 (R2 0.49)  monthly dlog r=0.854 (R2 0.73) beta=1.15  spread mean +0.211 sd 0.175 $/gal
+2014-2025 tx  : level r=0.985  weekly dlog r=0.849 (R2 0.72)  monthly dlog r=0.953 (R2 0.91) beta=1.15  spread mean -0.337 sd 0.111 $/gal
+2014-2025 nyc : level r=0.988  weekly dlog r=0.820 (R2 0.67)  monthly dlog r=0.894 (R2 0.80) beta=0.86  spread mean -0.011 sd 0.092 $/gal
+
+range of local gas, by year ($/gal):
+        us         chi          tx         nyc      
+       min   max   min   max   min   max   min   max
+week                                                
+2013  3.19  3.78  3.25  4.36  2.96  3.65  3.32  3.82
+2014  2.30  3.71  2.31  4.09  2.05  3.52  2.54  3.80
+2015  2.03  2.84  2.00  3.37  1.76  2.62  2.03  2.80
+2016  1.72  2.40  1.56  2.78  1.52  2.15  1.72  2.41
+2017  2.26  2.68  2.27  2.86  2.01  2.56  2.33  2.80
+2018  2.27  2.96  2.12  3.20  1.90  2.76  2.41  3.01
+2019  2.24  2.90  2.12  3.27  1.86  2.60  2.32  2.93
+2020  1.77  2.58  1.84  2.70  1.43  2.25  1.96  2.60
+2021  2.25  3.41  2.36  3.62  1.88  3.06  2.26  3.44
+2022  3.09  5.01  3.25  5.80  2.55  4.64  3.16  4.98
+2023  3.05  3.88  3.09  4.40  2.46  3.45  3.12  3.77
+2024  3.01  3.67  2.98  4.32  2.51  3.27  2.90  3.61
+2025  2.81  3.24  2.99  3.66  2.36  2.86  2.81  3.11
+
+=== Kalshi settled ladders: implied AAA vs EIA (same Monday for KXAAAGASW) ===
+KXAAAGASW: 9 settled events; strike spacing e.g. [3.8, 3.82, 3.84, 3.86]
+   KXAAAGASW-26AUG24            2026-08-24 AAA in (4.098,4.100]  EIA us wk 2026-08-24 = 4.085  diff +0.014
+   KXAAAGASW-26AUG31            2026-08-31 AAA in (4.080,4.100]  EIA us wk 2026-08-31 = 4.071  diff +0.019
+   KXAAAGASW-26SEP07            2026-09-07 AAA in (4.150,4.160]  EIA us wk 2026-09-07 = 4.157  diff -0.002
+   KXAAAGASW-26SEP14            2026-09-14 AAA in (4.316,4.318]  EIA us wk 2026-09-14 = 4.319  diff -0.002
+   KXAAAGASW-26SEP21            2026-09-21 AAA in (4.470,4.480]  EIA us wk 2026-09-21 = 4.478  diff -0.003
+   KXAAAGASW-26SEP28            2026-09-28 AAA in (4.476,4.478]  EIA us wk 2026-09-28 = 4.465  diff +0.012
+   KXAAAGASW-26OCT05            2026-10-05 AAA in (4.360,4.380]  EIA us wk 2026-10-05 = 4.354  diff +0.016
+   KXAAAGASW-26OCT12            2026-10-12 AAA in (4.350,4.360]  EIA us wk 2026-10-12 = 4.331  diff +0.024
+   KXAAAGASW-26OCT19            2026-10-19 AAA in (4.290,4.300]  EIA us wk 2026-10-19 = 4.284  diff +0.011
+   mean AAA-EIA +0.010  sd 0.009
+KXAAAGASM: 2 settled events; strike spacing e.g. [2.5, 2.6, 2.7, 2.8]
+   KXAAAGASM-26AUG31            2026-08-31 AAA in (4.080,4.090]  EIA us wk 2026-08-31 = 4.071  diff +0.014
+   KXAAAGASM-26SEP30            2026-09-30 AAA in (4.430,4.440]  EIA us wk 2026-09-28 = 4.465  diff -0.030
+   mean AAA-EIA -0.008  sd 0.022
+KXAAAGASDIL: 58 settled events; strike spacing e.g. [4.235, 4.24, 4.245, 4.25]
+   KXAAAGASDIL-26OCT13          2026-10-13 AAA in (4.670,4.675]  EIA chi wk 2026-10-12 = 4.695  diff -0.023
+   KXAAAGASDIL-26OCT14          2026-10-14 AAA in (4.660,4.665]  EIA chi wk 2026-10-12 = 4.695  diff -0.033
+   KXAAAGASDIL-26OCT15          2026-10-15 AAA in (4.690,4.695]  EIA chi wk 2026-10-12 = 4.695  diff -0.002
+   KXAAAGASDIL-26OCT16          2026-10-16 AAA in (4.705,4.710]  EIA chi wk 2026-10-12 = 4.695  diff +0.012
+   KXAAAGASDIL-26OCT17          2026-10-17 AAA in (4.685,4.690]  EIA chi wk 2026-10-12 = 4.695  diff -0.008
+   KXAAAGASDIL-26OCT18          2026-10-18 AAA in (4.670,4.675]  EIA chi wk 2026-10-12 = 4.695  diff -0.023
+   KXAAAGASDIL-26OCT19          2026-10-19 AAA in (4.665,4.670]  EIA chi wk 2026-10-19 = 4.705  diff -0.037
+   KXAAAGASDIL-26OCT20          2026-10-20 AAA in (4.645,4.650]  EIA chi wk 2026-10-19 = 4.705  diff -0.058
+   KXAAAGASDIL-26OCT21          2026-10-21 AAA in (4.640,4.645]  EIA chi wk 2026-10-19 = 4.705  diff -0.062
+   KXAAAGASDIL-26OCT22          2026-10-22 AAA in (4.665,4.670]  EIA chi wk 2026-10-19 = 4.705  diff -0.037
+   KXAAAGASDIL-26OCT23          2026-10-23 AAA in (4.805,4.810]  EIA chi wk 2026-10-19 = 4.705  diff +0.102
+   KXAAAGASDIL-26OCT24          2026-10-24 AAA in (4.895,4.900]  EIA chi wk 2026-10-19 = 4.705  diff +0.192
+   mean AAA-EIA +0.002  sd 0.071
+KXAAAGASDTX: 62 settled events; strike spacing e.g. [3.57, 3.575, 3.58, 3.585]
+   KXAAAGASDTX-26OCT13          2026-10-13 AAA in (3.835,3.840]  EIA tx wk 2026-10-12 = 3.779  diff +0.058
+   KXAAAGASDTX-26OCT14          2026-10-14 AAA in (3.835,3.840]  EIA tx wk 2026-10-12 = 3.779  diff +0.058
+   KXAAAGASDTX-26OCT15          2026-10-15 AAA in (3.830,3.835]  EIA tx wk 2026-10-12 = 3.779  diff +0.054
+   KXAAAGASDTX-26OCT16          2026-10-16 AAA in (3.815,3.820]  EIA tx wk 2026-10-12 = 3.779  diff +0.038
+   KXAAAGASDTX-26OCT17          2026-10-17 AAA in (3.795,3.800]  EIA tx wk 2026-10-12 = 3.779  diff +0.018
+   KXAAAGASDTX-26OCT18          2026-10-18 AAA in (3.785,3.790]  EIA tx wk 2026-10-12 = 3.779  diff +0.009
+   KXAAAGASDTX-26OCT19          2026-10-19 AAA in (3.775,3.780]  EIA tx wk 2026-10-19 = 3.704  diff +0.073
+   KXAAAGASDTX-26OCT20          2026-10-20 AAA in (3.775,3.780]  EIA tx wk 2026-10-19 = 3.704  diff +0.073
+   KXAAAGASDTX-26OCT21          2026-10-21 AAA in (3.760,3.765]  EIA tx wk 2026-10-19 = 3.704  diff +0.058
+   KXAAAGASDTX-26OCT22          2026-10-22 AAA in (3.760,3.765]  EIA tx wk 2026-10-19 = 3.704  diff +0.058
+   KXAAAGASDTX-26OCT23          2026-10-23 AAA in (3.745,3.750]  EIA tx wk 2026-10-19 = 3.704  diff +0.043
+   KXAAAGASDTX-26OCT24          2026-10-24 AAA in (3.725,3.730]  EIA tx wk 2026-10-19 = 3.704  diff +0.023
+   mean AAA-EIA +0.047  sd 0.020
+KXAAAGASDNY: 60 settled events; strike spacing e.g. [4.135, 4.14, 4.145, 4.15]
+   KXAAAGASDNY-26OCT13          2026-10-13 AAA in (4.450,4.455]  EIA nyc wk 2026-10-12 = 4.314  diff +0.139
+   KXAAAGASDNY-26OCT14          2026-10-14 AAA in (4.445,4.450]  EIA nyc wk 2026-10-12 = 4.314  diff +0.133
+   KXAAAGASDNY-26OCT15          2026-10-15 AAA in (4.440,4.445]  EIA nyc wk 2026-10-12 = 4.314  diff +0.129
+   KXAAAGASDNY-26OCT16          2026-10-16 AAA in (4.430,4.435]  EIA nyc wk 2026-10-12 = 4.314  diff +0.118
+   KXAAAGASDNY-26OCT17          2026-10-17 AAA in (4.425,4.430]  EIA nyc wk 2026-10-12 = 4.314  diff +0.114
+   KXAAAGASDNY-26OCT18          2026-10-18 AAA in (4.420,4.425]  EIA nyc wk 2026-10-12 = 4.314  diff +0.108
+   KXAAAGASDNY-26OCT19          2026-10-19 AAA in (4.415,4.420]  EIA nyc wk 2026-10-19 = 4.249  diff +0.169
+   KXAAAGASDNY-26OCT20          2026-10-20 AAA in (4.410,4.415]  EIA nyc wk 2026-10-19 = 4.249  diff +0.163
+   KXAAAGASDNY-26OCT21          2026-10-21 AAA in (4.405,4.410]  EIA nyc wk 2026-10-19 = 4.249  diff +0.159
+   KXAAAGASDNY-26OCT22          2026-10-22 AAA in (4.400,4.405]  EIA nyc wk 2026-10-19 = 4.249  diff +0.154
+   KXAAAGASDNY-26OCT23          2026-10-23 AAA in (4.395,4.400]  EIA nyc wk 2026-10-19 = 4.249  diff +0.149
+   KXAAAGASDNY-26OCT24          2026-10-24 AAA in (4.385,4.390]  EIA nyc wk 2026-10-19 = 4.249  diff +0.138
+   mean AAA-EIA +0.139  sd 0.019
+Kalshi rules: If average regular gas prices for United States are strictly greater than $4.45 on Sep 30, 2026 according to AAA, then the market resolves to Yes.

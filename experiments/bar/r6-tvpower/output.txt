@@ -1,0 +1,228 @@
+games: 19179 (759 playoff), by city: {('chi', False): 8438, ('chi', True): 302, ('phl', False): 5680, ('phl', True): 257, ('pit', False): 4302, ('pit', True): 200}
+
+MAIN: 35 train tests, BH 10%. effect = % load per full game-hour (100·log MW)
+PJME    reg_in_nfl  tr  -0.12 [ -0.66, +0.41] d= 139 q=0.871 | ho  -0.12 [ -0.72, +0.48] d= 129 
+PJME    reg_in_mlb  tr  -0.27 [ -0.44, -0.10] d=1276 q=0.040 | ho  -0.16 [ -0.34, +0.02] d=1388 
+PJME    reg_in_nhl  tr  +0.30 [ +0.06, +0.55] d= 593 q=0.116 | ho  +0.50 [ +0.25, +0.75] d= 683 
+PJME    reg_in_nba  tr  +0.37 [ +0.12, +0.62] d= 662 q=0.072 | ho  +0.17 [ -0.08, +0.42] d= 711 
+PJME    po_in       tr  -0.04 [ -0.47, +0.38] d= 143 q=0.933 | ho  -0.31 [ -1.00, +0.39] d= 106 
+PJME    po_post     tr  -0.25 [ -0.68, +0.18] d= 159 q=0.543 | ho  -0.50 [ -1.25, +0.25] d= 135 
+PJME    ot          tr  -0.65 [ -1.32, +0.02] d= 335 q=0.223 | ho  -0.06 [ -0.75, +0.62] d= 372 
+PJME    close_late  tr  +0.05 [ -0.20, +0.31] d= 948 q=0.871 | ho  -0.15 [ -0.41, +0.11] d=1031 
+PJME    win_post    tr  +0.22 [ +0.05, +0.39] d=1551 q=0.115 | ho  +0.05 [ -0.15, +0.24] d=1571 
+DUQ     reg_in_nfl  tr  +0.51 [ -0.23, +1.25] d= 115 q=0.439 | ho  +0.28 [ -0.31, +0.87] d=  97 
+DUQ     reg_in_mlb  tr  +0.14 [ -0.07, +0.34] d=1125 q=0.439 | ho  -0.20 [ -0.42, +0.01] d=1072 
+DUQ     reg_in_nhl  tr  +0.30 [ +0.01, +0.59] d= 543 q=0.223 | ho  +0.25 [ -0.01, +0.51] d= 521 
+DUQ     po_in       tr  -0.85 [ -1.48, -0.22] d=  82 q=0.095 | ho  -0.18 [ -0.78, +0.42] d= 116 
+DUQ     po_post     tr  -1.15 [ -1.77, -0.53] d=  96 q=0.019 | ho  -0.40 [ -1.01, +0.22] d= 159 
+DUQ     ot          tr  +0.77 [ -0.02, +1.55] d= 259 q=0.223 | ho  -0.12 [ -1.12, +0.88] d= 242 
+DUQ     close_late  tr  +0.04 [ -0.28, +0.36] d= 653 q=0.933 | ho  +0.26 [ -0.08, +0.60] d= 665 
+DUQ     win_post    tr  +0.19 [ -0.07, +0.44] d=1030 q=0.407 | ho  +0.03 [ -0.22, +0.27] d=1147 
+COMED   reg_in_nfl  tr  -0.22 [ -0.94, +0.50] d=  65 q=0.871 | ho  +0.55 [ -1.25, +2.35] d=  48 
+COMED   reg_in_mlb  tr  -0.38 [ -0.59, -0.17] d= 686 q=0.019 | ho  -0.27 [ -0.53, -0.00] d= 633 FOUND
+COMED   reg_in_nhl  tr  +0.66 [ +0.31, +1.01] d= 311 q=0.019 | ho  +0.27 [ -0.14, +0.67] d= 308 
+COMED   reg_in_nba  tr  +0.42 [ +0.06, +0.79] d= 325 q=0.156 | ho  +0.14 [ -0.28, +0.55] d= 311 
+COMED   po_in       tr  -0.23 [ -0.99, +0.54] d=  98 q=0.871 | ho  +0.25 [ -0.59, +1.08] d=  86 
+COMED   po_post     tr  +0.18 [ -0.50, +0.86] d= 140 q=0.871 | ho  +0.65 [ -0.12, +1.41] d= 118 
+COMED   ot          tr  -0.09 [ -1.34, +1.16] d= 247 q=0.933 | ho  -0.51 [ -1.64, +0.62] d= 210 
+COMED   close_late  tr  +0.03 [ -0.37, +0.43] d= 630 q=0.933 | ho  +0.63 [ +0.18, +1.07] d= 567 
+COMED   win_post    tr  -0.37 [ -0.64, -0.10] d=1060 q=0.095 | ho  +0.18 [ -0.12, +0.48] d= 930 
+pooled  reg_in_nfl  tr  +0.08 [ -0.32, +0.48] d= 259 q=0.871 | ho  +0.11 [ -0.39, +0.61] d= 173 
+pooled  reg_in_mlb  tr  -0.21 [ -0.32, -0.09] d=2195 q=0.024 | ho  -0.21 [ -0.34, -0.07] d=1489 FOUND
+pooled  reg_in_nhl  tr  +0.38 [ +0.21, +0.56] d=1163 q=0.013 | ho  +0.36 [ +0.18, +0.54] d= 995 FOUND
+pooled  reg_in_nba  tr  +0.39 [ +0.18, +0.60] d= 987 q=0.019 | ho  +0.15 [ -0.07, +0.37] d= 847 
+pooled  po_in       tr  -0.31 [ -0.66, +0.03] d= 298 q=0.260 | ho  -0.12 [ -0.53, +0.30] d= 282 
+pooled  po_post     tr  -0.33 [ -0.67, -0.00] d= 371 q=0.223 | ho  -0.16 [ -0.59, +0.27] d= 373 
+pooled  ot          tr  -0.02 [ -0.57, +0.54] d= 795 q=0.960 | ho  -0.19 [ -0.74, +0.35] d= 728 
+pooled  close_late  tr  +0.04 [ -0.15, +0.23] d=1984 q=0.871 | ho  +0.19 [ -0.00, +0.39] d=1709 
+pooled  win_post    tr  +0.03 [ -0.11, +0.16] d=3072 q=0.871 | ho  +0.08 [ -0.06, +0.22] d=2349 
+
+PLACEBO far zone (full period, games of another city; should be ~0 unless national audience):
+AEP<-phl   reg_in_nfl  placebo  -0.19 [ -0.67, +0.29]   own zone same yrs  -0.25 [ -0.70, +0.20]
+AEP<-phl   reg_in_mlb  placebo  -0.03 [ -0.15, +0.10]   own zone same yrs  -0.24 [ -0.37, -0.10]
+AEP<-phl   reg_in_nhl  placebo  +0.20 [ -0.04, +0.43]   own zone same yrs  +0.41 [ +0.21, +0.61]
+AEP<-phl   reg_in_nba  placebo  +0.18 [ -0.05, +0.40]   own zone same yrs  +0.20 [ +0.00, +0.40]
+AEP<-phl   po_in       placebo  -0.10 [ -0.49, +0.28]   own zone same yrs  -0.10 [ -0.55, +0.34]
+AEP<-phl   po_post     placebo  -0.16 [ -0.56, +0.24]   own zone same yrs  -0.42 [ -0.90, +0.06]
+AEP<-phl   ot          placebo  +0.25 [ -0.31, +0.81]   own zone same yrs  -0.35 [ -0.90, +0.20]
+AEP<-phl   close_late  placebo  +0.02 [ -0.18, +0.22]   own zone same yrs  -0.08 [ -0.28, +0.13]
+AEP<-phl   win_post    placebo  +0.13 [ -0.02, +0.29]   own zone same yrs  +0.08 [ -0.07, +0.23]
+DOM<-pit   reg_in_nfl  placebo  -0.03 [ -0.48, +0.41]   own zone same yrs  +0.41 [ -0.08, +0.91]
+DOM<-pit   reg_in_mlb  placebo  -0.23 [ -0.39, -0.08]   own zone same yrs  -0.02 [ -0.17, +0.13]
+DOM<-pit   reg_in_nhl  placebo  +0.05 [ -0.18, +0.27]   own zone same yrs  +0.24 [ +0.04, +0.44]
+DOM<-pit   reg_in_nba  placebo   +nan [  +nan,  +nan]   own zone same yrs   +nan [  +nan,  +nan]
+DOM<-pit   po_in       placebo  -0.34 [ -0.79, +0.10]   own zone same yrs  -0.42 [ -0.89, +0.05]
+DOM<-pit   po_post     placebo  -0.90 [ -1.37, -0.43]   own zone same yrs  -0.69 [ -1.15, -0.23]
+DOM<-pit   ot          placebo  -0.31 [ -0.88, +0.26]   own zone same yrs  +0.16 [ -0.51, +0.83]
+DOM<-pit   close_late  placebo  +0.11 [ -0.15, +0.36]   own zone same yrs  +0.10 [ -0.13, +0.34]
+DOM<-pit   win_post    placebo  +0.05 [ -0.14, +0.23]   own zone same yrs  +0.10 [ -0.07, +0.28]
+PJME<-chi  reg_in_nfl  placebo  +0.71 [ -0.22, +1.65]   own zone same yrs  +0.17 [ -0.62, +0.97]
+PJME<-chi  reg_in_mlb  placebo  -0.15 [ -0.27, -0.02]   own zone same yrs  -0.33 [ -0.50, -0.15]
+PJME<-chi  reg_in_nhl  placebo  +0.26 [ +0.01, +0.50]   own zone same yrs  +0.47 [ +0.19, +0.74]
+PJME<-chi  reg_in_nba  placebo  +0.21 [ -0.05, +0.47]   own zone same yrs  +0.31 [ +0.03, +0.59]
+PJME<-chi  po_in       placebo  -0.62 [ -1.02, -0.22]   own zone same yrs  -0.01 [ -0.58, +0.55]
+PJME<-chi  po_post     placebo  -1.06 [ -1.45, -0.66]   own zone same yrs  +0.35 [ -0.16, +0.86]
+PJME<-chi  ot          placebo  -0.09 [ -0.66, +0.49]   own zone same yrs  -0.23 [ -1.10, +0.63]
+PJME<-chi  close_late  placebo  -0.07 [ -0.29, +0.15]   own zone same yrs  +0.34 [ +0.03, +0.64]
+PJME<-chi  win_post    placebo  +0.01 [ -0.13, +0.16]   own zone same yrs  -0.06 [ -0.26, +0.14]
+
+PLACEBO day-before (outcome features shifted -24 h; full period, own zone):
+PJME   po_in       day-before  -0.50 [ -0.83, -0.17]  real  -0.23 [ -0.61, +0.15]
+PJME   po_post     day-before  -0.61 [ -0.93, -0.29]  real  -0.40 [ -0.82, +0.01]
+PJME   ot          day-before  -0.13 [ -0.67, +0.42]  real  -0.33 [ -0.82, +0.16]
+PJME   close_late  day-before  +0.03 [ -0.15, +0.21]  real  -0.03 [ -0.21, +0.16]
+PJME   win_post    day-before  -0.06 [ -0.19, +0.07]  real  +0.13 [ +0.00, +0.27]
+DUQ    po_in       day-before  -0.56 [ -1.03, -0.09]  real  -0.51 [ -0.98, -0.04]
+DUQ    po_post     day-before  -0.80 [ -1.28, -0.31]  real  -0.82 [ -1.28, -0.36]
+DUQ    ot          day-before  +0.38 [ -0.34, +1.10]  real  +0.15 [ -0.51, +0.82]
+DUQ    close_late  day-before  +0.30 [ +0.06, +0.53]  real  +0.10 [ -0.14, +0.33]
+DUQ    win_post    day-before  -0.00 [ -0.17, +0.17]  real  +0.10 [ -0.08, +0.28]
+COMED  po_in       day-before  -0.38 [ -0.90, +0.15]  real  -0.02 [ -0.58, +0.55]
+COMED  po_post     day-before  -0.31 [ -0.79, +0.18]  real  +0.35 [ -0.16, +0.86]
+COMED  ot          day-before  +0.83 [ +0.12, +1.54]  real  -0.24 [ -1.10, +0.62]
+COMED  close_late  day-before  +0.13 [ -0.15, +0.41]  real  +0.33 [ +0.03, +0.63]
+COMED  win_post    day-before  +0.02 [ -0.18, +0.22]  real  -0.07 [ -0.27, +0.14]
+
+ROBUSTNESS (adds day-of-month × hour slope; full period, own zone): real vs day-before
+PJME   po_in       real  -0.23 [ -0.62, +0.15]  day-before  -0.50 [ -0.83, -0.17]
+PJME   po_post     real  -0.40 [ -0.82, +0.01]  day-before  -0.61 [ -0.93, -0.29]
+PJME   ot          real  -0.33 [ -0.82, +0.16]  day-before  -0.13 [ -0.68, +0.41]
+PJME   close_late  real  -0.04 [ -0.22, +0.14]  day-before  +0.01 [ -0.17, +0.19]
+PJME   win_post    real  +0.13 [ +0.00, +0.27]  day-before  -0.06 [ -0.19, +0.07]
+DUQ    po_in       real  -0.53 [ -1.01, -0.06]  day-before  -0.58 [ -1.05, -0.11]
+DUQ    po_post     real  -0.83 [ -1.30, -0.37]  day-before  -0.81 [ -1.30, -0.33]
+DUQ    ot          real  +0.16 [ -0.51, +0.83]  day-before  +0.38 [ -0.34, +1.10]
+DUQ    close_late  real  +0.10 [ -0.14, +0.33]  day-before  +0.30 [ +0.07, +0.53]
+DUQ    win_post    real  +0.10 [ -0.08, +0.28]  day-before  -0.00 [ -0.17, +0.16]
+COMED  po_in       real  -0.02 [ -0.59, +0.55]  day-before  -0.38 [ -0.90, +0.15]
+COMED  po_post     real  +0.35 [ -0.16, +0.86]  day-before  -0.31 [ -0.79, +0.17]
+COMED  ot          real  -0.24 [ -1.10, +0.62]  day-before  +0.82 [ +0.11, +1.54]
+COMED  close_late  real  +0.33 [ +0.03, +0.63]  day-before  +0.13 [ -0.15, +0.41]
+COMED  win_post    real  -0.06 [ -0.27, +0.14]  day-before  +0.02 [ -0.18, +0.22]
+AEP<-phl   far-zone po_in -0.11 [-0.49,+0.27]  po_post -0.15 [-0.56,+0.25]  reg_in_nhl +0.19  reg_in_mlb -0.02
+DOM<-pit   far-zone po_in -0.37 [-0.82,+0.08]  po_post -0.92 [-1.39,-0.45]  reg_in_nhl +0.04  reg_in_mlb -0.23
+PJME<-chi  far-zone po_in -0.61 [-1.00,-0.21]  po_post -1.03 [-1.42,-0.63]  reg_in_nhl +0.23  reg_in_mlb -0.13
+
+BIG GAMES: mean residual (% load) over game hours / 2 h after, vs no-game model (full period):
+PJME   2004-01-18 18:45 eagles     NFC CHAMPIONSHIP                   win=0 ot=0 in  +2.3%  post  +3.0%  (~  +822 MW)
+PJME   2005-01-23 15:00 eagles     NFC CHAMPIONSHIP                   win=1 ot=0 in  -0.4%  post  -1.6%  (~  -181 MW)
+PJME   2005-02-06 18:30 eagles     Super Bowl XXXIX                   win=0 ot=0 in  -2.8%  post  -2.2%  (~  -890 MW)
+PJME   2008-10-22 20:00 phillies   WORLD SERIES                       win=1 ot=0 in  -1.0%  post  -0.4%  (~  -331 MW)
+PJME   2008-10-23 20:00 phillies   WORLD SERIES                       win=0 ot=0 in  -0.3%  post  -1.5%  (~   -87 MW)
+PJME   2008-10-25 20:00 phillies   WORLD SERIES                       win=1 ot=0 in  +1.5%  post  +1.5%  (~  +438 MW)
+PJME   2008-10-26 20:00 phillies   WORLD SERIES                       win=1 ot=0 in  +0.8%  post  +0.8%  (~  +226 MW)
+PJME   2008-10-27 20:00 phillies   WORLD SERIES                       win=1 ot=0 in  -1.1%  post  -0.8%  (~  -372 MW)
+PJME   2009-01-18 15:00 eagles     NFC CHAMPIONSHIP                   win=0 ot=0 in  +3.0%  post  +0.3%  (~ +1135 MW)
+PJME   2009-10-28 19:57 phillies   WORLD SERIES                       win=1 ot=0 in  +0.6%  post  +1.1%  (~  +181 MW)
+PJME   2009-10-29 19:57 phillies   WORLD SERIES                       win=0 ot=0 in  +1.0%  post  +1.3%  (~  +331 MW)
+PJME   2009-10-31 19:57 phillies   WORLD SERIES                       win=0 ot=0 in  -1.3%  post  -0.7%  (~  -365 MW)
+PJME   2009-11-01 20:20 phillies   WORLD SERIES                       win=0 ot=0 in  +2.6%  post  +2.1%  (~  +759 MW)
+PJME   2009-11-02 19:57 phillies   WORLD SERIES                       win=1 ot=0 in  -0.6%  post  -1.0%  (~  -186 MW)
+PJME   2009-11-04 19:57 phillies   WORLD SERIES                       win=0 ot=0 in  -2.7%  post  -2.6%  (~  -908 MW)
+PJME   2010-05-14 19:00 flyers     EASTERN CONFERENCE SEMIFINALS - GA win=1 ot=0 in  -2.1%  post  +0.6%  (~  -703 MW)
+PJME   2010-05-29 20:00 flyers     STANLEY CUP FINAL - GAME 1         win=0 ot=0 in  +5.7%  post  +3.3%  (~ +1896 MW)
+PJME   2010-05-31 20:00 flyers     STANLEY CUP FINAL - GAME 2         win=0 ot=0 in  +0.9%  post  -3.1%  (~  +338 MW)
+PJME   2010-06-02 20:00 flyers     STANLEY CUP FINAL - GAME 3         win=1 ot=1 in  +1.9%  post  -0.5%  (~  +766 MW)
+PJME   2010-06-04 20:00 flyers     STANLEY CUP FINAL - GAME 4         win=1 ot=0 in  +4.6%  post  +1.8%  (~ +1952 MW)
+PJME   2010-06-06 20:00 flyers     STANLEY CUP FINAL - GAME 5         win=0 ot=0 in  -5.2%  post  -2.0%  (~ -1806 MW)
+PJME   2010-06-09 20:00 flyers     STANLEY CUP FINAL - GAME 6         win=0 ot=1 in  +1.6%  post  -3.3%  (~  +491 MW)
+PJME   2011-04-26 19:30 flyers     EASTERN CONFERENCE QUARTERFINALS - win=1 ot=0 in  -4.6%  post  -1.7%  (~ -1616 MW)
+PJME   2012-05-26 20:00 sixers     EASTERN CONFERENCE SEMIFINALS - GA win=0 ot=0 in  -2.0%  post  -1.2%  (~  -713 MW)
+PJME   2014-04-30 19:00 flyers     EASTERN CONFERENCE FIRST ROUND - G win=0 ot=0 in  +6.0%  post  +4.4%  (~ +1945 MW)
+PJME   2018-01-21 18:40 eagles     NFC CHAMPIONSHIP                   win=1 ot=0 in  -3.1%  post  -4.0%  (~  -962 MW)
+PJME   2018-02-04 18:30 eagles     Super Bowl LII                     win=1 ot=0 in  +3.6%  post  +5.2%  (~ +1229 MW)
+DUQ    2005-01-23 18:30 steelers   AFC CHAMPIONSHIP                   win=0 ot=0 in  -5.5%  post  -5.5%  (~  -106 MW)
+DUQ    2006-01-22 15:00 steelers   AFC CHAMPIONSHIP                   win=1 ot=0 in  -3.3%  post  -3.0%  (~   -51 MW)
+DUQ    2006-02-05 18:30 steelers   Super Bowl XL                      win=1 ot=0 in  -3.4%  post  +0.4%  (~   -57 MW)
+DUQ    2008-05-24 20:00 penguins   STANLEY CUP FINAL - GAME 1         win=0 ot=0 in  -1.4%  post  -2.2%  (~   -20 MW)
+DUQ    2008-05-26 20:00 penguins   STANLEY CUP FINAL - GAME 2         win=0 ot=0 in  -4.4%  post  -4.7%  (~   -67 MW)
+DUQ    2008-05-28 20:00 penguins   STANLEY CUP FINAL - GAME 3         win=1 ot=0 in  -2.6%  post  -1.8%  (~   -41 MW)
+DUQ    2008-05-31 20:00 penguins   STANLEY CUP FINAL - GAME 4         win=0 ot=0 in  -5.2%  post  -1.0%  (~   -85 MW)
+DUQ    2008-06-02 20:00 penguins   STANLEY CUP FINAL - GAME 5         win=1 ot=1 in  -1.2%  post  -5.7%  (~   -19 MW)
+DUQ    2008-06-04 20:00 penguins   STANLEY CUP FINAL - GAME 6         win=0 ot=0 in  +0.1%  post  -4.0%  (~    +2 MW)
+DUQ    2009-01-18 18:30 steelers   AFC CHAMPIONSHIP                   win=1 ot=0 in  -1.0%  post  +1.3%  (~   -17 MW)
+DUQ    2009-02-01 18:28 steelers   Super Bowl XLIII                   win=1 ot=0 in  -4.8%  post  -0.3%  (~   -74 MW)
+DUQ    2009-05-13 19:00 penguins   EASTERN CONFERENCE SEMIFINALS - GA win=1 ot=0 in  -3.8%  post  -2.8%  (~   -60 MW)
+DUQ    2009-05-30 20:00 penguins   STANLEY CUP FINAL - GAME 1         win=0 ot=0 in  +0.4%  post  +1.5%  (~    +6 MW)
+DUQ    2009-05-31 20:00 penguins   STANLEY CUP FINAL - GAME 2         win=0 ot=0 in  +2.5%  post  -0.9%  (~   +34 MW)
+DUQ    2009-06-02 20:00 penguins   STANLEY CUP FINAL - GAME 3         win=1 ot=0 in  +3.8%  post  +3.4%  (~   +69 MW)
+DUQ    2009-06-04 20:00 penguins   STANLEY CUP FINAL - GAME 4         win=1 ot=0 in  -1.6%  post  -2.4%  (~   -24 MW)
+DUQ    2009-06-06 20:00 penguins   STANLEY CUP FINAL - GAME 5         win=0 ot=0 in  -0.0%  post  -2.6%  (~    -0 MW)
+DUQ    2009-06-09 20:00 penguins   STANLEY CUP FINAL - GAME 6         win=1 ot=0 in  +0.3%  post  +1.7%  (~    +6 MW)
+DUQ    2009-06-12 20:00 penguins   STANLEY CUP FINAL - GAME 7         win=1 ot=0 in  -2.0%  post  +0.3%  (~   -33 MW)
+DUQ    2010-05-12 19:00 penguins   EASTERN CONFERENCE SEMIFINALS - GA win=0 ot=0 in  -1.5%  post  -3.9%  (~   -24 MW)
+DUQ    2011-01-23 18:30 steelers   AFC CHAMPIONSHIP                   win=1 ot=0 in  -5.1%  post  -2.2%  (~   -96 MW)
+DUQ    2011-02-06 18:29 steelers   Super Bowl XLV                     win=0 ot=0 in  -5.0%  post  -3.1%  (~   -82 MW)
+DUQ    2011-04-27 20:00 penguins   EASTERN CONFERENCE QUARTERFINALS - win=0 ot=0 in  -2.0%  post  +0.4%  (~   -35 MW)
+DUQ    2014-05-13 19:00 penguins   EASTERN CONFERENCE SECOND ROUND -  win=0 ot=0 in  +4.2%  post  +6.0%  (~   +92 MW)
+DUQ    2016-05-26 20:00 penguins   EASTERN CONFERENCE FINALS - GAME 7 win=1 ot=0 in  +7.9%  post  +7.1%  (~  +148 MW)
+DUQ    2016-05-30 20:00 penguins   STANLEY CUP FINAL - GAME 1         win=1 ot=0 in  +8.0%  post  +5.8%  (~  +147 MW)
+DUQ    2016-06-01 20:00 penguins   STANLEY CUP FINAL - GAME 2         win=1 ot=1 in  +4.4%  post  +5.6%  (~   +90 MW)
+DUQ    2016-06-04 20:00 penguins   STANLEY CUP FINAL - GAME 3         win=0 ot=1 in  +0.2%  post  +2.7%  (~    +3 MW)
+DUQ    2016-06-06 20:00 penguins   STANLEY CUP FINAL - GAME 4         win=1 ot=0 in  -3.3%  post  -0.7%  (~   -56 MW)
+DUQ    2016-06-09 20:00 penguins   STANLEY CUP FINAL - GAME 5         win=0 ot=0 in  -4.6%  post  -3.5%  (~   -67 MW)
+DUQ    2016-06-12 20:00 penguins   STANLEY CUP FINAL - GAME 6         win=1 ot=0 in  -4.4%  post  -1.5%  (~   -69 MW)
+DUQ    2017-01-22 18:40 steelers   AFC CHAMPIONSHIP                   win=0 ot=0 in  -3.8%  post  -4.4%  (~   -54 MW)
+DUQ    2017-05-10 19:30 penguins   EASTERN CONFERENCE SECOND ROUND -  win=1 ot=0 in  -0.2%  post  -1.2%  (~    -2 MW)
+DUQ    2017-05-25 20:00 penguins   EASTERN CONFERENCE FINALS - GAME 7 win=1 ot=1 in  +2.7%  post  +2.2%  (~   +39 MW)
+DUQ    2017-05-29 20:00 penguins   STANLEY CUP FINAL - GAME 1         win=1 ot=0 in  +6.1%  post  +4.0%  (~   +94 MW)
+DUQ    2017-05-31 20:00 penguins   STANLEY CUP FINAL - GAME 2         win=1 ot=0 in  +3.0%  post  +2.3%  (~   +46 MW)
+DUQ    2017-06-03 20:00 penguins   STANLEY CUP FINAL - GAME 3         win=0 ot=0 in  -2.2%  post  -3.8%  (~   -34 MW)
+DUQ    2017-06-05 20:00 penguins   STANLEY CUP FINAL - GAME 4         win=0 ot=0 in  -1.0%  post  -1.4%  (~   -15 MW)
+DUQ    2017-06-08 20:00 penguins   STANLEY CUP FINAL - GAME 5         win=1 ot=0 in  -5.6%  post  -4.5%  (~   -81 MW)
+DUQ    2017-06-11 20:00 penguins   STANLEY CUP FINAL - GAME 6         win=1 ot=0 in  +4.0%  post  +2.7%  (~   +78 MW)
+COMED  2011-01-23 15:00 bears      NFC CHAMPIONSHIP                   win=0 ot=0 in  -1.5%  post  -0.2%  (~  -182 MW)
+COMED  2011-04-26 22:00 blackhawks WESTERN CONFERENCE QUARTERFINALS - win=0 ot=1 in  +0.9%  post  +0.3%  (~   +93 MW)
+COMED  2013-05-04 20:00 bulls      EASTERN CONFERENCE 1st ROUND - GAM win=1 ot=0 in  -1.1%  post  -1.1%  (~  -109 MW)
+COMED  2013-05-29 20:00 blackhawks WESTERN CONFERENCE SEMIFINALS - GA win=1 ot=1 in  -2.7%  post  -3.3%  (~  -379 MW)
+COMED  2013-06-12 20:00 blackhawks STANLEY CUP FINAL - GAME 1         win=1 ot=1 in  +3.5%  post  +8.3%  (~  +449 MW)
+COMED  2013-06-15 20:00 blackhawks STANLEY CUP FINAL - GAME 2         win=0 ot=1 in  +5.2%  post  +3.1%  (~  +629 MW)
+COMED  2013-06-17 20:00 blackhawks STANLEY CUP FINAL - GAME 3         win=0 ot=0 in  -5.9%  post  +0.5%  (~  -863 MW)
+COMED  2013-06-19 20:00 blackhawks STANLEY CUP FINAL - GAME 4         win=1 ot=1 in  +3.0%  post  -4.2%  (~  +360 MW)
+COMED  2013-06-22 20:00 blackhawks STANLEY CUP FINAL - GAME 5         win=1 ot=0 in -11.0%  post -12.0%  (~ -1438 MW)
+COMED  2013-06-24 20:00 blackhawks STANLEY CUP FINAL - GAME 6         win=1 ot=0 in  -4.7%  post  -7.9%  (~  -652 MW)
+COMED  2014-06-01 20:00 blackhawks WESTERN CONFERENCE FINALS - GAME 7 win=0 ot=1 in  -3.0%  post  +1.1%  (~  -415 MW)
+COMED  2015-05-30 20:00 blackhawks WESTERN CONFERENCE FINALS - GAME 7 win=1 ot=0 in  -1.7%  post  -2.2%  (~  -161 MW)
+COMED  2015-06-03 20:00 blackhawks STANLEY CUP FINAL - GAME 1         win=1 ot=0 in  -2.9%  post  -4.3%  (~  -344 MW)
+COMED  2015-06-06 19:15 blackhawks STANLEY CUP FINAL - GAME 2         win=0 ot=0 in  -0.2%  post  -0.8%  (~   -19 MW)
+COMED  2015-06-08 20:00 blackhawks STANLEY CUP FINAL - GAME 3         win=0 ot=0 in  -1.2%  post  -5.5%  (~  -148 MW)
+COMED  2015-06-10 20:00 blackhawks STANLEY CUP FINAL - GAME 4         win=1 ot=0 in  +7.5%  post  +8.3%  (~ +1144 MW)
+COMED  2015-06-13 20:00 blackhawks STANLEY CUP FINAL - GAME 5         win=1 ot=0 in  +4.4%  post  +2.8%  (~  +548 MW)
+COMED  2015-06-15 20:00 blackhawks STANLEY CUP FINAL - GAME 6         win=1 ot=0 in  +6.6%  post  +8.8%  (~  +937 MW)
+COMED  2016-04-25 20:30 blackhawks WESTERN CONFERENCE FIRST ROUND - G win=0 ot=0 in  +3.1%  post  +5.5%  (~  +371 MW)
+COMED  2016-10-25 20:00 cubs       World Series - GAME 1              win=0 ot=0 in  +4.8%  post  +3.9%  (~  +535 MW)
+COMED  2016-10-26 19:00 cubs       World Series - GAME 2              win=1 ot=0 in  +7.3%  post  +5.8%  (~  +863 MW)
+COMED  2016-10-28 20:00 cubs       World Series - GAME 3              win=0 ot=0 in  +4.0%  post  +3.5%  (~  +443 MW)
+COMED  2016-10-29 20:00 cubs       World Series - GAME 4              win=0 ot=0 in  +2.9%  post  +1.3%  (~  +291 MW)
+COMED  2016-10-30 20:00 cubs       World Series - GAME 5              win=1 ot=0 in  +4.0%  post  +3.9%  (~  +393 MW)
+COMED  2016-11-01 20:00 cubs       World Series - GAME 6              win=1 ot=0 in  -3.3%  post  +0.4%  (~  -373 MW)
+COMED  2016-11-02 20:00 cubs       World Series - GAME 7              win=1 ot=1 in  -0.1%  post  +1.4%  (~    -8 MW)
+
+SUPER BOWL 18:00-22:00 ET mean residual (% load), every zone, by whether a local team played:
+PJME   local-team SBs: [-2.7, 3.5]  other SBs: mean -1.18% (n=14, se 0.44)  | SD of any evening's residual 2.97%
+DUQ    local-team SBs: [-3.3, -4.7, -5.1]  other SBs: mean -0.88% (n=10, se 0.95)  | SD of any evening's residual 3.15%
+COMED  local-team SBs: []  other SBs: mean +0.43% (n=8, se 0.56)  | SD of any evening's residual 4.12%
+AEP    local-team SBs: []  other SBs: mean -0.25% (n=14, se 0.71)  | SD of any evening's residual 3.07%
+DOM    local-team SBs: []  other SBs: mean -0.93% (n=13, se 0.69)  | SD of any evening's residual 3.22%
+
+EXPLORATORY post hoc: NFL playoff game hours, mean residual own zone vs far zone (not in the BH family)
+pit NFL playoff games n=19: own DUQ -0.73% (se 0.80), far DOM -0.01% (se 0.50), own−far -0.72% (se 0.97); own<0 in 12/19
+phl NFL playoff games n=14: own PJME -0.23% (se 0.71), far AEP +0.18% (se 0.96), own−far -0.41% (se 0.84); own<0 in 7/14
+pit NFL playoff games n=19: own DUQ -0.73% (se 0.80), far PJME +0.24% (se 0.56), own−far -0.97% (se 0.61); own<0 in 12/19
+
+DOLLARS (holdout betas × zone mean MW in those hours × hours, at $40/MWh):
+PJME   po_in       beta_ho -0.31% ×   30625 MW × 2.68 h =  -254.1 MWh = $  -10,166 per event  [90% CI $-32,991 .. $+12,660]
+PJME   po_post     beta_ho -0.50% ×   27859 MW × 2.00 h =  -278.5 MWh = $  -11,139 per event  [90% CI $-27,772 .. $+5,494]
+PJME   ot          beta_ho -0.06% ×   31949 MW × 0.46 h =    -9.0 MWh = $     -361 per event  [90% CI $-4,402 .. $+3,681]
+PJME   close_late  beta_ho -0.15% ×   33142 MW × 1.00 h =   -49.8 MWh = $   -1,994 per event  [90% CI $-5,420 .. $+1,432]
+PJME   win_post    beta_ho +0.05% ×   31030 MW × 2.00 h =   +28.2 MWh = $   +1,126 per event  [90% CI $-3,718 .. $+5,971]
+DUQ    po_in       beta_ho -0.18% ×    1573 MW × 2.58 h =    -7.4 MWh = $     -298 per event  [90% CI $-1,273 .. $+677]
+DUQ    po_post     beta_ho -0.40% ×    1442 MW × 2.00 h =   -11.4 MWh = $     -457 per event  [90% CI $-1,170 .. $+257]
+DUQ    ot          beta_ho -0.12% ×    1607 MW × 0.56 h =    -1.1 MWh = $      -42 per event  [90% CI $-402 .. $+317]
+DUQ    close_late  beta_ho +0.26% ×    1684 MW × 1.00 h =    +4.4 MWh = $     +175 per event  [90% CI $-53 .. $+403]
+DUQ    win_post    beta_ho +0.03% ×    1599 MW × 2.00 h =    +0.9 MWh = $      +37 per event  [90% CI $-276 .. $+350]
+COMED  po_in       beta_ho +0.25% ×   10647 MW × 2.72 h =   +71.2 MWh = $   +2,848 per event  [90% CI $-6,843 .. $+12,538]
+COMED  po_post     beta_ho +0.65% ×    9781 MW × 2.00 h =  +126.3 MWh = $   +5,050 per event  [90% CI $-914 .. $+11,014]
+COMED  ot          beta_ho -0.51% ×   11527 MW × 0.55 h =   -32.4 MWh = $   -1,296 per event  [90% CI $-4,163 .. $+1,570]
+COMED  close_late  beta_ho +0.63% ×   11862 MW × 1.00 h =   +74.2 MWh = $   +2,967 per event  [90% CI $+837 .. $+5,096]
+COMED  win_post    beta_ho +0.18% ×   11298 MW × 2.00 h =   +40.9 MWh = $   +1,637 per event  [90% CI $-1,053 .. $+4,327]

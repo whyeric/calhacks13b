@@ -1,0 +1,15 @@
+team,season,round,k,opp,g1,games,home_games,hca,won,ticker,kalshi_last,kalshi_bid,kalshi_ask,P,P_src
+knicks,2023,East 1st Round,0,CLE,2023-04-15,5,2,False,True,,,,,0.25,assumed
+knicks,2023,East Semifinals,1,MIA,2023-04-30,6,3,True,False,,,,,0.75,assumed
+knicks,2024,East 1st Round,0,PHI,2024-04-20,6,3,True,True,,,,,0.75,assumed
+knicks,2024,East Semifinals,1,IND,2024-05-06,7,4,True,False,,,,,0.75,assumed
+knicks,2025,East 1st Round,0,DET,2025-04-19,6,3,True,True,KXNBASERIES-25DETNYK-NYK,0.79,0.78,0.79,0.785,kalshi
+knicks,2025,East Semifinals,1,BOS,2025-05-05,6,3,False,True,KXNBASERIES-25NYKBOS-NYK,0.15,0.14,0.15,0.145,kalshi
+knicks,2025,East Finals,2,IND,2025-05-21,6,3,True,False,KXNBAEAST-25-NYK,0.6,0.59,0.6,0.595,kalshi
+knicks,2026,East 1st Round,0,ATL,2026-04-18,6,3,True,True,KXNBASERIES-26ATLNYKR1-NYK,0.73,0.72,0.73,0.725,kalshi
+knicks,2026,East Semifinals,1,PHI,2026-05-04,4,2,True,True,KXNBASERIES-26PHINYKR2-NYK,0.71,0.7,0.71,0.705,kalshi
+knicks,2026,East Finals,2,CLE,2026-05-19,4,2,True,True,KXNBAEAST-26-NYK,0.71,0.7,0.71,0.705,kalshi
+knicks,2026,NBA Finals,3,SA,2026-06-03,5,2,False,True,KXNBA-26-NYK,0.37,0.36,0.37,0.365,kalshi
+rangers,2024,East 1st Round,0,WSH,2024-04-21,4,2,True,True,,,,,0.6,assumed
+rangers,2024,East 2nd Round,1,CAR,2024-05-05,6,3,True,True,,,,,0.6,assumed
+rangers,2024,East Final,2,FLA,2024-05-22,6,3,True,False,,,,,0.6,assumed

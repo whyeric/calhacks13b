@@ -1,0 +1,36 @@
+series        event     | train beta            90% CI  n_ev   p_bh |  hold beta            90% CI  n_ev   p_bh | verdict
+city          rain      |    -0.0172 [-0.0262,-0.0083]   271  0.004 |    -0.0267 [-0.0610,+0.0076]   136  0.306 | not found
+city          rain25    |    -0.0385 [-0.0519,-0.0251]   109  0.000 |    -0.0067 [-0.0374,+0.0239]    50  0.813 | not found
+city          hot       |    +0.0026 [-0.0067,+0.0118]   208  0.812 |    -0.0808 [-0.1352,-0.0264]    90  0.035 | not found
+city          cold      |    -0.0063 [-0.0180,+0.0054]   278  0.555 |    +0.0277 [-0.0096,+0.0650]   137  0.310 | not found
+city          gsw_home  |    +0.0338 [+0.0235,+0.0440]   101  0.000 |    +0.0624 [+0.0385,+0.0864]    93  0.000 | real, NOT settleable
+city          gsw_win   |    +0.0251 [+0.0001,+0.0502]    70  0.217 |    -0.0056 [-0.0464,+0.0353]    53  0.891 | not found
+city          sfg_home  |    +0.0876 [+0.0812,+0.0940]   338  0.000 |    +0.0830 [+0.0449,+0.1212]   202  0.002 | real, NOT settleable
+city          sfg_win   |    +0.0051 [-0.0010,+0.0112]   166  0.314 |    +0.0736 [+0.0261,+0.1212]    96  0.030 | not found
+chase         rain      |    -0.0078 [-0.0578,+0.0422]   270  0.812 |    -0.0764 [-0.1515,-0.0012]   135  0.176 | not found
+chase         rain25    |    +0.0113 [-0.0612,+0.0839]   109  0.812 |    -0.1872 [-0.2877,-0.0868]    50  0.008 | not found
+chase         hot       |    +0.0117 [-0.0577,+0.0811]   206  0.812 |    -0.1520 [-0.2462,-0.0578]    90  0.026 | not found
+chase         cold      |    -0.1140 [-0.1716,-0.0565]   278  0.003 |    -0.0724 [-0.1557,+0.0109]   135  0.248 | not found
+chase         gsw_home  |    +0.6502 [+0.5824,+0.7180]   101  0.000 |    +0.6424 [+0.5829,+0.7020]    94  0.000 | real, NOT settleable
+chase         gsw_win   |    +0.1045 [-0.0001,+0.2091]    70  0.217 |    +0.0236 [-0.0623,+0.1095]    54  0.769 | not found
+chase         sfg_home  |    +0.8325 [+0.7914,+0.8736]   338  0.000 |    +0.5744 [+0.5142,+0.6345]   202  0.000 | real, NOT settleable
+chase         sfg_win   |    +0.0060 [-0.0355,+0.0475]   166  0.812 |    +0.1191 [+0.0416,+0.1966]    96  0.030 | not found
+oracle        rain      |    -0.0224 [-0.0622,+0.0175]   269  0.555 |    -0.0408 [-0.1182,+0.0367]   134  0.502 | not found
+oracle        rain25    |    -0.0378 [-0.0817,+0.0062]   108  0.314 |    -0.1018 [-0.1814,-0.0222]    49  0.071 | not found
+oracle        hot       |    -0.0093 [-0.0675,+0.0489]   207  0.812 |    -0.0971 [-0.2068,+0.0125]    88  0.248 | not found
+oracle        cold      |    -0.1054 [-0.1562,-0.0546]   278  0.002 |    -0.0032 [-0.0715,+0.0652]   135  0.939 | not found
+oracle        gsw_home  |    +0.1659 [+0.1178,+0.2140]   101  0.000 |    +0.2059 [+0.1440,+0.2678]    93  0.000 | real, NOT settleable
+oracle        gsw_win   |    +0.0644 [-0.0211,+0.1499]    70  0.374 |    +0.0719 [-0.0259,+0.1697]    53  0.310 | not found
+oracle        sfg_home  |    +0.7836 [+0.7387,+0.8284]   338  0.000 |    +0.8262 [+0.7627,+0.8897]   202  0.000 | real, NOT settleable
+oracle        sfg_win   |    +0.0250 [-0.0223,+0.0723]   166  0.555 |    +0.0995 [+0.0260,+0.1730]    96  0.057 | not found
+city_monthly  precip_in |    +0.0014 [-0.0035,+0.0062]     -  0.812 |    -0.0023 [-0.0479,+0.0433]     -  0.939 | not found
+city_monthly  rain_days |    +0.0004 [-0.0017,+0.0026]     -  0.812 |    +0.0060 [-0.0110,+0.0230]     -  0.678 | not found
+
+No settleable event passed every criterion, so no hedge backtest was run.
+
+26 tests; BH at 10% on train p and holdout p separately.
+
+Mean daily revenue (train, Mon-Sat): city $187,813, chase $4,936, oracle $7,937
+Dollar effects (holdout, vs non-event mean): city/rain -4,296; city/rain25 -1,086; city/hot -12,638; city/cold +4,567; city/gsw_home +10,414; city/gsw_win -897; city/sfg_home +13,695; city/sfg_win +12,222; chase/rain -525; chase/rain25 -1,211; chase/hot -991; chase/cold -502; chase/gsw_home +5,954; chase/gsw_win +162; chase/sfg_home +4,632; chase/sfg_win +822; oracle/rain -263; oracle/rain25 -628; oracle/hot -584; oracle/cold -21; oracle/gsw_home +1,463; oracle/gsw_win +476; oracle/sfg_home +6,232; oracle/sfg_win +595
+
+Sample: 9136 series-days; gap days dropped: city 38, chase 45, oracle 55
