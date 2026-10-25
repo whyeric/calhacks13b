@@ -1,0 +1,21 @@
+# Hedge Desk API on Render's free tier (Dashboard > New > Blueprint, pick this repo and branch).
+# Free has no disk: the container re-seeds the demo on every start, and sleeps after 15 min idle.
+# The frontend deploys separately on Vercel with NEXT_PUBLIC_API_URL set to this service's URL.
+services:
+  - type: web
+    name: hedge-desk-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      # The Vercel site's origin, e.g. https://hedge-desk.vercel.app (comma-separate several).
+      - key: CORS_ORIGINS
+        sync: false
+      - key: DEMO_SAMPLE_WEEK
+        value: "1"
+      # Optional: set ANTHROPIC_API_KEY in the dashboard for the real agent; empty = fallback.
+      - key: ANTHROPIC_MODEL
+        value: claude-sonnet-5-5

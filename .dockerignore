@@ -1,0 +1,14 @@
+# Only backend/ goes into the image.
+*
+!backend/
+backend/.venv/
+backend/**/__pycache__/
+backend/**/*.egg-info/
+backend/.pytest_cache/
+backend/*.db
+backend/*.db-*
+backend/tests/
+backend/ledgers/
+# Dewey-derived aggregates stay off hosted servers (D2 pending), as in .gitignore.
+backend/fixtures/restaurant_daily.parquet
+backend/fixtures/msg_visits_daily.parquet
