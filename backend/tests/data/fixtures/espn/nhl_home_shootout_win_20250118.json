@@ -1,0 +1,1041 @@
+{
+ "events": [
+  {
+   "id": "401688327",
+   "uid": "s:70~l:90~e:401688327",
+   "date": "2025-01-19T00:00Z",
+   "name": "Columbus Blue Jackets at New York Rangers",
+   "shortName": "CBJ @ NYR",
+   "season": {
+    "year": 2025,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "competitions": [
+    {
+     "id": "401688327",
+     "uid": "s:70~l:90~e:401688327~c:401688327",
+     "date": "2025-01-19T00:00Z",
+     "attendance": 18006,
+     "type": {
+      "id": "1",
+      "abbreviation": "STD"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "playByPlayAvailable": true,
+     "recent": false,
+     "venue": {
+      "id": "1830",
+      "fullName": "Madison Square Garden",
+      "address": {
+       "city": "New York",
+       "state": "NY",
+       "country": "USA"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "13",
+       "uid": "s:70~l:90~t:13",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": true,
+       "team": {
+        "id": "13",
+        "uid": "s:70~l:90~t:13",
+        "location": "New York",
+        "name": "Rangers",
+        "abbreviation": "NYR",
+        "displayName": "New York Rangers",
+        "shortDisplayName": "Rangers",
+        "color": "0056ae",
+        "alternateColor": "e51937",
+        "isActive": true,
+        "venue": {
+         "id": "1830"
+        },
+        "links": [
+         {
+          "rel": [
+           "clubhouse",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/_/name/nyr/new-york-rangers",
+          "text": "Clubhouse",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "clubhouse",
+           "mobile",
+           "team"
+          ],
+          "href": "https://m.espn.com/nhl/clubhouse?teamId=13",
+          "text": "Clubhouse",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "roster",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/roster/_/name/nyr/new-york-rangers",
+          "text": "Roster",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "roster",
+           "sportscenter",
+           "app",
+           "team"
+          ],
+          "href": "sportscenter://x-callback-url/showClubhouse?uid=s:70~l:90~t:13&section=roster",
+          "text": "Roster",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "stats",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/stats/_/name/nyr/new-york-rangers",
+          "text": "Statistics",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "stats",
+           "sportscenter",
+           "app",
+           "team"
+          ],
+          "href": "sportscenter://x-callback-url/showClubhouse?uid=s:70~l:90~t:13&section=stats",
+          "text": "Statistics",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "schedule",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/schedule/_/name/nyr",
+          "text": "Schedule",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "schedule",
+           "sportscenter",
+           "app",
+           "team"
+          ],
+          "href": "sportscenter://x-callback-url/showClubhouse?uid=s:70~l:90~t:13&section=scores",
+          "text": "Schedule",
+          "isExternal": false,
+          "isPremium": false
+         }
+        ],
+        "logo": "https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyr.png",
+        "logoDark": "https://a.espncdn.com/i/teamlogos/nhl/500-dark/scoreboard/nyr.png"
+       },
+       "score": "1",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 5
+        }
+       ],
+       "statistics": [
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "27"
+        },
+        {
+         "name": "savePct",
+         "abbreviation": "SV%",
+         "displayValue": "1.000"
+        },
+        {
+         "name": "goals",
+         "abbreviation": "G",
+         "displayValue": "0"
+        },
+        {
+         "name": "ytdGoals",
+         "abbreviation": "YTDG",
+         "displayValue": "258"
+        },
+        {
+         "name": "assists",
+         "abbreviation": "A",
+         "displayValue": "0"
+        },
+        {
+         "name": "points",
+         "abbreviation": "PTS",
+         "displayValue": "0"
+        }
+       ],
+       "probables": [
+        {
+         "name": "probableStartingGoalie",
+         "displayName": "Probable Starting Goalie",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SG",
+         "playerId": 3151297,
+         "athlete": {
+          "id": "3151297",
+          "fullName": "Igor Shesterkin",
+          "displayName": "Igor Shesterkin",
+          "shortName": "I. Shesterkin",
+          "links": [
+           {
+            "rel": [
+             "playercard",
+             "desktop",
+             "athlete"
+            ],
+            "href": "https://www.espn.com/nhl/player/_/id/3151297"
+           }
+          ],
+          "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/3151297.png",
+          "jersey": "31",
+          "position": "G",
+          "team": {
+           "id": "13"
+          }
+         },
+         "status": {
+          "id": "102",
+          "name": "Confirmed",
+          "type": "confirmed",
+          "abbreviation": "Confirmed"
+         },
+         "statistics": [],
+         "record": ""
+        }
+       ],
+       "curatedRank": {
+        "current": 99
+       },
+       "records": [
+        {
+         "name": "YTD",
+         "abbreviation": "Game",
+         "type": "ytd",
+         "summary": "22-20-3"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "HOME",
+         "type": "home",
+         "summary": "10-9-2"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "12-11-1"
+        }
+       ]
+      },
+      {
+       "id": "29",
+       "uid": "s:70~l:90~t:29",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": false,
+       "team": {
+        "id": "29",
+        "uid": "s:70~l:90~t:29",
+        "location": "Columbus",
+        "name": "Blue Jackets",
+        "abbreviation": "CBJ",
+        "displayName": "Columbus Blue Jackets",
+        "shortDisplayName": "Blue Jackets",
+        "color": "002d62",
+        "alternateColor": "e31937",
+        "isActive": true,
+        "venue": {
+         "id": "1828"
+        },
+        "links": [
+         {
+          "rel": [
+           "clubhouse",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/_/name/cbj/columbus-blue-jackets",
+          "text": "Clubhouse",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "clubhouse",
+           "mobile",
+           "team"
+          ],
+          "href": "https://m.espn.com/nhl/clubhouse?teamId=29",
+          "text": "Clubhouse",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "roster",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/roster/_/name/cbj/columbus-blue-jackets",
+          "text": "Roster",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "roster",
+           "sportscenter",
+           "app",
+           "team"
+          ],
+          "href": "sportscenter://x-callback-url/showClubhouse?uid=s:70~l:90~t:29&section=roster",
+          "text": "Roster",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "stats",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/stats/_/name/cbj/columbus-blue-jackets",
+          "text": "Statistics",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "stats",
+           "sportscenter",
+           "app",
+           "team"
+          ],
+          "href": "sportscenter://x-callback-url/showClubhouse?uid=s:70~l:90~t:29&section=stats",
+          "text": "Statistics",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "schedule",
+           "desktop",
+           "team"
+          ],
+          "href": "https://www.espn.com/nhl/team/schedule/_/name/cbj",
+          "text": "Schedule",
+          "isExternal": false,
+          "isPremium": false
+         },
+         {
+          "rel": [
+           "schedule",
+           "sportscenter",
+           "app",
+           "team"
+          ],
+          "href": "sportscenter://x-callback-url/showClubhouse?uid=s:70~l:90~t:29&section=scores",
+          "text": "Schedule",
+          "isExternal": false,
+          "isPremium": false
+         }
+        ],
+        "logo": "https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/cbj.png",
+        "logoDark": "https://a.espncdn.com/i/teamlogos/nhl/500-dark/scoreboard/cbj.png"
+       },
+       "score": "0",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 5
+        }
+       ],
+       "statistics": [
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "26"
+        },
+        {
+         "name": "savePct",
+         "abbreviation": "SV%",
+         "displayValue": "1.000"
+        },
+        {
+         "name": "goals",
+         "abbreviation": "G",
+         "displayValue": "0"
+        },
+        {
+         "name": "ytdGoals",
+         "abbreviation": "YTDG",
+         "displayValue": "308"
+        },
+        {
+         "name": "assists",
+         "abbreviation": "A",
+         "displayValue": "0"
+        },
+        {
+         "name": "points",
+         "abbreviation": "PTS",
+         "displayValue": "0"
+        }
+       ],
+       "probables": [
+        {
+         "name": "probableStartingGoalie",
+         "displayName": "Probable Starting Goalie",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SG",
+         "playerId": 4587994,
+         "athlete": {
+          "id": "4587994",
+          "fullName": "Daniil Tarasov",
+          "displayName": "Daniil Tarasov",
+          "shortName": "D. Tarasov",
+          "links": [
+           {
+            "rel": [
+             "playercard",
+             "desktop",
+             "athlete"
+            ],
+            "href": "https://www.espn.com/nhl/player/_/id/4587994"
+           }
+          ],
+          "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/4587994.png",
+          "jersey": "80",
+          "position": "G",
+          "team": {
+           "id": "29"
+          }
+         },
+         "status": {
+          "id": "102",
+          "name": "Confirmed",
+          "type": "confirmed",
+          "abbreviation": "Confirmed"
+         },
+         "statistics": [],
+         "record": ""
+        }
+       ],
+       "curatedRank": {
+        "current": 99
+       },
+       "records": [
+        {
+         "name": "YTD",
+         "abbreviation": "Game",
+         "type": "ytd",
+         "summary": "22-17-7"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "HOME",
+         "type": "home",
+         "summary": "16-5-3"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "6-12-4"
+        }
+       ]
+      }
+     ],
+     "notes": [],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 5,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final/SO",
+       "shortDetail": "Final/SO",
+       "altDetail": "SO"
+      },
+      "featuredAthletes": [
+       {
+        "name": "winningGoalie",
+        "displayName": "Winning Goalie",
+        "shortDisplayName": "Winning Goalie",
+        "abbreviation": "W",
+        "playerId": 3151297,
+        "athlete": {
+         "id": "3151297",
+         "fullName": "Igor Shesterkin",
+         "displayName": "Igor Shesterkin",
+         "shortName": "I. Shesterkin",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nhl/player/_/id/3151297"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/3151297.png",
+         "jersey": "31",
+         "position": "G",
+         "team": {
+          "id": "13"
+         }
+        },
+        "team": {
+         "id": "13"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "27"
+         },
+         {
+          "name": "savePct",
+          "abbreviation": "SV%",
+          "displayValue": "1.000"
+         },
+         {
+          "name": "plusMinus",
+          "abbreviation": "+/-",
+          "displayValue": "0"
+         },
+         {
+          "name": "goals",
+          "abbreviation": "G",
+          "displayValue": "0"
+         },
+         {
+          "name": "ytdGoals",
+          "abbreviation": "YTDG",
+          "displayValue": "0"
+         },
+         {
+          "name": "assists",
+          "abbreviation": "A",
+          "displayValue": "0"
+         },
+         {
+          "name": "points",
+          "abbreviation": "PTS",
+          "displayValue": "0"
+         }
+        ]
+       },
+       {
+        "name": "losingGoalie",
+        "displayName": "Losing Goalie",
+        "shortDisplayName": "Losing Goalie",
+        "abbreviation": "L",
+        "playerId": 4587994,
+        "athlete": {
+         "id": "4587994",
+         "fullName": "Daniil Tarasov",
+         "displayName": "Daniil Tarasov",
+         "shortName": "D. Tarasov",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nhl/player/_/id/4587994"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/4587994.png",
+         "jersey": "80",
+         "position": "G",
+         "team": {
+          "id": "29"
+         }
+        },
+        "team": {
+         "id": "29"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "26"
+         },
+         {
+          "name": "savePct",
+          "abbreviation": "SV%",
+          "displayValue": "1.000"
+         },
+         {
+          "name": "plusMinus",
+          "abbreviation": "+/-",
+          "displayValue": "0"
+         },
+         {
+          "name": "goals",
+          "abbreviation": "G",
+          "displayValue": "0"
+         },
+         {
+          "name": "ytdGoals",
+          "abbreviation": "YTDG",
+          "displayValue": "0"
+         },
+         {
+          "name": "assists",
+          "abbreviation": "A",
+          "displayValue": "0"
+         },
+         {
+          "name": "points",
+          "abbreviation": "PTS",
+          "displayValue": "0"
+         }
+        ]
+       },
+       {
+        "name": "firstStar",
+        "displayName": "First Star",
+        "shortDisplayName": "First Star",
+        "abbreviation": "FS",
+        "playerId": 3151297,
+        "athlete": {
+         "id": "3151297",
+         "fullName": "Igor Shesterkin",
+         "displayName": "Igor Shesterkin",
+         "shortName": "I. Shesterkin",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nhl/player/_/id/3151297"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/3151297.png",
+         "jersey": "31",
+         "position": "G",
+         "team": {
+          "id": "13"
+         }
+        },
+        "team": {
+         "id": "13"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "27"
+         },
+         {
+          "name": "savePct",
+          "abbreviation": "SV%",
+          "displayValue": "1.000"
+         },
+         {
+          "name": "plusMinus",
+          "abbreviation": "+/-",
+          "displayValue": "0"
+         },
+         {
+          "name": "goals",
+          "abbreviation": "G",
+          "displayValue": "0"
+         },
+         {
+          "name": "ytdGoals",
+          "abbreviation": "YTDG",
+          "displayValue": "0"
+         },
+         {
+          "name": "assists",
+          "abbreviation": "A",
+          "displayValue": "0"
+         },
+         {
+          "name": "points",
+          "abbreviation": "PTS",
+          "displayValue": "0"
+         }
+        ]
+       },
+       {
+        "name": "secondStar",
+        "displayName": "Second Star",
+        "shortDisplayName": "Second Star",
+        "abbreviation": "SS",
+        "playerId": 4587994,
+        "athlete": {
+         "id": "4587994",
+         "fullName": "Daniil Tarasov",
+         "displayName": "Daniil Tarasov",
+         "shortName": "D. Tarasov",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nhl/player/_/id/4587994"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/4587994.png",
+         "jersey": "80",
+         "position": "G",
+         "team": {
+          "id": "29"
+         }
+        },
+        "team": {
+         "id": "29"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "26"
+         },
+         {
+          "name": "savePct",
+          "abbreviation": "SV%",
+          "displayValue": "1.000"
+         },
+         {
+          "name": "plusMinus",
+          "abbreviation": "+/-",
+          "displayValue": "0"
+         },
+         {
+          "name": "goals",
+          "abbreviation": "G",
+          "displayValue": "0"
+         },
+         {
+          "name": "ytdGoals",
+          "abbreviation": "YTDG",
+          "displayValue": "0"
+         },
+         {
+          "name": "assists",
+          "abbreviation": "A",
+          "displayValue": "0"
+         },
+         {
+          "name": "points",
+          "abbreviation": "PTS",
+          "displayValue": "0"
+         }
+        ]
+       },
+       {
+        "name": "thirdStar",
+        "displayName": "Third Star",
+        "shortDisplayName": "Third Star",
+        "abbreviation": "TS",
+        "playerId": 2563036,
+        "athlete": {
+         "id": "2563036",
+         "fullName": "Vincent Trocheck",
+         "displayName": "Vincent Trocheck",
+         "shortName": "V. Trocheck",
+         "links": [
+          {
+           "rel": [
+            "playercard",
+            "desktop",
+            "athlete"
+           ],
+           "href": "https://www.espn.com/nhl/player/_/id/2563036"
+          }
+         ],
+         "headshot": "https://a.espncdn.com/i/headshots/nhl/players/full/2563036.png",
+         "jersey": "16",
+         "position": "C",
+         "team": {
+          "id": "47844"
+         }
+        },
+        "team": {
+         "id": "13"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "savePct",
+          "abbreviation": "SV%",
+          "displayValue": ".000"
+         },
+         {
+          "name": "plusMinus",
+          "abbreviation": "+/-",
+          "displayValue": "0"
+         },
+         {
+          "name": "goals",
+          "abbreviation": "G",
+          "displayValue": "0"
+         },
+         {
+          "name": "ytdGoals",
+          "abbreviation": "YTDG",
+          "displayValue": "14"
+         },
+         {
+          "name": "assists",
+          "abbreviation": "A",
+          "displayValue": "0"
+         },
+         {
+          "name": "points",
+          "abbreviation": "PTS",
+          "displayValue": "0"
+         }
+        ]
+       }
+      ]
+     },
+     "broadcasts": [
+      {
+       "market": "national",
+       "names": [
+        "ESPN+"
+       ]
+      },
+      {
+       "market": "home",
+       "names": [
+        "FanDuel SN OH",
+        "MSG"
+       ]
+      }
+     ],
+     "format": {
+      "regulation": {
+       "periods": 3
+      }
+     },
+     "startDate": "2025-01-19T00:00Z",
+     "broadcast": "ESPN+",
+     "geoBroadcasts": [
+      {
+       "type": {
+        "id": "4",
+        "shortName": "Streaming"
+       },
+       "market": {
+        "id": "1",
+        "type": "National"
+       },
+       "media": {
+        "shortName": "ESPN+",
+        "logo": "https://a.espncdn.com/guid/322a7e47-3cdb-3b5c-ab1b-678e1f2c27e5/logos/default.png",
+        "darkLogo": "https://a.espncdn.com/guid/322a7e47-3cdb-3b5c-ab1b-678e1f2c27e5/logos/default-dark.png"
+       },
+       "lang": "en",
+       "region": "us"
+      },
+      {
+       "type": {
+        "id": "1",
+        "shortName": "TV"
+       },
+       "market": {
+        "id": "2",
+        "type": "Home"
+       },
+       "media": {
+        "shortName": "FanDuel SN OH"
+       },
+       "lang": "en",
+       "region": "us"
+      },
+      {
+       "type": {
+        "id": "1",
+        "shortName": "TV"
+       },
+       "market": {
+        "id": "2",
+        "type": "Home"
+       },
+       "media": {
+        "shortName": "MSG"
+       },
+       "lang": "en",
+       "region": "us"
+      }
+     ],
+     "highlights": [],
+     "headlines": [
+      {
+       "type": "Recap",
+       "description": "\u2014 Vincent Trocheck scored the only goal of the shootout, Igor Shesterkin stopped 27 shots and New York Rangers beat the Columbus Blue Jackets 1-0 on Saturday night.",
+       "shortLinkText": "Trocheck scores in shootout, Shesterkin stops 27 shots as Rangers beat Blue Jackets 1-0"
+      }
+     ]
+    }
+   ],
+   "links": [
+    {
+     "language": "en-US",
+     "rel": [
+      "summary",
+      "desktop",
+      "event"
+     ],
+     "href": "https://www.espn.com/nhl/game/_/gameId/401688327/blue-jackets-rangers",
+     "text": "Gamecast",
+     "shortText": "Gamecast",
+     "isExternal": false,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "boxscore",
+      "desktop",
+      "event"
+     ],
+     "href": "https://www.espn.com/nhl/boxscore/_/gameId/401688327",
+     "text": "Box Score",
+     "shortText": "Box Score",
+     "isExternal": false,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "pbp",
+      "desktop",
+      "event"
+     ],
+     "href": "https://www.espn.com/nhl/playbyplay/_/gameId/401688327",
+     "text": "Play-by-Play",
+     "shortText": "Play-by-Play",
+     "isExternal": false,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "recap",
+      "desktop",
+      "event"
+     ],
+     "href": "https://www.espn.com/nhl/recap?gameId=401688327",
+     "text": "Recap",
+     "shortText": "Recap",
+     "isExternal": false,
+     "isPremium": false
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 5,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/SO",
+     "shortDetail": "Final/SO",
+     "altDetail": "SO"
+    }
+   }
+  }
+ ],
+ "provider": {
+  "id": "100",
+  "name": "Draft Kings",
+  "displayName": "Draft Kings",
+  "priority": 1
+ }
+}
