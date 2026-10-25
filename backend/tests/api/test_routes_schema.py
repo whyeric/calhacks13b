@@ -65,15 +65,18 @@ def test_every_route_validates(client, stub_analysis):
     ok("POST", "/businesses/taxi/analyze", dict, json={})
     run = ok("POST", "/businesses/taxi/desk/run", RunAccepted, status=202, json={})
     ok("GET", f"/runs/{run['run_id']}", RunStatus)
-    ok("GET", "/businesses/taxi/hedges", list[Hedge])
+    # the desk run replaced the sample week, so approve/reject hedges it proposed
+    open_ = [h["id"] for h in ok("GET", "/businesses/taxi/hedges", list[Hedge])
+             if h["status"] in ("proposed", "pending_approval")]
+    assert len(open_) >= 2 and not any(db.is_sample_hedge(h) for h in open_)
     ok("GET", "/businesses/taxi/backtest", BacktestResult)
     ok("GET", "/businesses/taxi/ledger", LedgerResponse)
     ok("POST", "/businesses/taxi/chat", ChatReply, json={"message": "why?"})
     ok("GET", "/businesses/taxi/decisions", list[LogEntry])
     settings = ok("GET", "/businesses/taxi/settings", Settings)
     ok("PUT", "/businesses/taxi/settings", Settings, json=settings)
-    ok("POST", "/hedges/hdg_01/approve", Hedge, json={"actor": "owner"})
-    ok("POST", "/hedges/hdg_02/reject", Hedge, json={"actor": "owner", "reason": "not this week"})
+    ok("POST", f"/hedges/{open_[0]}/approve", Hedge, json={"actor": "owner"})
+    ok("POST", f"/hedges/{open_[1]}/reject", Hedge, json={"actor": "owner", "reason": "not this week"})
     r = client.post("/businesses/taxi/reconcile", json={})
     assert r.status_code in (200, 409) and ("error" in r.json() or "matches" in r.json())
 

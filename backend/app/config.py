@@ -112,6 +112,10 @@ class Settings(BaseSettings):
     anthropic_model: str | None = None  # pinned id from .env; never defaulted here
     kalshi_base_url: str = "https://external-api.kalshi.com/trade-api/v2"
     demo_offline: bool = False  # True blocks all outbound HTTP
+    # Seed the example week (fixtures/examples/week_seed.json) into an empty db, marked as sample
+    # data: /health reports `sample_week`, and a real desk run replaces that business/week's sample
+    # hedges. False seeds businesses only, and startup drops any sample hedges already stored.
+    demo_sample_week: bool = True
     database_url: str = "sqlite:///./hedge_desk.db"
     weekly_budget_default: Decimal = Decimal("250")
     # C4: assumed avg check per visit (food + drinks, pre-tip) for a bar across from MSG.

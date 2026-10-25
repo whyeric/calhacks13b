@@ -643,6 +643,11 @@ class Health(Contract):
     status: Literal["ok"]
     offline: bool
     anthropic: Literal["configured", "fallback"]
+    # DEMO_SAMPLE_WEEK: true while example hedges from fixtures/examples/week_seed.json are still
+    # stored (label them "sample week", I6). A desk run replaces a business's sample hedges, so
+    # `sample_businesses` lists the businesses still showing sample data.
+    sample_week: bool
+    sample_businesses: list[str]
 
 
 class ErrorDetail(Contract):
