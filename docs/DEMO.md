@@ -14,11 +14,44 @@ bar, whose `home_win` isn't hedgeable). The frontend labels them "sample week" f
 entries about replaced hedges. They are still stored, because the log is append-only.
 Owner-approved or settled sample hedges are never deleted, since they have ledger entries.
 
-## Real pipeline today (offline, committed Kalshi cache)
+## The pinned demo week (`DEMO_AS_OF`)
 
-- **taxi**: one `declined` hedge on `exp_rain`, reason `illiquid` (the cached book filled 0 of
-  1307 contracts). There's no proposal, so there's no payoff table.
-- **restaurant**: no hedges. The bar has no hedgeable exposure (see `experiments/bar/SUMMARY.md` on branch `experiments/bar`).
+The committed cache was warmed Sat 2026-10-24 ~23:10 UTC, and its markets close over the next few
+days. `make demo` sets `DEMO_AS_OF=2026-10-24T19:00:00Z`: the API clock starts at that instant and
+moves forward with real time from there, so the desk week is **Mon 2026-10-26**, approval expiry and
+offline market matching follow the cached week, and the demo doesn't depend on today's date. Set
+`DEMO_AS_OF` in `.env` (or `DEMO_AS_OF= make demo` to unset) when you re-warm for another week.
+`make api` / `make dev` use the real clock unless `.env` sets it.
+
+The desk only matches markets about a day **inside** the desk week (Mon–Sun). A Saturday run for the
+week of Oct 26 no longer picks Sunday Oct 25's `KXRAIN-26OCT25-NYC`.
+
+## Backtest
+
+`make seed` (and API startup, when the row is missing) stores the walk-forward backtest for every
+business that has data (`python -m scripts.run_backtest --if-missing`, offline from the feature
+fixtures and `fixtures/kalshi_history/`). `GET /businesses/{id}/backtest` therefore answers on a
+fresh db. On a fresh clone only taxi has one; the restaurant gets one once its Dewey series exist.
+After changing thresholds, `python -m scripts.run_backtest` (from `backend/`) recomputes and stores.
+
+## Real pipeline today (offline, committed Kalshi cache, `DEMO_AS_OF` week)
+
+- **taxi**: one `declined` hedge on `exp_rain`, reasons `no_market` + `unstable`. The cache has no
+  NYC rain market for a day in the week of Oct 26, and the recent-window refit of rain
+  (+$228 [−$1,885, +$2,342] vs +$2,080 [+$386, +$3,775] on train) crosses zero. No payoff table.
+- **restaurant** (needs the Dewey series): the `playoff_home` season hedge, three legs on the
+  Knicks futures (group total $3,059.50): "Knicks don't win the title" (`KXNBA-27-NYK`, 84 NO,
+  $78.51) is **proposed** within the $250 budget; "Knicks miss the playoffs" (1,251 of 2,462
+  filled, $260.94) and "Knicks don't win the East" ($2,720.05) are **pending_approval**
+  (`over_budget`). Approving the title leg books it. Rain and game results are dropped as not
+  significant. Without the Dewey files the restaurant run fails contained (`analysis_unavailable`)
+  and its sample week stays.
+
+## Taxi numbers with and without the Dewey files
+
+The MSG-event control (`msg_event`) uses Dewey visit spikes for the **restaurant only**. The taxi
+table is `home_game` alone either way, so taxi numbers are the same on a fresh clone and with
+`msg_visits_daily.parquet` built: rain +$2,080/day (it used to read +$2,245 with the file).
 
 `tests/api/test_sample_week.py` checks that every non-sample proposed/pending hedge is for a
 hedgeable exposure from `/analyze`.
