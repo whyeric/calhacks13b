@@ -223,7 +223,10 @@ export default function Research() {
               On Central Park rain days bike share falls about 20%, transit 2–4%
               and bar foot traffic 2–3%, in both the fit and the check years.
               Rain is one slice of a noisy day, so a rain hedge removes only a
-              few percent of the swing — and the card says so.
+              few percent of the swing — and the card says so. Weather is NOAA’s
+              Central Park record, the same station Kalshi’s NYC contracts
+              settle on (Kalshi has used The Weather Company’s reading there
+              since Aug 2026).
             </p>
             <small>
               <a href={source("r2-citibike")}>r2-citibike</a> ·{" "}

@@ -26,36 +26,52 @@ import { BacktestNotReady, BacktestPanel } from "@/components/BacktestPanel";
 import { LedgerTab } from "@/components/LedgerTab";
 import { ChatDrawer } from "@/components/ChatDrawer";
 import { SettingsDrawer } from "@/components/SettingsDrawer";
+import {
+  DEMO_ID,
+  DemoDesk,
+  DemoUploadDrawer,
+  useDemo,
+} from "@/components/DemoDesk";
 
 export default function Home() {
   const [selectedId, setSelectedId] = useState("taxi");
   const [runningId, setRunningId] = useState<string | null>(null);
   const [runError, setRunError] = useState("");
   const [tab, setTab] = useState<"backtest" | "ledger">("backtest");
-  const [drawer, setDrawer] = useState<"chat" | "settings" | null>(null);
+  const [drawer, setDrawer] = useState<"chat" | "settings" | "upload" | null>(
+    null,
+  );
   const activeBusiness = useRef(selectedId);
   const businesses = useSWR<Business[]>(["/businesses", "all"], () =>
     apiGet("/businesses"),
   );
-  const business = businesses.data?.find((row) => row.id === selectedId);
+  // Scripted upload demo: a client-only business; no API calls for it.
+  const demo = useDemo();
+  const isDemo = selectedId === DEMO_ID;
+  const live = (key: string): [string, string] | null =>
+    isDemo ? null : [key, selectedId];
+  const allBusinesses = [
+    ...(businesses.data ?? []),
+    ...(demo.business ? [demo.business] : []),
+  ];
+  const business = allBusinesses.find((row) => row.id === selectedId);
   const base = `/businesses/${encodeURIComponent(selectedId)}`;
-  const analyze = useSWR<Analyze>(["analyze", selectedId], () =>
+  const analyze = useSWR<Analyze>(live("analyze"), () =>
     apiPost(`${base}/analyze`),
   );
-  const hedges = useSWR<Hedge[]>(["hedges", selectedId], () =>
+  const hedges = useSWR<Hedge[]>(live("hedges"), () =>
     apiGet(
       `${base}/hedges${business ? `?week_of=${business.budget.week_start}` : ""}`,
     ),
   );
-  const decisions = useSWR<LogEntry[]>(["decisions", selectedId], () =>
+  const decisions = useSWR<LogEntry[]>(live("decisions"), () =>
     apiGet(`${base}/decisions`),
   );
-  const backtest = useSWR<Backtest>(["backtest", selectedId], () =>
+  const backtest = useSWR<Backtest>(live("backtest"), () =>
     apiGet(`${base}/backtest`),
   );
-  const ledger = useSWR<Ledger>(
-    tab === "ledger" ? ["ledger", selectedId] : null,
-    () => apiGet(`${base}/ledger`),
+  const ledger = useSWR<Ledger>(tab === "ledger" ? live("ledger") : null, () =>
+    apiGet(`${base}/ledger`),
   );
   const health = useSWR<Health>(["/health", "all"], () => apiGet("/health"), {
     shouldRetryOnError: false,
@@ -82,6 +98,11 @@ export default function Home() {
       businesses.mutate(),
       decisions.mutate(),
     ]);
+  }
+  function select(id: string) {
+    activeBusiness.current = id;
+    setSelectedId(id);
+    setRunError("");
   }
   async function runDesk() {
     const id = selectedId;
@@ -124,15 +145,12 @@ export default function Home() {
         retry={() => businesses.mutate()}
       >
         <Header
-          businesses={businesses.data ?? []}
+          businesses={allBusinesses}
           selectedId={selectedId}
-          onSelect={(id) => {
-            activeBusiness.current = id;
-            setSelectedId(id);
-            setRunError("");
-          }}
+          onSelect={select}
           onRun={runDesk}
           running={runningId !== null}
+          onUpload={() => setDrawer(drawer === "upload" ? null : "upload")}
         />
       </StateBoundary>
       {sampleWeek && (
@@ -152,12 +170,14 @@ export default function Home() {
           <button
             onClick={() => setDrawer(drawer === "chat" ? null : "chat")}
             aria-expanded={drawer === "chat"}
+            disabled={isDemo}
           >
             Ask “why?”
           </button>
           <button
             onClick={() => setDrawer(drawer === "settings" ? null : "settings")}
             aria-expanded={drawer === "settings"}
+            disabled={isDemo}
           >
             Settings
           </button>
@@ -171,144 +191,163 @@ export default function Home() {
           </button>
         </div>
       )}
-      <div className="dashboard" key={selectedId}>
-        <section
-          className="panel exposure-panel"
-          aria-label="Revenue exposures"
-        >
-          <div className="section-heading">
-            <h2>What moves revenue</h2>
-            {business && (
-              <EstimatedBadge
-                kind={business.estimated ? "estimated" : "real"}
-              />
-            )}
-          </div>
-          <StateBoundary
-            loading={analyze.isLoading}
-            error={analyze.error}
-            retry={() => analyze.mutate()}
-          >
-            {analyze.data && (
-              <>
-                <ExposureList exposures={analyze.data.exposures} />
-                <NotHedgedList dropped={analyze.data.dropped} />
-                <ModelCheck
-                  data={analyze.data.model_check}
-                  r2={analyze.data.r2_holdout}
-                />
-              </>
-            )}
-          </StateBoundary>
-        </section>
-        <section className="hedges-panel" aria-label="Hedge decisions">
-          <StateBoundary
-            loading={hedges.isLoading}
-            error={hedges.error}
-            retry={() => hedges.mutate()}
-          >
-            <HedgeList
-              hedges={hedges.data ?? []}
-              onChanged={refresh}
-              exposures={
-                analyze.data
-                  ? [...analyze.data.exposures, ...analyze.data.dropped]
-                  : []
-              }
-            />
-          </StateBoundary>
-        </section>
-        <section className="panel log-panel" aria-label="Decision log">
-          <div className="section-heading">
-            <h2>Decision log</h2>
-            <span className="live-dot" aria-hidden="true" />
-          </div>
-          <p className="muted">Every decision has a receipt.</p>
-          <StateBoundary
-            loading={decisions.isLoading}
-            error={decisions.error}
-            retry={() => decisions.mutate()}
-          >
-            <DecisionLog decisions={decisions.data ?? []} />
-          </StateBoundary>
-        </section>
-      </div>
-      <section
-        className="panel bottom-panel"
-        aria-label="Backtest and books"
-        key={`bottom-${selectedId}`}
-      >
-        <div className="tabs" role="tablist">
-          <button
-            role="tab"
-            id="tab-backtest"
-            aria-selected={tab === "backtest"}
-            aria-controls="panel-backtest"
-            onClick={() => setTab("backtest")}
-          >
-            Last season, replayed
-          </button>
-          <button
-            role="tab"
-            id="tab-ledger"
-            aria-selected={tab === "ledger"}
-            aria-controls="panel-ledger"
-            onClick={() => setTab("ledger")}
-          >
-            Books &amp; reconciliation
-          </button>
-        </div>
-        {tab === "backtest" ? (
-          <div
-            role="tabpanel"
-            id="panel-backtest"
-            aria-labelledby="tab-backtest"
-          >
-            {errorCode(backtest.error) === "backtest_not_ready" ? (
-              <BacktestNotReady retry={() => backtest.mutate()} />
-            ) : (
-              <StateBoundary
-                loading={backtest.isLoading}
-                error={backtest.error}
-                retry={() => backtest.mutate()}
-              >
-                {backtest.data && <BacktestPanel data={backtest.data} />}
-              </StateBoundary>
-            )}
-          </div>
-        ) : (
-          <div role="tabpanel" id="panel-ledger" aria-labelledby="tab-ledger">
-            <StateBoundary
-              loading={ledger.isLoading}
-              error={ledger.error}
-              retry={() => ledger.mutate()}
+      {isDemo ? (
+        <DemoDesk demo={demo} onRemoved={() => select("taxi")} />
+      ) : (
+        <>
+          <div className="dashboard" key={selectedId}>
+            <section
+              className="panel exposure-panel"
+              aria-label="Revenue exposures"
             >
-              {ledger.data && (
-                <LedgerTab
-                  ledger={ledger.data}
-                  businessId={selectedId}
-                  onReconciled={() =>
-                    Promise.all([ledger.mutate(), decisions.mutate()])
+              <div className="section-heading">
+                <h2>What moves revenue</h2>
+                {business && (
+                  <EstimatedBadge
+                    kind={business.estimated ? "estimated" : "real"}
+                  />
+                )}
+              </div>
+              <StateBoundary
+                loading={analyze.isLoading}
+                error={analyze.error}
+                retry={() => analyze.mutate()}
+              >
+                {analyze.data && (
+                  <>
+                    <ExposureList exposures={analyze.data.exposures} />
+                    <NotHedgedList dropped={analyze.data.dropped} />
+                    <ModelCheck
+                      data={analyze.data.model_check}
+                      r2={analyze.data.r2_holdout}
+                    />
+                  </>
+                )}
+              </StateBoundary>
+            </section>
+            <section className="hedges-panel" aria-label="Hedge decisions">
+              <StateBoundary
+                loading={hedges.isLoading}
+                error={hedges.error}
+                retry={() => hedges.mutate()}
+              >
+                <HedgeList
+                  hedges={hedges.data ?? []}
+                  onChanged={refresh}
+                  exposures={
+                    analyze.data
+                      ? [...analyze.data.exposures, ...analyze.data.dropped]
+                      : []
                   }
                 />
-              )}
-            </StateBoundary>
+              </StateBoundary>
+            </section>
+            <section className="panel log-panel" aria-label="Decision log">
+              <div className="section-heading">
+                <h2>Decision log</h2>
+                <span className="live-dot" aria-hidden="true" />
+              </div>
+              <p className="muted">Every decision has a receipt.</p>
+              <StateBoundary
+                loading={decisions.isLoading}
+                error={decisions.error}
+                retry={() => decisions.mutate()}
+              >
+                <DecisionLog decisions={decisions.data ?? []} />
+              </StateBoundary>
+            </section>
           </div>
-        )}
-      </section>
+          <section
+            className="panel bottom-panel"
+            aria-label="Backtest and books"
+            key={`bottom-${selectedId}`}
+          >
+            <div className="tabs" role="tablist">
+              <button
+                role="tab"
+                id="tab-backtest"
+                aria-selected={tab === "backtest"}
+                aria-controls="panel-backtest"
+                onClick={() => setTab("backtest")}
+              >
+                Last season, replayed
+              </button>
+              <button
+                role="tab"
+                id="tab-ledger"
+                aria-selected={tab === "ledger"}
+                aria-controls="panel-ledger"
+                onClick={() => setTab("ledger")}
+              >
+                Books &amp; reconciliation
+              </button>
+            </div>
+            {tab === "backtest" ? (
+              <div
+                role="tabpanel"
+                id="panel-backtest"
+                aria-labelledby="tab-backtest"
+              >
+                {errorCode(backtest.error) === "backtest_not_ready" ? (
+                  <BacktestNotReady retry={() => backtest.mutate()} />
+                ) : (
+                  <StateBoundary
+                    loading={backtest.isLoading}
+                    error={backtest.error}
+                    retry={() => backtest.mutate()}
+                  >
+                    {backtest.data && <BacktestPanel data={backtest.data} />}
+                  </StateBoundary>
+                )}
+              </div>
+            ) : (
+              <div
+                role="tabpanel"
+                id="panel-ledger"
+                aria-labelledby="tab-ledger"
+              >
+                <StateBoundary
+                  loading={ledger.isLoading}
+                  error={ledger.error}
+                  retry={() => ledger.mutate()}
+                >
+                  {ledger.data && (
+                    <LedgerTab
+                      ledger={ledger.data}
+                      businessId={selectedId}
+                      onReconciled={() =>
+                        Promise.all([ledger.mutate(), decisions.mutate()])
+                      }
+                    />
+                  )}
+                </StateBoundary>
+              </div>
+            )}
+          </section>
+        </>
+      )}
       <ChatDrawer
         key={`chat-${selectedId}`}
         businessId={selectedId}
-        open={drawer === "chat"}
+        open={!isDemo && drawer === "chat"}
         onClose={() => setDrawer(null)}
       />
       <SettingsDrawer
         key={`settings-${selectedId}`}
         businessId={selectedId}
-        open={drawer === "settings"}
+        open={!isDemo && drawer === "settings"}
         onClose={() => setDrawer(null)}
         hedges={hedges.data ?? []}
         onSaved={refreshAfterSettings}
+      />
+      <DemoUploadDrawer
+        open={drawer === "upload"}
+        onClose={() => setDrawer(null)}
+        onStart={(upload) => {
+          demo.start(upload);
+          setDrawer(null);
+          select(DEMO_ID);
+        }}
       />
       <footer>
         Protection for the business you’re building. · The owner always decides.

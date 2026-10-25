@@ -1,5 +1,14 @@
 import type { components } from "./schema";
-export type Business = components["schemas"]["Business"];
+// The scripted upload demo (lib/demoScript.ts) adds a client-only business:
+// kind/data_label widen to "uploaded", plus optional `uploaded` / `scripted`.
+type BusinessBase = components["schemas"]["Business"];
+export type Business = Omit<BusinessBase, "kind" | "data_label"> & {
+  kind: BusinessBase["kind"] | "uploaded";
+  data_label: BusinessBase["data_label"] | "uploaded";
+  uploaded?: boolean;
+  scripted?: boolean;
+};
+export type Budget = components["schemas"]["Budget"];
 export type Analyze = components["schemas"]["AnalyzeResponse"];
 export type Hedge = components["schemas"]["Hedge"];
 export type LogEntry = components["schemas"]["LogEntry"];
