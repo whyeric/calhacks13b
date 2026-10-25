@@ -116,6 +116,25 @@ def _beancount_available() -> bool:
     return True
 
 
+# --- Period lock (books/close.py) --------------------------------------------------
+
+CLOSES_KEY = "period_closes"  # analysis-cache key holding the business's PeriodClose records
+
+
+def locked_through(business_id: str, engine: Engine | None = None) -> date | None:
+    closes = db.get_analysis(business_id, CLOSES_KEY, engine) or []
+    return max((date.fromisoformat(c["through"]) for c in closes), default=None)
+
+
+def posting_date(business_id: str, on: date, engine: Engine | None = None) -> tuple[date, str]:
+    """(date to book on, narration suffix). Nothing is dated inside a closed period: a late item
+    lands on the first open day and says which closed date it belongs to."""
+    lock = locked_through(business_id, engine)
+    if lock is None or on > lock:
+        return on, ""
+    return lock + timedelta(days=1), f" [belongs to {on.isoformat()}; books closed through {lock.isoformat()}]"
+
+
 def get_entry(business_id: str, entry_id: str, engine: Engine | None = None) -> LedgerEntry | None:
     for e in db.list_ledger_entries(business_id, engine):
         if e.id == entry_id:
@@ -203,6 +222,7 @@ def book_entries(
         return [existing]
 
     booked_on = on or (ny_date(hedge.decided_at) if hedge.decided_at else datetime.now(NY).date())
+    booked_on, late = posting_date(hedge.business_id, booked_on, engine)
     ensure_opening_deposit(hedge.business_id, booked_on, engine, venue=hedge.venue)
     where = "" if hedge.venue == "kalshi" else f" ({hedge.venue.capitalize()})"
     entry = LedgerEntry(
@@ -210,7 +230,8 @@ def book_entries(
         business_id=hedge.business_id,
         date=booked_on,
         kind="premium",
-        narration=("[SIMULATED] " if simulated else "") + f"Premium{where}: {ticker} {hedge.side.upper()} x {hedge.n_filled}",
+        narration=("[SIMULATED] " if simulated else "") + f"Premium{where}: {ticker} {hedge.side.upper()} x {hedge.n_filled}"
+        + late,
         postings=[
             Posting(account=PREMIUMS, amount=cost),
             Posting(account=FEES, amount=fee),

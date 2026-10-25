@@ -1,0 +1,358 @@
+{
+  "hedge": {
+    "id": "hdg_02",
+    "business_id": "taxi",
+    "exposure_id": "exp_rain",
+    "week_of": "2026-10-26",
+    "status": "pending_approval",
+    "ticker": "KXRAINNYC-26OCT28",
+    "market_title": "Will it rain in NYC on Oct 28, 2026?",
+    "market_url": "https://kalshi.com/markets/kxrainnyc",
+    "close_time": "2026-10-29T04:59:00Z",
+    "side": "no",
+    "match_reason": "NYC daily rain market for Oct 28 settles on Central Park, the station nearest the zone.",
+    "h": "1",
+    "n_target": 1240,
+    "n_filled": 1240,
+    "n_unfilled": 0,
+    "partial": false,
+    "resized": false,
+    "fills": [
+      {
+        "price": "0.74",
+        "count": 800
+      },
+      {
+        "price": "0.76",
+        "count": 440
+      }
+    ],
+    "avg_price": "0.7471",
+    "cost": "926.40",
+    "fee": "16.40",
+    "premium": "942.80",
+    "fair": "0.73",
+    "expected_cost": "37.60",
+    "fee_unverified": false,
+    "payoff": [
+      {
+        "outcome": "event",
+        "revenue_vs_base": "1240.00",
+        "contract_payout": "0.00",
+        "premium": "-942.80",
+        "net_vs_base": "297.20"
+      },
+      {
+        "outcome": "no_event",
+        "revenue_vs_base": "0.00",
+        "contract_payout": "1240.00",
+        "premium": "-942.80",
+        "net_vs_base": "297.20"
+      }
+    ],
+    "headline": {
+      "unhedged_swing": "1240.00",
+      "hedged_swing": "0.00",
+      "cost": "942.80"
+    },
+    "decision": {
+      "id": "dec_02",
+      "status": "pending_approval",
+      "checks": [
+        {
+          "code": "no_market",
+          "passed": true,
+          "metric": {
+            "n_candidates": 2
+          }
+        },
+        {
+          "code": "illiquid",
+          "passed": true,
+          "metric": {
+            "n_target": 1240,
+            "n_filled": 1240,
+            "fill_ratio": "1",
+            "partial": false
+          }
+        },
+        {
+          "code": "overpriced",
+          "passed": true,
+          "metric": {
+            "avg_price": "0.7471",
+            "fair": "0.73",
+            "overpay": "0.0171"
+          }
+        },
+        {
+          "code": "basis_too_loose",
+          "passed": true,
+          "metric": {
+            "r2": "0.91",
+            "beta_s": "1265.00",
+            "beta": "1240.00",
+            "h": "1",
+            "resized": false
+          }
+        },
+        {
+          "code": "too_expensive",
+          "passed": true,
+          "metric": {
+            "expected_cost": "37.60",
+            "swing": "1240.00",
+            "ratio": "0.0303"
+          }
+        },
+        {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
+          "code": "over_budget",
+          "passed": false,
+          "metric": {
+            "premium": "942.80",
+            "remaining": "250.00"
+          }
+        }
+      ],
+      "reasons": [
+        "over_budget"
+      ],
+      "summary": "Needs your approval: full protection costs $942.80 against $250.00 left this week. A within-budget version buys 331 contracts for $249.40."
+    },
+    "alternative": {
+      "h": "0.2669",
+      "n_target": 331,
+      "n_filled": 331,
+      "avg_price": "0.74",
+      "cost": "244.94",
+      "fee": "4.46",
+      "premium": "249.40",
+      "payoff": [
+        {
+          "outcome": "event",
+          "revenue_vs_base": "1240.00",
+          "contract_payout": "0.00",
+          "premium": "-249.40",
+          "net_vs_base": "990.60"
+        },
+        {
+          "outcome": "no_event",
+          "revenue_vs_base": "0.00",
+          "contract_payout": "331.00",
+          "premium": "-249.40",
+          "net_vs_base": "81.60"
+        }
+      ],
+      "headline": {
+        "unhedged_swing": "1240.00",
+        "hedged_swing": "909.00",
+        "cost": "249.40"
+      }
+    },
+    "agent": "claude",
+    "ledger_entry_ids": [],
+    "created_at": "2026-10-24T15:00:00Z",
+    "decided_by": null,
+    "decided_at": null,
+    "leg_label": null,
+    "group_total_premium": null,
+    "estimated": false,
+    "venue": "kalshi",
+    "fee_rate": null,
+    "needs_controller": true,
+    "controller": {
+      "decision": "signed",
+      "at": "2026-10-24T19:00:00Z",
+      "note": "Checked against this week's budget."
+    },
+    "decision_note": null,
+    "owner_history": null
+  },
+  "exposure": {
+    "id": "exp_rain",
+    "business_id": "taxi",
+    "event": "rain",
+    "effect_usd": "2080.20",
+    "ci90": [
+      "385.70",
+      "3774.69"
+    ],
+    "se": "1030.09",
+    "p_value": 0.043441630116285754,
+    "n_events_train": 148,
+    "direction": "positive",
+    "hedge_side": "no",
+    "settlement_var": "rain",
+    "hedgeable": true,
+    "reasons": [],
+    "strike": null,
+    "beta_settlement": null,
+    "stability": {
+      "effect_usd": "228.41",
+      "ci90": [
+        "-1885.02",
+        "2341.83"
+      ],
+      "n_days": 335,
+      "n_events": 158,
+      "start": "2025-10-01",
+      "end": "2026-08-31",
+      "same_sign": true,
+      "stable": false
+    },
+    "expected_count": null,
+    "estimated": false,
+    "basis_note": null
+  },
+  "thresholds": {
+    "min_size_usd": "150.00",
+    "min_support": 10,
+    "overpay_max": "0.15",
+    "cost_ratio_max": "0.35",
+    "fill_decline": "0.5",
+    "fill_full": "1.0",
+    "max_slip": "0.05",
+    "basis_r2_min": 0.5,
+    "max_tool_calls": 12,
+    "decline_unstable": true,
+    "rain_size_multiplier": 1.0,
+    "materiality_usd": "200.00"
+  },
+  "trail": [
+    {
+      "log_id": "log_0005",
+      "business_id": "taxi",
+      "kind": "proposal",
+      "created_at": "2026-10-24T15:00:20Z",
+      "actor": "desk",
+      "agent": "claude",
+      "hedge_id": "hdg_02",
+      "decision_id": "dec_02",
+      "run_id": "run_0007",
+      "status": "pending_approval",
+      "checks": [
+        {
+          "code": "no_market",
+          "passed": true,
+          "metric": {
+            "n_candidates": 2
+          }
+        },
+        {
+          "code": "illiquid",
+          "passed": true,
+          "metric": {
+            "n_target": 1240,
+            "n_filled": 1240,
+            "fill_ratio": "1",
+            "partial": false
+          }
+        },
+        {
+          "code": "overpriced",
+          "passed": true,
+          "metric": {
+            "avg_price": "0.7471",
+            "fair": "0.73",
+            "overpay": "0.0171"
+          }
+        },
+        {
+          "code": "basis_too_loose",
+          "passed": true,
+          "metric": {
+            "r2": "0.91",
+            "beta_s": "1265.00",
+            "beta": "1240.00",
+            "h": "1",
+            "resized": false
+          }
+        },
+        {
+          "code": "too_expensive",
+          "passed": true,
+          "metric": {
+            "expected_cost": "37.60",
+            "swing": "1240.00",
+            "ratio": "0.0303"
+          }
+        },
+        {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
+          "code": "over_budget",
+          "passed": false,
+          "metric": {
+            "premium": "942.80",
+            "remaining": "250.00"
+          }
+        }
+      ],
+      "reasons": [
+        "over_budget"
+      ],
+      "numbers": {
+        "n_candidates": 2,
+        "n_target": 1240,
+        "n_filled": 1240,
+        "fill_ratio": "1",
+        "avg_price": "0.7471",
+        "fair": "0.73",
+        "overpay": "0.0171",
+        "r2": "0.91",
+        "beta_s": "1265.00",
+        "beta": "1240.00",
+        "h": "1",
+        "expected_cost": "37.60",
+        "swing": "1240.00",
+        "ratio": "0.0303",
+        "premium": "942.80",
+        "remaining": "250.00",
+        "alt_n_filled": 331,
+        "alt_premium": "249.40"
+      },
+      "summary": "Needs your approval: full protection costs $942.80 against $250.00 left this week. A within-budget version buys 331 contracts for $249.40."
+    },
+    {
+      "log_id": "log_de635b18c511",
+      "business_id": "taxi",
+      "kind": "cosign",
+      "created_at": "2026-10-24T19:00:00Z",
+      "actor": "controller",
+      "agent": null,
+      "hedge_id": "hdg_02",
+      "decision_id": "dec_02",
+      "run_id": null,
+      "status": "pending_approval",
+      "checks": [],
+      "reasons": [],
+      "numbers": {
+        "premium": "942.80",
+        "materiality": "200.00"
+      },
+      "summary": "Controller co-signed hdg_02 ($942.80 premium, above $200.00 materiality). Note: Checked against this week's budget. The owner decides next."
+    }
+  ],
+  "approvals_required": [
+    "owner",
+    "controller"
+  ],
+  "sources": [
+    "Exposure: OLS on the business's daily revenue (train year), with a refit on the recent window.",
+    "Market and prices: Kalshi public order book, read at 2026-10-24T15:00:00+00:00 (offline cache).",
+    "Decline rules: code in markets/rules.py, judged against the thresholds below.",
+    "Summary text: written by Claude or the template, checked so every number matches a tool result (I2)."
+  ]
+}

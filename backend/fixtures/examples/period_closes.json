@@ -1,0 +1,41 @@
+{
+  "locked_through": "2026-10-23",
+  "closes": [
+    {
+      "business_id": "taxi",
+      "through": "2026-10-23",
+      "previous_through": null,
+      "closed_at": "2026-10-24T19:00:00Z",
+      "closed_by": "controller",
+      "n_entries": 8,
+      "trial_balance": [
+        {
+          "account": "Assets:Bank:Checking",
+          "balance": "-395.00"
+        },
+        {
+          "account": "Assets:Kalshi:Cash",
+          "balance": "417.48"
+        },
+        {
+          "account": "Expenses:Hedging:Fees",
+          "balance": "2.12"
+        },
+        {
+          "account": "Expenses:Hedging:Premiums",
+          "balance": "80.40"
+        },
+        {
+          "account": "Income:Hedging:Payouts",
+          "balance": "-105.00"
+        }
+      ],
+      "exceptions": [
+        "Bank deposit is $0.89 short of the Kalshi payout; equals the $0.89 fee recorded for hdg_s01."
+      ],
+      "open_hedges": 2,
+      "simulated": true,
+      "note": "Soft close for the last full week of October."
+    }
+  ]
+}

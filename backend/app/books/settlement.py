@@ -30,6 +30,7 @@ from app.books.ledger import (
     hedge_meta,
     opening_entry_id,
     payout_entry_id,
+    posting_date,
     usd,
     withdrawal_entry_id,
     write_ledger,
@@ -121,12 +122,13 @@ def book_settlement(
         existing = get_entry(hedge.business_id, payout_entry_id(hedge.id), engine)
         if existing is not None:
             return [existing]
+        on, late = posting_date(hedge.business_id, rec.settled_on, engine)
         entry = LedgerEntry(
             id=payout_entry_id(hedge.id),
             business_id=hedge.business_id,
-            date=rec.settled_on,
+            date=on,
             kind="payout",
-            narration=f"[SIMULATED] Payout: {rec.ticker} {rec.side.upper()} x {rec.n_filled}",
+            narration=f"[SIMULATED] Payout: {rec.ticker} {rec.side.upper()} x {rec.n_filled}{late}",
             postings=[Posting(account=VENUE_CASH[hedge.venue], amount=rec.payout),
                       Posting(account=PAYOUTS, amount=-rec.payout)],
             meta=hedge_meta(hedge),
@@ -182,12 +184,13 @@ def book_withdrawal(
     existing = get_entry(business_id, entry_id, engine)
     if existing is not None:
         return existing
+    booked_on, late = posting_date(business_id, on, engine)
     entry = LedgerEntry(
         id=entry_id,
         business_id=business_id,
-        date=on,
+        date=booked_on,
         kind="withdrawal",
-        narration=f"[SIMULATED] Withdrawal to bank: {', '.join(hedge_ids)}",
+        narration=f"[SIMULATED] Withdrawal to bank: {', '.join(hedge_ids)}{late}",
         postings=[Posting(account=BANK, amount=amount), Posting(account=VENUE_CASH[venue], amount=-amount)],
         meta=None,
         simulated=True,

@@ -37,12 +37,18 @@ from app.models import (
     Business,
     ChatReply,
     ChatRequest,
+    ControllerSignoff,
+    CosignRequest,
+    DecisionReceipt,
     DeskRunRequest,
     ErrorBody,
     Health,
     Hedge,
     LedgerResponse,
     LogEntry,
+    PeriodClose,
+    PeriodCloseRequest,
+    PeriodCloses,
     ReconBenchmark,
     ReconResult,
     RejectRequest,
@@ -107,7 +113,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().cors_origin_list,
     allow_methods=["GET", "POST", "PUT", "OPTIONS"],
-    allow_headers=["Content-Type", "X-Owner-Token"],
+    allow_headers=["Content-Type", "X-Owner-Token", "X-Controller-Token", "X-Actor"],
 )
 
 
@@ -153,10 +159,17 @@ def _hedge(hedge_id: str) -> Hedge:
 
 
 def _labeled(h: Hedge, b: Business | None = None) -> Hedge:
-    """I6: a hedge for a business with estimated dollars says so (older rows predate the field)."""
+    """I6: a hedge for a business with estimated dollars says so (older rows predate the field).
+    Open hedges also say whether their premium needs the controller under today's materiality."""
+    from app.agent import policy
+
     b = b or db.get_business(h.business_id)
     if b is not None and b.estimated and not h.estimated:
-        return h.model_copy(update={"estimated": True})
+        h = h.model_copy(update={"estimated": True})
+    if h.status in OPEN_STATUSES:
+        need = policy.needs_controller(h, db.get_business_thresholds(h.business_id))
+        if need != h.needs_controller:
+            h = h.model_copy(update={"needs_controller": need})
     return h
 
 
@@ -198,7 +211,8 @@ def _expire_stale(hedges: list[Hedge]) -> list[Hedge]:
 
 
 def _require_owner(actor: str | None, token: str | None, action: str) -> None:
-    """I4: only exactly "owner" may approve or reject; optional X-Owner-Token (G1)."""
+    """I4: only exactly "owner" may approve or reject; X-Owner-Token when OWNER_TOKEN is set (G1;
+    `make demo` sets it, so a caller without the owner's token, like the desk, is refused)."""
     if actor != "owner":
         raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; the desk never decides for you.",
                        {"actor": actor})
@@ -206,6 +220,22 @@ def _require_owner(actor: str | None, token: str | None, action: str) -> None:
     if expected and token != expected:
         raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; the owner token is missing or wrong.",
                        {"actor": actor})
+
+
+def _require_controller(actor: str | None, token: str | None, action: str, business_id: str,
+                        hedge_id: str | None = None) -> None:
+    """Segregation of duties: only exactly "controller" (with X-Controller-Token when set) may
+    co-sign, change materiality or close the books. Refusals are logged (I5)."""
+    expected = get_settings().controller_token
+    why = None
+    if actor != "controller":
+        why = "the owner approves, the controller co-signs and closes; one person can't do both"
+    elif expected and token != expected:
+        why = "the controller token is missing or wrong"
+    if why:
+        _log({"business_id": business_id, "kind": "refusal", "actor": "system", "hedge_id": hedge_id,
+              "summary": f"Refused {action} by {actor!r}: only the controller can {action}."})
+        raise ApiError(403, "controller_only", f"Only the controller can {action}; {why}.", {"actor": actor})
 
 
 def _require_decidable(h: Hedge) -> None:
@@ -346,8 +376,11 @@ def approve(
     h = _hedge(hedge_id)
     _require_owner(body.actor if body else None, x_owner_token, "approve")
     _require_decidable(h)
+    _require_cosign(h)
     from app.books import ledger  # looked up at call time so tests can patch book_approval
 
+    note = body.note.strip() if body and body.note and body.note.strip() else None
+    h = h.model_copy(update={"decision_note": note})
     try:  # validates the approved Hedge, books it (+ `booking` log event), then stores it
         approved, _entries = ledger.approve_hedge(h, "owner", at=clock.now())
     except Exception as e:
@@ -370,14 +403,104 @@ def reject(
     h = _hedge(hedge_id)
     _require_owner(body.actor if body else None, x_owner_token, "reject")
     _require_decidable(h)
+    reason_text = body.reason.strip() if body and body.reason and body.reason.strip() else None
     rejected = Hedge.model_validate(h.model_dump() | {"status": "rejected", "decided_by": "owner",
-                                                      "decided_at": clock.now(), "alternative": None})
+                                                      "decided_at": clock.now(), "alternative": None,
+                                                      "decision_note": reason_text})
     db.put_hedge(rejected)
     reason = f" Reason: {body.reason}" if body and body.reason else ""
     _log({"business_id": h.business_id, "kind": "rejection", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "rejected", "numbers": _hedge_numbers(h),
           "summary": f"Owner rejected {h.id}.{reason}"})
     return _labeled(rejected)
+
+
+def _require_cosign(h: Hedge) -> None:
+    """A premium above materiality needs the controller's signature before the owner's approval."""
+    from app.agent import policy
+
+    th = db.get_business_thresholds(h.business_id)
+    if not policy.needs_controller(h, th):
+        return
+    if h.controller is None or h.controller.decision != "signed":
+        refused = h.controller is not None
+        code = "controller_refused" if refused else "needs_controller"
+        msg = (f"The controller refused to co-sign {h.id}; the owner can only reject it." if refused else
+               f"{h.id} costs ${h.premium}, above the ${th.materiality_usd} materiality threshold, so the "
+               "controller must co-sign before the owner's approval can book it.")
+        _log({"business_id": h.business_id, "kind": "refusal", "actor": "system", "hedge_id": h.id,
+              "decision_id": h.decision.id, "numbers": {"premium": h.premium, "materiality": th.materiality_usd},
+              "summary": f"Approval of {h.id} held: " + ("the controller refused to co-sign." if refused else
+                                                        "it needs the controller's co-sign first.")})
+        raise ApiError(409, code, msg, {"premium": str(h.premium), "materiality_usd": str(th.materiality_usd)})
+
+
+@app.post("/hedges/{hedge_id}/cosign", response_model=Hedge, responses=ERRORS | {403: {"model": ErrorBody}})
+def cosign(
+    hedge_id: str,
+    body: CosignRequest | None = Body(None),
+    x_controller_token: str | None = Header(None),
+) -> Hedge:
+    """The controller's co-sign (or refusal) on a hedge whose premium is above materiality. It
+    doesn't approve anything: the owner still decides, and a refusal leaves only reject open."""
+    from app.agent import log as desk_log
+    from app.agent import policy
+
+    h = _hedge(hedge_id)
+    _require_controller(body.actor if body else None, x_controller_token, "co-sign", h.business_id, h.id)
+    _require_decidable(h)
+    th = db.get_business_thresholds(h.business_id)
+    if not policy.needs_controller(h, th):
+        raise ApiError(409, "cosign_not_required", f"{h.id} is within the ${th.materiality_usd} materiality "
+                       "threshold; the owner decides alone.", {"premium": str(h.premium)})
+    if h.controller is not None:
+        raise ApiError(409, "already_cosigned", f"The controller already {h.controller.decision} {h.id}.",
+                       {"decision": h.controller.decision})
+    approve = body.approve if body else True
+    numbers = desk_log.allowed_numbers({"premium": h.premium, "materiality": th.materiality_usd})
+    note, _ = desk_log.sanitize(body.note.strip(), numbers) if body and body.note and body.note.strip() else (None, [])
+    signed = Hedge.model_validate(h.model_dump() | {
+        "needs_controller": True,
+        "controller": ControllerSignoff(decision="signed" if approve else "refused", at=clock.now(), note=note),
+    })
+    db.put_hedge(signed)
+    verb = "co-signed" if approve else "refused to co-sign"
+    _log({"business_id": h.business_id, "kind": "cosign" if approve else "cosign_refused", "actor": "controller",
+          "hedge_id": h.id, "decision_id": h.decision.id, "status": h.status, "numbers": numbers,
+          "summary": f"Controller {verb} {h.id} (${h.premium} premium, above ${th.materiality_usd} materiality)."
+                     + (f" Note: {note}" if note else "")
+                     + (" The owner decides next." if approve else " The owner can only reject it now.")})
+    return _labeled(signed)
+
+
+@app.get("/hedges/{hedge_id}/receipt", response_model=DecisionReceipt, responses=ERRORS)
+def receipt(hedge_id: str) -> DecisionReceipt:
+    """Everything behind one decision, from the record: the hedge with its checks, the exposure
+    it measured, today's thresholds, who must sign, and every log entry about it (oldest first)."""
+    from app.agent import policy
+
+    h = _labeled(_hedge(hedge_id))
+    th = db.get_business_settings(h.business_id).thresholds
+    exposure = None
+    try:
+        res = analysis.analyze(h.business_id, None)
+        exposure = next((e for e in res.exposures + res.dropped if e.id == h.exposure_id), None)
+    except analysis.AnalysisUnavailable:
+        pass
+    trail = [e for e in db.list_log(h.business_id, hedge_id=h.id) if not db.is_retired_sample_entry(e)]
+    need = ["owner"] + (["controller"] if policy.needs_controller(h, db.get_business_thresholds(h.business_id)) else [])
+    venue = {"kalshi": "Kalshi", "polymarket": "Polymarket"}[h.venue]
+    sources = [
+        "Exposure: OLS on the business's daily revenue (train year), with a refit on the recent window.",
+        f"Market and prices: {venue} public order book, read at {h.created_at.isoformat()}"
+        + (" (offline cache)." if get_settings().demo_offline else "."),
+        "Decline rules: code in markets/rules.py, judged against the thresholds below.",
+        "Summary text: written by Claude or the template, checked so every number matches a tool result (I2).",
+    ]
+    if h.estimated:
+        sources.append("Estimated: the business's dollars are visits x an assumed average check (I6).")
+    return DecisionReceipt(hedge=h, exposure=exposure, thresholds=th, trail=trail, approvals_required=need,
+                           sources=sources)
 
 
 # --- Books -------------------------------------------------------------------
@@ -409,6 +532,32 @@ def reconcile(business_id: str, _body: dict | None = Body(None)) -> ReconResult:
     result = recon.reconcile(business_id)
     db.put_analysis(business_id, "reconciliation", result, clock.now().isoformat())
     return result
+
+
+@app.get("/businesses/{business_id}/closes", response_model=PeriodCloses, responses=ERRORS)
+def closes(business_id: str) -> PeriodCloses:
+    _business(business_id)
+    from app.books import close as books_close
+
+    return books_close.list_closes(business_id)
+
+
+@app.post("/businesses/{business_id}/close", response_model=PeriodClose,
+          responses=ERRORS | {403: {"model": ErrorBody}})
+def close_books(
+    business_id: str, body: PeriodCloseRequest, x_controller_token: str | None = Header(None),
+) -> PeriodClose:
+    """Controller only: reconcile, take the trial balance and lock the books through `through`
+    (books/close.py). 409 `unreconciled` lists open mismatches unless they're acknowledged."""
+    _business(business_id)
+    _require_controller(body.actor, x_controller_token, "close the books", business_id)
+    from app.books import close as books_close
+
+    try:
+        return books_close.close_period(business_id, body.through, acknowledge_exceptions=body.acknowledge_exceptions,
+                                        note=body.note)
+    except books_close.CloseRefused as e:
+        raise ApiError(409, e.code, e.message, e.detail)
 
 
 # --- Chat --------------------------------------------------------------------
@@ -479,10 +628,17 @@ def get_settings_route(business_id: str) -> Settings:
 
 
 @app.put("/businesses/{business_id}/settings", response_model=Settings, responses=ERRORS)
-def put_settings_route(business_id: str, body: Settings) -> Settings:
+def put_settings_route(
+    business_id: str, body: Settings,
+    x_actor: str | None = Header(None), x_controller_token: str | None = Header(None),
+) -> Settings:
     """Store the overrides, then re-run the rules (no Claude) on this week's open hedges and
-    log each status flip (R14)."""
+    log each status flip (R14). Changing materiality is the controller's call (X-Actor:
+    controller + X-Controller-Token), so the owner can't lift the co-sign requirement alone."""
     _business(business_id)
+    current = db.get_business_settings(business_id).thresholds.materiality_usd
+    if body.thresholds.materiality_usd != current:
+        _require_controller(x_actor, x_controller_token, "change the materiality threshold", business_id)
     db.put_business_settings(business_id, body)
     th = db.get_business_thresholds(business_id)
     week = clock.desk_week()

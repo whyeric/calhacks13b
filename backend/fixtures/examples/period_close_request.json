@@ -1,0 +1,6 @@
+{
+  "actor": "controller",
+  "through": "2026-10-23",
+  "acknowledge_exceptions": true,
+  "note": "Soft close for the last full week of October."
+}
