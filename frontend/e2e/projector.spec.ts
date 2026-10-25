@@ -67,7 +67,7 @@ for (const scenario of ["empty", "error", "slow", "longtext", "negative"])
     else if (scenario === "error") {
       await expect(
         page.getByRole("button", { name: "Retry", exact: true }),
-      ).toHaveCount(3);
+      ).toHaveCount(4); // exposures, hedges, decision log, backtest (#28)
     } else {
       await expect(page.getByTestId("hedge-card")).toHaveCount(3);
       expect(
