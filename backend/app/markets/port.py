@@ -17,7 +17,7 @@ from decimal import Decimal
 from functools import lru_cache
 from typing import Protocol
 
-from app.config import FIXTURES_DIR, Thresholds, get_settings
+from app.config import FIXTURES_DIR, Thresholds, get_settings, get_thresholds
 from app.hedge_rules import apply_rules
 from app.models import CHECK_ORDER, Agent, Check, Decision, Exposure, Hedge
 
@@ -34,13 +34,19 @@ class MarketsPort(Protocol):
 
 
 def no_market_hedge(
-    exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent, remaining: Decimal
+    exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent, remaining: Decimal,
+    thresholds: Thresholds | None = None,
 ) -> Hedge:
-    """Declined with `no_market`; the other decline checks are skipped (I3: shown, not hidden)."""
+    """Declined with `no_market`; the market checks are skipped (I3: shown, not hidden).
+    `unstable` doesn't need a market, so it is still judged."""
+    from app.markets.rules import check_unstable
+
     checks = [Check(code="no_market", passed=False, metric={"n_candidates": 0})]
-    checks += [Check(code=c, passed=None, metric={"skipped": "no_market"}) for c in CHECK_ORDER[1:-1]]
+    checks += [Check(code=c, passed=None, metric={"skipped": "no_market"}) for c in CHECK_ORDER[1:-2]]
+    checks.append(check_unstable(exposure, thresholds or get_thresholds()))
     checks.append(Check(code="over_budget", passed=True, metric={"premium": Decimal("0.00"), "remaining": remaining}))
-    decision = Decision(id=f"dec_{hedge_id}", status="declined", checks=checks, reasons=["no_market"], summary=None)
+    reasons = [c.code for c in checks if c.passed is False and c.code != "over_budget"]
+    decision = Decision(id=f"dec_{hedge_id}", status="declined", checks=checks, reasons=reasons, summary=None)
     return Hedge(
         id=hedge_id, business_id=exposure.business_id, exposure_id=exposure.id, week_of=week_of,
         status="declined", ticker=None, market_title=None, market_url=None, close_time=None,
@@ -95,7 +101,7 @@ class FixtureMarkets:
         ex = self._example(exposure)
         if ex is None:
             return no_market_hedge(exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
-                                   remaining=remaining)
+                                   remaining=remaining, thresholds=thresholds)
         shift = timedelta(days=(week_of - ex.week_of).days)
         data = ex.model_dump() | {
             "id": hedge_id, "business_id": exposure.business_id, "exposure_id": exposure.id,
@@ -167,7 +173,7 @@ class KalshiMarkets:
                     sizing = size_hedge(exposure, pick, book, h, p_hat, series, thresholds.max_slip)
         except CacheMiss:
             return no_market_hedge(exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
-                                   remaining=remaining)
+                                   remaining=remaining, thresholds=thresholds)
         decision = evaluate(exposure, cands, sizing, basis, remaining, thresholds, decision_id=f"dec_{hedge_id}")
         return to_hedge(exposure, sizing, decision, hedge_id=hedge_id, week_of=week_of, created_at=now, agent=agent)
 

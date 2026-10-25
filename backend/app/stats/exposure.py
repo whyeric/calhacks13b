@@ -17,6 +17,15 @@ Decisions:
 - A flag that is constant on train (e.g. never true) is dropped from the design and its
   exposure reported as 0 with every failing reason; non-finite stats become se 0, p 1.
 - `estimated` propagates from the frame's `estimated` column (I6).
+- Stability (research hedgesim): each exposure is also refit, same model, on the most recent
+  window only (the `holdout` rows) and carries `stability` = that effect, its CI, and
+  `stable` = same sign as train AND a CI that excludes 0. Train-year significance alone is not
+  enough: taxi rain (+$2,212 train) was +$303 with a CI crossing 0 on the recent window, and
+  taxi hot flipped sign. `markets.rules` declines unstable exposures (rule `unstable`). The
+  refit does not change `hedgeable` or the train gates.
+- Small samples: HAC (Newey-West) standard errors, used in the research scripts, collapse
+  toward 0 for events with fewer than about 10 days, so their CIs are not trustworthy. Such
+  exposures already fail `thin_support` (min_support = 10 event days), so they are never hedged.
 
 Pure: no I/O, no network, no DB.
 """
@@ -30,7 +39,7 @@ import statsmodels.api as sm
 from pydantic import BaseModel, ConfigDict
 
 from app.config import Thresholds, get_thresholds
-from app.models import CENT, BasisStat, Event, Exposure, ModelCheck
+from app.models import CENT, BasisStat, Event, Exposure, ModelCheck, Stability
 
 Z90 = 1.645
 COV_TYPE = "HC3"
@@ -130,6 +139,38 @@ def _r2(y: np.ndarray, yhat: np.ndarray) -> float:
     return 1.0 - float(((y - yhat) ** 2).sum()) / sst
 
 
+def _recent_fit(recent: pd.DataFrame, strikes: dict[str, float]):
+    """The §5 model fit on the recent window alone, or None when it can't be fit."""
+    if recent.empty:
+        return None, {}
+    flags = event_flags(recent, strikes)
+    X = build_design(recent, flags)
+    if len(recent) <= X.shape[1]:
+        return None, flags
+    try:
+        return fit_ols(recent["revenue"], X), flags
+    except (np.linalg.LinAlgError, ValueError):
+        return None, flags
+
+
+def stability(
+    event: str, train_effect: Decimal, res, flags: dict[str, pd.Series], recent: pd.DataFrame
+) -> Stability | None:
+    """`event`'s recent-window effect vs its train effect (see module docstring)."""
+    if res is None or event not in flags or "date" not in recent.columns:
+        return None
+    b, se, _ = _coef(res, event)
+    effect = money(b)
+    lo, hi = money(b - Z90 * se), money(b + Z90 * se)
+    same_sign = effect != 0 and train_effect != 0 and (effect > 0) == (train_effect > 0)
+    dates = pd.to_datetime(recent["date"]).dt.date
+    return Stability(
+        effect_usd=effect, ci90=(lo, hi), n_days=len(recent), n_events=int(flags[event].sum()),
+        start=dates.min(), end=dates.max(),
+        same_sign=same_sign, stable=same_sign and (lo > 0 or hi < 0),
+    )
+
+
 def _exposure(
     event: str, b: float, se: float, p: float, n_events: int, business_id: str,
     strike: float | None, beta_s: Decimal | None, th: Thresholds,
@@ -202,6 +243,8 @@ def fit_exposures(
         yh = holdout["revenue"].to_numpy(float)
         r2_holdout = _r2(yh, Xh.to_numpy(float) @ res.params.to_numpy(float))
 
+    recent_res, recent_flags = _recent_fit(holdout, strikes)
+
     exposures, dropped = [], []
     for event, flag in flags.items():
         b, se, p = _coef(res, event)
@@ -209,6 +252,8 @@ def fit_exposures(
         if settle_flags and event in settle_flags:
             beta_s = beta_settlement(df, settle_flags[event], event=event, strikes=strikes).beta_s
         exp = _exposure(event, b, se, p, int(flag.sum()), business_id, strikes.get("hot"), beta_s, th)
+        if (stab := stability(event, exp.effect_usd, recent_res, recent_flags, holdout)) is not None:
+            exp = exp.model_copy(update={"stability": stab})
         (exposures if exp.hedgeable else dropped).append(exp)
 
     return ExposureResult(

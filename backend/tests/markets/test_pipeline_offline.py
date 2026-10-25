@@ -52,16 +52,16 @@ async def test_taxi_and_bar_rain_offline_and_deterministic():
     assert (taxi.side, taxi.n_filled, taxi.status, taxi.decision.reasons) == ("no", 0, "declined", ["illiquid"])
     # Bar buys YES at 1¢, resized to h = 700/900 by the basis rule.
     assert (bar.side, bar.n_target, bar.resized, bar.status) == ("yes", 700, True, "proposed")
-    assert bar.fills[0].price == D("0.01") and bar.fair == D("0.3973")
+    assert bar.fills[0].price == D("0.01") and bar.fair == D("0.3123")  # NOAA GHCN p̂ (Open-Meteo was 0.3973)
     overpriced = bar.decision.checks[2].model_dump(mode="json")["metric"]
     assert overpriced["overpay"] == "0.00"
-    assert overpriced["note"] == "Market price reflects the current forecast; historical rate is 40%."
+    assert overpriced["note"] == "Market price reflects the current forecast; historical rate is 31%."
     assert bar.expected_cost == bar.fee  # never cheaper than its fee
 
     for hd in (taxi, bar):
         dumped = json.loads(hd.model_dump_json())
         assert Hedge.model_validate(dumped) == hd
-        assert isinstance(dumped["premium"], (str, type(None))) and len(hd.decision.checks) == 6
+        assert isinstance(dumped["premium"], (str, type(None))) and len(hd.decision.checks) == 7
 
     again = await desk(bar_exp)
     assert again.model_dump_json() == bar.model_dump_json()  # byte-identical replay

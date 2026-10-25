@@ -1,9 +1,9 @@
 {
   "rain": {
-    "p_hat": "0.3973",
+    "p_hat": "0.3123",
     "settlement_col": "settle_rain",
     "series": "KXRAIN (-NYC markets)",
-    "station": "CLINYC, Central Park",
+    "station": "CLINYC, Central Park (NOAA GHCN USW00094728)",
     "latlon": [
       "40.7789",
       "-73.9692"
@@ -14,8 +14,8 @@
       "2025-09-30"
     ],
     "n_train_days": 365,
-    "n_event_days": 145,
-    "source": "app.data.features.add_settlement + event_frequency on the taxi feature table (#20)"
+    "n_event_days": 114,
+    "source": "app.data.features.add_settlement (NOAA GHCN, the settlement record) + event_frequency on the taxi feature table (#20)"
   },
   "home_win": {
     "p_hat": "0.5444",

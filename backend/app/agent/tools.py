@@ -218,7 +218,7 @@ class DeskContext:
             hid = self.hedge_id(exposure_id)
             b = self.budget_excluding(hid)
             hedge = no_market_hedge(e, hedge_id=hid, week_of=self.week_of, now=self.now, agent=self.agent,
-                                    remaining=b.remaining)
+                                    remaining=b.remaining, thresholds=self.thresholds)
             st = self._store(e, hedge, b)
             out["hedge_id"] = hid
             out["decision"] = st.hedge.decision.model_dump(mode="json", exclude={"summary"})

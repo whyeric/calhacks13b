@@ -100,3 +100,47 @@ def test_checked_in_weather_caches_cover_window():
         assert len(w.daily) == (config.WINDOW_END - config.WINDOW_START).days + 1
         assert not w.daily.isna().any().any()
         assert pd.api.types.is_datetime64_any_dtype(w.hourly["time"])
+
+
+# --- NOAA GHCN-Daily, the KXRAIN / KXHIGHNY settlement record (research r3-noaa) ---
+
+GHCN_CSV = (
+    '"STATION","DATE","PRCP","TMAX"\n'
+    '"USW00094728","2024-10-01","0.00","69"\n'
+    '"USW00094728","2024-10-02","0.01","85"\n'
+    '"USW00094728","2024-10-03","0.45","86"\n'
+)
+
+
+def test_ghcn_parse_and_flags():
+    g = weather.parse_ghcn(GHCN_CSV)
+    assert list(g.columns) == ["date", "prcp", "tmax"] and g["date"].iloc[0] == date(2024, 10, 1)
+    f = weather.ghcn_flags(g)
+    assert f["rain"].tolist() == [False, True, True]  # >= 0.01 in, i.e. "more than 0 in"; trace is 0
+    assert f["tmax"].tolist() == [69.0, 85.0, 86.0]
+
+
+def test_ghcn_fixture_covers_the_project_window_offline():
+    g = weather.load_ghcn(offline=True)
+    assert len(g) == (config.WINDOW_END - config.WINDOW_START).days + 1
+    assert not g.isna().any().any()
+    assert (config.FIXTURES_DIR / weather.GHCN_FIXTURE).stat().st_size < 100_000  # small, committed
+
+
+def test_ghcn_offline_without_fixture_is_a_cache_miss(tmp_path):
+    with pytest.raises(weather.WeatherCacheMiss):
+        weather.load_ghcn(cache_dir=tmp_path, offline=True)
+
+
+def test_ghcn_fetches_and_merges_when_online(tmp_path):
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.update(request.url.params)
+        return httpx.Response(200, text=GHCN_CSV)
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    g = weather.load_ghcn(date(2024, 10, 1), date(2024, 10, 3), cache_dir=tmp_path, offline=False, client=client)
+    assert len(g) == 3 and seen["stations"] == weather.GHCN_STATION and seen["units"] == "standard"
+    again = weather.load_ghcn(date(2024, 10, 1), date(2024, 10, 3), cache_dir=tmp_path, offline=True)
+    assert again.equals(g)

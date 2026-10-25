@@ -69,9 +69,30 @@ def _event(hedge: Hedge) -> str:
 
 # ---- one clause per check code
 
+UNSTABLE_NOUN = {"rain": "rain", "hot": "hot weather", "home_win": "a home win"}
+
+
+def unstable_clause(m: dict, event: str) -> str:
+    """'rain added $2,212 a day last year but only $303, not distinguishable from zero, in the most
+    recent months, so the risk isn't reliable enough to insure'. Whole dollars from the metric."""
+    noun = UNSTABLE_NOUN.get(event, event.replace("_", " "))
+    train, recent = Decimal(str(m["effect_last_year_usd"])), Decimal(str(m["effect_recent_usd"]))
+    verb = "added" if train > 0 else "cost"
+    train_s = _usd_signed_whole(abs(train)).lstrip("+")
+    if not m.get("sign_flipped"):
+        recent_s = _usd_signed_whole(abs(recent)).lstrip("+")
+        middle = f"only {recent_s}, not distinguishable from zero,"
+    else:
+        middle = f"went the other way ({_usd_signed_whole(recent)} a day)"
+    return (f"{noun} {verb} {train_s} a day last year but {middle} in the most recent months, "
+            "so the risk isn't reliable enough to insure")
+
+
 
 def _clause(code: str, m: dict, hedge: Hedge) -> str:
     side = hedge.side.upper()
+    if code == "unstable":
+        return unstable_clause(m, _event(hedge))
     if code == "no_market":
         label = NO_MARKET_LABEL.get(_event(hedge), _event(hedge))
         return f"there is no open Kalshi market for {label} this week, so there is nothing to buy"

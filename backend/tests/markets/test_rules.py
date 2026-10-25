@@ -9,7 +9,7 @@ import pytest
 from app.config import Thresholds
 from app.markets.match import Candidate, Depth
 from app.markets.rules import (
-    check_basis, check_illiquid, check_overpriced, check_too_expensive, evaluate, resolve_h,
+    check_basis, check_illiquid, check_overpriced, check_too_expensive, check_unstable, evaluate, resolve_h,
 )
 from app.markets.shapes import Sizing
 from app.markets.sizing import target_contracts
@@ -17,7 +17,7 @@ from app.models import BasisStat, Headline
 
 TH = Thresholds()
 T0 = datetime(2026, 10, 24, tzinfo=timezone.utc)
-CODES = ["no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive", "over_budget"]
+CODES = ["no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive", "unstable", "over_budget"]
 BAR = {"id": "exp_rain", "business_id": "restaurant", "effect_usd": "-900.00",
        "hedge_side": "yes", "settlement_var": "rain"}
 GOOD_BASIS = BasisStat(r2=D("0.81"), beta_s=D("-900"), se=D("100"))
@@ -26,6 +26,15 @@ CANDS = [Candidate(
     floor_strike=None, settlement_var="rain", fee_type="quadratic", fee_multiplier=D(1),
     yes_ask=D("0.42"), no_ask=None, yes_bid=None, no_bid=None, depth_within_5c=Depth(yes=900, no=0), fetched_at=T0,
 )]
+
+
+def stab(effect="-850.00", lo="-1400.00", hi="-300.00", same_sign=True):
+    stable = same_sign and (D(lo) > 0 or D(hi) < 0)
+    return {"effect_usd": effect, "ci90": (lo, hi), "n_days": 335, "n_events": 158, "start": "2025-10-01",
+            "end": "2026-08-31", "same_sign": same_sign, "stable": stable}
+
+
+STABLE = stab()
 
 
 def sizing(n_target=900, n_filled=900, avg="0.30", fair="0.27", expected_cost="50.00", premium="100.00"):
@@ -52,7 +61,8 @@ def test_rule1_no_market_declines_with_everything_logged():
     assert (d.status, d.reasons) == ("declined", ["no_market"])
     assert [c.code for c in d.checks] == CODES
     assert all(c.passed is None and c.metric == {"skipped": "no_market"} for c in d.checks[1:5])
-    assert d.checks[5].passed is True and metric_json(d.checks[5])["premium"] == "0.00"
+    assert d.checks[5].passed is None and d.checks[5].metric == {"skipped": "no_recent_window"}
+    assert d.checks[6].passed is True and metric_json(d.checks[6])["premium"] == "0.00"
 
 
 @pytest.mark.parametrize("filled,passed,partial,status", [
@@ -127,7 +137,7 @@ def test_rule6_over_budget_waits_for_owner(premium, status):
 
 
 def test_all_six_logged_after_failures():
-    d = run(sizing(avg="0.62", fair="0.27", expected_cost="328.20"))
+    d = run(sizing(avg="0.62", fair="0.27", expected_cost="328.20"), exposure=BAR | {"stability": STABLE})
     assert [c.code for c in d.checks] == CODES
     assert all(c.passed is not None and c.metric for c in d.checks)
     assert (d.status, d.reasons) == ("declined", ["overpriced", "too_expensive"])
@@ -135,7 +145,7 @@ def test_all_six_logged_after_failures():
 
 def test_status_precedence():
     d = run(sizing(expected_cost="400.00", premium="300.00"))
-    assert d.status == "declined" and d.checks[5].passed is False
+    assert d.status == "declined" and d.checks[-1].code == "over_budget" and d.checks[-1].passed is False
     assert d.reasons == ["too_expensive"]  # models.Decision: declines only, budget is a pause
     d = run(sizing(premium="300.00"))
     assert (d.status, d.reasons) == ("pending_approval", ["over_budget"])
@@ -152,3 +162,52 @@ def test_threshold_flip():
     s = sizing(expected_cost="328.20")
     assert run(s).status == "declined"
     assert run(s, th=replace(TH, cost_ratio_max=D("0.40"))).status == "proposed"
+
+
+# ---- rule `unstable` (research hedgesim): recent-window refit must keep its sign and exclude 0
+
+TAXI_RAIN = {"id": "exp_rain", "business_id": "taxi", "effect_usd": "2211.68", "hedge_side": "no",
+             "settlement_var": "rain", "stability": stab("303.37", "-1823.08", "2429.82")}
+
+
+def test_unstable_declines_with_train_and_recent_metric():
+    c = check_unstable(TAXI_RAIN, TH)
+    assert c.passed is False
+    m = metric_json(c)
+    assert (m["effect_last_year_usd"], m["effect_recent_usd"]) == ("2211.68", "303.37")
+    assert (m["recent_ci_low"], m["recent_ci_high"]) == ("-1823.08", "2429.82")
+    assert m["sign_flipped"] is False and m["stable"] is False and m["enforced"] is True
+    d = run(exposure=TAXI_RAIN)
+    assert (d.status, d.reasons) == ("declined", ["unstable"])
+    assert [c.code for c in d.checks] == CODES
+
+
+def test_unstable_sign_flip_declines_even_when_recent_ci_excludes_zero():
+    flipped = BAR | {"stability": stab("600.00", "100.00", "1100.00", same_sign=False)}
+    c = check_unstable(flipped, TH)
+    assert c.passed is False and c.metric["sign_flipped"] is True
+
+
+def test_stable_exposure_passes_unstable():
+    d = run(exposure=BAR | {"stability": STABLE})
+    assert d.status == "proposed" and next(c for c in d.checks if c.code == "unstable").passed is True
+
+
+def test_unstable_toggle_records_without_declining():
+    off = replace(TH, decline_unstable=False)
+    c = check_unstable(TAXI_RAIN, off)
+    assert c.passed is True and c.metric["stable"] is False and c.metric["enforced"] is False
+    assert run(exposure=TAXI_RAIN, th=off).status == "proposed"
+
+
+def test_unstable_runs_without_a_market():
+    d = evaluate(TAXI_RAIN, [], None, GOOD_BASIS, D("250"), TH)
+    assert d.reasons == ["no_market", "unstable"]
+
+
+def test_unstable_rejudged_when_toggle_changes():
+    from app.hedge_rules import _rejudge
+
+    c = check_unstable(TAXI_RAIN, TH)
+    assert _rejudge(c, replace(TH, decline_unstable=False), None).passed is True
+    assert _rejudge(_rejudge(c, replace(TH, decline_unstable=False), None), TH, None).passed is False

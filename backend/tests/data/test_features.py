@@ -99,15 +99,58 @@ def test_thresholds_from_config(taxi_df):  # C1-A27
     assert 0 < features.event_frequency(s, "settle_rain") < 1
 
 
-def test_settle_hot_is_strictly_above_strike(taxi_df):  # KXHIGHNY: high > strike
-    station = weather.load_weather(*config.SETTLEMENT_STATION_LATLON, offline=True).daily.set_index("date")
-    tmax = taxi_df["date"].map(station["temperature_2m_max"])
+def test_settle_hot_is_strictly_above_strike(taxi_df):  # KXHIGHNY: high > strike, on the NOAA record
+    noaa = weather.load_ghcn(offline=True).set_index("date")
+    tmax = taxi_df["date"].map(noaa["tmax"])
     strike = float(tmax.iloc[0])  # a real station high, so some day sits exactly at the strike
     s = features.add_settlement(taxi_df, strike=strike)
+    assert s.attrs["settlement_source"] == "noaa"
     at = tmax == strike
     assert at.any()
     assert not s.loc[at, "settle_hot"].any()
     assert s["settle_hot"].equals(tmax > strike)
+
+
+def test_settle_rain_uses_noaa_ghcn(taxi_df):  # r3-noaa: KXRAIN settles on GHCN USW00094728
+    noaa = weather.load_ghcn(offline=True).set_index("date")
+    s = features.add_settlement(taxi_df)
+    assert s["settle_rain"].equals(taxi_df["date"].map(noaa["prcp"]) >= 0.01)
+    om = features.add_settlement(taxi_df, source="open-meteo")
+    assert om.attrs["settlement_source"] == "open-meteo"
+    # Open-Meteo over-calls rain against the settlement record, so p̂ (and fair) drop with NOAA.
+    p_noaa, p_om = features.event_frequency(s, "settle_rain"), features.event_frequency(om, "settle_rain")
+    assert 0.25 < p_noaa < 0.36 and p_om - p_noaa > 0.05
+
+
+def test_settlement_falls_back_to_open_meteo_with_warning(taxi_df, tmp_path, caplog, monkeypatch):
+    import shutil
+
+    for name in ("weather_station.parquet", "weather_station_hourly.parquet"):
+        shutil.copy(config.FIXTURES_DIR / name, tmp_path / name)
+    monkeypatch.setenv("DEMO_OFFLINE", "1")  # no GHCN file in tmp_path and no fetch: a cache miss
+    config.get_settings.cache_clear()
+    try:
+        with caplog.at_level("WARNING", logger="app.data.features"):
+            s = features.add_settlement(taxi_df, strike=85, fixtures_dir=tmp_path)
+    finally:
+        monkeypatch.delenv("DEMO_OFFLINE")
+        config.get_settings.cache_clear()
+    assert s.attrs["settlement_source"] == "open-meteo"
+    assert "Open-Meteo" in caplog.text
+    om = features.add_settlement(taxi_df, strike=85, source="open-meteo")
+    assert s["settle_rain"].equals(om["settle_rain"]) and s["settle_hot"].equals(om["settle_hot"])
+
+
+def test_settlement_fills_ghcn_gaps_from_open_meteo(taxi_df, tmp_path, caplog):
+    import shutil
+
+    for name in ("weather_station.parquet", "weather_station_hourly.parquet"):
+        shutil.copy(config.FIXTURES_DIR / name, tmp_path / name)
+    lines = (config.FIXTURES_DIR / weather.GHCN_FIXTURE).read_text().splitlines()
+    (tmp_path / weather.GHCN_FIXTURE).write_text("\n".join(l for l in lines if "2025-01-" not in l) + "\n")
+    with caplog.at_level("WARNING", logger="app.data.features"):
+        s = features.add_settlement(taxi_df, fixtures_dir=tmp_path)
+    assert s.attrs["settlement_source"] == "mixed" and "31 settle on Open-Meteo" in caplog.text
 
 
 def test_offline_build_end_to_end(monkeypatch):  # C1-A28

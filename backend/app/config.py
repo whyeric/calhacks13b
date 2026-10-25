@@ -162,6 +162,17 @@ class Thresholds:
     max_slip: Decimal = Decimal("0.05")  # book walk: max price above best ask
     basis_r2_min: float = 0.5  # rule 4
     max_tool_calls: int = 12  # agent loop cap per turn
+    # Rule `unstable`: decline an exposure whose recent-window refit (the holdout split) has the
+    # other sign or a 90% CI that includes 0 (research hedgesim: taxi rain +$2,212 on train was
+    # +$303 [-1,823, 2,430] recently, and hedging it raised holdout income SD). False records the
+    # check but never declines on it.
+    decline_unstable: bool = True
+    # Rain hedge size relative to the same-day effect. Research r7-deferral: a rain episode's loss
+    # spreads over day-1..day+1 at about 1.4x the same-day effect with no rebound, so 1.0 is the
+    # conservative default and up to 1.4 is supported; never below 1.0 (a "deferral haircut"
+    # was the worst hedged option). Recorded only: sizing still caps contracts at the measured
+    # same-day exposure (I1), so values above 1.0 need the multi-day loss measured first.
+    rain_size_multiplier: float = 1.0
 
 
 @lru_cache

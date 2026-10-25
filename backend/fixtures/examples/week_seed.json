@@ -104,6 +104,13 @@
           }
         },
         {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
           "code": "over_budget",
           "passed": true,
           "metric": {
@@ -229,6 +236,13 @@
           }
         },
         {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
           "code": "over_budget",
           "passed": true,
           "metric": {
@@ -351,6 +365,13 @@
             "expected_cost": "37.60",
             "swing": "1240.00",
             "ratio": "0.0303"
+          }
+        },
+        {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
           }
         },
         {
@@ -503,6 +524,13 @@
             "expected_cost": "329.85",
             "swing": "900.00",
             "ratio": "0.3665"
+          }
+        },
+        {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
           }
         },
         {

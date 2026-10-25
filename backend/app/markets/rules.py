@@ -1,4 +1,9 @@
-"""The six decline rules (spec §8). All six always run and are logged (I3, I5).
+"""The decline rules (spec §8) plus `unstable`. All always run and are logged (I3, I5).
+
+`unstable` (research hedgesim) declines an exposure whose recent-window refit
+(`Exposure.stability`) has the other sign or a 90% CI that includes 0. It sits after
+too_expensive in table order and runs whether or not a market was found; with no recent
+window it is skipped, and `Thresholds.decline_unstable=False` records it without declining.
 
 Thresholds come only from config (R19), never module constants.
 """
@@ -18,7 +23,8 @@ from .shapes import Sizing, dec, field
 ZERO = Decimal("0")
 ONE = Decimal("1")
 NO_BASIS_NEEDED = {"home_win"}  # the business flag *is* the settlement flag
-DECLINE_CODES = ("no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive")
+DECLINE_CODES = ("no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive", "unstable")
+MARKET_CODES = DECLINE_CODES[:5]  # the checks that need a market (skipped with no_market)
 
 
 def _q(x: Decimal, places: str, rounding=ROUND_HALF_UP) -> str:
@@ -103,6 +109,24 @@ def check_too_expensive(expected_cost: Decimal, effect_usd: Decimal, th: Thresho
     })
 
 
+def check_unstable(exposure: Any, th: Thresholds) -> Check:
+    """Fails when the recent-window effect flipped sign or its 90% CI includes 0 (and the rule is on)."""
+    stab = exposure.get("stability") if isinstance(exposure, dict) else getattr(exposure, "stability", None)
+    if stab is None:
+        return _skip("unstable", "no_recent_window")
+    lo, hi = (dec(x) for x in field(stab, "ci90"))
+    stable = bool(field(stab, "stable"))
+    return Check(code="unstable", passed=stable or not th.decline_unstable, metric={
+        "effect_last_year_usd": _money(dec(field(exposure, "effect_usd"))),
+        "effect_recent_usd": _money(dec(field(stab, "effect_usd"))),
+        "recent_ci_low": _money(lo), "recent_ci_high": _money(hi),
+        "recent_n_events": int(field(stab, "n_events")),
+        "recent_start": str(field(stab, "start")), "recent_end": str(field(stab, "end")),
+        "sign_flipped": not bool(field(stab, "same_sign")), "stable": stable,
+        "enforced": th.decline_unstable,
+    })
+
+
 def check_over_budget(premium: Decimal, remaining: Decimal) -> Check:
     return Check(code="over_budget", passed=premium <= remaining, metric={
         "premium": _money(premium), "remaining": _money(remaining),
@@ -146,7 +170,7 @@ def evaluate(
     basis: BasisStat | None, remaining_budget: Decimal, th: Thresholds,
     *, decision_id: str | None = None,
 ) -> Decision:
-    """Run checks 1–6 in table order, always. Size with resolve_h's h first (G5).
+    """Run every check in table order, always. Size with resolve_h's h first (G5).
 
     Raises NotHedgeableError for an exposure the stats gates dropped, before any check runs.
     """
@@ -160,7 +184,8 @@ def evaluate(
 
     checks = [check_no_market(candidates)]
     if not candidates or sizing is None:
-        checks += [_skip(c, "no_market") for c in DECLINE_CODES[1:]]
+        checks += [_skip(c, "no_market") for c in MARKET_CODES[1:]]
+        checks.append(check_unstable(exposure, th))
         checks.append(check_over_budget(ZERO, remaining))
     else:
         filled = sizing.n_filled > 0
@@ -172,6 +197,7 @@ def evaluate(
                       Check(code="basis_too_loose", passed=True, metric={"skipped": "no_basis_needed", "h": "1"}))
         checks.append(check_too_expensive(sizing.expected_cost, beta, th) if filled
                       else _skip("too_expensive", "no_fill"))
+        checks.append(check_unstable(exposure, th))
         checks.append(check_over_budget(sizing.premium, remaining))
 
     failed = [c.code for c in checks if c.passed is False]
