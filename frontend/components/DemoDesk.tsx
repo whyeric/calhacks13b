@@ -1,6 +1,8 @@
 "use client";
-// Scripted "Upload your revenue" demo: client-only, works in live and mock
-// mode. All figures come from lib/demoScript.ts (hardcoded strings).
+// "Upload your revenue": the drawer POSTs the CSV to /research and the report
+// renders the response (docs/RESEARCH_CONTRACT.md). If the API is unreachable
+// it falls back to the precomputed sample report, labeled as such (I6).
+// "Send to the desk" is still scripted (lib/demoScript.ts).
 import {
   useCallback,
   useEffect,
@@ -10,6 +12,7 @@ import {
 } from "react";
 import Link from "next/link";
 import type { Business, LogEntry } from "@/lib/types";
+import { ApiError, apiUpload } from "@/lib/api";
 import {
   DEMO_BUDGETS,
   DEMO_DEFAULTS,
@@ -18,16 +21,19 @@ import {
   DEMO_KINDS,
   DEMO_SAMPLE,
   FOREST_DOMAIN,
+  PRECOMPUTED_LABEL,
+  PRECOMPUTED_RESEARCH,
   PRIVACY_NOTE,
-  PROTOCOL_CHIPS,
-  RESEARCH_ROWS,
-  SUMMARY,
+  canSend,
   csvSummary,
   demoBusiness,
   demoLog,
+  liveResearch,
   parseRevenueCsv,
   type DemoHedgeStatus,
   type ParsedCsv,
+  type Research,
+  type ResearchResponse,
   type ResearchRow,
 } from "@/lib/demoScript";
 import { columnSpan, position, progressPercent } from "@/lib/chartScale";
@@ -35,16 +41,19 @@ import { fmtUsd } from "@/lib/format";
 import { Drawer } from "./ChatDrawer";
 import { DecisionLog } from "./DecisionLog";
 
-export type DemoUpload = { name: string; kind: string; csv: ParsedCsv };
+export type DemoUpload = {
+  name: string;
+  kind: string;
+  csv: ParsedCsv;
+  research: Research;
+};
 type HedgeState = { status: "sending" | DemoHedgeStatus; startedAt: number };
-// How long the analysis and the hedge pricing take on screen.
-export const RESEARCH_MS = 7000;
+// How long the scripted hedge pricing takes on screen.
 export const SEND_MS = 2600;
 
 // --- State (lives in the page so switching businesses keeps the demo) -------
 export function useDemo() {
   const [upload, setUpload] = useState<DemoUpload | null>(null);
-  const [startedAt, setStartedAt] = useState(0);
   const [hedge, setHedge] = useState<HedgeState | null>(null);
   const [log, setLog] = useState<LogEntry[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,7 +66,6 @@ export function useDemo() {
   const start = useCallback((next: DemoUpload) => {
     if (timer.current) clearTimeout(timer.current);
     setUpload(next);
-    setStartedAt(Date.now());
     setHedge(null);
     setLog([]);
   }, []);
@@ -66,10 +74,6 @@ export function useDemo() {
     setUpload(null);
     setHedge(null);
     setLog([]);
-  }, []);
-  // Tests only: jump to the end of the analysis.
-  const skip = useCallback(() => {
-    setStartedAt(Date.now() - RESEARCH_MS);
   }, []);
   const send = useCallback(() => {
     if (!upload) return;
@@ -104,13 +108,11 @@ export function useDemo() {
     : null;
   return {
     upload,
-    startedAt,
     hedge,
     log,
     business,
     start,
     remove,
-    skip,
     send,
     decide,
   };
@@ -138,12 +140,17 @@ export function DemoUploadDrawer({
 }) {
   const [name, setName] = useState(DEMO_DEFAULTS.name);
   const [kind, setKind] = useState(DEMO_DEFAULTS.kind);
-  const [fileName, setFileName] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [csv, setCsv] = useState<ParsedCsv | null>(null);
   const [error, setError] = useState("");
-  function load(label: string, text: string) {
+  const [pending, setPending] = useState(false);
+  // Only the latest request may finish (a new pick supersedes an old one).
+  const request = useRef(0);
+  function load(picked: File, text: string) {
     const parsed = parseRevenueCsv(text);
-    setFileName(label);
+    request.current++;
+    setPending(false);
+    setFile(picked);
     setCsv(parsed);
     setError(
       parsed
@@ -154,7 +161,7 @@ export function DemoUploadDrawer({
   async function pick(file: File | undefined) {
     if (!file) return;
     try {
-      load(file.name, await readText(file));
+      load(file, await readText(file));
     } catch {
       setError("We couldn't read that file.");
     }
@@ -163,17 +170,47 @@ export function DemoUploadDrawer({
     try {
       const res = await fetch(DEMO_SAMPLE.href);
       if (!res.ok) throw new Error();
-      load(DEMO_SAMPLE.file, await res.text());
+      const text = await res.text();
+      load(new File([text], DEMO_SAMPLE.file, { type: "text/csv" }), text);
     } catch {
       setError("The sample file is unavailable. Download it and pick it.");
     }
   }
   const trimmed = name.trim();
-  const ready = !!trimmed && trimmed.length <= 60 && !!csv;
-  function submit(e: FormEvent) {
+  const ready = !!trimmed && trimmed.length <= 60 && !!csv && !!file;
+  async function submit(e: FormEvent) {
     e.preventDefault();
-    if (!ready || !csv) return;
-    onStart({ name: trimmed, kind, csv });
+    if (!ready || !csv || !file || pending) return;
+    const id = ++request.current;
+    setPending(true);
+    setError("");
+    const form = new FormData();
+    form.append("file", file);
+    form.append("name", trimmed);
+    form.append("kind", kind);
+    let next: DemoUpload | null = null;
+    try {
+      const res = await apiUpload<ResearchResponse>("/research", form);
+      next = {
+        name: trimmed,
+        kind,
+        csv: { rows: res.n_days, first: res.first, last: res.last },
+        research: liveResearch(res),
+      };
+    } catch (err) {
+      if (id !== request.current) return;
+      if (err instanceof ApiError && err.status === 422) {
+        // The file is the problem: say so plainly and let them pick another.
+        setError(err.message);
+        setPending(false);
+        return;
+      }
+      // Unreachable or broken API: the labeled precomputed report (I6).
+      next = { name: trimmed, kind, csv, research: PRECOMPUTED_RESEARCH };
+    }
+    if (id !== request.current) return;
+    setPending(false);
+    onStart(next);
   }
   return (
     <Drawer title="Upload your revenue" open={open} onClose={onClose}>
@@ -208,7 +245,7 @@ export function DemoUploadDrawer({
         />
         {csv && (
           <p className="upload-parsed" role="status">
-            <strong>{fileName}</strong> · {csvSummary(csv)}
+            <strong>{file?.name}</strong> · {csvSummary(csv)}
           </p>
         )}
         {error && (
@@ -222,8 +259,20 @@ export function DemoUploadDrawer({
           history or more works best.
         </p>
         <p className="upload-privacy">{PRIVACY_NOTE}</p>
-        <button className="primary" type="submit" disabled={!ready}>
-          Upload and research
+        <button
+          className="primary"
+          type="submit"
+          disabled={!ready || pending}
+          aria-busy={pending}
+        >
+          {pending ? (
+            <>
+              <span className="step-icon spinner" aria-hidden="true" />{" "}
+              Researching…
+            </>
+          ) : (
+            "Upload and research"
+          )}
         </button>
       </form>
       <div className="upload-samples">
@@ -241,7 +290,7 @@ export function DemoUploadDrawer({
   );
 }
 
-// --- Progress -----------------------------------------------------------------
+// --- Progress (scripted hedge pricing) ---------------------------------------
 // Uneven pace (fast, stall, catch up) so the bar reads like real work.
 const PACE: [number, number][] = [
   [0, 0], [0.1, 0.16], [0.24, 0.27], [0.36, 0.31], [0.52, 0.55],
@@ -345,9 +394,11 @@ function Verdict({ row }: { row: ResearchRow }) {
   );
 }
 export function ResearchTable({
+  rows,
   onSend,
   sendState,
 }: {
+  rows: ResearchRow[];
   onSend?: () => void;
   sendState: HedgeState["status"] | null;
 }) {
@@ -379,7 +430,7 @@ export function ResearchTable({
           </tr>
         </thead>
         <tbody>
-          {RESEARCH_ROWS.map((row) => (
+          {rows.map((row) => (
             <tr key={row.id} data-testid={`research-row-${row.id}`}>
               <th scope="row">
                 {row.label}
@@ -401,7 +452,7 @@ export function ResearchTable({
               <td>{row.placebo}</td>
               <td>
                 <Verdict row={row} />
-                {row.sendable && onSend && (
+                {canSend(row) && onSend && (
                   <button
                     className="primary send-desk"
                     onClick={onSend}
@@ -542,6 +593,18 @@ export function DemoHedgeCard({
   );
 }
 
+// I6: the fallback report is about the sample file, not the upload; say so.
+export function PrecomputedNote({ research }: { research: Research }) {
+  if (research.source !== "precomputed") return null;
+  return (
+    <p className="precomputed-note" data-testid="precomputed-note">
+      <span className="badge estimated">{PRECOMPUTED_LABEL}</span> The research
+      service couldn’t be reached, so this is the report for the Hudson Bike
+      Co. sample, not your file.
+    </p>
+  );
+}
+
 // --- The demo business view -------------------------------------------------
 export function DemoDesk({
   demo,
@@ -550,12 +613,10 @@ export function DemoDesk({
   demo: Demo;
   onRemoved: () => void;
 }) {
-  const { upload, startedAt, hedge } = demo;
-  const total = RESEARCH_MS;
-  // Clock: ticks every 50 ms only while something is animating.
+  const { upload, hedge } = demo;
+  // Clock: ticks every 50 ms only while the scripted pricing is animating.
   const [now, setNow] = useState(() => Date.now());
-  const elapsed = now - startedAt;
-  const ticking = !!upload && (elapsed < total || hedge?.status === "sending");
+  const ticking = !!upload && hedge?.status === "sending";
   useEffect(() => {
     if (!ticking) return;
     setNow(Date.now());
@@ -563,7 +624,7 @@ export function DemoDesk({
     return () => clearInterval(id);
   }, [ticking]);
   if (!upload) return null;
-  const researchDone = elapsed >= total;
+  const { research } = upload;
   const sendElapsed = hedge ? now - hedge.startedAt : 0;
   return (
     <>
@@ -590,31 +651,28 @@ export function DemoDesk({
             </button>
           </div>
         </div>
-        {!researchDone && (
-          <RunningBar label="Running analysis…" elapsed={elapsed} total={total} />
-        )}
-        {researchDone && (
-          <div className="demo-report">
-            <p className="demo-summary">{SUMMARY}</p>
-            <ul className="protocol-chips" aria-label="Protocol">
-              {PROTOCOL_CHIPS.map((chip) => (
-                <li key={chip} className="badge">
-                  {chip}
-                </li>
-              ))}
-            </ul>
-            <ResearchTable
-              onSend={demo.send}
-              sendState={hedge?.status ?? null}
-            />
-            <p className="muted demo-footnote">
-              Effects are $ per day at the training-year average. FOUND means
-              the 2024 effect is clear of zero after correcting for 6 tests,
-              holds the same sign on unseen 2025–26 data, and the 7-day placebo
-              shows nothing. <Link href="/research">How this works</Link>
-            </p>
-          </div>
-        )}
+        <div className="demo-report">
+          <PrecomputedNote research={research} />
+          <p className="demo-summary">{research.summary}</p>
+          <ul className="protocol-chips" aria-label="Protocol">
+            {research.chips.map((chip) => (
+              <li key={chip} className="badge">
+                {chip}
+              </li>
+            ))}
+          </ul>
+          <ResearchTable
+            rows={research.rows}
+            onSend={demo.send}
+            sendState={hedge?.status ?? null}
+          />
+          <p className="muted demo-footnote">
+            Effects are $ per day at the training-year average. FOUND means
+            the 2024 effect is clear of zero after correcting for 6 tests,
+            holds the same sign on unseen 2025–26 data, and the 7-day placebo
+            shows nothing. <Link href="/research">How this works</Link>
+          </p>
+        </div>
       </section>
       <div className="demo-grid">
         <section className="hedges-panel" aria-label="Hedge decisions">
