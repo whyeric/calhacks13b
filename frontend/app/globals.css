@@ -1446,7 +1446,8 @@ svg.forest-axis text {
   border-radius: 50%;
   background: #247153;
 }
-button.link-button {
+/* Scoped to the QuickBooks card so main's plain .link-button (Re-run setup) keeps its size. */
+.qbo-connect button.link-button {
   align-self: flex-start;
   border: none;
   background: none;
@@ -1456,7 +1457,7 @@ button.link-button {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-button.link-button:hover:not(:disabled) {
+.qbo-connect button.link-button:hover:not(:disabled) {
   background: none;
   color: #143c2a;
 }
