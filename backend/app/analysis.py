@@ -37,7 +37,9 @@ def compute(business_id: str, strike: float | None = None) -> AnalyzeResponse:
     if playoff is not None:
         (exposures if playoff.hedgeable else dropped).append(playoff)
     # r2_holdout is None when the table has no holdout rows; the response carries null then.
-    return AnalyzeResponse(exposures=exposures, dropped=dropped, model_check=check, r2_holdout=result.r2_holdout)
+    biz = db.get_business(business_id)
+    return AnalyzeResponse(exposures=exposures, dropped=dropped, model_check=check, r2_holdout=result.r2_holdout,
+                           estimated=bool(biz is not None and biz.estimated))  # I6
 
 
 # Businesses next to MSG get the playoff home-game exposure (a pooled near-MSG estimate, I6).

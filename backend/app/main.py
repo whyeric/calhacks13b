@@ -151,6 +151,14 @@ def _hedge(hedge_id: str) -> Hedge:
     return h
 
 
+def _labeled(h: Hedge, b: Business | None = None) -> Hedge:
+    """I6: a hedge for a business with estimated dollars says so (older rows predate the field)."""
+    b = b or db.get_business(h.business_id)
+    if b is not None and b.estimated and not h.estimated:
+        return h.model_copy(update={"estimated": True})
+    return h
+
+
 def _week(week_of: str | None) -> date:
     """G3: Monday ISO date; any other day snaps to its Monday; omitted = the desk week."""
     if week_of is None:
@@ -227,12 +235,13 @@ def businesses() -> list[Business]:
 
 @app.post("/businesses/{business_id}/analyze", response_model=AnalyzeResponse, responses=ERRORS)
 def analyze(business_id: str, body: AnalyzeRequest | None = Body(None)) -> AnalyzeResponse:
-    _business(business_id)
+    biz = _business(business_id)
     strike = body.strike if body else None
     try:
-        return analysis.analyze(business_id, strike)
+        res = analysis.analyze(business_id, strike)
     except analysis.AnalysisUnavailable as e:
         raise ApiError(409, "analysis_unavailable", f"No feature data for {business_id} yet.", {"reason": str(e)})
+    return res if res.estimated or not biz.estimated else res.model_copy(update={"estimated": True})  # I6
 
 
 @app.get("/businesses/{business_id}/backtest", response_model=BacktestResult, responses=ERRORS)
@@ -306,8 +315,8 @@ def run_status(run_id: str) -> RunStatus:
 
 @app.get("/businesses/{business_id}/hedges", response_model=list[Hedge], responses=ERRORS)
 def hedges(business_id: str, week_of: str | None = Query(None, description="Monday ISO date; other days snap")) -> list[Hedge]:
-    _business(business_id)
-    return _expire_stale(db.list_hedges(business_id, _week(week_of)))
+    biz = _business(business_id)
+    return [_labeled(h, biz) for h in _expire_stale(db.list_hedges(business_id, _week(week_of)))]
 
 
 @app.get("/businesses/{business_id}/decisions", response_model=list[LogEntry], responses=ERRORS)
@@ -344,6 +353,7 @@ def approve(
         log.exception("booking %s failed", hedge_id)
         raise ApiError(500, "ledger_write_failed", "The ledger could not be written; the hedge is unchanged.",
                        {"type": type(e).__name__})
+    approved = _labeled(approved)
     _log({"business_id": h.business_id, "kind": "approval", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "approved", "numbers": _hedge_numbers(approved),
           "summary": f"Owner approved {h.id}: {h.n_filled} {h.side.upper()} contracts for ${h.premium}."})
@@ -366,7 +376,7 @@ def reject(
     _log({"business_id": h.business_id, "kind": "rejection", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "rejected", "numbers": _hedge_numbers(h),
           "summary": f"Owner rejected {h.id}.{reason}"})
-    return rejected
+    return _labeled(rejected)
 
 
 # --- Books -------------------------------------------------------------------

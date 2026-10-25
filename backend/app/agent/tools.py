@@ -271,9 +271,12 @@ class DeskContext:
         alt = None
         if hedge.decision.status == "pending_approval":
             alt = policy.within_budget_alternative(hedge, budget.remaining)
+        biz = db.get_business(self.business_id, self.engine)
         hedge = Hedge.model_validate({
             **hedge.model_dump(), "agent": self.agent, "alternative": alt.model_dump() if alt else None,
             "decision": {**hedge.decision.model_dump(), "summary": None},
+            # I6: estimated dollars (the business) or a pooled estimate (the exposure) stay labeled
+            "estimated": bool(hedge.estimated or e.estimated or (biz is not None and biz.estimated)),
         })
         db.put_hedge(hedge, self.engine)
         st = self.states.get(hedge.id) or HedgeState(exposure=e)

@@ -403,6 +403,9 @@ class Hedge(Contract):
     # null on single-contract hedges.
     leg_label: str | None = None
     group_total_premium: Money | None = None
+    # I6: true when the business's dollars are estimated (the restaurant: visits x assumed check)
+    # or the exposure is a pooled estimate. Defaults keep older payloads valid.
+    estimated: bool = False
 
     @model_validator(mode="after")
     def _consistent(self) -> "Hedge":
@@ -628,6 +631,7 @@ class AnalyzeResponse(Contract):
     dropped: list[Exposure]
     model_check: ModelCheck
     r2_holdout: float | None  # null when the feature table has no holdout rows
+    estimated: bool = False  # I6: the business's dollars are estimated (Business.estimated)
 
     @model_validator(mode="after")
     def _split(self) -> "AnalyzeResponse":

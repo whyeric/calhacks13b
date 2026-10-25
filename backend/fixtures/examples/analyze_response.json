@@ -107,5 +107,6 @@
     "mean_recovered": "497.85",
     "target": 0.9
   },
-  "r2_holdout": 0.58
+  "r2_holdout": 0.58,
+  "estimated": false
 }

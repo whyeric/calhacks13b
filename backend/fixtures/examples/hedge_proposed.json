@@ -128,5 +128,6 @@
   "decided_by": null,
   "decided_at": null,
   "leg_label": null,
-  "group_total_premium": null
+  "group_total_premium": null,
+  "estimated": true
 }

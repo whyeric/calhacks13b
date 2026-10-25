@@ -129,7 +129,8 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": true
   },
   {
     "id": "hdg_01",
@@ -263,7 +264,8 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": false
   },
   {
     "id": "hdg_02",
@@ -428,7 +430,8 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": false
   },
   {
     "id": "hdg_03",
@@ -561,6 +564,7 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": true
   }
 ]

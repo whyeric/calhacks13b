@@ -177,5 +177,6 @@
   "decided_by": null,
   "decided_at": null,
   "leg_label": "Knicks miss the playoffs",
-  "group_total_premium": "3059.50"
+  "group_total_premium": "3059.50",
+  "estimated": true
 }
