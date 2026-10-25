@@ -26,6 +26,11 @@ export type ChatReply = components["schemas"]["ChatReply"];
 export type ToolCall = components["schemas"]["ToolCall"];
 export type Settings = components["schemas"]["Settings"];
 export type Thresholds = components["schemas"]["ThresholdSettings"];
+// POST /research (live upload): the protocol's report on an uploaded CSV.
+export type ResearchReport = components["schemas"]["ResearchReport"];
+export type ResearchHypothesis = components["schemas"]["ResearchHypothesis"];
+export type ResearchEstimate = components["schemas"]["ResearchEstimate"];
+export type ResearchPeriod = components["schemas"]["ResearchPeriod"];
 // `sample_week` / `sample_businesses` land on /health in PR #60 (and possibly per hedge);
 // optional here so the UI works before and after, treating missing as false / [].
 export type Health = components["schemas"]["Health"] & {

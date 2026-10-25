@@ -28,12 +28,11 @@ import {
   RESEARCH_MS,
   useDemo,
   type DemoUpload,
+  type ResearchFn,
 } from "@/components/DemoDesk";
-import {
-  DEMO_ID,
-  RESEARCH_ROWS,
-  parseRevenueCsv,
-} from "@/lib/demoScript";
+import { DEMO_ID, parseRevenueCsv } from "@/lib/demoScript";
+import type { ResearchReport } from "@/lib/types";
+import research from "@/fixtures/research_report.json";
 import businesses from "@/fixtures/businesses.json";
 import taxi from "@/fixtures/analyze_taxi.json";
 import hedges from "@/fixtures/hedges_mixed.json";
@@ -52,10 +51,20 @@ const upload: DemoUpload = {
   name: "Hudson Bike Co.",
   kind: "Bike rental",
   csv: parseRevenueCsv(sampleText)!,
+  text: sampleText,
 };
+// The report a real backend run returned for the sample (fixtures/research_report.json).
+const report = research as ResearchReport;
+const resolved: ResearchFn = () => Promise.resolve(report);
 
-function Harness({ skip = false }: { skip?: boolean }) {
-  const demo = useDemo();
+function Harness({
+  skip = false,
+  fn = resolved,
+}: {
+  skip?: boolean;
+  fn?: ResearchFn;
+}) {
+  const demo = useDemo(fn);
   const { start, upload: current, skip: skipNow } = demo;
   useEffect(() => start(upload), [start]);
   useEffect(() => {
@@ -68,7 +77,10 @@ function Harness({ skip = false }: { skip?: boolean }) {
     </>
   );
 }
-const advance = (ms: number) => act(() => vi.advanceTimersByTime(ms));
+const advance = (ms: number) =>
+  act(async () => {
+    vi.advanceTimersByTime(ms);
+  });
 
 describe("CSV parsing", () => {
   it("counts the real sample's rows and date range, skipping # comments", () => {
@@ -89,7 +101,9 @@ describe("upload drawer", () => {
       "Hudson Bike Co.",
     );
     expect(screen.getByLabelText("Type")).toHaveValue("Bike rental");
-    expect(screen.getByText("Stays on this machine")).toBeVisible();
+    expect(
+      screen.getByText("Analyzed by your desk server; never stored"),
+    ).toBeVisible();
     expect(screen.getByText(/one row per day/)).toBeVisible();
     expect(
       screen.getByRole("link", { name: /Download Hudson Bike Co\./ }),
@@ -110,57 +124,67 @@ describe("upload drawer", () => {
 
 describe("running analysis", () => {
   afterEach(() => vi.useRealTimers());
-  it("shows a single running bar, then the report", () => {
+  it("shows a single running bar, then the live report", async () => {
     vi.useFakeTimers();
     render(<Harness />);
     expect(screen.getByText("Running analysis…")).toBeVisible();
     const bar = screen.getByRole("progressbar");
     expect(Number(bar.getAttribute("aria-valuenow"))).toBeLessThan(100);
     expect(screen.queryByTestId("research-row-rain")).toBeNull();
-    advance(RESEARCH_MS / 2);
-    const mid = Number(screen.getByRole("progressbar").getAttribute("aria-valuenow"));
+    await advance(RESEARCH_MS / 2);
+    const mid = Number(
+      screen.getByRole("progressbar").getAttribute("aria-valuenow"),
+    );
     expect(mid).toBeGreaterThan(0);
     expect(mid).toBeLessThan(100);
-    advance(RESEARCH_MS);
+    await advance(RESEARCH_MS);
     expect(screen.queryByText("Running analysis…")).toBeNull();
-    expect(screen.getByText(/Rain and cold reliably cost you money/)).toBeVisible();
+    expect(
+      screen.getByText(
+        /Rain days and cold days \(<40°F\) reliably cost you money/,
+      ),
+    ).toBeVisible();
+    expect(screen.getByTestId("research-file-notes")).toHaveTextContent(
+      "SYNTHETIC demo data",
+    );
     expect(screen.getByTestId("research-row-rain")).toBeVisible();
   });
 });
 
 describe("research report", () => {
   afterEach(() => vi.useRealTimers());
-  it("renders the exact scripted values", () => {
+  it("renders the API's values", async () => {
     vi.useFakeTimers();
     render(<Harness skip />);
-    advance(100);
+    await advance(100);
     const row = (id: string) => screen.getByTestId(`research-row-${id}`);
     const rain = row("rain");
     for (const text of [
-      "Riders skip rentals when it rains.",
-      "−18.4% · −$1,955.68/day",
-      "90% CI −$2,171.00 to −$1,734.86",
-      "124 days",
-      "−20.4% · −$2,485.41/day",
-      "90% CI −$2,657.97 to −$2,309.72",
-      "229 days",
-      "Not significant (p 0.38)",
+      "Customers stay in when it rains.",
+      "−18.2% · −$1,923.43/day",
+      "90% CI −$2,137.76 to −$1,703.67",
+      "125 days",
+      "−20.4% · −$2,488.09/day",
+      "90% CI −$2,660.85 to −$2,312.19",
+      "228 days",
+      "Not significant (p 0.29)",
       "FOUND",
       "· hedgeable",
-      "KXRAIN · NYC daily rain (Central Park, The Weather Company)",
     ])
       expect(within(rain).getByText(text)).toBeInTheDocument();
-    expect(row("cold")).toHaveTextContent("−27.0% · −$2,861.35/day");
-    expect(row("cold")).toHaveTextContent("90% CI −$3,533.44 to −$2,869.42");
-    expect(row("cold")).toHaveTextContent("Not significant (p 0.11)");
-    expect(row("warm")).toHaveTextContent("90% CI +$706.87 to +$1,630.36");
+    expect(rain).toHaveTextContent("Kalshi KXRAIN (NYC, Central Park)");
+    expect(row("cold")).toHaveTextContent("−26.5% · −$2,804.78/day");
+    expect(row("cold")).toHaveTextContent("90% CI −$3,536.86 to −$2,872.26");
+    expect(row("cold")).toHaveTextContent("Not significant (p 0.13)");
+    expect(row("cold")).toHaveTextContent("no daily contract to buy");
+    expect(row("warm")).toHaveTextContent("90% CI +$698.13 to +$1,623.44");
     expect(row("warm")).toHaveTextContent("upside, no protection needed");
-    expect(row("hot")).toHaveTextContent("−2.2% · −$267.65/day");
-    expect(row("hot")).toHaveTextContent("90% CI −$1,000.13 to +$512.89");
-    expect(row("knicks_home")).toHaveTextContent("+2.9% · +$354.37/day");
-    expect(row("knicks_home")).toHaveTextContent("None (games are scheduled)");
+    expect(row("hot")).toHaveTextContent("−2.1% · −$257.69/day");
+    expect(row("hot")).toHaveTextContent("90% CI −$996.62 to +$530.09");
+    expect(row("knicks_home")).toHaveTextContent("+3.0% · +$359.61/day");
+    expect(row("knicks_home")).toHaveTextContent("None: games are scheduled");
     expect(row("knicks_win")).toHaveTextContent(
-      "90% CI −$2,362.83 to +$3,354.79",
+      "90% CI −$1,538.50 to +$2,731.74",
     );
     for (const id of ["hot", "knicks_home", "knicks_win"]) {
       expect(row(id)).toHaveTextContent("NOT FOUND");
@@ -168,19 +192,41 @@ describe("research report", () => {
     }
     expect(
       screen.getAllByRole("button", { name: /Send to the desk/ }),
-    ).toHaveLength(RESEARCH_ROWS.filter((r) => r.sendable).length);
+    ).toHaveLength(report.hypotheses.filter((r) => r.sendable).length);
     expect(screen.getAllByRole("img", { name: /: 2024 / })).toHaveLength(6);
+    expect(
+      screen.getByRole("columnheader", { name: /Unseen \(2025–26\)/ }),
+    ).toBeInTheDocument();
   });
-  it("send to the desk animates, proposes the hedge and approve logs it", () => {
+  it("shows the API's error instead of a report", async () => {
+    vi.useFakeTimers();
+    const failing: ResearchFn = () =>
+      Promise.reject(
+        new Error(
+          "Need at least 540 open days inside the weather record; found 28.",
+        ),
+      );
+    render(<Harness skip fn={failing} />);
+    await advance(100);
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Need at least 540 open days",
+    );
+    expect(screen.queryByText("Running analysis…")).toBeNull();
+    expect(screen.queryByTestId("research-row-rain")).toBeNull();
+  });
+  it("send to the desk animates, proposes the hedge and approve logs it", async () => {
     vi.useFakeTimers();
     render(<Harness skip />);
-    advance(100);
+    await advance(100);
     expect(screen.getByTestId("remaining")).toHaveTextContent("1000.00");
     fireEvent.click(screen.getByRole("button", { name: /Send to the desk/ }));
-    advance(100);
+    await advance(100);
     expect(screen.getByText("Pricing protection…")).toBeVisible();
-    advance(3300);
+    await advance(3300);
     const card = screen.getByTestId("demo-hedge-card");
+    expect(within(card).getByTestId("demo-hedge-scripted")).toHaveTextContent(
+      "Example hedge (scripted)",
+    );
     for (const text of [
       "Rain protection · Hudson Bike Co.",
       "Buy YES · 1,955 contracts @ 33¢ · premium $675.41 (includes $30.26 fee) · pays $1,955.00 if it rains",
@@ -208,12 +254,12 @@ describe("research report", () => {
       screen.getByText(/Owner approved rain protection/),
     ).toBeInTheDocument();
   });
-  it("reject logs a rejection and frees the budget", () => {
+  it("reject logs a rejection and frees the budget", async () => {
     vi.useFakeTimers();
     render(<Harness skip />);
-    advance(100);
+    await advance(100);
     fireEvent.click(screen.getByRole("button", { name: /Send to the desk/ }));
-    advance(3500);
+    await advance(3500);
     fireEvent.click(screen.getByRole("button", { name: "Reject" }));
     expect(screen.getByText("Rejected by you")).toBeVisible();
     expect(
@@ -226,7 +272,21 @@ describe("research report", () => {
 describe("dashboard integration (live mode, msw)", () => {
   const api = "http://localhost:8000";
   const demoCalls: string[] = [];
+  const researchCalls: {
+    name: string | null;
+    type: string | null;
+    rows: number;
+  }[] = [];
   const server = setupServer(
+    http.post(`${api}/research`, async ({ request }) => {
+      const text = await request.text();
+      researchCalls.push({
+        name: new URL(request.url).searchParams.get("name"),
+        type: request.headers.get("Content-Type"),
+        rows: text.split("\n").filter((l) => /^\d{4}-/.test(l)).length,
+      });
+      return HttpResponse.json(research);
+    }),
     http.get(`${api}/businesses`, () => HttpResponse.json(businesses)),
     http.all(`${api}/businesses/${DEMO_ID}/*`, ({ request }) => {
       demoCalls.push(request.url);
@@ -286,5 +346,8 @@ describe("dashboard integration (live mode, msw)", () => {
       expect(screen.queryByTestId("demo-research")).not.toBeInTheDocument(),
     );
     expect(demoCalls).toEqual([]);
+    expect(researchCalls).toEqual([
+      { name: "Hudson Bike Co.", type: "text/csv", rows: 1004 },
+    ]);
   }, 20000);
 });

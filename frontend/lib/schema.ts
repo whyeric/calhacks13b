@@ -16,6 +16,11 @@ export interface components {
       model_check: components["schemas"]["ModelCheck"];
       /** R2 Holdout */
       r2_holdout: number | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
     };
     /** BacktestResult */
     BacktestResult: {
@@ -118,6 +123,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget";
       /** Passed */
       passed: boolean | null;
@@ -150,6 +156,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget"
       )[];
       /** Summary */
@@ -168,7 +175,7 @@ export interface components {
        * Event
        * @enum {string}
        */
-      event: "rain" | "hot" | "home_win";
+      event: "rain" | "hot" | "home_win" | "playoff_home";
       /** Effect Usd */
       effect_usd: string;
       /** Ci90 */
@@ -193,7 +200,7 @@ export interface components {
        * Settlement Var
        * @enum {string}
        */
-      settlement_var: "rain" | "hot" | "home_win";
+      settlement_var: "rain" | "hot" | "home_win" | "playoff_home";
       /** Hedgeable */
       hedgeable: boolean;
       /** Reasons */
@@ -202,6 +209,23 @@ export interface components {
       strike: number | null;
       /** Beta Settlement */
       beta_settlement: string | null;
+      /** @default null */
+      stability: components["schemas"]["Stability"] | null;
+      /**
+       * Expected Count
+       * @default null
+       */
+      expected_count: number | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
+      /**
+       * Basis Note
+       * @default null
+       */
+      basis_note: string | null;
     };
     /**
      * Headline
@@ -229,6 +253,10 @@ export interface components {
        * @enum {string}
        */
       anthropic: "configured" | "fallback";
+      /** Sample Week */
+      sample_week: boolean;
+      /** Sample Businesses */
+      sample_businesses: string[];
     };
     /**
      * Hedge
@@ -323,6 +351,21 @@ export interface components {
       decided_by: "owner" | null;
       /** Decided At */
       decided_at: string | null;
+      /**
+       * Leg Label
+       * @default null
+       */
+      leg_label: string | null;
+      /**
+       * Group Total Premium
+       * @default null
+       */
+      group_total_premium: string | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
     };
     /**
      * HedgeLite
@@ -474,6 +517,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget"
       )[];
       /** Numbers */
@@ -625,6 +669,131 @@ export interface components {
       total_difference: string;
     };
     /**
+     * ResearchEstimate
+     * @description One fit of one flag on one period. `pct` is exp(b) − 1 in percent (a stat); the dollars
+     *     are that share of the period's mean daily revenue (`mean_revenue`).
+     */
+    ResearchEstimate: {
+      /** Pct */
+      pct: number;
+      /** Effect Usd */
+      effect_usd: string;
+      /** Ci90 */
+      ci90: [string, string];
+      /** Ci Excludes Zero */
+      ci_excludes_zero: boolean;
+      /** P Value */
+      p_value: number;
+      /** N Event Days */
+      n_event_days: number;
+      /** N Days */
+      n_days: number;
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+      /** Mean Revenue */
+      mean_revenue: string;
+    };
+    /** ResearchHypothesis */
+    ResearchHypothesis: {
+      /** Id */
+      id: string;
+      /** Label */
+      label: string;
+      /** Rule */
+      rule: string;
+      /** Mechanism */
+      mechanism: string;
+      train: components["schemas"]["ResearchEstimate"] | null;
+      holdout: components["schemas"]["ResearchEstimate"] | null;
+      /** Placebo P */
+      placebo_p: number | null;
+      /** Bh Q */
+      bh_q: number;
+      /**
+       * Verdict
+       * @enum {string}
+       */
+      verdict: "FOUND" | "NOT FOUND";
+      /** Reasons */
+      reasons: (
+        | "thin_support"
+        | "not_significant"
+        | "failed_bh"
+        | "placebo_fired"
+        | "did_not_replicate"
+        | "sign_flipped"
+      )[];
+      /** Direction */
+      direction: ("positive" | "negative") | null;
+      /** Upside */
+      upside: boolean;
+      /** Venue */
+      venue: string;
+      /** Sendable */
+      sendable: boolean;
+    };
+    /** ResearchPeriod */
+    ResearchPeriod: {
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+    };
+    /**
+     * ResearchReport
+     * @description POST /research. Every figure comes from `stats.research.run`; `summary` is templated.
+     */
+    ResearchReport: {
+      /** Name */
+      name: string | null;
+      /** N Rows */
+      n_rows: number;
+      /** N Days */
+      n_days: number;
+      /** N Closed Days */
+      n_closed_days: number;
+      /** N Outside Window */
+      n_outside_window: number;
+      /**
+       * First
+       * Format: date
+       */
+      first: string;
+      /**
+       * Last
+       * Format: date
+       */
+      last: string;
+      train: components["schemas"]["ResearchPeriod"];
+      holdout: components["schemas"]["ResearchPeriod"];
+      /** Station */
+      station: string;
+      /** Protocol */
+      protocol: string[];
+      /** Notes */
+      notes: string[];
+      /** Hypotheses */
+      hypotheses: components["schemas"]["ResearchHypothesis"][];
+      /** Summary */
+      summary: string;
+      /** Plot Max Usd */
+      plot_max_usd: string;
+    };
+    /**
      * RunAccepted
      * @description 202 body of POST /businesses/{id}/desk/run.
      */
@@ -670,6 +839,38 @@ export interface components {
       weekly_budget: string;
     };
     /**
+     * Stability
+     * @description The same §5 model refit on the most recent window only (the holdout split).
+     *
+     *     `stable` = the recent effect has the train effect's sign AND its 90% CI excludes 0. The
+     *     `unstable` decline rule reads it (research hedgesim: taxi rain +$2,212 on train was +$303,
+     *     CI crossing 0, on the recent window, and hedging it made income less steady).
+     */
+    Stability: {
+      /** Effect Usd */
+      effect_usd: string;
+      /** Ci90 */
+      ci90: [string, string];
+      /** N Days */
+      n_days: number;
+      /** N Events */
+      n_events: number;
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+      /** Same Sign */
+      same_sign: boolean;
+      /** Stable */
+      stable: boolean;
+    };
+    /**
      * ThresholdSettings
      * @description Mirrors `config.Thresholds` field for field.
      */
@@ -692,6 +893,16 @@ export interface components {
       basis_r2_min: number;
       /** Max Tool Calls */
       max_tool_calls: number;
+      /**
+       * Decline Unstable
+       * @default true
+       */
+      decline_unstable: boolean;
+      /**
+       * Rain Size Multiplier
+       * @default 1
+       */
+      rain_size_multiplier: number;
     };
     /** ToolCall */
     ToolCall: {

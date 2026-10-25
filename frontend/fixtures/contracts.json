@@ -37,6 +37,11 @@
               }
             ],
             "title": "R2 Holdout"
+          },
+          "estimated": {
+            "default": false,
+            "title": "Estimated",
+            "type": "boolean"
           }
         },
         "required": [
@@ -291,6 +296,7 @@
               "overpriced",
               "basis_too_loose",
               "too_expensive",
+              "unstable",
               "over_budget"
             ],
             "title": "Code",
@@ -368,6 +374,7 @@
                 "overpriced",
                 "basis_too_loose",
                 "too_expensive",
+                "unstable",
                 "over_budget"
               ],
               "type": "string"
@@ -413,7 +420,8 @@
             "enum": [
               "rain",
               "hot",
-              "home_win"
+              "home_win",
+              "playoff_home"
             ],
             "title": "Event",
             "type": "string"
@@ -468,7 +476,8 @@
             "enum": [
               "rain",
               "hot",
-              "home_win"
+              "home_win",
+              "playoff_home"
             ],
             "title": "Settlement Var",
             "type": "string"
@@ -510,6 +519,46 @@
               }
             ],
             "title": "Beta Settlement"
+          },
+          "stability": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Stability"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "expected_count": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expected Count"
+          },
+          "estimated": {
+            "default": false,
+            "title": "Estimated",
+            "type": "boolean"
+          },
+          "basis_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Basis Note"
           }
         },
         "required": [
@@ -576,12 +625,25 @@
             ],
             "title": "Anthropic",
             "type": "string"
+          },
+          "sample_week": {
+            "title": "Sample Week",
+            "type": "boolean"
+          },
+          "sample_businesses": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sample Businesses",
+            "type": "array"
           }
         },
         "required": [
           "status",
           "offline",
-          "anthropic"
+          "anthropic",
+          "sample_week",
+          "sample_businesses"
         ],
         "title": "Health",
         "type": "object"
@@ -879,6 +941,35 @@
               }
             ],
             "title": "Decided At"
+          },
+          "leg_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Leg Label"
+          },
+          "group_total_premium": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Group Total Premium"
+          },
+          "estimated": {
+            "default": false,
+            "title": "Estimated",
+            "type": "boolean"
           }
         },
         "required": [
@@ -1255,6 +1346,7 @@
                 "overpriced",
                 "basis_too_loose",
                 "too_expensive",
+                "unstable",
                 "over_budget"
               ],
               "type": "string"
@@ -1645,6 +1737,324 @@
         "title": "ReconSummary",
         "type": "object"
       },
+      "ResearchEstimate": {
+        "additionalProperties": false,
+        "description": "One fit of one flag on one period. `pct` is exp(b) \u2212 1 in percent (a stat); the dollars\nare that share of the period's mean daily revenue (`mean_revenue`).",
+        "properties": {
+          "pct": {
+            "title": "Pct",
+            "type": "number"
+          },
+          "effect_usd": {
+            "title": "Effect Usd",
+            "type": "string"
+          },
+          "ci90": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Ci90",
+            "type": "array"
+          },
+          "ci_excludes_zero": {
+            "title": "Ci Excludes Zero",
+            "type": "boolean"
+          },
+          "p_value": {
+            "title": "P Value",
+            "type": "number"
+          },
+          "n_event_days": {
+            "title": "N Event Days",
+            "type": "integer"
+          },
+          "n_days": {
+            "title": "N Days",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "mean_revenue": {
+            "title": "Mean Revenue",
+            "type": "string"
+          }
+        },
+        "required": [
+          "pct",
+          "effect_usd",
+          "ci90",
+          "ci_excludes_zero",
+          "p_value",
+          "n_event_days",
+          "n_days",
+          "start",
+          "end",
+          "mean_revenue"
+        ],
+        "title": "ResearchEstimate",
+        "type": "object"
+      },
+      "ResearchHypothesis": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "mechanism": {
+            "title": "Mechanism",
+            "type": "string"
+          },
+          "train": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResearchEstimate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "holdout": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ResearchEstimate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "placebo_p": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Placebo P"
+          },
+          "bh_q": {
+            "title": "Bh Q",
+            "type": "number"
+          },
+          "verdict": {
+            "enum": [
+              "FOUND",
+              "NOT FOUND"
+            ],
+            "title": "Verdict",
+            "type": "string"
+          },
+          "reasons": {
+            "items": {
+              "enum": [
+                "thin_support",
+                "not_significant",
+                "failed_bh",
+                "placebo_fired",
+                "did_not_replicate",
+                "sign_flipped"
+              ],
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "direction": {
+            "anyOf": [
+              {
+                "enum": [
+                  "positive",
+                  "negative"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direction"
+          },
+          "upside": {
+            "title": "Upside",
+            "type": "boolean"
+          },
+          "venue": {
+            "title": "Venue",
+            "type": "string"
+          },
+          "sendable": {
+            "title": "Sendable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "label",
+          "rule",
+          "mechanism",
+          "train",
+          "holdout",
+          "placebo_p",
+          "bh_q",
+          "verdict",
+          "reasons",
+          "direction",
+          "upside",
+          "venue",
+          "sendable"
+        ],
+        "title": "ResearchHypothesis",
+        "type": "object"
+      },
+      "ResearchPeriod": {
+        "additionalProperties": false,
+        "properties": {
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "ResearchPeriod",
+        "type": "object"
+      },
+      "ResearchReport": {
+        "additionalProperties": false,
+        "description": "POST /research. Every figure comes from `stats.research.run`; `summary` is templated.",
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "n_rows": {
+            "title": "N Rows",
+            "type": "integer"
+          },
+          "n_days": {
+            "title": "N Days",
+            "type": "integer"
+          },
+          "n_closed_days": {
+            "title": "N Closed Days",
+            "type": "integer"
+          },
+          "n_outside_window": {
+            "title": "N Outside Window",
+            "type": "integer"
+          },
+          "first": {
+            "format": "date",
+            "title": "First",
+            "type": "string"
+          },
+          "last": {
+            "format": "date",
+            "title": "Last",
+            "type": "string"
+          },
+          "train": {
+            "$ref": "#/components/schemas/ResearchPeriod"
+          },
+          "holdout": {
+            "$ref": "#/components/schemas/ResearchPeriod"
+          },
+          "station": {
+            "title": "Station",
+            "type": "string"
+          },
+          "protocol": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Protocol",
+            "type": "array"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "hypotheses": {
+            "items": {
+              "$ref": "#/components/schemas/ResearchHypothesis"
+            },
+            "title": "Hypotheses",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "plot_max_usd": {
+            "title": "Plot Max Usd",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "n_rows",
+          "n_days",
+          "n_closed_days",
+          "n_outside_window",
+          "first",
+          "last",
+          "train",
+          "holdout",
+          "station",
+          "protocol",
+          "notes",
+          "hypotheses",
+          "summary",
+          "plot_max_usd"
+        ],
+        "title": "ResearchReport",
+        "type": "object"
+      },
       "RunAccepted": {
         "additionalProperties": false,
         "description": "202 body of POST /businesses/{id}/desk/run.",
@@ -1770,6 +2180,68 @@
         "title": "Settings",
         "type": "object"
       },
+      "Stability": {
+        "additionalProperties": false,
+        "description": "The same \u00a75 model refit on the most recent window only (the holdout split).\n\n`stable` = the recent effect has the train effect's sign AND its 90% CI excludes 0. The\n`unstable` decline rule reads it (research hedgesim: taxi rain +$2,212 on train was +$303,\nCI crossing 0, on the recent window, and hedging it made income less steady).",
+        "properties": {
+          "effect_usd": {
+            "title": "Effect Usd",
+            "type": "string"
+          },
+          "ci90": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Ci90",
+            "type": "array"
+          },
+          "n_days": {
+            "title": "N Days",
+            "type": "integer"
+          },
+          "n_events": {
+            "title": "N Events",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "same_sign": {
+            "title": "Same Sign",
+            "type": "boolean"
+          },
+          "stable": {
+            "title": "Stable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "effect_usd",
+          "ci90",
+          "n_days",
+          "n_events",
+          "start",
+          "end",
+          "same_sign",
+          "stable"
+        ],
+        "title": "Stability",
+        "type": "object"
+      },
       "ThresholdSettings": {
         "additionalProperties": false,
         "description": "Mirrors `config.Thresholds` field for field.",
@@ -1809,6 +2281,18 @@
           "max_tool_calls": {
             "title": "Max Tool Calls",
             "type": "integer"
+          },
+          "decline_unstable": {
+            "default": true,
+            "title": "Decline Unstable",
+            "type": "boolean"
+          },
+          "rain_size_multiplier": {
+            "default": 1.0,
+            "maximum": 1.4,
+            "minimum": 1.0,
+            "title": "Rain Size Multiplier",
+            "type": "number"
           }
         },
         "required": [

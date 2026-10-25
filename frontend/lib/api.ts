@@ -55,3 +55,17 @@ export const apiPost = <T>(path: string, body?: unknown) =>
   send<T>("POST", path, body);
 export const apiPut = <T>(path: string, body: unknown) =>
   send<T>("PUT", path, body);
+
+// POST /research: the raw CSV is the body (text/csv); the backend runs the protocol live and
+// stores nothing.
+export async function postResearch<T>(csv: string, name: string): Promise<T> {
+  const path = `/research?name=${encodeURIComponent(name)}`;
+  if (MOCK_MODE)
+    return (await import("./mock")).mockRequest<T>("POST", path, csv);
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "text/csv" },
+    body: csv,
+  });
+  return responseBody<T>(res);
+}

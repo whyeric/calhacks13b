@@ -83,10 +83,10 @@ numbers come from really running the protocol offline on the sample file. Full d
    presenter's copy is in `~/Downloads/`.
 2. On `make demo`, click **Upload your revenue** and choose the file. The app shows the file's real
    row count and dates (1,004 days, 2024-01-01 to 2026-09-30).
-3. Click **Upload and research**. A "Running analysis…" bar runs for about 7 seconds, then the
-   report appears.
-   - Rain is FOUND: −18.4% (−$1,955.68/day) on 2024, −20.4% on 2025–26, placebo p 0.38.
-   - Cold <40 °F is FOUND (−27.0% / −26.4%), and warm >80 °F is FOUND as an upside
+3. Click **Upload and research**. The backend runs the protocol live (`POST /research`); a
+   "Running analysis…" bar shows for about 2.5 seconds, then the report appears.
+   - Rain is FOUND: −18.2% (−$1,923.43/day) on 2024, −20.4% on 2025–26, placebo p 0.29.
+   - Cold <40 °F is FOUND (−26.5% / −26.4%), and warm >80 °F is FOUND as an upside
      (+10.9% / +15.5%).
    - Hot >90 °F, Knicks home games and Knicks wins are not distinguishable from zero.
 4. Click **Send to the desk** on rain. The hedge card shows 1,955 YES @ 33¢, a premium of $675.41

@@ -9,10 +9,10 @@ reconciled against Kalshi and the bank at settlement. **It never places real ord
 The demo has two businesses around Madison Square Garden. One is a taxi fleet (real NYC trip
 records). The other is a bar across from MSG (real foot traffic, estimated dollars).
 
-The app also includes a **scripted demo of the research protocol**. Upload the sample revenue file
-of a fictional bike shop (synthetic revenue, real NOAA Central Park weather), and the app shows
-what our protocol finds on it: train/holdout replication, Benjamini–Hochberg and a placebo. The
-numbers come from really running the protocol offline on that file. They are not computed live.
+The app also runs the **research protocol live on an uploaded revenue file**. Upload any daily
+`date,revenue` CSV (the drawer offers a fictional bike shop's: synthetic revenue on real NOAA
+Central Park weather), and `POST /research` tests six pre-registered risks with train/holdout
+replication, Benjamini–Hochberg and a placebo, in about a second. Nothing is stored.
 
 ## Quickstart
 
@@ -46,20 +46,21 @@ labeled sample week. See [docs/DEMO.md](docs/DEMO.md).
 
 ## Try it: upload the sample
 
-*This is a scripted demo of the research protocol. The report is hardcoded from a real offline run
-of the protocol on the sample file, and there are no upload or research API routes.*
+*The report is computed live by `POST /research` on whatever file you pick; nothing is stored.
+The hedge card behind **Send to the desk** is still a scripted example, and is labeled so.*
 
 1. `make demo`, then open <http://localhost:3000>.
 2. Click **Upload your revenue** and choose `hudson_bike_co_daily_revenue.csv` (in
    `frontend/public/samples/`, and linked from the drawer). The app reads the file's real row count
    and date range: 1,004 days, 2024-01-01 to 2026-09-30.
-3. Click **Upload and research**. A "Running analysis…" bar runs for a few seconds, then the
-   report appears with each risk's pre-registered mechanism. Rain, cold and warm days are FOUND; hot days and Knicks
-   games aren't.
-4. On the rain row, click **Send to the desk** to see the (scripted) hedge card.
+3. Click **Upload and research**. The backend runs the protocol (a "Running analysis…" bar shows
+   for a couple of seconds), then the report appears with each risk's pre-registered mechanism.
+   On the sample, rain, cold and warm days are FOUND; hot days and Knicks games aren't. Any other
+   NYC-area file from 2024-01-01 to 2026-09-30 with at least 540 days works the same way.
+4. On the rain row, click **Send to the desk** to see the (scripted, labeled) hedge card.
 
-See [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md) for what's scripted, what's real
-and the full results.
+See [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md) for the protocol, the API, what's
+still scripted and the full results.
 
 **Restaurant data on a fresh clone.** The bar's daily series (`restaurant_daily.parquet`,
 `msg_visits_daily.parquet`) come from Dewey and are gitignored under its license. On a fresh clone,
@@ -76,7 +77,8 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | The "sample week" of hedges shown before the first desk run | **Example data**, labeled "sample week" |
 | Hedge settlements and the bank statement (with one planted short deposit) | **Simulated**, from real settled Kalshi results |
 | Hudson Bike Co. sample revenue | **Synthetic** (fictional shop, planted effects) on **real** NOAA Central Park weather |
-| The upload → research → send-to-desk flow | **Scripted**; its report numbers come from a real offline protocol run on the sample |
+| The upload → research report | **Live**: `POST /research` runs the protocol on the uploaded file (nothing stored) |
+| The hedge card behind "Send to the desk" | **Scripted** example, labeled on the card |
 | Trades | **None**: nothing is ever sent to Kalshi |
 
 In the pitch and the UI, the bar is only ever called "a bar across from MSG".
@@ -88,7 +90,7 @@ In the pitch and the UI, the bar is only ever called "a bar across from MSG".
 - [docs/PLAN.md](docs/PLAN.md): chunks, gates and conventions
 - [docs/DEMO.md](docs/DEMO.md): sample week vs real desk runs, and re-warming the cache
 - [docs/ACCEPTANCE-demo.md](docs/ACCEPTANCE-demo.md): the C8 demo acceptance tests
-- [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md): the scripted upload + research demo, its results and the planned API
+- [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md): the live upload + research protocol, its API and results
 - [docs/RESEARCH.md](docs/RESEARCH.md): what we tested, what replicated, and what didn't
 - [docs/PITCH.md](docs/PITCH.md): the 2-minute demo script, track pitches and the Devpost draft
 - [AGENTS.md](AGENTS.md): guidance for coding agents
