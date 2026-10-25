@@ -27,8 +27,10 @@ class MarketsPort(Protocol):
 
     async def hedge_for(
         self, exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent,
-        remaining: Decimal, thresholds: Thresholds,
+        remaining: Decimal, thresholds: Thresholds, ticker: str | None = None,
     ) -> Hedge: ...
+
+    async def candidates(self, exposure: Exposure, now: datetime) -> list[dict]: ...
 
 
 def no_market_hedge(
@@ -70,9 +72,25 @@ class FixtureMarkets:
                     return h
         return None
 
+    async def candidates(self, exposure: Exposure, now: datetime) -> list[dict]:
+        """The example hedge's market as the only candidate (tool-facing row, agent #45)."""
+        ex = self._example(exposure)
+        if ex is None or ex.ticker is None:
+            return []
+        ask = ex.avg_price or Decimal("0.50")
+        other = (Decimal(1) - ask + Decimal("0.01")).quantize(Decimal("0.01"))
+        side = exposure.hedge_side
+        return [{
+            "ticker": ex.ticker, "series": ex.ticker.split("-")[0], "title": ex.market_title,
+            "close_ts": ex.close_time.isoformat() if ex.close_time else None,
+            "yes_ask": str(ask if side == "yes" else other), "no_ask": str(ask if side == "no" else other),
+            "depth_yes": ex.n_filled if side == "yes" else 0, "depth_no": ex.n_filled if side == "no" else 0,
+            "rules_primary": f"Fixture market {ex.ticker} (offline example).", "floor_strike": None,
+        }]
+
     async def hedge_for(
         self, exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent,
-        remaining: Decimal, thresholds: Thresholds,
+        remaining: Decimal, thresholds: Thresholds, ticker: str | None = None,
     ) -> Hedge:
         ex = self._example(exposure)
         if ex is None:
@@ -108,9 +126,27 @@ class KalshiMarkets:
         p_hat = Decimal(repr(features.event_frequency(df, col))).quantize(Decimal("0.0001"))
         return basis, p_hat
 
+    async def candidates(self, exposure: Exposure, now: datetime) -> list[dict]:
+        """Tool-facing candidate rows for Claude's pick (agent #45)."""
+        from app.markets.kalshi import KalshiClient
+        from app.markets.match import build_candidates
+
+        async with KalshiClient(offline=get_settings().demo_offline) as k:
+            cands = await build_candidates(k, exposure, now)
+
+        def p(x):
+            return None if x is None else str(x)
+
+        return [{
+            "ticker": c.ticker, "series": c.series_ticker, "title": c.title, "close_ts": c.close_time.isoformat(),
+            "yes_ask": p(c.yes_ask), "no_ask": p(c.no_ask), "yes_bid": p(c.yes_bid), "no_bid": p(c.no_bid),
+            "depth_yes": c.depth_within_5c.yes, "depth_no": c.depth_within_5c.no,
+            "rules_primary": c.rules_primary, "floor_strike": p(c.floor_strike),
+        } for c in cands]
+
     async def hedge_for(
         self, exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent,
-        remaining: Decimal, thresholds: Thresholds,
+        remaining: Decimal, thresholds: Thresholds, ticker: str | None = None,
     ) -> Hedge:
         from app.markets.kalshi import CacheMiss, KalshiClient
         from app.markets.match import build_candidates, deterministic_pick
@@ -122,7 +158,8 @@ class KalshiMarkets:
         try:
             async with KalshiClient(offline=get_settings().demo_offline) as k:
                 cands = await build_candidates(k, exposure, now)
-                pick = deterministic_pick(cands, exposure.hedge_side)
+                chosen = [c for c in cands if c.ticker == ticker]  # Claude's validated pick, if any
+                pick = chosen[0] if chosen else deterministic_pick(cands, exposure.hedge_side)
                 if pick is not None:
                     h = resolve_h(basis, exposure.effect_usd, thresholds) or Decimal(1)
                     series = await k.get_series(pick.series_ticker)
