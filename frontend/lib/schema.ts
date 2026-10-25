@@ -16,6 +16,11 @@ export interface components {
       model_check: components["schemas"]["ModelCheck"];
       /** R2 Holdout */
       r2_holdout: number | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
     };
     /** BacktestResult */
     BacktestResult: {
@@ -118,6 +123,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget";
       /** Passed */
       passed: boolean | null;
@@ -150,6 +156,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget"
       )[];
       /** Summary */
@@ -168,7 +175,7 @@ export interface components {
        * Event
        * @enum {string}
        */
-      event: "rain" | "hot" | "home_win";
+      event: "rain" | "hot" | "home_win" | "playoff_home";
       /** Effect Usd */
       effect_usd: string;
       /** Ci90 */
@@ -193,7 +200,7 @@ export interface components {
        * Settlement Var
        * @enum {string}
        */
-      settlement_var: "rain" | "hot" | "home_win";
+      settlement_var: "rain" | "hot" | "home_win" | "playoff_home";
       /** Hedgeable */
       hedgeable: boolean;
       /** Reasons */
@@ -202,6 +209,23 @@ export interface components {
       strike: number | null;
       /** Beta Settlement */
       beta_settlement: string | null;
+      /** @default null */
+      stability: components["schemas"]["Stability"] | null;
+      /**
+       * Expected Count
+       * @default null
+       */
+      expected_count: number | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
+      /**
+       * Basis Note
+       * @default null
+       */
+      basis_note: string | null;
     };
     /**
      * Headline
@@ -229,6 +253,10 @@ export interface components {
        * @enum {string}
        */
       anthropic: "configured" | "fallback";
+      /** Sample Week */
+      sample_week: boolean;
+      /** Sample Businesses */
+      sample_businesses: string[];
     };
     /**
      * Hedge
@@ -323,6 +351,21 @@ export interface components {
       decided_by: "owner" | null;
       /** Decided At */
       decided_at: string | null;
+      /**
+       * Leg Label
+       * @default null
+       */
+      leg_label: string | null;
+      /**
+       * Group Total Premium
+       * @default null
+       */
+      group_total_premium: string | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
     };
     /**
      * HedgeLite
@@ -474,6 +517,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget"
       )[];
       /** Numbers */
@@ -544,6 +588,64 @@ export interface components {
       account: string;
       /** Amount */
       amount: string;
+    };
+    /** ReconBenchmark */
+    ReconBenchmark: {
+      /** Seed */
+      seed: number;
+      /**
+       * Simulated
+       * @constant
+       */
+      simulated: true;
+      /** N Hedges */
+      n_hedges: number;
+      /** N Bank Rows */
+      n_bank_rows: number;
+      /** N Planted */
+      n_planted: number;
+      /** N Caught */
+      n_caught: number;
+      /** N Cause Correct */
+      n_cause_correct: number;
+      /** N Traps */
+      n_traps: number;
+      /** N False Flags */
+      n_false_flags: number;
+      /** Precision */
+      precision: number;
+      /** Recall */
+      recall: number;
+      /** Cause Accuracy */
+      cause_accuracy: number;
+      /** Cases */
+      cases: components["schemas"]["ReconBenchmarkCase"][];
+      /** False Flags */
+      false_flags: string[];
+    };
+    /**
+     * ReconBenchmarkCase
+     * @description One answer-key row. `planted` rows must be flagged with `expected_cause`; `trap` rows
+     *     look odd but are correct, and must not be flagged (`expected_cause` is null).
+     */
+    ReconBenchmarkCase: {
+      /** Subject */
+      subject: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "planted" | "trap";
+      /** Description */
+      description: string;
+      /** Expected Cause */
+      expected_cause: string | null;
+      /** Found Cause */
+      found_cause: string | null;
+      /** Flagged */
+      flagged: boolean;
+      /** Correct */
+      correct: boolean;
     };
     /** ReconMatch */
     ReconMatch: {
@@ -670,6 +772,38 @@ export interface components {
       weekly_budget: string;
     };
     /**
+     * Stability
+     * @description The same §5 model refit on the most recent window only (the holdout split).
+     *
+     *     `stable` = the recent effect has the train effect's sign AND its 90% CI excludes 0. The
+     *     `unstable` decline rule reads it (research hedgesim: taxi rain +$2,212 on train was +$303,
+     *     CI crossing 0, on the recent window, and hedging it made income less steady).
+     */
+    Stability: {
+      /** Effect Usd */
+      effect_usd: string;
+      /** Ci90 */
+      ci90: [string, string];
+      /** N Days */
+      n_days: number;
+      /** N Events */
+      n_events: number;
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+      /** Same Sign */
+      same_sign: boolean;
+      /** Stable */
+      stable: boolean;
+    };
+    /**
      * ThresholdSettings
      * @description Mirrors `config.Thresholds` field for field.
      */
@@ -692,6 +826,16 @@ export interface components {
       basis_r2_min: number;
       /** Max Tool Calls */
       max_tool_calls: number;
+      /**
+       * Decline Unstable
+       * @default true
+       */
+      decline_unstable: boolean;
+      /**
+       * Rain Size Multiplier
+       * @default 1
+       */
+      rain_size_multiplier: number;
     };
     /** ToolCall */
     ToolCall: {

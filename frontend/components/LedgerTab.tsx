@@ -1,6 +1,11 @@
 "use client";
 import { useState } from "react";
-import type { Ledger, LedgerEntry, Reconciliation } from "@/lib/types";
+import type {
+  Ledger,
+  LedgerEntry,
+  ReconBenchmark,
+  Reconciliation,
+} from "@/lib/types";
 import { fmtUsd } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { apiPost } from "@/lib/api";
@@ -154,14 +159,99 @@ export function ReconcilePanel({
     </section>
   );
 }
+const CAUSES: Record<string, string> = {
+  fee_deducted_from_deposit: "Fee netted from deposit",
+  duplicate_deposit: "Duplicate deposit",
+  transposed_digits: "Transposed digits",
+  reversed_sign: "Reversed sign",
+  missing_deposit: "Missing deposit",
+  ledger_payout_differs: "Ledger payout wrong",
+  deposit_amount_differs: "Deposit amount differs",
+  unexplained_bank_row: "Unexplained bank row",
+};
+const cause = (code: string | null) =>
+  code === null ? "Not flagged" : (CAUSES[code] ?? label(code));
+
+// The reconciler scored on a simulated world with planted errors and an answer key
+// (GET /benchmarks/reconciliation). Counts and verdicts come from the API as is.
+export function BenchmarkScorecard({
+  benchmark,
+}: {
+  benchmark: ReconBenchmark;
+}) {
+  return (
+    <section
+      className="benchmark"
+      aria-label="Planted-error benchmark"
+      data-testid="recon-benchmark"
+    >
+      <div className="section-heading">
+        <h3>Planted-error benchmark</h3>
+        <EstimatedBadge kind="simulated" note="planted errors, answer key" />
+      </div>
+      <p>
+        <strong>
+          Caught {benchmark.n_caught} of {benchmark.n_planted}
+        </strong>{" "}
+        planted errors · {benchmark.n_cause_correct} with the right cause ·{" "}
+        {benchmark.n_false_flags} false flags on {benchmark.n_traps} traps
+      </p>
+      <details>
+        <summary>
+          Show the answer key ({benchmark.cases.length} cases,{" "}
+          {benchmark.n_hedges} simulated hedges)
+        </summary>
+        <table>
+          <caption>Planted cause vs. what the reconciler found</caption>
+          <thead>
+            <tr>
+              <th scope="col" className="text-left">
+                Case
+              </th>
+              <th scope="col" className="text-left">
+                Planted
+              </th>
+              <th scope="col" className="text-left">
+                Found
+              </th>
+              <th scope="col">Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            {benchmark.cases.map((row) => (
+              <tr key={row.subject} data-testid="benchmark-case">
+                <th scope="row" className="text-left">
+                  {row.subject}
+                  <small className="narration">{row.description}</small>
+                </th>
+                <td className="text-left">
+                  {row.kind === "trap"
+                    ? "Trap (looks odd, is fine)"
+                    : cause(row.expected_cause ?? null)}
+                </td>
+                <td className="text-left">{cause(row.found_cause ?? null)}</td>
+                <td>{row.correct ? "✓" : "✗"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {benchmark.false_flags.length > 0 && (
+          <p role="note">False flags: {benchmark.false_flags.join(", ")}</p>
+        )}
+      </details>
+    </section>
+  );
+}
 export function LedgerTab({
   ledger,
   businessId,
   onReconciled,
+  benchmark,
 }: {
   ledger: Ledger;
   businessId: string;
   onReconciled: () => Promise<unknown>;
+  benchmark?: ReconBenchmark;
 }) {
   return (
     <div className="ledger" data-testid="ledger-tab">
@@ -207,6 +297,7 @@ export function LedgerTab({
           onReconciled={onReconciled}
         />
       </div>
+      {benchmark && <BenchmarkScorecard benchmark={benchmark} />}
     </div>
   );
 }

@@ -22,6 +22,9 @@ export type Backtest = components["schemas"]["BacktestResult"];
 export type Ledger = components["schemas"]["LedgerResponse"];
 export type LedgerEntry = components["schemas"]["LedgerEntry"];
 export type Reconciliation = components["schemas"]["ReconResult"];
+// GET /benchmarks/reconciliation: the reconciler scored on planted errors (simulated).
+export type ReconBenchmark = components["schemas"]["ReconBenchmark"];
+export type ReconBenchmarkCase = components["schemas"]["ReconBenchmarkCase"];
 export type ChatReply = components["schemas"]["ChatReply"];
 export type ToolCall = components["schemas"]["ToolCall"];
 export type Settings = components["schemas"]["Settings"];

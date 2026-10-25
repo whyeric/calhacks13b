@@ -10,6 +10,7 @@ import type {
   Hedge,
   Ledger,
   LogEntry,
+  ReconBenchmark,
   Run,
   SampleFlag,
 } from "@/lib/types";
@@ -72,6 +73,12 @@ export default function Home() {
   );
   const ledger = useSWR<Ledger>(tab === "ledger" ? live("ledger") : null, () =>
     apiGet(`${base}/ledger`),
+  );
+  // Planted-error benchmark (simulated, same for every business); optional on the Books tab.
+  const benchmark = useSWR<ReconBenchmark>(
+    tab === "ledger" && !isDemo ? ["/benchmarks/reconciliation", "all"] : null,
+    () => apiGet("/benchmarks/reconciliation"),
+    { shouldRetryOnError: false },
   );
   const health = useSWR<Health>(["/health", "all"], () => apiGet("/health"), {
     shouldRetryOnError: false,
@@ -315,6 +322,7 @@ export default function Home() {
                     <LedgerTab
                       ledger={ledger.data}
                       businessId={selectedId}
+                      benchmark={benchmark.data}
                       onReconciled={() =>
                         Promise.all([ledger.mutate(), decisions.mutate()])
                       }

@@ -1,0 +1,179 @@
+{
+  "seed": 7,
+  "simulated": true,
+  "n_hedges": 20,
+  "n_bank_rows": 20,
+  "n_planted": 13,
+  "n_caught": 13,
+  "n_cause_correct": 13,
+  "n_traps": 5,
+  "n_false_flags": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "cause_accuracy": 1.0,
+  "cases": [
+    {
+      "subject": "hdg_b01",
+      "kind": "planted",
+      "description": "Deposit short by exactly the entry fee",
+      "expected_cause": "fee_deducted_from_deposit",
+      "found_cause": "fee_deducted_from_deposit",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b02",
+      "kind": "planted",
+      "description": "Deposit short by exactly the entry fee",
+      "expected_cause": "fee_deducted_from_deposit",
+      "found_cause": "fee_deducted_from_deposit",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b03",
+      "kind": "planted",
+      "description": "Same payout deposited twice",
+      "expected_cause": "duplicate_deposit",
+      "found_cause": "duplicate_deposit",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b04",
+      "kind": "planted",
+      "description": "Deposit keyed as $54.00 instead of $45.00",
+      "expected_cause": "transposed_digits",
+      "found_cause": "transposed_digits",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b05",
+      "kind": "planted",
+      "description": "Deposit keyed as $172.00 instead of $127.00",
+      "expected_cause": "transposed_digits",
+      "found_cause": "transposed_digits",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b06",
+      "kind": "planted",
+      "description": "Deposit recorded as money going out",
+      "expected_cause": "reversed_sign",
+      "found_cause": "reversed_sign",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b07",
+      "kind": "planted",
+      "description": "Payout never reached the bank",
+      "expected_cause": "missing_deposit",
+      "found_cause": "missing_deposit",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b08",
+      "kind": "planted",
+      "description": "Payout never reached the bank",
+      "expected_cause": "missing_deposit",
+      "found_cause": "missing_deposit",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b09",
+      "kind": "planted",
+      "description": "Payout booked for a hedge that lost",
+      "expected_cause": "ledger_payout_differs",
+      "found_cause": "ledger_payout_differs",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b10",
+      "kind": "planted",
+      "description": "Payout booked $1.00 short in the Kalshi ledger",
+      "expected_cause": "ledger_payout_differs",
+      "found_cause": "ledger_payout_differs",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b11",
+      "kind": "planted",
+      "description": "Deposit $5.00 short, no fee explains it",
+      "expected_cause": "deposit_amount_differs",
+      "found_cause": "deposit_amount_differs",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b12",
+      "kind": "trap",
+      "description": "Payout split across two deposits that add up",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b13",
+      "kind": "trap",
+      "description": "Deposit referenced correctly but posted 6 days late",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b14",
+      "kind": "trap",
+      "description": "Deposit with no reference, right amount, 2 days late",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b15",
+      "kind": "trap",
+      "description": "Expired worthless; no deposit expected",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true
+    },
+    {
+      "subject": "hdg_b16",
+      "kind": "trap",
+      "description": "Expired worthless; no deposit expected",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true
+    },
+    {
+      "subject": "WIRE-7731",
+      "kind": "planted",
+      "description": "Unknown incoming wire",
+      "expected_cause": "unexplained_bank_row",
+      "found_cause": "unexplained_bank_row",
+      "flagged": true,
+      "correct": true
+    },
+    {
+      "subject": "ACH-ADJ-0918",
+      "kind": "planted",
+      "description": "Unknown bank adjustment",
+      "expected_cause": "unexplained_bank_row",
+      "found_cause": "unexplained_bank_row",
+      "flagged": true,
+      "correct": true
+    }
+  ],
+  "false_flags": []
+}

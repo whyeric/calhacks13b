@@ -17,6 +17,7 @@ import hedgesJson from "@/fixtures/hedges_mixed.json";
 import logs from "@/fixtures/decisions.json";
 import backtest from "@/fixtures/backtest_taxi.json";
 import ledger from "@/fixtures/ledger_with_mismatch.json";
+import benchmark from "@/fixtures/recon_benchmark.json";
 import chat from "@/fixtures/chat_reply.json";
 import settings from "@/fixtures/settings.json";
 import { resetMock, mockRequest } from "@/lib/mock";
@@ -33,6 +34,9 @@ const server = setupServer(
   http.get(`${api}/businesses/:id/decisions`, () => HttpResponse.json(logs)),
   http.get(`${api}/businesses/:id/backtest`, () => HttpResponse.json(backtest)),
   http.get(`${api}/businesses/:id/ledger`, () => HttpResponse.json(ledger)),
+  http.get(`${api}/benchmarks/reconciliation`, () =>
+    HttpResponse.json(benchmark),
+  ),
   http.get(`${api}/businesses/:id/settings`, () => HttpResponse.json(settings)),
   http.post(`${api}/businesses/:id/chat`, () => HttpResponse.json(chat)),
   http.get(`${api}/health`, () => HttpResponse.json(health)),
@@ -153,6 +157,18 @@ describe("bottom panels", () => {
     expect(await screen.findByTestId("mismatch-row")).toBeVisible();
     expect(requests).toContain("GET /businesses/taxi/ledger");
     expect(screen.getByText(/Did you authorize the \$1.05 fee/)).toBeVisible();
+  });
+  it("Books tab shows the planted-error benchmark scorecard, labeled simulated", async () => {
+    mount();
+    await screen.findByTestId("backtest-panel");
+    fireEvent.click(screen.getByRole("tab", { name: /Books/ }));
+    const card = await screen.findByTestId("recon-benchmark");
+    expect(requests).toContain("GET /benchmarks/reconciliation");
+    expect(within(card).getByText("Caught 13 of 13")).toBeVisible();
+    expect(card).toHaveTextContent("0 false flags on 5 traps");
+    expect(within(card).getByText(/Simulated/)).toBeVisible();
+    expect(within(card).getAllByTestId("benchmark-case")).toHaveLength(18);
+    expect(within(card).getAllByText("Transposed digits")).toHaveLength(4);
   });
   it("C7-A16 switching business refetches backtest/ledger and clears chat", async () => {
     mount();

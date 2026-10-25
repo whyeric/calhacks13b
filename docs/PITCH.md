@@ -167,6 +167,13 @@ the bookkeeper who records and reconciles it." Show, on screen:
 - the Beancount ledger;
 - sources that disagree: rule 4's basis check between our weather and the settlement station;
 - two planted errors with answer keys: the $500 in the model check and the $0.89 short deposit.
+- the planted-error benchmark on the Books tab: a simulated world of 20 hedges with 13 planted
+  errors (fee netted, duplicate deposit, transposed digits, reversed sign, missing deposit,
+  wrong ledger payout, short deposit, unexplained bank rows) and 5 traps that look wrong but
+  aren't (split deposit, late deposit, unreferenced deposit two days late, two expired hedges).
+  The real reconciler catches **13 of 13 with the right cause and 0 false flags**. Say "on
+  simulated data with an answer key"; the old exact-date matcher would have false-flagged a trap,
+  and a test proves the key can fail.
 
 **Microsoft: Built for the Real World.**
 - *Customer:* a taxi fleet and a bar near MSG.

@@ -43,6 +43,7 @@ EXAMPLES: dict[str, str] = {
     "log_entry.json": "LogEntry",
     "model_check.json": "ModelCheck",
     "reconciliation.json": "ReconResult",
+    "reconciliation_benchmark.json": "ReconBenchmark",
     "reject_request.json": "RejectRequest",
     "run_accepted.json": "RunAccepted",
     "run_status.json": "RunStatus",

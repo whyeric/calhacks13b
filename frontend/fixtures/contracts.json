@@ -37,6 +37,11 @@
               }
             ],
             "title": "R2 Holdout"
+          },
+          "estimated": {
+            "default": false,
+            "title": "Estimated",
+            "type": "boolean"
           }
         },
         "required": [
@@ -291,6 +296,7 @@
               "overpriced",
               "basis_too_loose",
               "too_expensive",
+              "unstable",
               "over_budget"
             ],
             "title": "Code",
@@ -368,6 +374,7 @@
                 "overpriced",
                 "basis_too_loose",
                 "too_expensive",
+                "unstable",
                 "over_budget"
               ],
               "type": "string"
@@ -413,7 +420,8 @@
             "enum": [
               "rain",
               "hot",
-              "home_win"
+              "home_win",
+              "playoff_home"
             ],
             "title": "Event",
             "type": "string"
@@ -468,7 +476,8 @@
             "enum": [
               "rain",
               "hot",
-              "home_win"
+              "home_win",
+              "playoff_home"
             ],
             "title": "Settlement Var",
             "type": "string"
@@ -510,6 +519,46 @@
               }
             ],
             "title": "Beta Settlement"
+          },
+          "stability": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Stability"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "expected_count": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expected Count"
+          },
+          "estimated": {
+            "default": false,
+            "title": "Estimated",
+            "type": "boolean"
+          },
+          "basis_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Basis Note"
           }
         },
         "required": [
@@ -576,12 +625,25 @@
             ],
             "title": "Anthropic",
             "type": "string"
+          },
+          "sample_week": {
+            "title": "Sample Week",
+            "type": "boolean"
+          },
+          "sample_businesses": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sample Businesses",
+            "type": "array"
           }
         },
         "required": [
           "status",
           "offline",
-          "anthropic"
+          "anthropic",
+          "sample_week",
+          "sample_businesses"
         ],
         "title": "Health",
         "type": "object"
@@ -879,6 +941,35 @@
               }
             ],
             "title": "Decided At"
+          },
+          "leg_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Leg Label"
+          },
+          "group_total_premium": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Group Total Premium"
+          },
+          "estimated": {
+            "default": false,
+            "title": "Estimated",
+            "type": "boolean"
           }
         },
         "required": [
@@ -1255,6 +1346,7 @@
                 "overpriced",
                 "basis_too_loose",
                 "too_expensive",
+                "unstable",
                 "over_budget"
               ],
               "type": "string"
@@ -1468,6 +1560,155 @@
           "amount"
         ],
         "title": "Posting",
+        "type": "object"
+      },
+      "ReconBenchmark": {
+        "additionalProperties": false,
+        "properties": {
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "simulated": {
+            "const": true,
+            "title": "Simulated",
+            "type": "boolean"
+          },
+          "n_hedges": {
+            "title": "N Hedges",
+            "type": "integer"
+          },
+          "n_bank_rows": {
+            "title": "N Bank Rows",
+            "type": "integer"
+          },
+          "n_planted": {
+            "title": "N Planted",
+            "type": "integer"
+          },
+          "n_caught": {
+            "title": "N Caught",
+            "type": "integer"
+          },
+          "n_cause_correct": {
+            "title": "N Cause Correct",
+            "type": "integer"
+          },
+          "n_traps": {
+            "title": "N Traps",
+            "type": "integer"
+          },
+          "n_false_flags": {
+            "title": "N False Flags",
+            "type": "integer"
+          },
+          "precision": {
+            "title": "Precision",
+            "type": "number"
+          },
+          "recall": {
+            "title": "Recall",
+            "type": "number"
+          },
+          "cause_accuracy": {
+            "title": "Cause Accuracy",
+            "type": "number"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/ReconBenchmarkCase"
+            },
+            "title": "Cases",
+            "type": "array"
+          },
+          "false_flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "False Flags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "seed",
+          "simulated",
+          "n_hedges",
+          "n_bank_rows",
+          "n_planted",
+          "n_caught",
+          "n_cause_correct",
+          "n_traps",
+          "n_false_flags",
+          "precision",
+          "recall",
+          "cause_accuracy",
+          "cases",
+          "false_flags"
+        ],
+        "title": "ReconBenchmark",
+        "type": "object"
+      },
+      "ReconBenchmarkCase": {
+        "additionalProperties": false,
+        "description": "One answer-key row. `planted` rows must be flagged with `expected_cause`; `trap` rows\nlook odd but are correct, and must not be flagged (`expected_cause` is null).",
+        "properties": {
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "planted",
+              "trap"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "expected_cause": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Cause"
+          },
+          "found_cause": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Found Cause"
+          },
+          "flagged": {
+            "title": "Flagged",
+            "type": "boolean"
+          },
+          "correct": {
+            "title": "Correct",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "subject",
+          "kind",
+          "description",
+          "expected_cause",
+          "found_cause",
+          "flagged",
+          "correct"
+        ],
+        "title": "ReconBenchmarkCase",
         "type": "object"
       },
       "ReconMatch": {
@@ -1770,6 +2011,68 @@
         "title": "Settings",
         "type": "object"
       },
+      "Stability": {
+        "additionalProperties": false,
+        "description": "The same \u00a75 model refit on the most recent window only (the holdout split).\n\n`stable` = the recent effect has the train effect's sign AND its 90% CI excludes 0. The\n`unstable` decline rule reads it (research hedgesim: taxi rain +$2,212 on train was +$303,\nCI crossing 0, on the recent window, and hedging it made income less steady).",
+        "properties": {
+          "effect_usd": {
+            "title": "Effect Usd",
+            "type": "string"
+          },
+          "ci90": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Ci90",
+            "type": "array"
+          },
+          "n_days": {
+            "title": "N Days",
+            "type": "integer"
+          },
+          "n_events": {
+            "title": "N Events",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "same_sign": {
+            "title": "Same Sign",
+            "type": "boolean"
+          },
+          "stable": {
+            "title": "Stable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "effect_usd",
+          "ci90",
+          "n_days",
+          "n_events",
+          "start",
+          "end",
+          "same_sign",
+          "stable"
+        ],
+        "title": "Stability",
+        "type": "object"
+      },
       "ThresholdSettings": {
         "additionalProperties": false,
         "description": "Mirrors `config.Thresholds` field for field.",
@@ -1809,6 +2112,18 @@
           "max_tool_calls": {
             "title": "Max Tool Calls",
             "type": "integer"
+          },
+          "decline_unstable": {
+            "default": true,
+            "title": "Decline Unstable",
+            "type": "boolean"
+          },
+          "rain_size_multiplier": {
+            "default": 1.0,
+            "maximum": 1.4,
+            "minimum": 1.0,
+            "title": "Rain Size Multiplier",
+            "type": "number"
           }
         },
         "required": [

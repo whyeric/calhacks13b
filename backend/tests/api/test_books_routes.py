@@ -40,3 +40,12 @@ def test_reconcile_catches_plant(client, app_env):
     assert client.post("/businesses/restaurant/reconcile", json={}).json()["mismatches"] == []
     client.post("/businesses/taxi/reconcile", json={})  # same result: no duplicate log row
     assert _n_recon(client) == before + 1
+
+
+def test_reconciliation_benchmark_route(client):
+    r = client.get("/benchmarks/reconciliation")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["simulated"] is True
+    assert body["n_caught"] == body["n_planted"] == 13 and body["false_flags"] == []
+    assert db.list_ledger_entries("bench") == []  # the benchmark never touches the app's books
