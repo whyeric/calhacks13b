@@ -1,10 +1,16 @@
 # Hedge Desk
 
+**The seats it fills:** a small business's treasury analyst (finds and sizes event-risk hedges)
+and the bookkeeper behind it (books, reconciles and closes them), working under the owner's and
+the controller's sign-off.
+
 Hedge Desk measures how much a small business's daily revenue moves with weather and game days,
-looks for a Kalshi contract that settles on that event, and sizes a hedge so it never covers more
-than the measured exposure. Every hedge has to pass six decline rules before the desk proposes it
-to the owner, and only the owner can approve. Approved hedges are booked to a Beancount ledger and
-reconciled against Kalshi and the bank at settlement. **It never places real orders.**
+looks for a contract on **Kalshi or Polymarket** that settles on that event, and sizes a hedge so
+it never covers more than the measured exposure. Every hedge has to pass six decline rules before
+the desk proposes it to the owner, and only the owner can approve; a premium above the
+materiality threshold also needs the controller's co-sign. Approved hedges are booked to a
+Beancount ledger, reconciled against the venue and the bank at settlement, and the controller
+closes the books through a date. **It never places real orders.**
 
 The demo has two businesses around Madison Square Garden. One is a taxi fleet (real NYC trip
 records). The other is a bar across from MSG (real foot traffic, estimated dollars).
@@ -46,8 +52,8 @@ labeled sample week. See [docs/DEMO.md](docs/DEMO.md).
 
 ## Try it: upload the sample
 
-*The report is computed live by `POST /research` on whatever file you pick; nothing is stored.
-The hedge card behind **Send to the desk** is still a scripted example, and is labeled so.*
+*The report is computed live by `POST /research` on whatever file you pick, and **Send to the
+desk** prices a live quote with `POST /research/quote`; nothing is stored.*
 
 1. `make demo`, then open <http://localhost:3000>.
 2. Click **Upload your revenue** and choose `hudson_bike_co_daily_revenue.csv` (in
@@ -57,10 +63,28 @@ The hedge card behind **Send to the desk** is still a scripted example, and is l
    for a couple of seconds), then the report appears with each risk's pre-registered mechanism.
    On the sample, rain, cold and warm days are FOUND; hot days and Knicks games aren't. Any other
    NYC-area file from 2024-01-01 to 2026-09-30 with at least 540 days works the same way.
-4. On the rain row, click **Send to the desk** to see the (scripted, labeled) hedge card.
+4. On the rain row, click **Send to the desk**. The desk scans Kalshi and Polymarket for the next
+   8 days, sizes the hedge at no more than the measured exposure and runs every decline rule. It's
+   a quote: the uploaded business isn't saved, so there is nothing to approve or book.
 
-See [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md) for the protocol, the API, what's
-still scripted and the full results.
+See [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md) for the protocol, the API and the
+full results.
+
+## Try it: limits, sign-offs and the record
+
+`make demo` turns on role tokens (`OWNER_TOKEN=demo-owner`, `CONTROLLER_TOKEN=demo-controller`);
+the header's **Acting as** switch picks which one the browser sends. See
+[docs/CONTROLS.md](docs/CONTROLS.md).
+
+1. As **Owner**, try to approve the taxi's $942.80 rain hedge: it's held, because the premium is
+   above the $200.00 materiality threshold and the controller hasn't co-signed.
+2. Switch to **Controller** and co-sign (or refuse) it. The controller can't approve, and the owner
+   can't co-sign or raise materiality.
+3. Click **Challenge this decision** on any card for the receipt: every check against its
+   threshold, the exposure, the sources and the full log trail.
+4. On the **Books** tab, as Controller, close the books through 2026-10-23. The planted $0.89 short
+   deposit blocks the close until it's acknowledged and carried as an exception; anything dated
+   inside a closed period afterwards lands on the next open day and says so.
 
 **Restaurant data on a fresh clone.** The bar's daily series (`restaurant_daily.parquet`,
 `msg_visits_daily.parquet`) come from Dewey and are gitignored under its license. On a fresh clone,
@@ -72,6 +96,7 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | | Status |
 |---|---|
 | Taxi fares (NYC TLC, zone 186 Penn Station/Madison Sq West), weather, Knicks/Rangers games, Kalshi markets and prices | **Real** |
+| Polymarket markets, order books and fee schedules (NYC rain; Knicks/Rangers home games) | **Real**, public read-only data, cached for offline judging (`fixtures/polymarket_cache/`) |
 | Bar foot traffic (Dewey / Advan, aggregates only) | **Real** |
 | Bar dollars (visits × an assumed $35 average check) | **Estimated**, labeled in the UI |
 | The "sample week" of hedges shown before the first desk run | **Example data**, labeled "sample week" |
@@ -79,8 +104,9 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | Reconciliation benchmark (`GET /benchmarks/reconciliation`, Books tab): 20 hedges, 13 planted errors of 8 kinds, 5 traps | **Simulated** world with an answer key; the real reconciler scores **13 of 13 caught, 13 with the right cause, 0 false flags** (`python -m app.books.benchmark`) |
 | Hudson Bike Co. sample revenue | **Synthetic** (fictional shop, planted effects) on **real** NOAA Central Park weather |
 | The upload → research report | **Live**: `POST /research` runs the protocol on the uploaded file (nothing stored) |
-| The hedge card behind "Send to the desk" | **Scripted** example, labeled on the card |
-| Trades | **None**: nothing is ever sent to Kalshi |
+| The hedge card behind "Send to the desk" | **Live quote**: `POST /research/quote` prices it on the cached Kalshi and Polymarket books; not saved |
+| Owner and controller roles | **Demo tokens** (`make demo`); real deployments set their own |
+| Trades | **None**: nothing is ever sent to Kalshi or Polymarket |
 
 In the pitch and the UI, the bar is only ever called "a bar across from MSG".
 
@@ -92,6 +118,7 @@ In the pitch and the UI, the bar is only ever called "a bar across from MSG".
 - [docs/DEMO.md](docs/DEMO.md): sample week vs real desk runs, and re-warming the cache
 - [docs/ACCEPTANCE-demo.md](docs/ACCEPTANCE-demo.md): the C8 demo acceptance tests
 - [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md): the live upload + research protocol, its API and results
+- [docs/CONTROLS.md](docs/CONTROLS.md): roles and segregation of duties, materiality, the desk's memory, receipts, period close, and the Polymarket venue
 - [docs/RESEARCH.md](docs/RESEARCH.md): what we tested, what replicated, and what didn't
 - [docs/PITCH.md](docs/PITCH.md): the 2-minute demo script, track pitches and the Devpost draft
 - [AGENTS.md](AGENTS.md): guidance for coding agents

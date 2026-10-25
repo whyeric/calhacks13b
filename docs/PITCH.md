@@ -32,8 +32,9 @@ the first minute say "insurance for a single Saturday", never "hedge ratio" or "
 
 **Before you start:** have `~/Downloads/hudson_bike_co_daily_revenue.csv` ready (it's also in
 `frontend/public/samples/`). The research report is **computed live** by `POST /research` on
-whatever file you upload; the hedge card behind "Send to the desk" is still a scripted example
-(labeled on the card), so never present that card as priced live.
+whatever file you upload, and the hedge card behind "Send to the desk" is a **live quote**
+(`POST /research/quote`) on the cached Kalshi and Polymarket books. Call it a quote: the uploaded
+business isn't saved, so it can't be approved.
 
 ### 0:00–0:10 · The hook: owners already want this
 
@@ -76,10 +77,10 @@ are not distinguishable from zero.
 > "Rain costs this shop about $1,923 a day, and it held on data the model never saw. Knicks
 > games? Nothing, so we won't sell insurance on them."
 
-*Click **Send to the desk** on rain.* The hedge card shows **1,955 YES @ 33¢** on Kalshi's NYC daily rain (`KXRAIN`), a
-**$675.41** premium (including a $30.26 fee) and an expected cost of about **$64.86**. The 1,955
-contracts are at most the measured $1,955.68 ÷ $1 (I1). *The card is still the scripted example,
-sized on the earlier offline run's −$1,955.68, not the live −$1,923.43; it's labeled on screen.*
+*Click **Send to the desk** on rain.* The quote scans Kalshi and Polymarket and shows **1,923 YES
+on `KXRAIN-26OCT25-NYC` for $20.57**, every check passing; the card lists the Polymarket market it
+also scanned. The 1,923 contracts are at most the measured $1,923.43 ÷ $1 (I1). If asked why so
+cheap: the market prices tomorrow's dry forecast; rule 3 never counts that as a bargain.
 
 > "That's insurance for a rainy day, sized to the measured loss and no more. The owner decides."
 
@@ -121,9 +122,9 @@ the playoff finding survives as one line in the close. If a judge asks, the bar 
 
 ### Known gaps to rehearse around (as of this branch)
 
-- **The upload → research report is live**; the **hedge card** after Send is scripted and
-  hardcoded (labeled), so it doesn't depend on the Kalshi cache or the desk week. Never call the
-  card live.
+- **The upload → research report and the quote are live**; the quote reads the committed Kalshi
+  and Polymarket caches (pinned demo clock), so its prices are the 2026-10-24/25 snapshots. It's a
+  quote, not a proposal: no approve button for an uploaded business.
 - On the committed cache, the real taxi desk gives one **declined** rain hedge (`no_market` +
   `unstable`).
 - With the Dewey files, the bar's real run is the playoff season hedge: one leg **proposed**
@@ -153,8 +154,8 @@ Use this in the Devpost and say it out loud if asked (C8-H9):
   weather days.
 - **Live:** the upload → research report: `POST /research` runs the protocol on the uploaded
   file (nothing stored).
-- **Scripted:** the hedge card behind "Send to the desk", a labeled example with hardcoded
-  numbers.
+- **Live quote:** the hedge card behind "Send to the desk" (`POST /research/quote`), priced on
+  the cached Kalshi and Polymarket books; not saved, so not approvable.
 - **Simulated:** the hedge settlements and the bank statement. The settlements are simulated from
   *real* settled Kalshi results. The bank statement has one deliberately planted short deposit.
   **No real trades are placed.**
@@ -166,8 +167,20 @@ Use this in the Devpost and say it out loud if asked (C8-H9):
 ## Track pitches (spec §17)
 
 **Hyphenate (primary).** "The treasury analyst who finds and hedges a business's event risk, and
-the bookkeeper who records and reconciles it." Show, on screen:
-- limits and approvals: a pending card that only the owner can approve (I4);
+the bookkeeper who records, reconciles and closes it." Seats line for the form: *Treasury analyst
++ hedge bookkeeper for a small business, under the owner's approval and the controller's
+co-sign.* Show, on screen:
+- limits and approvals: a pending card that only the owner can approve (I4), and, above the
+  $200 materiality line, only after the controller co-signs. The controller can't approve, the
+  owner can't co-sign or move materiality, the desk can do neither; every refusal is logged;
+- "defend a decision when questioned": **Challenge this decision** opens the receipt (every
+  check against its threshold, the exposure, the sources, the full trail);
+- time: the desk remembers. Two rejected rain hedges in a row and the next proposal opens with
+  "You rejected the last two rain hedges (last reason: …)";
+- the close: the controller locks the books through a date; the $0.89 short deposit blocks it
+  until it's acknowledged and carried as an exception;
+- two venues: the desk scans Kalshi and Polymarket, and skips Polymarket's NYC temperature
+  markets because they settle at LaGuardia, not the Central Park station it measured;
 - the append-only decision log, with the checks behind every decision;
 - the Beancount ledger;
 - sources that disagree: rule 4's basis check between our weather and the settlement station;
@@ -252,7 +265,8 @@ uploaded file, shown on a fictional, labeled bike shop.
   number that didn't come from a tool. A deterministic fallback takes over when Claude isn't
   available.
 - *Research:* `POST /research` runs the protocol (statsmodels, HC3, BH, placebo) on an uploaded
-  CSV in about a second; the hedge card after it is still a labeled, scripted example.
+  CSV in about a second, and `POST /research/quote` prices a FOUND downside on Kalshi and
+  Polymarket with the desk's own sizing and decline rules.
 - *Books:* Beancount and SQLite.
 - *Frontend:* Next.js, Tailwind, Recharts and SWR.
 - *Research:* eight rounds of experiments, about 40 studies, with train/holdout replication,

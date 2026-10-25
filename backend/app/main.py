@@ -210,16 +210,22 @@ def _expire_stale(hedges: list[Hedge]) -> list[Hedge]:
     return out
 
 
-def _require_owner(actor: str | None, token: str | None, action: str) -> None:
+def _require_owner(actor: str | None, token: str | None, action: str, h: Hedge | None = None) -> None:
     """I4: only exactly "owner" may approve or reject; X-Owner-Token when OWNER_TOKEN is set (G1;
-    `make demo` sets it, so a caller without the owner's token, like the desk, is refused)."""
-    if actor != "owner":
-        raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; the desk never decides for you.",
-                       {"actor": actor})
+    `make demo` sets it, so a caller without the owner's token, like the desk, is refused).
+    Refusals on a hedge are logged (I5)."""
     expected = get_settings().owner_token
-    if expected and token != expected:
-        raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; the owner token is missing or wrong.",
-                       {"actor": actor})
+    why = None
+    if actor != "owner":
+        why = "the desk never decides for you"
+    elif expected and token != expected:
+        why = "the owner token is missing or wrong"
+    if why is None:
+        return
+    if h is not None:
+        _log({"business_id": h.business_id, "kind": "refusal", "actor": "system", "hedge_id": h.id,
+              "decision_id": h.decision.id, "summary": f"Refused {action} by {actor!r}: only the owner can {action}."})
+    raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; {why}.", {"actor": actor})
 
 
 def _require_controller(actor: str | None, token: str | None, action: str, business_id: str,
@@ -374,7 +380,7 @@ def approve(
     x_owner_token: str | None = Header(None),
 ) -> Hedge:
     h = _hedge(hedge_id)
-    _require_owner(body.actor if body else None, x_owner_token, "approve")
+    _require_owner(body.actor if body else None, x_owner_token, "approve", h)
     _require_decidable(h)
     _require_cosign(h)
     from app.books import ledger  # looked up at call time so tests can patch book_approval
@@ -401,7 +407,7 @@ def reject(
     x_owner_token: str | None = Header(None),
 ) -> Hedge:
     h = _hedge(hedge_id)
-    _require_owner(body.actor if body else None, x_owner_token, "reject")
+    _require_owner(body.actor if body else None, x_owner_token, "reject", h)
     _require_decidable(h)
     reason_text = body.reason.strip() if body and body.reason and body.reason.strip() else None
     rejected = Hedge.model_validate(h.model_dump() | {"status": "rejected", "decided_by": "owner",
