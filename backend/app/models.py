@@ -115,7 +115,7 @@ HedgeStatus = Literal[  # R5
 ]
 LogKind = Literal[
     "proposal", "decline", "approval", "rejection", "booking", "settlement", "expired",
-    "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed",
+    "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed", "refusal",
 ]
 
 
@@ -581,7 +581,7 @@ class AnalyzeResponse(Contract):
     exposures: list[Exposure]
     dropped: list[Exposure]
     model_check: ModelCheck
-    r2_holdout: float
+    r2_holdout: float | None  # null when the feature table has no holdout rows
 
     @model_validator(mode="after")
     def _split(self) -> "AnalyzeResponse":

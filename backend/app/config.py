@@ -8,6 +8,7 @@ from datetime import date, timedelta
 from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -114,6 +115,10 @@ class Settings(BaseSettings):
     avg_check_label: str = "assumed"
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
     owner_token: str | None = None  # G1: off unless set
+    # Markets backend for desk runs: "auto" uses app.markets (Kalshi, PR #48) when it is
+    # importable and falls back to fixtures/examples/hedge_*.json otherwise.
+    markets_backend: Literal["auto", "kalshi", "fixture"] = "auto"
+    ledgers_dir: str = str(REPO_ROOT / "ledgers")  # per-business .beancount files (C5)
     # D3: raw Dewey folders; unset -> named folders, then auto-detect (see app/data/dewey.py).
     dewey_restaurants_dir: str | None = None
     dewey_msg_dir: str | None = None

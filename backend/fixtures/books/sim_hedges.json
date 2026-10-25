@@ -1,0 +1,7 @@
+[
+  {"id": "hdg_s01", "business_id": "taxi", "ticker": "KXHIGHNY-26OCT20-T72", "side": "no", "n": 60, "price": "0.70", "approved_at": "2026-10-19T15:00:00Z"},
+  {"id": "hdg_s02", "business_id": "taxi", "ticker": "KXHIGHNY-26OCT21-T66", "side": "yes", "n": 30, "price": "0.35", "approved_at": "2026-10-20T15:00:00Z"},
+  {"id": "hdg_s03", "business_id": "taxi", "ticker": "KXHIGHNY-26OCT22-T70", "side": "no", "n": 45, "price": "0.62", "approved_at": "2026-10-21T15:00:00Z"},
+  {"id": "hdg_r01", "business_id": "restaurant", "ticker": "KXNBAGAME-26OCT12MINNYK-NYK", "side": "no", "n": 80, "price": "0.45", "approved_at": "2026-10-12T15:00:00Z"},
+  {"id": "hdg_r02", "business_id": "restaurant", "ticker": "KXNBAGAME-26OCT15TORNYK-NYK", "side": "no", "n": 50, "price": "0.40", "approved_at": "2026-10-14T15:00:00Z"}
+]
