@@ -12,18 +12,19 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
-import os
 from datetime import datetime, timezone
 from decimal import ROUND_FLOOR, Decimal, InvalidOperation
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 from urllib.parse import urlencode
 
 import httpx
 from pydantic import BaseModel
 
-DEFAULT_BASE_URL = "https://external-api.kalshi.com/trade-api/v2"
-DEFAULT_CACHE_DIR = Path(__file__).resolve().parents[3] / "fixtures" / "kalshi_cache"
+from app.config import FIXTURES_DIR, get_settings
+from app.models import Level, Side
+
+DEFAULT_CACHE_DIR = FIXTURES_DIR / "kalshi_cache"
 
 ONE = Decimal("1")
 TRIES = 3
@@ -31,8 +32,6 @@ TIMEOUT_S = 10
 MAX_CONCURRENCY = 4
 PAGE_LIMIT = 1000
 MAX_RETRY_AFTER_S = 10
-
-Side = Literal["yes", "no"]
 
 
 class KalshiError(Exception):
@@ -51,11 +50,6 @@ class CacheMiss(Exception):
         super().__init__(f"no cached response for GET {path} {params}")
         self.path = path
         self.params = params
-
-
-class Level(BaseModel):
-    price: Decimal
-    count: int
 
 
 class Orderbook(BaseModel):
@@ -167,8 +161,9 @@ class KalshiClient:
         backoff_s: int = 1,
         sleep=asyncio.sleep,
     ):
-        self.base_url = (base_url or os.environ.get("KALSHI_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
-        self.offline = os.environ.get("DEMO_OFFLINE") == "1" if offline is None else offline
+        settings = get_settings()
+        self.base_url = (base_url or settings.kalshi_base_url).rstrip("/")
+        self.offline = settings.demo_offline if offline is None else offline
         self.cache_dir = Path(cache_dir)
         self._backoff_s = backoff_s
         self._sleep = sleep

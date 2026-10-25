@@ -4,8 +4,7 @@ from pathlib import Path
 import httpx
 import pytest
 
-REPO = Path(__file__).resolve().parents[2]
-FIXTURES = REPO / "fixtures"
+FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"  # backend/fixtures
 
 
 @pytest.fixture(autouse=True)

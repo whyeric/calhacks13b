@@ -5,6 +5,7 @@ import json
 import httpx
 import pytest
 
+from app.config import get_settings
 from app.markets.kalshi import CacheMiss, KalshiClient
 from tests.conftest import MockKalshi, load
 
@@ -61,7 +62,8 @@ async def test_online_writes_cache_then_offline_replays_without_network(tmp_path
 
 
 def test_offline_flag_comes_from_env(monkeypatch, tmp_path):
-    monkeypatch.setenv("DEMO_OFFLINE", "1")
-    assert KalshiClient(cache_dir=tmp_path).offline is True
-    monkeypatch.setenv("DEMO_OFFLINE", "0")
-    assert KalshiClient(cache_dir=tmp_path).offline is False
+    for value, expected in (("1", True), ("0", False)):
+        monkeypatch.setenv("DEMO_OFFLINE", value)
+        get_settings.cache_clear()
+        assert KalshiClient(cache_dir=tmp_path).offline is expected
+    get_settings.cache_clear()

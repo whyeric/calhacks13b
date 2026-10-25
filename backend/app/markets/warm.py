@@ -1,6 +1,6 @@
-"""Warm fixtures/kalshi_cache/ from the live public API and print the C1 inventory.
+"""Warm backend/fixtures/kalshi_cache/ from the live public API and print the C1 inventory.
 
-    cd backend && python -m scripts.warm_kalshi_cache
+    make warm        # or: cd backend && python -m app.markets.warm
 
 Read-only. Re-run before the demo (spec §15); then DEMO_OFFLINE=1 replays it.
 """
