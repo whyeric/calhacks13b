@@ -9,6 +9,12 @@ reconciled against Kalshi and the bank at settlement. **It never places real ord
 The demo has two businesses around Madison Square Garden. One is a taxi fleet (real NYC trip
 records). The other is a bar across from MSG (real foot traffic, estimated dollars).
 
+You can also **upload your own daily revenue** and click **Research my risks**. Claude
+pre-registers which events should matter and why, and a fixed harness tests each one with
+train/holdout replication, Benjamini–Hochberg correction and a placebo against the NOAA settlement
+station. Claude does the analyst's work but never produces a number. Risks that come back FOUND can
+be sent to the desk to be priced.
+
 ## Quickstart
 
 You need Python 3.12, Node 18.18+ and `make`.
@@ -39,6 +45,35 @@ make clean             # drop the SQLite db, generated ledgers and the frontend 
 `make demo DEMO_WEB=0` serves only the API. `DEMO_SAMPLE_WEEK=0 make demo` starts without the
 labeled sample week. See [docs/DEMO.md](docs/DEMO.md).
 
+## Try it with your own revenue
+
+1. `make demo`, then open <http://localhost:3000>.
+2. Click **Upload your revenue**. Give a name (1–60 characters) and a type (bar, restaurant, shop,
+   transport or other), and choose a CSV with `date,revenue` columns. You need at least 540 days
+   inside the cached NYC weather/schedule window. No data handy? Download a sample from the drawer
+   (`sample_revenue_nyc_bike_shop.csv` or `sample_revenue_msg_sports_bar.csv`; both are
+   **synthetic**).
+3. The app switches to your business. **Run desk**, the backtest, the ledger and chat all work on
+   it.
+4. Click **Research my risks**. When the report lands, read each hypothesis's verdict and reasons.
+   On a FOUND row with a Kalshi series, click **Send to the desk**, then **Run desk**.
+
+The same thing from the shell:
+
+```bash
+curl -F name="Hudson Bikes" -F kind=shop -F file=@sample_revenue_nyc_bike_shop.csv \
+     localhost:8000/businesses/upload                                  # -> {"id": "up_...", ...}
+curl -XPOST localhost:8000/businesses/$ID/research -H 'content-type: application/json' -d '{}'
+curl localhost:8000/runs/$RUN_ID                                       # poll until done
+curl localhost:8000/businesses/$ID/research                            # the ResearchReport
+curl -XPOST localhost:8000/businesses/$ID/research/$HYP_ID/promote     # send a FOUND risk to the desk
+```
+
+Your revenue is stored in the local SQLite database only and is never sent to Kalshi. The data is
+NYC only (NOAA Central Park, Knicks/Rangers). Research runs offline with the deterministic fallback
+when there's no `ANTHROPIC_API_KEY`. See [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md)
+for the CSV format, the errors, the protocol, the verdicts and the limitations.
+
 **Restaurant data on a fresh clone.** The bar's daily series (`restaurant_daily.parquet`,
 `msg_visits_daily.parquet`) come from Dewey and are gitignored under its license. On a fresh clone,
 the bar's analysis therefore returns `analysis_unavailable`, and the rest of the app still works.
@@ -53,6 +88,8 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | Bar dollars (visits × an assumed $35 average check) | **Estimated**, labeled in the UI |
 | The "sample week" of hedges shown before the first desk run | **Example data**, labeled "sample week" |
 | Hedge settlements and the bank statement (with one planted short deposit) | **Simulated**, from real settled Kalshi results |
+| Uploaded revenue | **Yours**: stored locally, analysed as-is (`data_label: "uploaded"`) |
+| The two sample revenue CSVs | **Synthetic**, seeded with planted effects, labeled |
 | Trades | **None**: nothing is ever sent to Kalshi |
 
 In the pitch and the UI, the bar is only ever called "a bar across from MSG".
@@ -64,6 +101,7 @@ In the pitch and the UI, the bar is only ever called "a bar across from MSG".
 - [docs/PLAN.md](docs/PLAN.md): chunks, gates and conventions
 - [docs/DEMO.md](docs/DEMO.md): sample week vs real desk runs, and re-warming the cache
 - [docs/ACCEPTANCE-demo.md](docs/ACCEPTANCE-demo.md): the C8 demo acceptance tests
+- [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md): uploading your revenue, the research loop, the API and the limits
 - [docs/RESEARCH.md](docs/RESEARCH.md): what we tested, what replicated, and what didn't
 - [docs/PITCH.md](docs/PITCH.md): the 2-minute demo script, track pitches and the Devpost draft
 - [AGENTS.md](AGENTS.md): guidance for coding agents
