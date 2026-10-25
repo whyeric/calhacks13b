@@ -6,6 +6,7 @@ import { apiGet, apiPut } from "@/lib/api";
 import { label } from "@/lib/labels";
 import { Drawer } from "./ChatDrawer";
 import { StateBoundary } from "./StateBoundary";
+import { Button } from "@/components/ui/button";
 
 type Kind = "unit" | "money" | "count";
 type Field = {
@@ -199,9 +200,9 @@ export function SettingsForm({
         </p>
       )}
       {error && <p role="alert">{error}</p>}
-      <button className="primary" type="submit" disabled={invalid || saving}>
+      <Button className="primary" type="submit" disabled={invalid || saving}>
         {saving ? "Saving…" : "Save and re-check hedges"}
-      </button>
+      </Button>
     </form>
   );
 }

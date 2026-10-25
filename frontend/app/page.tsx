@@ -15,6 +15,8 @@ import type {
   SampleFlag,
 } from "@/lib/types";
 import { Header, EstimatedBadge } from "@/components/Header";
+import { Button } from "@/components/ui/button";
+import { Stamp } from "@/components/ui/stamp";
 import {
   ExposureList,
   NotHedgedList,
@@ -168,34 +170,46 @@ export default function Home() {
       )}
       <div className="intro">
         <div>
-          <span className="eyebrow">Your weekly desk</span>
+          <span className="eyebrow">
+            Hedge blotter
+            {business ? ` · week of ${business.budget.week_start}` : ""}
+          </span>
           <h2>A little more certainty.</h2>
           <p>Measured risks. Clear costs. Every decision stays yours.</p>
         </div>
         <div className="intro-actions">
-          <span className="badge">No real orders are placed</span>
-          <button
+          <Stamp ink="red" tilt="left" className="badge">
+            No real orders are placed
+          </Stamp>
+          <Button
+            variant="outline"
             onClick={() => setDrawer(drawer === "chat" ? null : "chat")}
             aria-expanded={drawer === "chat"}
             disabled={isDemo}
           >
             Ask “why?”
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => setDrawer(drawer === "settings" ? null : "settings")}
             aria-expanded={drawer === "settings"}
             disabled={isDemo}
           >
             Settings
-          </button>
+          </Button>
         </div>
       </div>
       {runError && (
         <div role="alert" className="run-error">
           {runError}{" "}
-          <button onClick={runDesk} disabled={runningId !== null}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={runDesk}
+            disabled={runningId !== null}
+          >
             Retry run
-          </button>
+          </Button>
         </div>
       )}
       {isDemo ? (

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { ChatReply, ToolCall } from "@/lib/types";
 import { apiPost } from "@/lib/api";
+import { Button } from "@/components/ui/button";
 
 type Message =
   | { role: "owner"; text: string }
@@ -29,9 +30,14 @@ export function Drawer({
     <aside className="drawer" role="dialog" aria-label={title}>
       <div className="section-heading">
         <h2>{title}</h2>
-        <button onClick={onClose} aria-label={`Close ${title}`}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onClose}
+          aria-label={`Close ${title}`}
+        >
           ✕
-        </button>
+        </Button>
       </div>
       {children}
     </aside>
@@ -109,9 +115,14 @@ export function ChatDrawer({
         {!messages.length && (
           <div className="suggestions">
             {SUGGESTIONS.map((text) => (
-              <button key={text} onClick={() => send(text)} disabled={pending}>
+              <Button
+                variant="outline"
+                key={text}
+                onClick={() => send(text)}
+                disabled={pending}
+              >
                 {text}
-              </button>
+              </Button>
             ))}
           </div>
         )}
@@ -157,9 +168,9 @@ export function ChatDrawer({
             }
           }}
         />
-        <button className="primary" disabled={pending || !input.trim()}>
+        <Button className="primary" disabled={pending || !input.trim()}>
           {pending ? "Asking…" : "Ask"}
-        </button>
+        </Button>
       </form>
     </Drawer>
   );

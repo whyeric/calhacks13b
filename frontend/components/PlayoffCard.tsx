@@ -5,6 +5,9 @@ import { fmtCents, fmtUsd } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { apiPost } from "@/lib/api";
 import { EstimatedBadge } from "./Header";
+import { Button } from "@/components/ui/button";
+import { Stamp } from "@/components/ui/stamp";
+import { STATUS_INK } from "@/lib/inks";
 
 const TEAMS: Record<string, string> = {
   NYK: "Knicks",
@@ -82,16 +85,20 @@ function GroupApprove({
       <div className="row">
         <p>Only you can approve protection. This decides every leg.</p>
         <div className="actions">
-          <button disabled={pending} onClick={() => decide("reject")}>
+          <Button
+            variant="outline"
+            disabled={pending}
+            onClick={() => decide("reject")}
+          >
             Reject all
-          </button>
-          <button
+          </Button>
+          <Button
             className="primary"
             disabled={pending}
             onClick={() => decide("approve")}
           >
             {pending ? "Saving…" : "Approve all"}
-          </button>
+          </Button>
         </div>
       </div>
       {error && <p role="alert">{error}</p>}
@@ -123,9 +130,13 @@ export function PlayoffCard({
         <span className="eyebrow">Playoff season protection</span>
         <span className="badges">
           {statuses.map((status) => (
-            <span key={status} className={`chip ${status}`}>
+            <Stamp
+              key={status}
+              ink={STATUS_INK[status] ?? "pencil"}
+              className={`chip ${status}`}
+            >
               {label(status)}
-            </span>
+            </Stamp>
           ))}
         </span>
       </div>

@@ -51,6 +51,7 @@ import {
 } from "@/lib/researchView";
 import { Drawer } from "./ChatDrawer";
 import { DecisionLog } from "./DecisionLog";
+import { Button } from "@/components/ui/button";
 
 export type DemoUpload = {
   name: string;
@@ -275,9 +276,9 @@ export function DemoUploadDrawer({
           history or more works best.
         </p>
         <p className="upload-privacy">{PRIVACY_NOTE}</p>
-        <button className="primary" type="submit" disabled={!ready}>
+        <Button className="primary" type="submit" disabled={!ready}>
           Upload and research
-        </button>
+        </Button>
       </form>
       <div className="upload-samples">
         <p className="eyebrow">No file handy?</p>
@@ -286,9 +287,9 @@ export function DemoUploadDrawer({
             Download {DEMO_SAMPLE.title}
           </a>
         </p>
-        <button type="button" onClick={loadSample}>
+        <Button variant="outline" type="button" onClick={loadSample}>
           Use the sample file
-        </button>
+        </Button>
       </div>
     </Drawer>
   );
@@ -297,8 +298,15 @@ export function DemoUploadDrawer({
 // --- Progress -----------------------------------------------------------------
 // Uneven pace (fast, stall, catch up) so the bar reads like real work.
 const PACE: [number, number][] = [
-  [0, 0], [0.1, 0.16], [0.24, 0.27], [0.36, 0.31], [0.52, 0.55],
-  [0.66, 0.62], [0.8, 0.79], [0.92, 0.93], [1, 1],
+  [0, 0],
+  [0.1, 0.16],
+  [0.24, 0.27],
+  [0.36, 0.31],
+  [0.52, 0.55],
+  [0.66, 0.62],
+  [0.8, 0.79],
+  [0.92, 0.93],
+  [1, 1],
 ];
 function paced(t: number): number {
   if (t <= 0) return 0;
@@ -358,9 +366,27 @@ function Forest({
   const fx = (value: string) => (position(value, axis.domain) / 100) * FW;
   const line = (plot: [string, string, string], y: number, cls: string) => (
     <g className={cls}>
-      <line x1={fx(plot[1])} x2={fx(plot[2])} y1={y} y2={y} className="whisker" />
-      <line x1={fx(plot[1])} x2={fx(plot[1])} y1={y - 4} y2={y + 4} className="whisker" />
-      <line x1={fx(plot[2])} x2={fx(plot[2])} y1={y - 4} y2={y + 4} className="whisker" />
+      <line
+        x1={fx(plot[1])}
+        x2={fx(plot[2])}
+        y1={y}
+        y2={y}
+        className="whisker"
+      />
+      <line
+        x1={fx(plot[1])}
+        x2={fx(plot[1])}
+        y1={y - 4}
+        y2={y + 4}
+        className="whisker"
+      />
+      <line
+        x1={fx(plot[2])}
+        x2={fx(plot[2])}
+        y1={y - 4}
+        y2={y + 4}
+        className="whisker"
+      />
       <circle cx={fx(plot[0])} cy={y} r={4.5} className="dot" />
     </g>
   );
@@ -382,7 +408,11 @@ function Forest({
 function ForestAxis({ axis }: { axis: Axis }) {
   const fx = (value: string) => (position(value, axis.domain) / 100) * FW;
   return (
-    <svg className="forest forest-axis" viewBox={`0 0 ${FW} 16`} aria-hidden="true">
+    <svg
+      className="forest forest-axis"
+      viewBox={`0 0 ${FW} 16`}
+      aria-hidden="true"
+    >
       {axis.ticks.map((v) => (
         <text key={v} x={fx(v)} y={11} textAnchor="middle">
           {tickLabel(v)}
@@ -479,7 +509,8 @@ export function ResearchTable({
               <td>
                 <Verdict row={row} />
                 {row.sendable && onSend && (
-                  <button
+                  <Button
+                    variant="outline"
                     className="primary send-desk"
                     onClick={onSend}
                     disabled={sendState !== null}
@@ -489,7 +520,7 @@ export function ResearchTable({
                       : sendState === "sending"
                         ? "Sending…"
                         : "Sent to the desk"}
-                  </button>
+                  </Button>
                 )}
               </td>
               <td className="kalshi-cell">{row.venue}</td>
@@ -506,7 +537,9 @@ const PAYOFF_DOMAIN: [number, number] = [-2200, 0];
 function DemoPayoff() {
   const rows = DEMO_HEDGE.payoff;
   const names = ["It rains", "It stays dry"];
-  const W = 320, top = 18, H = 120;
+  const W = 320,
+    top = 18,
+    H = 120;
   const zeroY = columnSpan("0", PAYOFF_DOMAIN, top, H).y;
   const bar = (v: string, x: number, cls: string) => {
     const span = columnSpan(v, PAYOFF_DOMAIN, top, H);
@@ -521,17 +554,28 @@ function DemoPayoff() {
   };
   return (
     <div className="payoff">
-      <svg className="payoff-svg" viewBox={`0 0 ${W} ${top + H + 40}`} role="img"
-        aria-label="Unhedged revenue change vs hedged net, if it rains and if it stays dry">
+      <svg
+        className="payoff-svg"
+        viewBox={`0 0 ${W} ${top + H + 40}`}
+        role="img"
+        aria-label="Unhedged revenue change vs hedged net, if it rains and if it stays dry"
+      >
         <line x1={0} x2={W} y1={zeroY} y2={zeroY} className="zero" />
-        <text x={2} y={zeroY - 5} className="axis-note">$0 (a normal day)</text>
+        <text x={2} y={zeroY - 5} className="axis-note">
+          $0 (a normal day)
+        </text>
         {rows.map((row, i) => {
           const cx = 40 + i * 150;
           return (
             <g key={row.outcome}>
               {bar(row.revenue_vs_base, cx, "unhedged")}
               {bar(row.net_vs_base, cx + 62, "hedged")}
-              <text x={cx + 59} y={top + H + 34} textAnchor="middle" className="outcome">
+              <text
+                x={cx + 59}
+                y={top + H + 34}
+                textAnchor="middle"
+                className="outcome"
+              >
                 {names[i]}
               </text>
             </g>
@@ -558,7 +602,11 @@ function DemoPayoff() {
             <tr key={row.outcome}>
               <th scope="row">{names[i]}</th>
               <td>{fmtUsd(row.revenue_vs_base)}</td>
-              <td>{row.contract_payout === "0.00" ? "$0" : `$${row.contract_payout.replace(/\B(?=(\d{3})+(?!\d))/, ",")}`}</td>
+              <td>
+                {row.contract_payout === "0.00"
+                  ? "$0"
+                  : `$${row.contract_payout.replace(/\B(?=(\d{3})+(?!\d))/, ",")}`}
+              </td>
               <td>{fmtUsd(row.premium)}</td>
               <td>{fmtUsd(row.net_vs_base)}</td>
             </tr>
@@ -612,10 +660,12 @@ export function DemoHedgeCard({
           <div className="row">
             <p>Only you can approve protection.</p>
             <div className="actions">
-              <button onClick={() => onDecide(false)}>Reject</button>
-              <button className="primary" onClick={() => onDecide(true)}>
+              <Button variant="outline" onClick={() => onDecide(false)}>
+                Reject
+              </Button>
+              <Button className="primary" onClick={() => onDecide(true)}>
                 Approve
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -641,8 +691,7 @@ export function DemoDesk({
   const failed = result && "error" in result ? result.error : null;
   const waiting = !result;
   const ticking =
-    !!upload &&
-    (elapsed < total || waiting || hedge?.status === "sending");
+    !!upload && (elapsed < total || waiting || hedge?.status === "sending");
   useEffect(() => {
     if (!ticking) return;
     setNow(Date.now());
@@ -669,14 +718,15 @@ export function DemoDesk({
             </h2>
           </div>
           <div className="demo-actions">
-            <button
+            <Button
+              variant="outline"
               onClick={() => {
                 demo.remove();
                 onRemoved();
               }}
             >
               Remove upload
-            </button>
+            </Button>
           </div>
         </div>
         {failed && (
@@ -731,7 +781,11 @@ export function DemoDesk({
           </div>
           {hedge?.status === "sending" ? (
             <div className="panel">
-              <RunningBar label="Pricing protection…" elapsed={sendElapsed} total={SEND_MS} />
+              <RunningBar
+                label="Pricing protection…"
+                elapsed={sendElapsed}
+                total={SEND_MS}
+              />
             </div>
           ) : hedge ? (
             <DemoHedgeCard

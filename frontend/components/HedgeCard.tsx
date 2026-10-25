@@ -12,9 +12,15 @@ import { PlayoffCard, groupHedges } from "./PlayoffCard";
 import { fmtUsd, fmtPct, fmtCents } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { apiPost } from "@/lib/api";
-
+import { Button } from "@/components/ui/button";
+import { Stamp } from "@/components/ui/stamp";
+import { LEDGER, PENCIL, STATUS_INK } from "@/lib/inks";
 export function DecisionChip({ status }: { status: Hedge["status"] }) {
-  return <span className={`chip ${status}`}>{label(status)}</span>;
+  return (
+    <Stamp ink={STATUS_INK[status] ?? "pencil"} className={`chip ${status}`}>
+      {label(status)}
+    </Stamp>
+  );
 }
 export function HeadlineStrip({ headline }: { headline: Headline }) {
   return (
@@ -129,13 +135,13 @@ export function PayoffChart({
             <Bar
               dataKey="revenue_vs_base"
               name="Unhedged"
-              fill="#9aa99e"
+              fill={PENCIL}
               isAnimationActive={false}
             />
             <Bar
               dataKey="net_vs_base"
               name="Hedged"
-              fill="#247153"
+              fill={LEDGER}
               isAnimationActive={false}
             />
           </BarChart>
@@ -213,18 +219,25 @@ export function ApproveBar({
       <div className="row">
         <p>Only you can approve protection.</p>
         <div className="actions">
-          <button disabled={pending} onClick={() => decide("reject")}>
+          <Button
+            variant="outline"
+            disabled={pending}
+            onClick={() => decide("reject")}
+          >
             Reject
-          </button>
-          <button
+          </Button>
+          <Button
             className="primary"
             disabled={pending}
             onClick={() => decide("approve")}
           >
             {pending ? "Saving…" : "Approve"}
-          </button>
+          </Button>
         </div>
       </div>
+      <p className="signature" aria-hidden="true">
+        Approved by · owner
+      </p>
       {error && <p role="alert">{error}</p>}
     </div>
   );
@@ -240,7 +253,10 @@ export function HedgeCard({
   return (
     <article className="hedge-card" data-testid="hedge-card">
       <div className="row">
-        <span className="eyebrow">{label(event)} protection</span>
+        <div className="ticket-meta">
+          <span className="eyebrow">{label(event)} protection</span>
+          <span className="ticket-no">No. {hedge.id}</span>
+        </div>
         <DecisionChip status={hedge.status} />
       </div>
       <h3>{hedge.market_title ?? "No matching market"}</h3>
@@ -286,7 +302,7 @@ export function HedgeList({
     <>
       <div className="section-heading">
         <h2>This week’s protection</h2>
-        <span className="badge">{items.length} decisions</span>
+        <Stamp className="badge">{items.length} decisions</Stamp>
       </div>
       {items.length ? (
         items.map((item) =>

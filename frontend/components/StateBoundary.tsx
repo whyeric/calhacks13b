@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 export function StateBoundary({
   loading,
   error,
@@ -14,7 +15,9 @@ export function StateBoundary({
     return (
       <div role="alert" className="state">
         <p>{error.message}</p>
-        <button onClick={retry}>Retry</button>
+        <Button variant="outline" onClick={retry}>
+          Retry
+        </Button>
       </div>
     );
   if (loading)

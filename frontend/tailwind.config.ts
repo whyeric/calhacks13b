@@ -1,9 +1,56 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
+// Blotter theme: every color is a CSS variable from app/globals.css, so the
+// shadcn/ui primitives in components/ui and the hand-written classes share one palette.
 const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
-  theme: { extend: {} },
-  plugins: [],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
+        condensed: ["var(--font-condensed)"],
+      },
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 1px)",
+        sm: "calc(var(--radius) - 2px)",
+      },
+    },
+  },
+  plugins: [animate],
 };
 
 export default config;

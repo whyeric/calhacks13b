@@ -1,6 +1,7 @@
 import type { LogEntry } from "@/lib/types";
 import { label } from "@/lib/labels";
 import { CheckMetrics } from "./HedgeCard";
+import { Stamp } from "@/components/ui/stamp";
 export function DecisionRow({ entry }: { entry: LogEntry }) {
   return (
     <details className="decision-row">
@@ -18,7 +19,9 @@ export function DecisionRow({ entry }: { entry: LogEntry }) {
         </time>
         <span className="log-summary">{entry.summary}</span>
         {entry.agent === "fallback" && (
-          <span className="badge">Automatic summary</span>
+          <Stamp ink="amber" className="badge">
+            Automatic summary
+          </Stamp>
         )}
       </summary>
       <CheckMetrics checks={entry.checks} />

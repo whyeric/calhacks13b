@@ -9,6 +9,7 @@ import {
   type Finding,
 } from "@/lib/research";
 import { barSpan, position } from "@/lib/chartScale";
+import { Card } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "Why this works · Offset",
@@ -143,7 +144,7 @@ export default function Research() {
           …and it can be hedged
         </h2>
         <div className="research-grid">
-          <article className="panel">
+          <Card className="panel">
             <span className="eyebrow">Playoff season</span>
             <h3>Protect the home games you might not get</h3>
             <p>
@@ -173,8 +174,8 @@ export default function Research() {
               <a href={source("r5-mobility")}>r5-mobility</a> ·{" "}
               <a href={source("r5-nycplayoffs")}>r5-nycplayoffs</a>
             </small>
-          </article>
-          <article className="panel">
+          </Card>
+          <Card className="panel">
             <span className="eyebrow">DC government shutdown</span>
             <h3>The loss grows with every day, so hedge the duration</h3>
             <p>
@@ -200,8 +201,8 @@ export default function Research() {
               the contracts YES with no downtown effect.{" "}
               <a href={source("r8-dcshutdown")}>r8-dcshutdown</a>
             </small>
-          </article>
-          <article className="panel">
+          </Card>
+          <Card className="panel">
             <span className="eyebrow">Texas heat</span>
             <h3>+$32 a day on the power bill, every year</h3>
             <p>
@@ -214,8 +215,8 @@ export default function Research() {
               The hedge is real but modest: it trims 4–6% of the month’s swing.{" "}
               <a href={source("r4-ercot")}>r4-ercot</a>
             </small>
-          </article>
-          <article className="panel">
+          </Card>
+          <Card className="panel">
             <span className="eyebrow">Rain</span>
             <h3>Real, replicated, and small</h3>
             <p>
@@ -232,7 +233,7 @@ export default function Research() {
               <a href={source("r2-mta")}>r2-mta</a> ·{" "}
               <a href={source("r2-places")}>r2-places</a>
             </small>
-          </article>
+          </Card>
         </div>
       </section>
 
@@ -242,13 +243,13 @@ export default function Research() {
         </h2>
         <div className="research-grid">
           {DECLINED.map((row) => (
-            <article className="panel declined-card" key={row.title}>
+            <Card className="panel declined-card" key={row.title}>
               <h3>{row.title}</h3>
               <p>{row.body}</p>
               <small>
                 <a href={source(row.dir)}>{row.dir}</a>
               </small>
-            </article>
+            </Card>
           ))}
         </div>
       </section>

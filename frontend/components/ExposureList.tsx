@@ -21,21 +21,21 @@ export function ExposureBar({
         x2={position("0", domain)}
         y1="0"
         y2="12"
-        stroke="#909d96"
+        stroke="#7b8981"
       />
       <line
         x1={position(exposure.ci90[0], domain)}
         x2={position(exposure.ci90[1], domain)}
         y1="6"
         y2="6"
-        stroke="#247153"
+        stroke="#1f5c45"
         strokeWidth="2"
       />
       <circle
         cx={position(exposure.effect_usd, domain)}
         cy="6"
         r="2"
-        fill="#153f31"
+        fill="#143f2f"
       />
     </svg>
   );

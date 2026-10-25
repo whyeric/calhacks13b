@@ -11,6 +11,8 @@ import { label } from "@/lib/labels";
 import { apiPost } from "@/lib/api";
 import { EstimatedBadge } from "./Header";
 import { weekLabel } from "./BacktestPanel";
+import { Button } from "@/components/ui/button";
+import { Stamp } from "@/components/ui/stamp";
 
 const SIMULATED_NOTE =
   "settlements and the bank statement are simulated from real market results";
@@ -41,9 +43,11 @@ function EntryRow({ entry }: { entry: LedgerEntry }) {
       </td>
       <td>
         {entry.simulated ? (
-          <span className="badge simulated">Simulated</span>
+          <Stamp ink="violet" tilt="left" className="badge simulated">
+            Simulated
+          </Stamp>
         ) : (
-          <span className="badge">Booked on approval</span>
+          <Stamp className="badge">Booked on approval</Stamp>
         )}
       </td>
     </tr>
@@ -79,9 +83,9 @@ export function ReconcilePanel({
       <div className="section-heading">
         <h3>Three-way check</h3>
         <EstimatedBadge kind="simulated" note="bank statement" />
-        <button onClick={run} disabled={pending}>
+        <Button variant="outline" onClick={run} disabled={pending}>
           {pending ? "Checking…" : "Run reconciliation"}
-        </button>
+        </Button>
       </div>
       {error && <p role="alert">{error}</p>}
       {!reconciliation ? (

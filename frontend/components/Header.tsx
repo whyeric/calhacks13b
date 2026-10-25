@@ -2,6 +2,14 @@ import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
 import type { Business } from "@/lib/types";
 import { fmtUsd } from "@/lib/format";
+import { Button } from "@/components/ui/button";
+import { Stamp } from "@/components/ui/stamp";
+
+const INK = { real: "green", estimated: "amber", simulated: "violet" } as const;
+// A negative figure is written in red ink. Reads the formatted sign only; no math.
+const inkFor = (value: string) =>
+  String(value).trim().startsWith("-") ? "negative" : undefined;
+
 export function EstimatedBadge({
   kind,
   note,
@@ -10,14 +18,14 @@ export function EstimatedBadge({
   note?: string;
 }) {
   return (
-    <span className={`badge ${kind}`} title={note}>
+    <Stamp ink={INK[kind]} className={`badge ${kind}`} title={note}>
       {kind === "real"
         ? "Real"
         : kind === "estimated"
           ? "Estimated"
           : "Simulated"}
       {note && <span> · {note}</span>}
-    </span>
+    </Stamp>
   );
 }
 export function Header({
@@ -63,7 +71,9 @@ export function Header({
           ))}
         </select>
         {business?.uploaded ? (
-          <span className="badge uploaded">Uploaded · sample</span>
+          <Stamp ink="blue" className="badge uploaded">
+            Uploaded · sample
+          </Stamp>
         ) : (
           business && (
             <EstimatedBadge
@@ -77,30 +87,42 @@ export function Header({
         <dl className="budget">
           <div>
             <dt>Weekly budget</dt>
-            <dd>{fmtUsd(business.budget.budget)}</dd>
+            <dd className={inkFor(String(business.budget.budget))}>
+              {fmtUsd(business.budget.budget)}
+            </dd>
           </div>
           <div>
             <dt>Spent</dt>
-            <dd>{fmtUsd(business.budget.spent)}</dd>
+            <dd className={inkFor(String(business.budget.spent))}>
+              {fmtUsd(business.budget.spent)}
+            </dd>
           </div>
           <div>
             <dt>Pending</dt>
-            <dd>{fmtUsd(business.budget.pending)}</dd>
+            <dd className={inkFor(String(business.budget.pending))}>
+              {fmtUsd(business.budget.pending)}
+            </dd>
           </div>
           <div>
             <dt>Remaining</dt>
-            <dd>{fmtUsd(business.budget.remaining)}</dd>
+            <dd className={inkFor(String(business.budget.remaining))}>
+              {fmtUsd(business.budget.remaining)}
+            </dd>
           </div>
         </dl>
       )}
-      {onUpload && <button onClick={onUpload}>Upload your revenue</button>}
-      <button
+      {onUpload && (
+        <Button variant="outline" onClick={onUpload}>
+          Upload your revenue
+        </Button>
+      )}
+      <Button
         className="primary"
         onClick={onRun}
         disabled={running || !business || business.scripted}
       >
         {running ? "Running…" : "Run desk →"}
-      </button>
+      </Button>
     </header>
   );
 }

@@ -5,6 +5,9 @@ import { fmtUsd } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { chartSeries } from "@/lib/chartScale";
 import { EstimatedBadge } from "./Header";
+import { Button } from "@/components/ui/button";
+import { Stamp } from "@/components/ui/stamp";
+import { LEDGER, PENCIL } from "@/lib/inks";
 
 // Stats such as reduction_pct are plain numbers from the API; shown verbatim.
 const pct = (value: number) => `${value}%`;
@@ -27,15 +30,22 @@ export function BacktestHeadline({ data }: { data: Backtest }) {
 }
 // priced_real_pct is a fraction of hedged days (0..1), per the backtest contract.
 const share = (fraction: number) =>
-  fraction.toLocaleString("en-US", { style: "percent", maximumFractionDigits: 1 });
+  fraction.toLocaleString("en-US", {
+    style: "percent",
+    maximumFractionDigits: 1,
+  });
 export function PricingLabel({ data }: { data: Backtest }) {
   if (data.priced_real_pct >= 1)
-    return <span className="badge real">Priced from real Kalshi prices</span>;
+    return (
+      <Stamp ink="green" className="badge real">
+        Priced from real Kalshi prices
+      </Stamp>
+    );
   return (
-    <span className="badge estimated">
+    <Stamp ink="amber" className="badge estimated">
       {share(data.priced_real_pct)} priced from real Kalshi prices · the rest
       frequency-priced
-    </span>
+    </Stamp>
   );
 }
 export function MetricsStrip({ data }: { data: Backtest }) {
@@ -93,12 +103,12 @@ export function BacktestPanel({ data }: { data: Backtest }) {
         <div className="backtest-chart" aria-hidden="true">
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={series} accessibilityLayer={false}>
-              <XAxis dataKey="label" tick={{ fontSize: 11 }} />
+              <XAxis dataKey="label" tick={{ fontSize: 10 }} minTickGap={24} />
               <YAxis hide domain={["auto", "auto"]} />
               <Line
                 dataKey="unhedged"
                 name="Unhedged"
-                stroke="#9aa99e"
+                stroke={PENCIL}
                 strokeWidth={2}
                 dot={false}
                 isAnimationActive={false}
@@ -106,7 +116,7 @@ export function BacktestPanel({ data }: { data: Backtest }) {
               <Line
                 dataKey="hedged"
                 name="Hedged"
-                stroke="#247153"
+                stroke={LEDGER}
                 strokeWidth={3}
                 dot={false}
                 isAnimationActive={false}
@@ -124,9 +134,9 @@ export function BacktestPanel({ data }: { data: Backtest }) {
                 {fmtUsd(row.total_premium)} premiums
               </span>
               {row.ineffective && (
-                <span className="badge declined">
+                <Stamp ink="red" className="badge declined">
                   Ineffective · under 10% reduction
-                </span>
+                </Stamp>
               )}
             </li>
           ))}
@@ -166,7 +176,9 @@ export function BacktestNotReady({ retry }: { retry: () => void }) {
         <strong>No backtest yet.</strong> The desk has not replayed last season
         for this business, so there are no before-and-after numbers to show.
       </p>
-      <button onClick={retry}>Check again</button>
+      <Button variant="outline" onClick={retry}>
+        Check again
+      </Button>
     </div>
   );
 }
