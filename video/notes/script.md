@@ -30,8 +30,8 @@ Times are from the recorded VO (`assets/vo/user.m4a`, synced with `vo-sync.py --
 |---|---|---|---|---|---|
 | **Hook** | | | | | |
 | S1 | 0.0–3.9 | Rain on a Saturday empties the shop. | **Rain.** · on a Saturday | Graphic: storefront in rain, OPEN → CLOSED | — |
-| S2 | 3.9–8.1 | A home game could crowd the street, or it might not. | **Game night.** · Or it might not. | Graphic: arena lights, crowd fills then drains | — |
-| S3 | 8.1–13.4 | Either way, as an owner, your week swings, and you can't plan around it. | **Revenue swings.** · Daily revenue · illustrative | Graphic: illustrative revenue line, next week as "?" | — |
+| S2 | 3.9–8.1 | A home game could crowd the street, or it might not. | **Game night.** · Packed street, or empty tables? · Or it might not. | Graphic: arena lights, crowd fills then drains | — |
+| S3 | 8.1–13.4 | Either way, as an owner, your week swings, and you can't plan around it. | Small-business owners: your week **swings** · Daily revenue · illustrative | Graphic: illustrative revenue line, next week as "?" | — |
 | **Principles** | | | | | |
 | S4 | 13.4–24.9 | Offset is built on four principles. Measured, not guessed. Built for steady income. The owner's call, every time. And interpretable, human-facing. | **Built on four principles** | Shield + 2×2 cards, all four held; each number lights as it's named | — (slide wording) |
 | **What Offset does** | | | | | |

@@ -95,9 +95,9 @@ export default {
       });
     });
 
-    const title = caption(k, "Revenue *swings.*", at("either") + 0.2, null, { cls: "section abs" });
-    Object.assign(title.style, { left: "160px", top: "120px", fontSize: "104px", lineHeight: "112px" });
-    const sw = title.querySelectorAll(".w")[1];
+    const title = caption(k, "Small-business owners: your week *swings*", at("either") + 0.2, null, { cls: "section abs" });
+    Object.assign(title.style, { left: "160px", top: "150px", fontSize: "76px", lineHeight: "84px", whiteSpace: "nowrap" });
+    const sw = title.querySelectorAll(".w")[4];   // "swings" lurches on the word
     sw.style.transformOrigin = "0% 80%";
     k.tween(sw, { rotate: [0, -2.5] }, { at: at("swings"), dur: 0.25, ease: "move" });
     k.tween(sw, { rotate: [-2.5, 0] }, { at: at("swings") + 0.25, dur: 0.6, ease: "move" });

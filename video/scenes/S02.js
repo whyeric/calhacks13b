@@ -86,10 +86,14 @@ export default {
 
     const title = caption(k, "Game night.", at("home"), null, { cls: "hero abs", wordStagger: 0.09 });
     Object.assign(title.style, { left: "160px", top: "400px", fontSize: "136px", lineHeight: "1", color: "#f3f5ef" });
+    // A small second line under the title, landing with "crowd the street".
+    const line2 = k.el("div", "abs", "Packed street, or empty tables?");
+    Object.assign(line2.style, { left: "166px", top: "556px", font: "500 36px/44px var(--sans)", color: "var(--paper)", opacity: 0 });
+    k.enter(line2, at("crowd") - 0.1, { y: 10 });
     const sub = k.el("div", "abs", "Or it might not.");
-    Object.assign(sub.style, { left: "166px", top: "566px", font: "400 italic 64px/1.1 var(--serif)", color: "var(--muted-d)" });
+    Object.assign(sub.style, { left: "166px", top: "624px", font: "400 italic 64px/1.1 var(--serif)", color: "var(--muted-d)" });
     k.enter(sub, at("might") - 0.12, { y: 10 });
-    k.exit(title, k.dur - 0.3, { dur: 0.3 }); k.exit(sub, k.dur - 0.3, { dur: 0.3 });
+    k.exit(title, k.dur - 0.3, { dur: 0.3 }); k.exit(line2, k.dur - 0.3, { dur: 0.3 }); k.exit(sub, k.dur - 0.3, { dur: 0.3 });
 
     const Cam = { s: 1 };
     k.tween(Cam, { s: [1.0, 1.06] }, { at: 0, dur: k.dur, ease: "linear" });
