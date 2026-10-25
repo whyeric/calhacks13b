@@ -532,7 +532,7 @@ function paced(t: number): number {
   }
   return 1;
 }
-function RunningBar({
+export function RunningBar({
   label,
   elapsed,
   total,

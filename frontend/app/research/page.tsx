@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 import {
   DECLINED,
   FINDINGS,
@@ -10,8 +11,8 @@ import {
 import { barSpan, position } from "@/lib/chartScale";
 
 export const metadata: Metadata = {
-  title: "Why this works · Hedge Desk",
-  description: "What the Hedge Desk research found, and what it declined",
+  title: "Why this works · Offset",
+  description: "What the Offset research found, and what it declined",
 };
 
 const DOMAIN: [number, number] = [-30, 130];
@@ -47,11 +48,9 @@ export default function Research() {
     <main className="research">
       <header>
         <div className="brand">
-          <span className="brand-icon" aria-hidden="true">
-            H
-          </span>
+          <BrandMark />
           <div>
-            <h1>Hedge Desk</h1>
+            <h1>Offset</h1>
             <p>Why this works</p>
           </div>
         </div>
