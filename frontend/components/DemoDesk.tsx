@@ -1,8 +1,12 @@
 "use client";
-// "Upload your revenue": the drawer POSTs the CSV to /research and the report
-// renders the response (docs/RESEARCH_CONTRACT.md). If the API is unreachable
-// it falls back to the precomputed sample report, labeled as such (I6).
-// "Send to the desk" is still scripted (lib/demoScript.ts).
+// "Upload your revenue": the report is LIVE (POST /research runs the protocol on the uploaded
+// CSV; nothing is stored). Connecting QuickBooks Online is the primary path: the backend pulls
+// daily income and commitments from the books and runs the same protocol
+// (POST /integrations/quickbooks/research), and the same report view renders it. A spinner shows
+// while the request runs (no staged delay). If an upload's request fails (anything but a 422,
+// whose message is shown), the precomputed sample report is shown, labeled (I6). The hedge card
+// after "Send to the desk" is scripted (fixed market and price, labeled) but sized from the live
+// report (`report.demo_hedge`). Client-only business; works in live and mock mode.
 import {
   useCallback,
   useEffect,
@@ -11,8 +15,17 @@ import {
   type FormEvent,
 } from "react";
 import Link from "next/link";
-import type { Business, LogEntry } from "@/lib/types";
-import { ApiError, apiUpload } from "@/lib/api";
+import type {
+  Business,
+  CommitmentLine,
+  Commitments,
+  InventoryLine,
+  LogEntry,
+  QuickBooksConnect,
+  QuickBooksResearch,
+  QuickBooksStatus,
+  ResearchReport,
+} from "@/lib/types";
 import {
   DEMO_BUDGETS,
   DEMO_DEFAULTS,
@@ -20,94 +33,191 @@ import {
   DEMO_ID,
   DEMO_KINDS,
   DEMO_SAMPLE,
-  FOREST_DOMAIN,
+  PRECOMPUTED_CARD,
   PRECOMPUTED_LABEL,
-  PRECOMPUTED_RESEARCH,
+  PRECOMPUTED_REPORT,
   PRIVACY_NOTE,
-  canSend,
   csvSummary,
   demoBusiness,
   demoLog,
-  liveResearch,
+  liveCard,
   parseRevenueCsv,
   type DemoHedgeStatus,
+  type HedgeCardView,
   type ParsedCsv,
-  type Research,
-  type ResearchResponse,
-  type ResearchRow,
 } from "@/lib/demoScript";
-import { columnSpan, position, progressPercent } from "@/lib/chartScale";
+import {
+  columnSpan,
+  forestAxis,
+  position,
+  progressPercent,
+  tickLabel,
+} from "@/lib/chartScale";
 import { fmtUsd } from "@/lib/format";
+import {
+  ApiError,
+  connectQuickBooks,
+  disconnectQuickBooks,
+  getQuickBooksStatus,
+  postQuickBooksResearch,
+  postResearch,
+} from "@/lib/api";
+import {
+  QBO_NAME,
+  QBO_RETURN_ERROR,
+  byDueDate,
+  fmtQty,
+  quickBooksErrorText,
+  quickBooksSummary,
+} from "@/lib/quickbooks";
+import {
+  periodLabel,
+  reportView,
+  type EstimateView,
+  type ReportView,
+  type ResearchRow,
+} from "@/lib/researchView";
 import { Drawer } from "./ChatDrawer";
 import { DecisionLog } from "./DecisionLog";
 
-export type DemoUpload = {
+export type CsvUpload = {
   name: string;
   kind: string;
   csv: ParsedCsv;
-  research: Research;
+  text: string;
 };
+// Connected books: the backend pulls the revenue itself, so there is no file.
+export type QuickBooksUpload = {
+  name: string;
+  kind: string;
+  source: "quickbooks";
+};
+export type DemoUpload = CsvUpload | QuickBooksUpload;
+const isQuickBooks = (u: DemoUpload): u is QuickBooksUpload => "source" in u;
 type HedgeState = { status: "sending" | DemoHedgeStatus; startedAt: number };
-// How long the scripted hedge pricing takes on screen.
+type ResearchState =
+  | { report: ResearchReport; quickbooks?: QuickBooksResearch }
+  | { precomputed: true } // the request failed: show the labeled sample report
+  | { error: string };
+// A 422 is the owner's file (show its message); anything else falls back to the sample report.
+const isRejected = (err: unknown) => err instanceof ApiError && err.status === 422;
+// The card for the current result: sized from the live report, or the precomputed one.
+export function cardFor(result: ResearchState | null): HedgeCardView | null {
+  if (!result || "error" in result) return null;
+  if ("precomputed" in result) return PRECOMPUTED_CARD;
+  return result.report.demo_hedge ? liveCard(result.report.demo_hedge) : null;
+}
+export type ResearchFn = (csv: string, name: string) => Promise<ResearchReport>;
+export type QuickBooksResearchFn = (name: string) => Promise<QuickBooksResearch>;
+const liveResearch: ResearchFn = (csv, name) =>
+  postResearch<ResearchReport>(csv, name);
+const liveQuickBooksResearch: QuickBooksResearchFn = (name) =>
+  postQuickBooksResearch<QuickBooksResearch>(name);
+// How long the (scripted) hedge pricing takes.
 export const SEND_MS = 2600;
 
 // --- State (lives in the page so switching businesses keeps the demo) -------
-export function useDemo() {
+export function useDemo(
+  research: ResearchFn = liveResearch,
+  quickBooksResearch: QuickBooksResearchFn = liveQuickBooksResearch,
+) {
   const [upload, setUpload] = useState<DemoUpload | null>(null);
+  const [result, setResult] = useState<ResearchState | null>(null);
   const [hedge, setHedge] = useState<HedgeState | null>(null);
   const [log, setLog] = useState<LogEntry[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const runId = useRef(0);
   useEffect(
     () => () => {
       if (timer.current) clearTimeout(timer.current);
     },
     [],
   );
-  const start = useCallback((next: DemoUpload) => {
-    if (timer.current) clearTimeout(timer.current);
-    setUpload(next);
-    setHedge(null);
-    setLog([]);
-  }, []);
+  const start = useCallback(
+    (next: DemoUpload) => {
+      if (timer.current) clearTimeout(timer.current);
+      const id = ++runId.current;
+      setUpload(next);
+      setResult(null);
+      setHedge(null);
+      setLog([]);
+      const run: Promise<ResearchState> = isQuickBooks(next)
+        ? quickBooksResearch(next.name).then((quickbooks) => ({
+            report: quickbooks.report,
+            quickbooks,
+          }))
+        : research(next.text, next.name).then((report) => ({ report }));
+      run.then(
+        (state) => {
+          if (runId.current === id) setResult(state);
+        },
+        (err: unknown) => {
+          if (runId.current !== id) return;
+          if (!isQuickBooks(next) && !isRejected(err))
+            setResult({ precomputed: true });
+          else
+            setResult({
+              error: isQuickBooks(next)
+                ? quickBooksErrorText(err, "The analysis failed. Please retry.")
+                : err instanceof Error
+                  ? err.message
+                  : "The analysis failed. Please retry.",
+            });
+        },
+      );
+    },
+    [research, quickBooksResearch],
+  );
   const remove = useCallback(() => {
     if (timer.current) clearTimeout(timer.current);
+    runId.current++;
     setUpload(null);
+    setResult(null);
     setHedge(null);
     setLog([]);
   }, []);
+  const card = cardFor(result);
   const send = useCallback(() => {
-    if (!upload) return;
+    if (!upload || !card) return;
     setHedge({ status: "sending", startedAt: Date.now() });
     timer.current = setTimeout(() => {
       setHedge({ status: "proposed", startedAt: Date.now() });
-      setLog((rows) => [...rows, demoLog("proposal", upload.name)]);
+      setLog((rows) => [...rows, demoLog("proposal", upload.name, card)]);
     }, SEND_MS);
-  }, [upload]);
+  }, [upload, card]);
   const decide = useCallback(
     (approved: boolean) => {
-      if (!upload) return;
+      if (!upload || !card) return;
       setHedge({
         status: approved ? "approved" : "rejected",
         startedAt: Date.now(),
       });
       setLog((rows) => [
         ...rows,
-        demoLog(approved ? "approval" : "rejection", upload.name),
+        demoLog(approved ? "approval" : "rejection", upload.name, card),
       ]);
     },
-    [upload],
+    [upload, card],
   );
+  const budgets = card?.budgets ?? DEMO_BUDGETS;
   const budget =
     hedge?.status === "proposed"
-      ? DEMO_BUDGETS.pending
+      ? budgets.pending
       : hedge?.status === "approved"
-        ? DEMO_BUDGETS.approved
-        : DEMO_BUDGETS.open;
+        ? budgets.approved
+        : budgets.open;
   const business: Business | null = upload
-    ? demoBusiness(upload.name, budget)
+    ? isQuickBooks(upload)
+      ? {
+          ...demoBusiness(upload.name, budget),
+          revenue_source: `${QBO_NAME} (researched live, not stored)`,
+        }
+      : demoBusiness(upload.name, budget)
     : null;
   return {
     upload,
+    result,
+    card,
     hedge,
     log,
     business,
@@ -129,29 +239,184 @@ async function readText(file: File): Promise<string> {
     reader.readAsText(file);
   });
 }
+// --- QuickBooks Online: the primary path ("integrations, not uploads") --------
+export type QuickBooksReturn = "connected" | "error" | null;
+export function QuickBooksConnectCard({
+  open,
+  returned = null,
+  onPull,
+}: {
+  open: boolean;
+  /** `?qbo=` from the OAuth callback redirect, if the page loaded with one. */
+  returned?: QuickBooksReturn;
+  onPull: (status: QuickBooksStatus) => void;
+}) {
+  const [status, setStatus] = useState<QuickBooksStatus | null>(null);
+  const [busy, setBusy] = useState<
+    "loading" | "connecting" | "redirecting" | "disconnecting" | null
+  >(null);
+  const [error, setError] = useState("");
+  // Fetch the connection each time the drawer opens (also after the OAuth redirect).
+  useEffect(() => {
+    if (!open) return;
+    let live = true;
+    setBusy("loading");
+    getQuickBooksStatus<QuickBooksStatus>().then(
+      (next) => {
+        if (!live) return;
+        setStatus(next);
+        setBusy(null);
+      },
+      (err: unknown) => {
+        if (!live) return;
+        setBusy(null);
+        // Quiet unless the owner just came back from connecting.
+        if (returned === "connected")
+          setError(
+            quickBooksErrorText(err, "We couldn’t load your QuickBooks connection."),
+          );
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, [open, returned]);
+  async function connect() {
+    setBusy("connecting");
+    setError("");
+    try {
+      const res = await connectQuickBooks<QuickBooksConnect>();
+      if (res.authorize_url) {
+        // Live mode: Intuit's consent page; the callback redirects back to /?qbo=…
+        setBusy("redirecting");
+        window.location.assign(res.authorize_url);
+        return;
+      }
+      setStatus(res.status);
+    } catch (err) {
+      setError(quickBooksErrorText(err, "QuickBooks didn’t connect. Please retry."));
+    }
+    setBusy(null);
+  }
+  async function disconnect() {
+    setBusy("disconnecting");
+    setError("");
+    try {
+      setStatus(await disconnectQuickBooks<QuickBooksStatus>());
+    } catch (err) {
+      setError(quickBooksErrorText(err, "QuickBooks didn’t disconnect. Please retry."));
+    }
+    setBusy(null);
+  }
+  const connected = !!status?.connected;
+  const shownError =
+    error || (returned === "error" && !connected ? QBO_RETURN_ERROR : "");
+  return (
+    <section
+      className="qbo-connect"
+      aria-label="QuickBooks Online"
+      aria-live="polite"
+      data-testid="qbo-connect"
+    >
+      <div className="row">
+        <span className="eyebrow">Connect your books</span>
+        {status && (
+          <span className="badge" data-testid="qbo-mode">
+            {status.mode === "demo" ? "Demo mode" : "Live"}
+          </span>
+        )}
+      </div>
+      {connected && status ? (
+        <>
+          <p className="qbo-company">
+            <span className="qbo-dot" aria-hidden="true" />
+            <span>
+              <strong>{status.company_name ?? "Your QuickBooks company"}</strong>
+              <small>
+                Connected to {QBO_NAME}
+                {status.connected_at && ` · since ${status.connected_at.slice(0, 10)}`}
+              </small>
+            </span>
+          </p>
+          {status.synthetic && (
+            <p className="badge synthetic" data-testid="qbo-synthetic">
+              Synthetic demo data: a fictional company, not real books
+            </p>
+          )}
+          <button
+            className="primary"
+            type="button"
+            disabled={busy !== null}
+            onClick={() => onPull(status)}
+          >
+            Pull revenue and research
+          </button>
+          <button
+            className="link-button"
+            type="button"
+            disabled={busy !== null}
+            onClick={disconnect}
+          >
+            {busy === "disconnecting" ? "Disconnecting…" : "Disconnect"}
+          </button>
+        </>
+      ) : (
+        <>
+          <p>
+            Connect {QBO_NAME} and the desk reads your daily income, plus what
+            you’re already committed to: open purchase orders, unpaid bills,
+            pending estimates and inventory. Read-only.
+          </p>
+          {status?.mode === "demo" && (
+            <p className="muted upload-note">
+              Demo mode connects a synthetic company (Hudson Bike Co.).
+            </p>
+          )}
+          <button
+            className="primary"
+            type="button"
+            disabled={busy !== null && busy !== "loading"}
+            onClick={connect}
+          >
+            {busy === "connecting"
+              ? "Connecting…"
+              : busy === "redirecting"
+                ? "Opening QuickBooks…"
+                : "Connect QuickBooks"}
+          </button>
+        </>
+      )}
+      {shownError && (
+        <p role="alert" className="field-error">
+          {shownError}
+        </p>
+      )}
+    </section>
+  );
+}
+
 export function DemoUploadDrawer({
   open,
   onClose,
   onStart,
+  quickBooksReturn = null,
 }: {
   open: boolean;
   onClose: () => void;
   onStart: (upload: DemoUpload) => void;
+  quickBooksReturn?: QuickBooksReturn;
 }) {
   const [name, setName] = useState(DEMO_DEFAULTS.name);
   const [kind, setKind] = useState(DEMO_DEFAULTS.kind);
-  const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState("");
   const [csv, setCsv] = useState<ParsedCsv | null>(null);
+  const [text, setText] = useState("");
   const [error, setError] = useState("");
-  const [pending, setPending] = useState(false);
-  // Only the latest request may finish (a new pick supersedes an old one).
-  const request = useRef(0);
-  function load(picked: File, text: string) {
-    const parsed = parseRevenueCsv(text);
-    request.current++;
-    setPending(false);
-    setFile(picked);
+  function load(label: string, body: string) {
+    const parsed = parseRevenueCsv(body);
+    setFileName(label);
     setCsv(parsed);
+    setText(body);
     setError(
       parsed
         ? ""
@@ -161,7 +426,7 @@ export function DemoUploadDrawer({
   async function pick(file: File | undefined) {
     if (!file) return;
     try {
-      load(file, await readText(file));
+      load(file.name, await readText(file));
     } catch {
       setError("We couldn't read that file.");
     }
@@ -170,47 +435,17 @@ export function DemoUploadDrawer({
     try {
       const res = await fetch(DEMO_SAMPLE.href);
       if (!res.ok) throw new Error();
-      const text = await res.text();
-      load(new File([text], DEMO_SAMPLE.file, { type: "text/csv" }), text);
+      load(DEMO_SAMPLE.file, await res.text());
     } catch {
       setError("The sample file is unavailable. Download it and pick it.");
     }
   }
   const trimmed = name.trim();
-  const ready = !!trimmed && trimmed.length <= 60 && !!csv && !!file;
-  async function submit(e: FormEvent) {
+  const ready = !!trimmed && trimmed.length <= 60 && !!csv;
+  function submit(e: FormEvent) {
     e.preventDefault();
-    if (!ready || !csv || !file || pending) return;
-    const id = ++request.current;
-    setPending(true);
-    setError("");
-    const form = new FormData();
-    form.append("file", file);
-    form.append("name", trimmed);
-    form.append("kind", kind);
-    let next: DemoUpload | null = null;
-    try {
-      const res = await apiUpload<ResearchResponse>("/research", form);
-      next = {
-        name: trimmed,
-        kind,
-        csv: { rows: res.n_days, first: res.first, last: res.last },
-        research: liveResearch(res),
-      };
-    } catch (err) {
-      if (id !== request.current) return;
-      if (err instanceof ApiError && err.status === 422) {
-        // The file is the problem: say so plainly and let them pick another.
-        setError(err.message);
-        setPending(false);
-        return;
-      }
-      // Unreachable or broken API: the labeled precomputed report (I6).
-      next = { name: trimmed, kind, csv, research: PRECOMPUTED_RESEARCH };
-    }
-    if (id !== request.current) return;
-    setPending(false);
-    onStart(next);
+    if (!ready || !csv) return;
+    onStart({ name: trimmed, kind, csv, text });
   }
   return (
     <Drawer title="Upload your revenue" open={open} onClose={onClose}>
@@ -218,6 +453,18 @@ export function DemoUploadDrawer({
         Add your daily revenue and the desk will test which weather and game
         days really move it.
       </p>
+      <QuickBooksConnectCard
+        open={open}
+        returned={quickBooksReturn}
+        onPull={(status) =>
+          onStart({
+            name: status.company_name ?? "QuickBooks company",
+            kind,
+            source: "quickbooks",
+          })
+        }
+      />
+      <p className="eyebrow upload-or">Or upload a CSV</p>
       <form className="upload-form" onSubmit={submit}>
         <label htmlFor="upload-name">Business name</label>
         <input
@@ -245,7 +492,7 @@ export function DemoUploadDrawer({
         />
         {csv && (
           <p className="upload-parsed" role="status">
-            <strong>{file?.name}</strong> · {csvSummary(csv)}
+            <strong>{fileName}</strong> · {csvSummary(csv)}
           </p>
         )}
         {error && (
@@ -259,20 +506,8 @@ export function DemoUploadDrawer({
           history or more works best.
         </p>
         <p className="upload-privacy">{PRIVACY_NOTE}</p>
-        <button
-          className="primary"
-          type="submit"
-          disabled={!ready || pending}
-          aria-busy={pending}
-        >
-          {pending ? (
-            <>
-              <span className="step-icon spinner" aria-hidden="true" />{" "}
-              Researching…
-            </>
-          ) : (
-            "Upload and research"
-          )}
+        <button className="primary" type="submit" disabled={!ready}>
+          Upload and research
         </button>
       </form>
       <div className="upload-samples">
@@ -290,7 +525,7 @@ export function DemoUploadDrawer({
   );
 }
 
-// --- Progress (scripted hedge pricing) ---------------------------------------
+// --- Progress -----------------------------------------------------------------
 // Uneven pace (fast, stall, catch up) so the bar reads like real work.
 const PACE: [number, number][] = [
   [0, 0], [0.1, 0.16], [0.24, 0.27], [0.36, 0.31], [0.52, 0.55],
@@ -338,11 +573,20 @@ export function RunningBar({
   );
 }
 
-// --- Report --------------------------------------------------------------------
-// Forest plot: $/day effect with 90% interval, 2024 (grey) over 2025–26 (green).
+// --- Report (live) ---------------------------------------------------------------
+// Forest plot: $/day effect with 90% interval, training year (grey) over unseen (green).
 const FW = 240; // SVG width units
-const fx = (value: string) => (position(value, FOREST_DOMAIN) / 100) * FW;
-function Forest({ row }: { row: ResearchRow }) {
+type Axis = ReturnType<typeof forestAxis>;
+function Forest({
+  row,
+  axis,
+  labels,
+}: {
+  row: ResearchRow;
+  axis: Axis;
+  labels: [string, string];
+}) {
+  const fx = (value: string) => (position(value, axis.domain) / 100) * FW;
   const line = (plot: [string, string, string], y: number, cls: string) => (
     <g className={cls}>
       <line x1={fx(plot[1])} x2={fx(plot[2])} y1={y} y2={y} className="whisker" />
@@ -351,33 +595,34 @@ function Forest({ row }: { row: ResearchRow }) {
       <circle cx={fx(plot[0])} cy={y} r={4.5} className="dot" />
     </g>
   );
+  const describe = (e: EstimateView) => (e ? e.text : "not estimable");
   return (
     <svg
       className="forest"
       viewBox={`0 0 ${FW} 34`}
       role="img"
-      aria-label={`${row.label}: 2024 ${row.train.text}; 2025–26 ${row.unseen.text}`}
+      aria-label={`${row.label}: ${labels[0]} ${describe(row.train)}; ${labels[1]} ${describe(row.unseen)}`}
     >
       <line x1={fx("0")} x2={fx("0")} y1={0} y2={34} className="zero" />
-      {line(row.train.plot, 10, "train")}
-      {line(row.unseen.plot, 24, "unseen")}
+      {row.train && line(row.train.plot, 10, "train")}
+      {row.unseen && line(row.unseen.plot, 24, "unseen")}
     </svg>
   );
 }
-function ForestAxis() {
-  const ticks = ["-3000", "-1500", "0", "1500", "3000"];
-  const label = (v: string) => (v === "0" ? "$0" : fmtUsd(v).replace(",000", "k").replace("$1,500", "$1.5k"));
+function ForestAxis({ axis }: { axis: Axis }) {
+  const fx = (value: string) => (position(value, axis.domain) / 100) * FW;
   return (
     <svg className="forest forest-axis" viewBox={`0 0 ${FW} 16`} aria-hidden="true">
-      {ticks.map((v) => (
+      {axis.ticks.map((v) => (
         <text key={v} x={fx(v)} y={11} textAnchor="middle">
-          {label(v)}
+          {tickLabel(v)}
         </text>
       ))}
     </svg>
   );
 }
 function Verdict({ row }: { row: ResearchRow }) {
+  const note = row.verdictNote;
   return (
     <span className="verdict">
       <span
@@ -385,74 +630,84 @@ function Verdict({ row }: { row: ResearchRow }) {
       >
         {row.verdict}
       </span>
-      {row.verdictNote && (
+      {note && (
         <span className="verdict-note">
-          {row.verdict === "FOUND" ? `· ${row.verdictNote}` : row.verdictNote}
+          {row.verdict === "FOUND" ? `· ${note}` : note}
         </span>
       )}
     </span>
   );
 }
+function EstimateCell({ e }: { e: EstimateView }) {
+  if (!e)
+    return (
+      <td>
+        <strong>Not estimable</strong>
+        <small>too few event days</small>
+      </td>
+    );
+  return (
+    <td>
+      <strong>{e.text}</strong>
+      <small>{e.ci}</small>
+      <small>{e.days}</small>
+    </td>
+  );
+}
 export function ResearchTable({
-  rows,
+  view,
   onSend,
   sendState,
 }: {
-  rows: ResearchRow[];
+  view: ReportView;
   onSend?: () => void;
   sendState: HedgeState["status"] | null;
 }) {
+  const [train, unseen] = view.periods;
+  const axis = forestAxis(view.plotMax);
   return (
     <div className="research-scroll">
       <table className="demo-research-table">
         <caption className="sr-only">
-          Each pre-registered risk, tested on 2024 and re-tested on unseen
-          2025–26 data
+          Each pre-registered risk, tested on {train} and re-tested on unseen{" "}
+          {unseen} data
         </caption>
         <thead>
           <tr>
             <th scope="col">Risk</th>
-            <th scope="col">Training year (2024)</th>
-            <th scope="col">Unseen (2025–26)</th>
+            <th scope="col">Training year ({train})</th>
+            <th scope="col">Unseen ({unseen})</th>
             <th scope="col">
               <span className="sr-only">Effect per day, with 90% CI</span>
               <span className="legend-keys" aria-hidden="true">
                 <span className="key train" />
-                2024
+                {train}
                 <span className="key unseen" />
-                2025–26
+                {unseen}
               </span>
-              <ForestAxis />
+              <ForestAxis axis={axis} />
             </th>
             <th scope="col">Placebo</th>
             <th scope="col">Verdict</th>
-            <th scope="col">Kalshi</th>
+            <th scope="col">Contract</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
+          {view.rows.map((row) => (
             <tr key={row.id} data-testid={`research-row-${row.id}`}>
               <th scope="row">
                 {row.label}
                 <small>{row.mechanism}</small>
               </th>
-              <td>
-                <strong>{row.train.text}</strong>
-                <small>{row.train.ci}</small>
-                <small>{row.train.days}</small>
-              </td>
-              <td>
-                <strong>{row.unseen.text}</strong>
-                <small>{row.unseen.ci}</small>
-                <small>{row.unseen.days}</small>
-              </td>
+              <EstimateCell e={row.train} />
+              <EstimateCell e={row.unseen} />
               <td className="forest-cell">
-                <Forest row={row} />
+                <Forest row={row} axis={axis} labels={[train, unseen]} />
               </td>
               <td>{row.placebo}</td>
               <td>
                 <Verdict row={row} />
-                {canSend(row) && onSend && (
+                {row.verdict === "FOUND" && row.sendable && onSend && (
                   <button
                     className="primary send-desk"
                     onClick={onSend}
@@ -466,7 +721,7 @@ export function ResearchTable({
                   </button>
                 )}
               </td>
-              <td className="kalshi-cell">{row.kalshi}</td>
+              <td className="kalshi-cell">{row.venue}</td>
             </tr>
           ))}
         </tbody>
@@ -477,8 +732,7 @@ export function ResearchTable({
 
 // --- Payoff: losses drawn below zero, unhedged (grey) vs hedged net (green) ---
 const PAYOFF_DOMAIN: [number, number] = [-2200, 0];
-function DemoPayoff() {
-  const rows = DEMO_HEDGE.payoff;
+function DemoPayoff({ rows }: { rows: HedgeCardView["payoff"] }) {
   const names = ["It rains", "It stays dry"];
   const W = 320, top = 18, H = 120;
   const zeroY = columnSpan("0", PAYOFF_DOMAIN, top, H).y;
@@ -543,7 +797,9 @@ function DemoPayoff() {
   );
 }
 
-// --- Hedge card -------------------------------------------------------------
+// --- Hedge card: SCRIPTED market and price (lib/demoScript.ts DEMO_HEDGE, labeled on the card),
+// sized from the live report (report.demo_hedge), or the precomputed card in the fallback.
+// TODO(main): live quote — price the FOUND rain row through the desk (POST /research/quote).
 const STATUS_TEXT: Record<DemoHedgeStatus, string> = {
   proposed: "Proposed · only you can approve",
   approved: "Approved by you",
@@ -551,10 +807,14 @@ const STATUS_TEXT: Record<DemoHedgeStatus, string> = {
 };
 export function DemoHedgeCard({
   businessName,
+  card,
+  precomputed = false,
   status,
   onDecide,
 }: {
   businessName: string;
+  card: HedgeCardView;
+  precomputed?: boolean;
   status: DemoHedgeStatus;
   onDecide: (approved: boolean) => void;
 }) {
@@ -564,11 +824,16 @@ export function DemoHedgeCard({
         <span className="eyebrow">Rain protection · {businessName}</span>
         <span className={`chip ${status}`}>{STATUS_TEXT[status]}</span>
       </div>
+      <p className="badge sample" data-testid="demo-hedge-scripted">
+        {precomputed
+          ? `Example hedge (scripted): sized on the precomputed sample report`
+          : "Example hedge (scripted market and price): sized from your report"}
+      </p>
       <h3>{DEMO_HEDGE.title}</h3>
       <p className="muted">{DEMO_HEDGE.ticker}</p>
-      <p className="headline">{DEMO_HEDGE.line}</p>
-      <DemoPayoff />
-      <p>{DEMO_HEDGE.expectedCost}</p>
+      <p className="headline">{card.line}</p>
+      <DemoPayoff rows={card.payoff} />
+      <p>{card.expectedCost}</p>
       <ul className="checks demo-checks">
         {DEMO_HEDGE.checks.map((check) => (
           <li key={check}>
@@ -593,16 +858,152 @@ export function DemoHedgeCard({
   );
 }
 
-// I6: the fallback report is about the sample file, not the upload; say so.
-export function PrecomputedNote({ research }: { research: Research }) {
-  if (research.source !== "precomputed") return null;
+// --- "What you're committed to" (QuickBooks): format only; totals come from the API ---
+function CommitmentList({
+  title,
+  rows,
+  empty,
+}: {
+  title: string;
+  rows: CommitmentLine[];
+  empty: string;
+}) {
   return (
-    <p className="precomputed-note" data-testid="precomputed-note">
-      <span className="badge estimated">{PRECOMPUTED_LABEL}</span> The research
-      service couldn’t be reached, so this is the report for the Hudson Bike
-      Co. sample, not your file.
+    <div className="commitment-list">
+      <h4>
+        {title} <span className="muted">· {rows.length}</span>
+      </h4>
+      {rows.length === 0 ? (
+        <p className="muted">{empty}</p>
+      ) : (
+        <ul aria-label={title}>
+          {byDueDate(rows).map((row) => (
+            <li key={row.id} data-testid={`commitment-${row.id}`}>
+              <span>
+                <strong>{row.counterparty}</strong>
+                <small>{row.description}</small>
+              </span>
+              <span className="commitment-amount">
+                <strong>{fmtUsd(row.amount)}</strong>
+                <small>
+                  {row.due_date ? `due ${row.due_date}` : "no due date"}
+                </small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+function InventoryList({ rows }: { rows: InventoryLine[] }) {
+  return (
+    <div className="commitment-list">
+      <h4>
+        Inventory <span className="muted">· {rows.length}</span>
+      </h4>
+      {rows.length === 0 ? (
+        <p className="muted">No inventory tracked.</p>
+      ) : (
+        <ul aria-label="Inventory">
+          {rows.map((row) => (
+            <li key={row.id} data-testid={`inventory-${row.id}`}>
+              <span>
+                <strong>{row.name}</strong>
+                <small>
+                  {row.sku ? `${row.sku} · ` : ""}
+                  {fmtQty(row.qty_on_hand)} on hand × {fmtUsd(row.unit_cost)}
+                </small>
+              </span>
+              <span className="commitment-amount">
+                <strong>{fmtUsd(row.value)}</strong>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+export function CommitmentsPanel({ commitments }: { commitments: Commitments }) {
+  const c = commitments;
+  return (
+    <section
+      className="commitments"
+      aria-label="What you’re committed to"
+      data-testid="qbo-commitments"
+    >
+      <div className="commitments-head">
+        <h3>What you’re committed to</h3>
+        <span className="muted">
+          From {QBO_NAME}, as of {c.as_of}
+        </span>
+        {c.synthetic && (
+          <span className="badge synthetic">Synthetic demo data</span>
+        )}
+      </div>
+      <dl className="commitment-totals">
+        <div>
+          <dt>Committed spend</dt>
+          <dd data-testid="committed-spend">{fmtUsd(c.committed_spend)}</dd>
+          <small>Open purchase orders and unpaid bills</small>
+        </div>
+        <div>
+          <dt>Booked future sales</dt>
+          <dd data-testid="expected-revenue">{fmtUsd(c.expected_revenue)}</dd>
+          <small>Pending estimates</small>
+        </div>
+        <div>
+          <dt>Inventory value</dt>
+          <dd data-testid="inventory-value">{fmtUsd(c.inventory_value)}</dd>
+          <small>On hand, at cost</small>
+        </div>
+      </dl>
+      <div className="commitment-lists">
+        <CommitmentList
+          title="Open purchase orders"
+          rows={c.purchase_orders}
+          empty="No open purchase orders."
+        />
+        <CommitmentList
+          title="Unpaid bills"
+          rows={c.bills}
+          empty="No unpaid bills."
+        />
+        <CommitmentList
+          title="Pending estimates"
+          rows={c.estimates}
+          empty="No pending estimates."
+        />
+        <InventoryList rows={c.inventory} />
+      </div>
+    </section>
+  );
+}
+
+// --- Waiting and fallback states (shared with the setup wizard) ----------------
+export function Researching({ upload }: { upload: DemoUpload }) {
+  return (
+    <p className="running researching" role="status" aria-live="polite">
+      <span className="step-icon spinner" aria-hidden="true" />
+      <span>Researching your {isQuickBooks(upload) ? "books" : "file"}…</span>
     </p>
   );
+}
+// I6: the fallback report is about the sample file, not the upload; say so.
+export function PrecomputedNote() {
+  return (
+    <p className="precomputed-note" data-testid="research-precomputed">
+      <span className="badge estimated">{PRECOMPUTED_LABEL}</span> The research
+      request failed, so this is the report for the Hudson Bike Co. sample
+      file, computed earlier, not for your file.
+    </p>
+  );
+}
+// The report to render for a result: live, or the labeled precomputed one.
+export function viewFor(result: ResearchState | null): ReportView | null {
+  if (!result || "error" in result) return null;
+  return "precomputed" in result ? PRECOMPUTED_REPORT : reportView(result.report);
 }
 
 // --- The demo business view -------------------------------------------------
@@ -613,9 +1014,14 @@ export function DemoDesk({
   demo: Demo;
   onRemoved: () => void;
 }) {
-  const { upload, hedge } = demo;
-  // Clock: ticks every 50 ms only while the scripted pricing is animating.
+  const { upload, hedge, result, card } = demo;
+  // Clock: ticks every 50 ms only while the (scripted) pricing animates.
   const [now, setNow] = useState(() => Date.now());
+  const report = result && "report" in result ? result.report : null;
+  const precomputed = !!result && "precomputed" in result;
+  const view = viewFor(result);
+  const failed = result && "error" in result ? result.error : null;
+  const books = result && "quickbooks" in result ? result.quickbooks : undefined;
   const ticking = !!upload && hedge?.status === "sending";
   useEffect(() => {
     if (!ticking) return;
@@ -624,7 +1030,6 @@ export function DemoDesk({
     return () => clearInterval(id);
   }, [ticking]);
   if (!upload) return null;
-  const { research } = upload;
   const sendElapsed = hedge ? now - hedge.startedAt : 0;
   return (
     <>
@@ -637,8 +1042,21 @@ export function DemoDesk({
           <div>
             <span className="eyebrow">Research my risks</span>
             <h2>
-              {upload.name} · {csvSummary(upload.csv)}
+              {upload.name} ·{" "}
+              {isQuickBooks(upload)
+                ? books
+                  ? quickBooksSummary(books)
+                  : QBO_NAME
+                : csvSummary(upload.csv)}
             </h2>
+            {books && (
+              <p className="qbo-source" data-testid="qbo-source">
+                {books.synthetic && (
+                  <span className="badge synthetic">Synthetic demo data</span>
+                )}{" "}
+                Revenue: {books.revenue_source}
+              </p>
+            )}
           </div>
           <div className="demo-actions">
             <button
@@ -647,32 +1065,57 @@ export function DemoDesk({
                 onRemoved();
               }}
             >
-              Remove upload
+              {isQuickBooks(upload) ? "Clear report" : "Remove upload"}
             </button>
           </div>
         </div>
-        <div className="demo-report">
-          <PrecomputedNote research={research} />
-          <p className="demo-summary">{research.summary}</p>
-          <ul className="protocol-chips" aria-label="Protocol">
-            {research.chips.map((chip) => (
-              <li key={chip} className="badge">
-                {chip}
-              </li>
-            ))}
-          </ul>
-          <ResearchTable
-            rows={research.rows}
-            onSend={demo.send}
-            sendState={hedge?.status ?? null}
-          />
-          <p className="muted demo-footnote">
-            Effects are $ per day at the training-year average. FOUND means
-            the 2024 effect is clear of zero after correcting for 6 tests,
-            holds the same sign on unseen 2025–26 data, and the 7-day placebo
-            shows nothing. <Link href="/research">How this works</Link>
+        {failed && (
+          <p role="alert" className="field-error">
+            {failed}
           </p>
-        </div>
+        )}
+        {!result && <Researching upload={upload} />}
+        {view && (
+          <div className="demo-report">
+            {precomputed && <PrecomputedNote />}
+            {report && report.notes.length > 0 && (
+              <p className="badge sample" data-testid="research-file-notes">
+                From your {books ? "books" : "file"}: {report.notes.join(" ")}
+              </p>
+            )}
+            <p className="demo-summary">{view.summary}</p>
+            <ul className="protocol-chips" aria-label="Protocol">
+              {view.chips.map((chip) => (
+                <li key={chip} className="badge">
+                  {chip}
+                </li>
+              ))}
+            </ul>
+            <ResearchTable
+              view={view}
+              onSend={card ? demo.send : undefined}
+              sendState={hedge?.status ?? null}
+            />
+            {report && (
+            <p className="muted demo-footnote">
+              Computed live on your {books ? "QuickBooks revenue" : "file"}{" "}
+              against {report.station}:{" "}
+              {report.n_days.toLocaleString("en-US")} days used
+              {report.n_closed_days > 0 &&
+                `, ${report.n_closed_days.toLocaleString("en-US")} zero-revenue days left out`}
+              {report.n_outside_window > 0 &&
+                `, ${report.n_outside_window.toLocaleString("en-US")} days outside the weather record`}
+              . Effects are $ per day at each period’s average. FOUND means the{" "}
+              {periodLabel(report.train)} effect is clear of zero after
+              correcting for {report.hypotheses.length} tests, holds the same
+              sign on unseen {periodLabel(report.holdout)} data, and the 7-day
+              placebo shows nothing.{" "}
+              <Link href="/research">How this works</Link>
+            </p>
+            )}
+            {books && <CommitmentsPanel commitments={books.commitments} />}
+          </div>
+        )}
       </section>
       <div className="demo-grid">
         <section className="hedges-panel" aria-label="Hedge decisions">
@@ -683,9 +1126,11 @@ export function DemoDesk({
             <div className="panel">
               <RunningBar label="Pricing protection…" elapsed={sendElapsed} total={SEND_MS} />
             </div>
-          ) : hedge ? (
+          ) : hedge && card ? (
             <DemoHedgeCard
               businessName={upload.name}
+              card={card}
+              precomputed={precomputed}
               status={hedge.status}
               onDecide={demo.decide}
             />

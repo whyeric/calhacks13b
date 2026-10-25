@@ -23,7 +23,6 @@ ROUTES = {
     ("POST", "/businesses/{business_id}/chat"), ("GET", "/businesses/{business_id}/decisions"),
     ("GET", "/businesses/{business_id}/settings"), ("PUT", "/businesses/{business_id}/settings"),
     ("POST", "/hedges/{hedge_id}/approve"), ("POST", "/hedges/{hedge_id}/reject"),
-    ("POST", "/research"),
 }
 
 

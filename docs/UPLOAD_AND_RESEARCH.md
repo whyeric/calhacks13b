@@ -5,54 +5,56 @@ the desk" flow runs the research protocol **live** on a business's own daily rev
 offers one example file, **Hudson Bike Co.**, a fictional NYC bike-rental shop, but any CSV in the
 right shape works.
 
-> **What's real now.** The report is computed live: the browser posts the CSV to `POST /research`
-> ([RESEARCH_CONTRACT.md](RESEARCH_CONTRACT.md)), the backend runs the protocol
-> (`backend/app/research.py`) and returns the report already formatted; the frontend shows
-> the strings it gets. If the request fails (network or server error), the precomputed Hudson
-> report is shown instead, labeled **"Precomputed on the sample file"**. **Send to the desk** is
-> still scripted.
+Instead of a CSV, the same revenue can come straight from the books: see [QUICKBOOKS.md](QUICKBOOKS.md)
+(QuickBooks Online, with a SYNTHETIC demo company, plus open POs, unpaid bills, estimates and inventory).
+
+> **What's live and what isn't.** The report is computed live: the browser sends the CSV to
+> `POST /research`, the backend runs the protocol (`backend/app/stats/research.py`) and returns
+> the report, with a spinner while it runs. If the request fails (anything but a 422), the
+> precomputed sample report is shown instead, labeled **"Precomputed on the sample file"**. The
+> **Send to the desk** card has a scripted market and price but is **sized from the live report**
+> (`report.demo_hedge`, `backend/app/markets/demo_card.py`). `POST /research/quote` prices the
+> FOUND downside live on Kalshi and Polymarket with the desk's own pipeline (API; the UI doesn't
+> call it yet). Nothing is stored, so there is nothing to approve or book for real.
 
 ---
 
-## 1. What's live and what's scripted
+## 1. What's live and what isn't
 
 | Part | Status |
 |---|---|
-| **The sample file** `hudson_bike_co_daily_revenue.csv` | **Synthetic revenue on real weather.** Hudson Bike Co. is fictional. Its daily revenue is generated, but the weather days it reacts to are the **real NOAA Central Park record** (USW00094728, the same Central Park station Kalshi's NYC weather contracts settle on; since 2026-08-14 Kalshi uses The Weather Company's reading there, so NOAA is a close proxy). The file header says so. |
+| **The sample file** `hudson_bike_co_daily_revenue.csv` | **Synthetic revenue on real weather.** Hudson Bike Co. is fictional. Its daily revenue is generated, but the weather days it reacts to are the **real NOAA Central Park record** (USW00094728, the same Central Park station Kalshi's NYC weather contracts settle on; since 2026-08-14 Kalshi uses The Weather Company's reading there, so NOAA is a close proxy). The file's `#` header lines say so, and the report repeats them ("From your file: …"). |
 | The effects planted in the file | About **−20% on rain days, −28% below 40 °F, and +10% above 80 °F** (from the file header). No game effect is planted. |
-| The upload | **Live.** The browser posts the CSV to `POST /research` (multipart). The backend reads it in memory and stores nothing. |
-| Waiting for the report | A spinner while the request is pending (about a second). No staged delay or progress animation. Claude is not called; the mechanisms are fixed in code before fitting. |
+| The upload | **Live.** The browser reads the row count and date range, then posts the raw CSV to `POST /research`. The backend reads it in memory and stores nothing. |
+| Waiting for the report | A spinner while the request is pending (about a second). No staged delay or progress bar. |
 | **The report** | **Live.** Every number is computed by the protocol on the uploaded file. The summary sentence is templated from the verdicts and carries no numbers. |
-| The fallback | If the request fails for a reason other than a bad file, the precomputed Hudson report (an earlier offline run, below) is shown, labeled "Precomputed on the sample file". A bad file (422) shows its message instead. |
-| "Send to the desk" and the hedge it shows | **Scripted**, offered only on FOUND rows that are sendable (rain). The numbers are hardcoded from a desk calculation on the precomputed rain effect. No hedge is proposed through the backend, and nothing is sent to Kalshi. |
+| The fallback | If the request fails for a reason other than a bad file (network or server error), the precomputed Hudson report (an earlier offline run of the protocol) is shown, labeled "Precomputed on the sample file", with the card sized from it. A bad file (422) shows its message instead. |
+| "Send to the desk" and the hedge it shows | **Scripted market and price, live size.** Offered only on a FOUND, sendable row (rain). Contracts = floor(\|train rain effect\| ÷ $1) (I1); premium = contracts × the card's 33¢ + the Kalshi taker fee (`markets/sizing.taker_fee`). Computed by the backend and sent with the report as `demo_hedge`. |
+| **Live quote** (`POST /research/quote`) | The desk's candidate search on Kalshi and Polymarket, sizing and all decline rules, on the cached books offline. API only for now; not saved, so not approvable; nothing is sent to either venue. |
 
-Because the effects were planted, the report is a **recovery check**: does the protocol find what
-we put in, and reject what we didn't? It isn't evidence about real bike shops.
+Because the effects were planted, the sample's report is a **recovery check**: does the protocol
+find what we put in, and reject what we didn't? It isn't evidence about real bike shops.
 
 ---
 
 ## 2. Running it
 
 1. `make demo`, then open <http://localhost:3000>.
-2. Click **Upload your revenue** and choose `hudson_bike_co_daily_revenue.csv`. A copy is in
-   `frontend/public/samples/`, and the drawer links it; the presenter's copy is in `~/Downloads/`.
-3. Click **Upload and research**; the report appears when the request returns.
-4. Read the report (§3). On the rain row, click **Send to the desk** to see the hedge.
+2. Click **Upload your revenue** and choose a CSV. The sample is in `frontend/public/samples/`, and
+   the drawer can load it directly ("Use the sample file").
+3. Click **Upload and research** and read the report (§3).
+4. On a FOUND rain row, click **Send to the desk** to see the card sized from the report.
 
-The flow works with no network and no API key, like the rest of `make demo`.
+It works with no network and no API key, like the rest of `make demo`.
 
-### The sample file
+### The file
 
-- **Fictional:** Hudson Bike Co. is not a real business.
-- **Synthetic revenue:** the daily revenue is generated.
-- **Real weather:** the weather days are real NOAA Central Park days.
-- **Shape:** 1,004 days, **2024-01-01 to 2026-09-30**, with columns `date,revenue`.
-- **Header:** two `#` comment lines at the top label the file as synthetic.
-
-Any other file works if it has a `date,revenue` header, one row per day, dates inside the weather
-record (2024-01-01 to 2026-09-30) and at least 540 non-zero days. Otherwise the drawer shows the
-422 message (`bad_csv`, `duplicate_dates`, `negative_revenue`, `out_of_window`, `too_short`; see
-[RESEARCH_CONTRACT.md](RESEARCH_CONTRACT.md)).
+- Two columns, one row per day: `date,revenue` (ISO dates). Headers named `day`/`ds` and
+  `sales`/`amount`/`total`/`y` are also accepted; otherwise the first two columns are used.
+  `$` and thousands separators are stripped. Lines starting with `#` are notes.
+- The weather record covers **2024-01-01 to 2026-09-30**. Days outside it are left out, and so are
+  zero-revenue (closed) days; the report counts both.
+- At least **540** usable days are needed: one training year plus enough unseen data.
 
 ### Privacy
 
@@ -61,65 +63,77 @@ is never stored or sent to Kalshi.
 
 ---
 
-## 3. What the protocol found on Hudson Bike Co.
+## 3. The protocol, and what it found on Hudson Bike Co.
 
-### The protocol (`backend/app/research.py`)
+### The protocol (`backend/app/stats/research.py`)
 
 These are the same rules as the hand research in [RESEARCH.md](RESEARCH.md):
 
-- **Model:** log revenue on day of week, year-month fixed effects, US federal holidays and the
-  event flag, HC3 standard errors. The Knicks home game is also controlled when testing a win.
+- **Model:** log revenue on day of week, year-month fixed effects, holidays and the event flag,
+  HC3 standard errors. `knicks_home` is also controlled when testing a Knicks win.
 - **Weather data:** flags come from NOAA Central Park, the Kalshi settlement station.
-- **Train:** 2024.
-- **Holdout:** the unseen 2025–26 data, fitted **independently**, with nothing tuned on it.
+- **Train:** the file's first year (2024 for the sample).
+- **Holdout:** the rest (2025–26), fitted **independently**, with nothing tuned on it.
 - **Corrections:** 90% CIs, and Benjamini–Hochberg at 10% across every hypothesis in the run.
 - **Placebo:** the same flag shifted 7 days later, which must come back not significant (p ≥ 0.10).
-- **Games:** Knicks hypotheses are fitted only on dates the schedule fixture covers (2024-10-22
-  onward), so earlier days aren't miscounted as non-game days.
+- **Games:** Knicks hypotheses are fitted only on dates the schedule fixture covers
+  (2024-10-22 onward), so earlier games aren't miscounted as non-game days.
 - **Dollars:** the % effect (exp(b) − 1) times the period's mean daily revenue.
 - **FOUND** means all of these hold:
+  - at least 10 event days in train;
   - the train interval excludes 0;
   - it survives BH;
-  - the holdout has the same sign, with its own interval excluding 0;
   - the placebo is quiet;
-  - there are at least 10 event days.
+  - the holdout has the same sign, with its own interval excluding 0.
 
-### Results (live run)
+The hypotheses and their mechanisms are fixed in code before any file is fitted (pre-registered).
+The code, not a model, applies every verdict.
+
+### Results on the sample (live run)
 
 | Hypothesis | Train (2024) | Holdout (2025–26) | Verdict |
 |---|---|---|---|
-| **Rain** (≥ 0.01 in) | **−18.3%**: −$1,933.03/day, 90% CI −$2,148.98 to −$1,711.56, 125 rain days | **−20.4%**: −$2,487.69/day | **FOUND**. Placebo p = 0.34. Hedgeable via `KXRAIN` (NYC). |
-| **Cold** (tmax < 40 °F) | **−26.6%** | **−26.4%** | **FOUND** |
+| **Rain** (≥ 0.01 in) | **−18.2%**: −$1,923.43/day, 90% CI −$2,137.76 to −$1,703.67, 125 rain days | **−20.4%**: −$2,488.09/day | **FOUND**. Placebo p = 0.29. Hedgeable. |
+| **Cold** (tmax < 40 °F) | **−26.5%** | **−26.4%** | **FOUND** (no daily contract at a fixed strike) |
 | **Warm** (tmax > 80 °F) | **+10.9%** | **+15.5%** | **FOUND**, as an upside |
 | Hot (tmax > 90 °F) | not distinguishable from zero | | NOT FOUND |
 | Knicks home game | not distinguishable from zero | | NOT FOUND |
 | Knicks win | not distinguishable from zero | | NOT FOUND |
 
-The protocol recovered all three planted effects close to their planted sizes (−20%, −28%, +10%).
-It rejected the hot and game hypotheses, and no game effect was planted. That is the behavior the
-recovery check is looking for.
-
-The verdicts match the earlier, precomputed report (still in `frontend/lib/demoScript.ts` as the
-fallback) exactly; some numbers differ. That run's exact inputs weren't kept. The NOAA fixture has
-125 rain days in 2024 where it counted 124, and the Knicks training fits differ most (live +6.3%
-home game and +4.7% win vs +3.0% and +1.1%), because the live run fits them only from the
-schedule's first date; both stay NOT FOUND on 10–14 game days. The live numbers are the reference
-now; `backend/tests/api/test_research.py` pins the verdicts.
+The protocol recovered all three planted effects close to their planted sizes (−20%, −28%, +10%)
+and rejected the hot and game hypotheses (no game effect was planted). The earlier, hardcoded
+report came from a separate offline run of the same protocol and differs slightly (rain −18.4%,
+−$1,955.68/day on 124 days); that run's exact inputs weren't kept, so the live numbers above are the
+reference now. `backend/tests/stats/test_research.py` pins them.
 
 ### "Send to the desk": rain
 
-The rain row is FOUND and sendable, and maps to Kalshi's NYC daily rain series `KXRAIN` (markets `KXRAIN-<date>-NYC`; the older `KXRAINNYC` series was retired after 2026-07-15), so it can be sent to the desk. The scripted
-hedge is:
+A FOUND rain downside maps to Kalshi's NYC daily rain series `KXRAIN` (markets
+`KXRAIN-<date>-NYC`) and to Polymarket's "Where will it rain" NYC market (both settle at Central
+Park), so the row offers **Send to the desk**, which calls `POST /research/quote`
+(`backend/app/markets/quote.py`) from the API.
 
-| | |
-|---|---|
-| Contracts | **1,955 YES @ 33¢** |
-| Premium | **$675.41** (including a $30.26 fee) |
-| Expected cost | **≈ $64.86** (premium minus expected payout) |
+**The card in the UI.** The card the page shows is scripted (`KXRAIN-26OCT28-NYC`, 33¢, labeled)
+and sized from the report by `backend/app/markets/demo_card.py`: on the sample, the train effect is
+−$1,923.43/day, so **1,923 YES**, a **$29.77** fee and a **$664.36** premium; the expected cost uses
+the train year's rain-day share (125 / 366). The precomputed fallback shows the earlier card
+(1,955 YES, $675.41), sized from the precomputed −$1,955.68/day.
 
-The scripted hedge was sized on the **precomputed** rain effect: 1,955 contracts ≤ −$1,955.68/day ÷
-$1 (I1). The live report measures −$1,933.03/day, so the scripted card no longer matches the live
-exposure; pricing the live effect through the desk is the next step (below). As everywhere else, only the owner can approve, and no order is ever placed.
+**The live quote** (`POST /research/quote`):
+
+1. The protocol re-runs on the same CSV, and the quote's exposure is built from its own train fit
+   (effect, 90% CI, p-value, event days) with the holdout refit as the `unstable` check's input.
+2. Both venues are scanned for the next 8 days; the deepest book within 5¢ on the side we buy is
+   picked, and the card lists every market it scanned.
+3. Sizing caps contracts at the measured exposure ÷ $1 (I1), and all six decline rules run.
+   Rule 4 treats the basis as a full match (the research flags are Central Park days, the station
+   both venues settle on), and rule 3's fair price is the train year's rain-day share.
+
+On the sample with the committed caches (pinned demo clock, Sat 2026-10-24), the quote is
+**1,923 YES on `KXRAIN-26OCT25-NYC` for $20.57**, proposed with every check passing. Polymarket's
+NYC market for the same day was scanned too (YES ask 74¢, 216 shares within 5¢). The low Kalshi
+price is the market's forecast for a dry day, not a bargain, so rule 3 never counts it as one.
+It's a quote: approval and booking need a saved business.
 
 ### Verdict reasons, in plain language
 
@@ -127,47 +141,59 @@ exposure; pricing the live effect through the desk is the next step (below). As 
 |---|---|
 | `thin_support` | Fewer than 10 event days in train. |
 | `not_significant` | The train interval includes zero. |
-| `did_not_replicate` | It showed up on train but not on the unseen data. |
-| `sign_flipped` | The unseen data points the other way. |
 | `failed_bh` | It's significant alone, but not after correcting for how many things were tested. |
 | `placebo_fired` | The week-shifted fake also "found" something. |
-| `no_contract` | It may be real, but no Kalshi contract settles on it. |
+| `did_not_replicate` | It showed up on train but not on the unseen data. |
+| `sign_flipped` | The unseen data points the other way. |
+
+A FOUND row that can't be bought shows "no daily contract to buy" instead of a Send button.
 
 ---
 
-## 4. The API, and what's still planned
+## 4. The API
 
-**Built:** `POST /research` (multipart `file`, optional `name`, `kind`) returns a
-`ResearchResponse` synchronously, or a 422 (`bad_csv`, `duplicate_dates`, `negative_revenue`,
-`out_of_window`, `too_short`). Full contract: [RESEARCH_CONTRACT.md](RESEARCH_CONTRACT.md).
+**`POST /research?name=<business name>`** — body: the raw CSV (`Content-Type: text/csv`).
+Returns `200` with a `ResearchReport` (`backend/app/models.py`, example in
+`backend/fixtures/examples/research_report.json`). Stateless: nothing is stored.
 
-**Not built yet:**
+Errors are `422` with the usual `{"error": {"code", "message", "detail"}}` body:
 
-- Saving an uploaded business (`POST /businesses/upload`, `DELETE /businesses/{id}`).
-- `POST /businesses/{id}/research/{hypothesis_id}/promote`, which would add a FOUND hypothesis to
-  the business's exposures so the real desk prices it under its six decline rules (replacing the
-  scripted "Send to the desk").
+| Code | When |
+|---|---|
+| `bad_csv` | Empty, not UTF-8, over 5 MB, no date/revenue columns, or too many unparseable rows |
+| `duplicate_dates` | A date appears twice (`detail.dates`) |
+| `negative_revenue` | A negative revenue (`detail.dates`) |
+| `out_of_window` | No date overlaps the weather record |
+| `too_short` | Fewer than 540 usable days (`detail.days`) |
 
-**The agent**
-- Claude would choose which catalog events fit the business and write each mechanism *before*
-  calling `run_hypothesis`.
-- The code, not Claude, would apply BH and the final verdicts.
-- Claude would write the summary, with every number validated against tool results (I2).
-- Without a key, a deterministic fallback would run instead.
+**`POST /research/quote?hypothesis=rain&name=<business name>`**: same raw CSV body. Returns
+`200` with a `ResearchQuote` (`exposure`, `hedge` with its checks, `budget`, `p_hat`, `window`,
+`basis_note`; example in `backend/fixtures/examples/research_quote.json`). `409 not_sendable` for
+a row with no daily contract (cold, warm, hot, games), `422 unknown_hypothesis` for an id not in
+the report, and the same `422`s as `/research` for a bad file.
+
+**Not built yet:** saving an uploaded business (`POST /businesses/upload`, `DELETE
+/businesses/{id}`), promoting a FOUND hypothesis into the business's exposures so the real desk
+prices it under its decline rules, and a Claude-written summary (validated against tool results,
+I2). The report today has a templated summary and no stored business.
 
 ---
 
 ## 5. Limitations
 
-- **Settlement source.** Live NYC weather contracts settle on The Weather Company's Central Park reading (since 2026-08-14); the research used NOAA's record for the same station, a close proxy. `KXRAIN` counts a trace of rain as 0.
+- **Settlement source.** Live NYC weather contracts settle on The Weather Company's Central Park reading (since 2026-08-14); the research uses NOAA's record for the same station, a close proxy. `KXRAIN` counts a trace of rain as 0.
 - **Temperature strikes.** `KXHIGHNY` lists 6 strikes around each day's forecast, so a fixed strike such as >85°F is listed only about 1 day in 5; a fixed-strike heat or cold hedge often can't be bought exactly.
-
-- **Send to the desk is scripted.** The hedge card is Hudson's, sized on the precomputed effect.
-- **NYC only, fixed window.** One weather station, the Knicks, and the 2024-01-01 to 2026-09-30
-  weather fixture; files outside that window are rejected.
-- **Synthetic revenue.** The effects were planted, so finding them shows that the protocol works.
-  It says nothing about real bike shops.
-- **Small samples.** One train year means the rarer flags (hot > 90 °F, Knicks games and wins) have few
+- **The card in the UI is scripted.** Its market and price are fixed; only its size follows the
+  report. The live quote is API-only for now.
+- **The fallback is the sample's.** It shows Hudson Bike Co.'s precomputed report whatever file
+  was uploaded, and says so.
+- **Quotes aren't saved.** The uploaded business isn't stored, so its quote can't be approved or
+  booked; the built-in businesses go through the full approval, co-sign and booking flow.
+- **Synthetic revenue.** The sample's effects were planted, so finding them shows that the protocol
+  works. It says nothing about real bike shops.
+- **NYC only, fixed window.** One weather station (Central Park), the Knicks, and the weather
+  fixture's 2024-01-01 to 2026-09-30 window.
+- **Small samples.** One train year means the rarer flags (hot > 90 °F, game nights) have few
   event days, and their intervals are wide.
 - **Correlation, not a guarantee.** Our own taxi rain effect was significant one year and near
   zero the next (see [RESEARCH.md](RESEARCH.md)). A FOUND result replicated once; it is not a

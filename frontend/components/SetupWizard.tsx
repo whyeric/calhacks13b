@@ -1,17 +1,12 @@
 "use client";
 // First-run setup: business → risks → settings → hedges → dashboard. Reuses
-// the dashboard's pieces and #74's upload (POST /research; the hedge step is
-// still scripted).
+// the dashboard's pieces and the upload flow (live POST /research, scripted hedge card).
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { MOCK_MODE, apiGet, apiPost, apiPut } from "@/lib/api";
 import type { Analyze, Business, Hedge, Settings } from "@/lib/types";
-import {
-  DEMO_BUDGETS,
-  DEMO_HEDGE,
-  canSend,
-  csvSummary,
-} from "@/lib/demoScript";
+import { DEMO_BUDGETS, DEMO_HEDGE, csvSummary } from "@/lib/demoScript";
+import { QBO_NAME } from "@/lib/quickbooks";
 import { fmtUsd } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { BrandMark } from "./BrandMark";
@@ -25,9 +20,11 @@ import {
   DemoHedgeCard,
   DemoUploadDrawer,
   PrecomputedNote,
+  Researching,
   ResearchTable,
   RunningBar,
   SEND_MS,
+  viewFor,
   type Demo,
 } from "./DemoDesk";
 
@@ -42,7 +39,7 @@ const STEPS = [
 ];
 type Choice = "msg" | "upload" | null;
 
-// Ticks every 50 ms until `until` (a Date.now() time), for the pricing bar.
+// Ticks every 50 ms until `until` (a Date.now() time), for the progress bars.
 function useNow(until: number) {
   const [now, setNow] = useState(() => Date.now());
   const on = now < until;
@@ -191,8 +188,15 @@ function BusinessStep({
       </div>
       {choice === "upload" && demo.upload && (
         <p role="status" className="wizard-picked">
-          <strong>{demo.upload.name}</strong> · {csvSummary(demo.upload.csv)}{" "}
-          <span className="badge uploaded">Uploaded · sample</span>
+          <strong>{demo.upload.name}</strong> ·{" "}
+          {"csv" in demo.upload ? (
+            <>
+              {csvSummary(demo.upload.csv)}{" "}
+              <span className="badge uploaded">Uploaded · sample</span>
+            </>
+          ) : (
+            QBO_NAME
+          )}
         </p>
       )}
       {choice === "msg" && (
@@ -207,15 +211,26 @@ function BusinessStep({
 
 // --- Step 2 -------------------------------------------------------------------
 function UploadRisks({ demo }: { demo: Demo }) {
-  if (!demo.upload) return null;
-  const { research } = demo.upload;
-  const declined = research.rows.filter((row) => row.verdict !== "FOUND");
+  const result = demo.result;
+  if (result && "error" in result)
+    return (
+      <p role="alert" className="field-error">
+        {result.error}
+      </p>
+    );
+  const view = viewFor(result);
+  if (!view || !demo.upload)
+    return demo.upload ? <Researching upload={demo.upload} /> : null;
+  const declined = view.rows.filter((row) => row.verdict !== "FOUND");
+  const [train, unseen] = view.periods;
   return (
     <div>
       <h2>What moves your revenue</h2>
-      <PrecomputedNote research={research} />
-      <p className="muted">{research.summary}</p>
-      <ResearchTable rows={research.rows} sendState={null} />
+      {view.source === "precomputed" && <PrecomputedNote />}
+      <p className="muted">
+        Each risk was tested on {train} and re-tested on unseen {unseen} data.
+      </p>
+      <ResearchTable view={view} sendState={null} />
       <h3>Declined, and why</h3>
       <ul className="wizard-declines">
         {declined.map((row) => (
@@ -367,19 +382,18 @@ function MsgHedges() {
   );
 }
 function UploadHedges({ demo }: { demo: Demo }) {
-  const { hedge, upload } = demo;
+  const { hedge, upload, card } = demo;
   const sendStart = hedge?.status === "sending" ? hedge.startedAt : 0;
   const elapsed = useNow(sendStart + SEND_MS) - sendStart;
   if (!upload) return null;
-  const sendable = upload.research.rows.some(canSend);
   return (
     <div>
       <h2>This week’s protection</h2>
       <p className="wizard-note">{NO_AUTO}</p>
-      {!hedge && !sendable ? (
-        <p>
-          No risk held up that the desk can protect with a matching market, so
-          there is nothing to propose this week.
+      {!card ? (
+        <p className="state">
+          No risk held up that the desk can protect, so there is nothing to
+          propose this week.
         </p>
       ) : !hedge ? (
         <div>
@@ -400,6 +414,8 @@ function UploadHedges({ demo }: { demo: Demo }) {
       ) : (
         <DemoHedgeCard
           businessName={upload.name}
+          card={card}
+          precomputed={demo.result !== null && "precomputed" in demo.result}
           status={hedge.status}
           onDecide={demo.decide}
         />

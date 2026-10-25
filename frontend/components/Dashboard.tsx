@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { MOCK_MODE, apiGet, apiPost, errorCode } from "@/lib/api";
 import type {
@@ -10,6 +10,7 @@ import type {
   Hedge,
   Ledger,
   LogEntry,
+  ReconBenchmark,
   Run,
   SampleFlag,
 } from "@/lib/types";
@@ -30,6 +31,7 @@ import {
   DEMO_ID,
   DemoDesk,
   DemoUploadDrawer,
+  type QuickBooksReturn,
   type Demo,
 } from "@/components/DemoDesk";
 import { fmtTime, newestPriceTime } from "@/lib/setup";
@@ -54,6 +56,18 @@ export function Dashboard({
     null,
   );
   const activeBusiness = useRef(selectedId);
+  // Back from QuickBooks' OAuth consent (?qbo=connected|error): reopen the drawer, which
+  // re-reads the connection, and drop the flag from the URL.
+  const [qboReturn, setQboReturn] = useState<QuickBooksReturn>(null);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const flag = url.searchParams.get("qbo");
+    if (flag !== "connected" && flag !== "error") return;
+    setQboReturn(flag);
+    setDrawer("upload");
+    url.searchParams.delete("qbo");
+    window.history.replaceState(window.history.state, "", url.toString());
+  }, []);
   const businesses = useSWR<Business[]>(["/businesses", "all"], () =>
     apiGet("/businesses"),
   );
@@ -86,6 +100,12 @@ export function Dashboard({
   );
   const ledger = useSWR<Ledger>(tab === "ledger" ? live("ledger") : null, () =>
     apiGet(`${base}/ledger`),
+  );
+  // Planted-error benchmark (simulated, same for every business); optional on the Books tab.
+  const benchmark = useSWR<ReconBenchmark>(
+    tab === "ledger" && !isDemo ? ["/benchmarks/reconciliation", "all"] : null,
+    () => apiGet("/benchmarks/reconciliation"),
+    { shouldRetryOnError: false },
   );
   const health = useSWR<Health>(["/health", "all"], () => apiGet("/health"), {
     shouldRetryOnError: false,
@@ -342,6 +362,7 @@ export function Dashboard({
                     <LedgerTab
                       ledger={ledger.data}
                       businessId={selectedId}
+                      benchmark={benchmark.data}
                       onReconciled={() =>
                         Promise.all([ledger.mutate(), decisions.mutate()])
                       }
@@ -369,7 +390,11 @@ export function Dashboard({
       />
       <DemoUploadDrawer
         open={drawer === "upload"}
-        onClose={() => setDrawer(null)}
+        onClose={() => {
+          setDrawer(null);
+          setQboReturn(null);
+        }}
+        quickBooksReturn={qboReturn}
         onStart={(upload) => {
           demo.start(upload);
           setDrawer(null);

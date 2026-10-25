@@ -60,8 +60,16 @@ def resolve_h(basis: BasisStat | None, effect_usd: Decimal, th: Thresholds) -> D
 # ---- individual checks (pure; the backtest calls 3–5 directly, R3)
 
 
-def check_no_market(candidates: list[Candidate]) -> Check:
-    return Check(code="no_market", passed=bool(candidates), metric={"n_candidates": len(candidates)})
+def check_no_market(candidates: list[Candidate], venue_note: str | None = None) -> Check:
+    """Counts per venue, so a no_market decline says both Kalshi and Polymarket were scanned."""
+    metric: dict[str, Any] = {"n_candidates": len(candidates)}
+    venues = {getattr(c, "venue", "kalshi") for c in candidates}
+    if "polymarket" in venues or venue_note is not None:
+        metric["n_kalshi"] = sum(getattr(c, "venue", "kalshi") == "kalshi" for c in candidates)
+        metric["n_polymarket"] = sum(getattr(c, "venue", "kalshi") == "polymarket" for c in candidates)
+    if venue_note:
+        metric["venue_note"] = venue_note
+    return Check(code="no_market", passed=bool(candidates), metric=metric)
 
 
 def check_illiquid(n_target: int, n_filled: int, th: Thresholds) -> Check:
@@ -169,7 +177,7 @@ class NotHedgeableError(ValueError):
 def evaluate(
     exposure: Any, candidates: list[Candidate], sizing: Sizing | None,
     basis: BasisStat | None, remaining_budget: Decimal, th: Thresholds,
-    *, decision_id: str | None = None,
+    *, decision_id: str | None = None, venue_note: str | None = None,
 ) -> Decision:
     """Run every check in table order, always. Size with resolve_h's h first (G5).
 
@@ -183,7 +191,7 @@ def evaluate(
     beta = dec(field(exposure, "effect_usd"))
     remaining = dec(remaining_budget)
 
-    checks = [check_no_market(candidates)]
+    checks = [check_no_market(candidates, venue_note)]
     if not candidates or sizing is None:
         checks += [_skip(c, "no_market") for c in MARKET_CODES[1:]]
         checks.append(check_unstable(exposure, th))

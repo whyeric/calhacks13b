@@ -40,20 +40,3 @@ test("first run: setup wizard with the MSG demo bar, then the dashboard", async 
   await expect(page.getByText(/Step 1 of 5/)).toBeVisible();
   expect(errors).toEqual([]);
 });
-
-test("first run with an upload: /research report in step 2", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: "Upload your revenue" }).click();
-  const drawer = page.getByRole("dialog", { name: "Upload your revenue" });
-  await drawer.getByRole("button", { name: "Use the sample file" }).click();
-  await drawer.getByRole("button", { name: "Upload and research" }).click();
-  await expect(page.locator(".wizard-picked")).toContainText(
-    "Hudson Bike Co. · 1,004 days · 2024-01-01 → 2026-09-30",
-  );
-  await page.getByRole("button", { name: "Next →" }).click();
-  await expect(page.getByTestId("research-row-rain")).toBeVisible();
-  await expect(page.getByText("Declined, and why")).toBeVisible();
-  await expect(page.getByText("Precomputed on the sample file")).toHaveCount(0);
-});

@@ -11,7 +11,7 @@ import asyncio
 import re
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
-from typing import Any
+from typing import Any, Literal
 from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel
@@ -64,6 +64,12 @@ class Candidate(BaseModel):
     no_bid: Decimal | None
     depth_within_5c: Depth
     fetched_at: datetime  # G13: lets the UI label cached prices
+    # Second venue (markets/polymarket.py). Kalshi candidates keep the defaults. `fee_rate` is the
+    # taker rate in fee = rate x C x P x (1 - P); None means Kalshi's 0.07 x fee_multiplier.
+    venue: Literal["kalshi", "polymarket"] = "kalshi"
+    fee_rate: Decimal | None = None
+    market_url: str | None = None
+    settlement_source: str | None = None
 
 
 class OffListError(ValueError):

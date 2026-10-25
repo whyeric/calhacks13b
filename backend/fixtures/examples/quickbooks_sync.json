@@ -1,0 +1,79 @@
+{
+  "business_id": "taxi",
+  "checked_at": "2026-10-30T18:00:00Z",
+  "mode": "demo",
+  "realm_id": "demo-hudson-bike-co",
+  "company_name": "Hudson Bike Co. (SYNTHETIC)",
+  "synthetic": true,
+  "system_of_record": "beancount",
+  "explanation": "Beancount, the desk's ledger, is the system of record for hedge entries: each one was approved by the owner and is in the decision log. QuickBooks holds a mirror of them as journal entries for the bookkeeper. Where the two disagree, the ledger is right: restore or re-post the QuickBooks entry instead of changing the ledger. This check only reads; it changes nothing in either.",
+  "lines": [
+    {
+      "entry_id": "le_taxi_opening",
+      "kind": "opening_deposit",
+      "date": "2026-10-24",
+      "amount": "500.00",
+      "simulated": true,
+      "doc_number": "le_taxi_opening",
+      "qbo_id": "demo-journalentry-1",
+      "qbo_amount": "500.00",
+      "status": "posted",
+      "detail": "Matches the ledger, line for line."
+    },
+    {
+      "entry_id": "le_hdg_01_premium",
+      "kind": "premium",
+      "date": "2026-10-24",
+      "amount": "66.47",
+      "simulated": false,
+      "doc_number": "le_hdg_01_premium",
+      "qbo_id": "demo-journalentry-2",
+      "qbo_amount": "65.47",
+      "status": "amount_differs",
+      "detail": "Edited in QuickBooks: totals ledger $66.47, QuickBooks $65.47 (credit to account demo-account-1: ledger $66.47, QuickBooks $65.47; debit to account demo-account-3: ledger $63.90, QuickBooks $62.90). The ledger is right; correct the QuickBooks entry."
+    },
+    {
+      "entry_id": "le_hdg_02_premium",
+      "kind": "premium",
+      "date": "2026-10-26",
+      "amount": "212.31",
+      "simulated": false,
+      "doc_number": "le_hdg_02_premium",
+      "qbo_id": "demo-journalentry-3",
+      "qbo_amount": null,
+      "status": "missing",
+      "detail": "JournalEntry demo-journalentry-3 is no longer in QuickBooks (deleted there?). The ledger still has the entry; re-post it in QuickBooks."
+    },
+    {
+      "entry_id": "le_hdg_01_payout",
+      "kind": "payout",
+      "date": "2026-10-29",
+      "amount": "150.00",
+      "simulated": true,
+      "doc_number": "le_hdg_01_payout",
+      "qbo_id": null,
+      "qbo_amount": null,
+      "status": "failed",
+      "detail": "Posting failed after 1 attempt(s): QuickBooks returned an error. Service unavailable: try later. Retried with the next booking."
+    },
+    {
+      "entry_id": "le_taxi_wd_2026-10-30_3f1c2a9b",
+      "kind": "withdrawal",
+      "date": "2026-10-30",
+      "amount": "150.00",
+      "simulated": true,
+      "doc_number": "le_taxi_wd_2-07132889",
+      "qbo_id": null,
+      "qbo_amount": null,
+      "status": "not_posted",
+      "detail": "not mirrored yet: booked before QuickBooks was connected, or the mirror is off; it is posted with the next booking"
+    }
+  ],
+  "counts": {
+    "posted": 1,
+    "missing": 1,
+    "amount_differs": 1,
+    "failed": 1,
+    "not_posted": 1
+  }
+}

@@ -73,23 +73,45 @@ to demo time, when books are live:
 4. To present only real data, start with `DEMO_SAMPLE_WEEK=0 make demo` (or `make clean` first for
    a fresh db). With the default `1`, the sample week shows, labeled, until the first desk run.
 
-## Try it: upload the sample (scripted)
+## Try it: upload the sample
 
-This is a scripted frontend demo of the research protocol, with no backend routes. The report's
-numbers come from really running the protocol offline on the sample file. Full details are in
+The report (`POST /research`) and the hedge quote (`POST /research/quote`) are computed live on the
+uploaded file; nothing is stored. Full details are in
 [UPLOAD_AND_RESEARCH.md](UPLOAD_AND_RESEARCH.md).
 
 1. Have `hudson_bike_co_daily_revenue.csv` ready. It's in `frontend/public/samples/`, and the
    presenter's copy is in `~/Downloads/`.
 2. On `make demo`, click **Upload your revenue** and choose the file. The app shows the file's real
    row count and dates (1,004 days, 2024-01-01 to 2026-09-30).
-3. Click **Upload and research**. The backend researches the file live (`POST /research`, about a
-   second, with a spinner), then the report appears. If the API is unreachable, the precomputed
-   report appears instead, labeled "Precomputed on the sample file".
-   - Rain is FOUND: −18.3% (−$1,933.03/day) on 2024, −20.4% on 2025–26, placebo p 0.34.
-   - Cold <40 °F is FOUND (−26.6% / −26.4%), and warm >80 °F is FOUND as an upside
+3. Click **Upload and research**. The backend runs the protocol live (`POST /research`, about a
+   second, with a spinner; no staged delay), then the report appears. If the API is unreachable, the
+   precomputed report appears instead, labeled "Precomputed on the sample file".
+   - Rain is FOUND: −18.2% (−$1,923.43/day) on 2024, −20.4% on 2025–26, placebo p 0.29.
+   - Cold <40 °F is FOUND (−26.5% / −26.4%), and warm >80 °F is FOUND as an upside
      (+10.9% / +15.5%).
    - Hot >90 °F, Knicks home games and Knicks wins are not distinguishable from zero.
-4. Click **Send to the desk** on rain. The hedge card shows 1,955 YES @ 33¢, a premium of $675.41
-   (fee $30.26) and an expected cost of ≈ $64.86. It's hardcoded, so it doesn't depend on the Kalshi
-   cache or the desk week.
+4. Click **Send to the desk** on rain. The card (scripted market, 33¢, labeled) is sized from the
+   report: 1,923 YES (the $1,923.43/day loss ÷ $1, rounded down), premium $664.36 including the
+   $29.77 Kalshi fee. In the precomputed fallback it's the earlier card: 1,955 YES, $675.41. The
+   live quote is `POST /research/quote` (API): 1,923 YES on `KXRAIN-26OCT25-NYC` for $20.57 on the
+   committed caches, every check passing. It's a quote (not saved).
+
+## Roles, co-sign and close
+
+`make demo` and `make dev` set `OWNER_TOKEN=demo-owner` and `CONTROLLER_TOKEN=demo-controller` (and
+bake the same values into the frontend build as `NEXT_PUBLIC_*`). Without the right token the API
+answers `403 owner_only` / `403 controller_only`, so the desk, or anyone calling the API without a
+role's token, can't approve, co-sign or close. Override them (`make demo OWNER_TOKEN=…`) outside a
+demo. The header's **Acting as** switch picks which token the browser sends. The flow to show:
+
+1. Owner tries to approve the taxi's $942.80 hedge: `409 needs_controller` (materiality $200.00).
+2. Controller co-signs (or refuses); then the owner approves (or can only reject).
+3. Books tab, as Controller: close through 2026-10-23. The planted $0.89 short deposit returns
+   `409 unreconciled` until it's acknowledged and carried as an exception.
+
+## Re-warming Polymarket
+
+`make warm` also refreshes `backend/fixtures/polymarket_cache/` for the desk week and the next 8
+days as of `DEMO_AS_OF`; `python -m app.markets.warm --polymarket-only` leaves the Kalshi cache
+alone. Game markets are looked up one slug per scheduled New York home game (the ESPN schedule
+fixtures), so the cache stays small. Commit it with the Kalshi cache before the demo freeze.

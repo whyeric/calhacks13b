@@ -27,7 +27,8 @@ def test_a8_reconcile_one_mismatch(client):
     assert f"${amount}" in m["explanation"], m["explanation"]
     assert m["action"] == "ask_owner" and m["question"]
     assert body["matches"] and body["summary"] == {"n_matched": len(body["matches"]), "n_mismatched": 1,
-                                                   "total_difference": PLANTED["difference"]}
+                                                   "total_difference": PLANTED["difference"],
+                                                   "n_in_transit": 0}
     for row in body["matches"]:
         assert row["expected"] == row["kalshi_ledger"] == row["bank"], row
 

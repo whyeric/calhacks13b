@@ -7,10 +7,12 @@ root = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(root / "frontend/.python-tools"), str(root / "backend")]
 from pydantic.json_schema import models_json_schema
 from app.models import (Business, AnalyzeResponse, Hedge, LogEntry, RunAccepted, RunStatus,
-    BacktestResult, LedgerResponse, ReconResult, ChatReply, Settings, Health)
+    BacktestResult, LedgerResponse, ReconResult, ChatReply, Settings, Health, ReconBenchmark, ResearchReport,
+    QuickBooksStatus, QuickBooksConnect, Commitments, QuickBooksResearch, QboSyncReport, KalshiStatus, IncreaseStatus)
 
 models = [Business, AnalyzeResponse, Hedge, LogEntry, RunAccepted, RunStatus,
-    BacktestResult, LedgerResponse, ReconResult, ChatReply, Settings, Health]
+    BacktestResult, LedgerResponse, ReconResult, ChatReply, Settings, Health, ReconBenchmark, ResearchReport,
+    QuickBooksStatus, QuickBooksConnect, Commitments, QuickBooksResearch, QboSyncReport, KalshiStatus, IncreaseStatus]
 _, schema = models_json_schema([(model, "serialization") for model in models])
 document = {"openapi": "3.1.0", "info": {"title": "Hedge Desk contracts", "version": "1"}, "paths": {}, "components": {"schemas": schema["$defs"]}}
 serialized = json.dumps(document, indent=2).replace("#/$defs/", "#/components/schemas/")

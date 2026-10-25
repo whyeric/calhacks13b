@@ -31,9 +31,11 @@ Each beat follows spec §14, with the narrative above. Use the stopwatch windows
 the first minute say "insurance for a single Saturday", never "hedge ratio" or "basis risk" (C8-H6).
 
 **Before you start:** have `~/Downloads/hudson_bike_co_daily_revenue.csv` ready (it's also in
-`frontend/public/samples/`). The upload → research flow is a **scripted demo**: the report shows
-results from a real offline run of our protocol on that file. Present it as what the protocol
-*finds*, and never say it's computing live.
+`frontend/public/samples/`). The research report is **computed live** by `POST /research` on
+whatever file you upload. The hedge card behind "Send to the desk" has a scripted market and 33¢
+price, labeled on the card, but is **sized from the live report**. `POST /research/quote` prices the
+same row live on the cached Kalshi and Polymarket books (API only for now). The uploaded business
+isn't saved.
 
 ### 0:00–0:10 · The hook: owners already want this
 
@@ -68,17 +70,20 @@ report appears with each risk's mechanism written above its numbers.
 > idea gets the same protocol: fit on 2024, check on 2025 and 2026 separately, correct for how
 > many things we tried, and test a fake rain a week later that must find nothing."
 
-*The report.* Rain is **FOUND**: −18.3% (−$1,933.03 a day) on 2024, and −20.4% on the unseen
-2025–26 data, with the placebo quiet (p 0.34). Cold days (−26.6% / −26.4%) and warm days
+*The report (computed live on the file).* Rain is **FOUND**: −18.2% (−$1,923.43 a day) on 2024,
+and −20.4% on the unseen 2025–26 data, with the placebo quiet (p 0.29). Cold days (−26.5% / −26.4%) and warm days
 (+10.9% / +15.5%, an upside) are FOUND too. Hot days over 90 °F, Knicks home games and Knicks wins
 are not distinguishable from zero.
 
-> "Rain costs this shop about $1,956 a day, and it held on data the model never saw. Knicks
+> "Rain costs this shop about $1,923 a day, and it held on data the model never saw. Knicks
 > games? Nothing, so we won't sell insurance on them."
 
-*Click **Send to the desk** on rain.* The hedge card shows **1,955 YES @ 33¢** on Kalshi's NYC daily rain (`KXRAIN`), a
-**$675.41** premium (including a $30.26 fee) and an expected cost of about **$64.86**. The 1,955
-contracts are at most the measured $1,955.68 ÷ $1 (I1).
+*Click **Send to the desk** on rain.* The card is sized from the report: contracts = the measured
+daily rain loss ÷ $1, rounded down, so it never buys more than the exposure (I1), and the premium
+is contracts × the card's 33¢ plus Kalshi's fee. On the sample that is **1,923 YES for $664.36**.
+The market and price are scripted and labeled. The live quote (`POST /research/quote`, API) finds
+1,923 YES on `KXRAIN-26OCT25-NYC` for $20.57 on the cached books; if asked why so cheap, the
+market prices tomorrow's dry forecast, and rule 3 never counts that as a bargain.
 
 > "That's insurance for a rainy day, sized to the measured loss and no more. The owner decides."
 
@@ -102,10 +107,12 @@ contracts are at most the measured $1,955.68 ÷ $1 (I1).
 
 **If something breaks:**
 - **API down:** each region degrades with a Retry button (C7-H12).
-- **The wrong file is picked:** choose `hudson_bike_co_daily_revenue.csv` again. The report is
-  only for that file.
-- **Asked "is it running live?":** no. "It's a scripted demo of the protocol. These are the real
-  results from running it on this file, and the live upload API is next."
+- **The wrong file is picked:** the report still runs live on it; for the planned beat, choose
+  `hudson_bike_co_daily_revenue.csv` again. A file outside 2024-01 to 2026-09 or under 540 days
+  gets a plain error instead of a report.
+- **Asked "is it running live?":** the report is: "Upload any NYC daily revenue CSV and it runs
+  the protocol on it now." The hedge card after Send is a labeled example; pricing it from the
+  report is next.
 - **Backtest panel shows "not ready":** `make seed` stores it. Otherwise say the model-check line
   and move on.
 
@@ -118,8 +125,9 @@ the playoff finding survives as one line in the close. If a judge asks, the bar 
 
 ### Known gaps to rehearse around (as of this branch)
 
-- **The upload → research → hedge-card beat is scripted** and hardcoded, so it doesn't depend on
-  the Kalshi cache or the desk week. Never call it live.
+- **The upload → research report and the quote are live**; the quote reads the committed Kalshi
+  and Polymarket caches (pinned demo clock), so its prices are the 2026-10-24/25 snapshots. It's a
+  quote, not a proposal: no approve button for an uploaded business.
 - On the committed cache, the real taxi desk gives one **declined** rain hedge (`no_market` +
   `unstable`).
 - With the Dewey files, the bar's real run is the playoff season hedge: one leg **proposed**
@@ -147,9 +155,10 @@ Use this in the Devpost and say it out loud if asked (C8-H9):
 - **Synthetic, on real weather:** Hudson Bike Co. (`hudson_bike_co_daily_revenue.csv`) is a
   fictional shop. Its revenue is generated with planted effects, keyed to real NOAA Central Park
   weather days.
-- **Scripted:** the upload → research → send-to-desk flow, which is a staged animation with a
-  hardcoded report. The report's numbers come from really running our protocol offline on that
-  file.
+- **Live:** the upload → research report: `POST /research` runs the protocol on the uploaded
+  file (nothing stored).
+- **Live quote:** the hedge card behind "Send to the desk" (`POST /research/quote`), priced on
+  the cached Kalshi and Polymarket books; not saved, so not approvable.
 - **Simulated:** the hedge settlements and the bank statement. The settlements are simulated from
   *real* settled Kalshi results. The bank statement has one deliberately planted short deposit.
   **No real trades are placed.**
@@ -161,12 +170,35 @@ Use this in the Devpost and say it out loud if asked (C8-H9):
 ## Track pitches (spec §17)
 
 **Hyphenate (primary).** "The treasury analyst who finds and hedges a business's event risk, and
-the bookkeeper who records and reconciles it." Show, on screen:
-- limits and approvals: a pending card that only the owner can approve (I4);
+the bookkeeper who records, reconciles and closes it." Seats line for the form: *Treasury analyst
++ hedge bookkeeper for a small business, under the owner's approval and the controller's
+co-sign.* Show, on screen:
+- limits and approvals: a pending card that only the owner can approve (I4), and, above the
+  $200 materiality line, only after the controller co-signs. The controller can't approve, the
+  owner can't co-sign or move materiality, the desk can do neither; every refusal is logged;
+- "defend a decision when questioned": **Challenge this decision** opens the receipt (every
+  check against its threshold, the exposure, the sources, the full trail);
+- time: the desk remembers. Two rejected rain hedges in a row and the next proposal opens with
+  "You rejected the last two rain hedges (last reason: …)";
+- the close: the controller locks the books through a date; the $0.89 short deposit blocks it
+  until it's acknowledged and carried as an exception;
+- two venues: the desk scans Kalshi and Polymarket, and skips Polymarket's NYC temperature
+  markets because they settle at LaGuardia, not the Central Park station it measured;
 - the append-only decision log, with the checks behind every decision;
 - the Beancount ledger;
 - sources that disagree: rule 4's basis check between our weather and the settlement station;
 - two planted errors with answer keys: the $500 in the model check and the $0.89 short deposit.
+- the planted-error benchmark on the Books tab: a simulated world of 26 hedges with 17 planted
+  errors across three sources, venue, ledger and bank (fee netted, duplicate deposit incl. one
+  split across two rows, transposed digits, reversed sign, missing deposit past the window,
+  wrong ledger payout, venue paid less than we booked, venue fee differs from ours, short
+  deposit, unexplained bank rows) and 7 traps that look wrong but aren't (split deposit, late
+  deposit, unreferenced deposit two days late, two expired hedges, and two deposits in transit
+  that must be reported as timing, not error). Each mismatch names the source of record (venue
+  for what was paid, bank for cash, ledger for what we booked) and why.
+  The real reconciler catches **17 of 17 with the right cause and 0 false flags**. Say "on
+  simulated data with an answer key"; the old exact-date matcher would have false-flagged a trap,
+  and a test proves the key can fail.
 
 **Microsoft: Built for the Real World.**
 - *Customer:* a taxi fleet and a bar near MSG.
@@ -183,8 +215,8 @@ the bookkeeper who records and reconciles it." Show, on screen:
   validated against tool results before it's logged, and the "why?" chat answers from those same
   checks.
 - An owner without an analyst gets the protocol an analyst would use, shown on a bike shop's
-  revenue in the scripted demo: replication, multiple-testing correction and a placebo. Next, the
-  same protocol will run live on an owner's own data, on their own machine.
+  revenue: replication, multiple-testing correction and a placebo, run live on whatever daily
+  revenue file the owner uploads (nothing is stored).
 - If Claude is slow or down, a deterministic fallback runs, marked `agent: fallback`.
 
 **General:** Overall; Most Technically Complex. Check the Devpost form's limit on sponsor tracks
@@ -221,16 +253,17 @@ The protocol is the same for every hypothesis:
 - a placebo that shifts the event a week;
 - weather from NOAA's Central Park station, the same station Kalshi's NYC contracts settle on.
 
-On the bike shop, rain is FOUND: −18.3% (−$1,933.03 a day) on 2024 and −20.4% on the unseen data,
+On the bike shop, rain is FOUND: −18.2% (−$1,923.43 a day) on 2024 and −20.4% on the unseen data,
 with the placebo quiet. Cold and warm days are FOUND too, and Knicks games and wins aren't. The
-rain risk becomes a `KXRAIN` (NYC) hedge: 1,955 YES at 33¢, a $675.41 premium and an expected cost of
-about $64.86. In the demo this flow is scripted: the report shows the real results of running the
-protocol on that file, not a live computation. A live upload and research API, with Claude
-choosing the hypotheses, is next.
+rain risk becomes a `KXRAIN` (NYC) hedge sized to the measured loss: contracts = the daily rain
+loss ÷ $1, premium = contracts × price + Kalshi's fee (1,923 YES at 33¢, $664.36, on the sample).
+The report is computed live by `POST /research` on the uploaded file. The card's market and price
+are still a labeled example; pricing it through the live quote in the UI (and Claude choosing the
+hypotheses) is next.
 
 We demo two businesses around Madison Square Garden: a taxi fleet (real NYC trip records) and a
-bar across from MSG (real foot traffic, estimated dollars), plus the scripted bike-shop research demo
-(fictional, labeled).
+bar across from MSG (real foot traffic, estimated dollars), plus the live research protocol on an
+uploaded file, shown on a fictional, labeled bike shop.
 
 **How we built it.**
 - *Backend:* Python 3.12 and FastAPI. DuckDB, pandas and statsmodels fit the exposures, with a
@@ -239,8 +272,9 @@ bar across from MSG (real foot traffic, estimated dollars), plus the scripted bi
 - *Agent:* the Anthropic SDK in a tool-use loop. A validator rejects any summary containing a
   number that didn't come from a tool. A deterministic fallback takes over when Claude isn't
   available.
-- *Research demo:* a scripted frontend flow (a staged animation and a hardcoded report) that shows
-  the protocol's real offline results on the bike-shop file.
+- *Research:* `POST /research` runs the protocol (statsmodels, HC3, BH, placebo) on an uploaded
+  CSV in about a second, and `POST /research/quote` prices a FOUND downside on Kalshi and
+  Polymarket with the desk's own sizing and decline rules.
 - *Books:* Beancount and SQLite.
 - *Frontend:* Next.js, Tailwind, Recharts and SWR.
 - *Research:* eight rounds of experiments, about 40 studies, with train/holdout replication,

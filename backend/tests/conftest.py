@@ -10,6 +10,12 @@ FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"  # backend/fixtures
 # API tests start the app many times on fresh dbs; the startup backtest is tested on its own
 # (tests/api/test_backtest_startup.py), so it is off by default here.
 os.environ.setdefault("BACKTEST_ON_STARTUP", "0")
+# Polymarket is a second network source; tests that cover it enable it with a mock transport.
+os.environ.setdefault("POLYMARKET_ENABLED", "0")
+# The bank leg reads the simulated CSV unless a test opts into Increase with a mock transport,
+# even when a developer's .env carries real Increase credentials.
+os.environ.setdefault("INCREASE_API_KEY", "")
+os.environ.setdefault("INCREASE_ACCOUNT_ID", "")
 
 
 @pytest.fixture(autouse=True)

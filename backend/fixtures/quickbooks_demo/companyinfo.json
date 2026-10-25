@@ -1,0 +1,30 @@
+{
+  "QueryResponse": {
+    "CompanyInfo": [
+      {
+        "Id": "1",
+        "SyncToken": "0",
+        "CompanyName": "Hudson Bike Co. (SYNTHETIC)",
+        "LegalName": "Hudson Bike Co. (SYNTHETIC demo company)",
+        "Country": "US",
+        "CompanyAddr": {
+          "Line1": "Pier 40 (fictional storefront)",
+          "City": "New York",
+          "CountrySubDivisionCode": "NY",
+          "PostalCode": "10014"
+        },
+        "FiscalYearStartMonth": "January",
+        "CompanyStartDate": "2024-01-01",
+        "NameValue": [
+          {
+            "Name": "SyntheticDemoData",
+            "Value": "true"
+          }
+        ]
+      }
+    ],
+    "startPosition": 1,
+    "maxResults": 1
+  },
+  "time": "2026-10-25T09:00:00.000-07:00"
+}

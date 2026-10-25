@@ -13,7 +13,9 @@ from .conftest import EXAMPLES, validate_example
 # Statistics and non-money parameters that stay JSON numbers (CONTRACTS R1).
 FLOAT_KEYS = {"p_value", "coverage", "reduction_pct", "priced_real_pct", "frac", "target", "strike", "basis_r2_min",
               "rain_size_multiplier",
-              "expected_count"}  # expected_count: model-implied expected events (playoff home games)
+              "precision", "recall", "cause_accuracy",  # reconciliation benchmark scores
+              "expected_count",  # expected_count: model-implied expected events (playoff home games)
+              "pct", "placebo_p", "bh_q"}  # research stats: % effect, placebo p, BH q-value
 
 
 def _decimal_paths(obj, raw, path="$"):

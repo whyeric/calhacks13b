@@ -24,6 +24,7 @@ FALLBACK_MARKUP = Decimal("0.02")
 # overpriced check notes that the market is pricing the current forecast.
 FORECAST_NOTE_GAP = Decimal("0.10")
 KALSHI_MARKET_URL = "https://kalshi.com/markets/{series}"  # "Open on Kalshi" link, series lowercased
+POLYMARKET_EVENT_URL = "https://polymarket.com/event/{slug}"  # "Open on Polymarket" link
 
 # Data paths: repo-root data/ holds raw Dewey exports (gitignored); backend/fixtures/ holds
 # the tracked daily aggregates. Distinct from the backend/app/data/ code package.
@@ -111,6 +112,11 @@ class Settings(BaseSettings):
     anthropic_api_key: str | None = None  # unset -> deterministic fallback agent
     anthropic_model: str | None = None  # pinned id from .env; never defaulted here
     kalshi_base_url: str = "https://external-api.kalshi.com/trade-api/v2"
+    # Second venue, scanned next to Kalshi (read-only public data; markets/polymarket.py). Offline it
+    # replays fixtures/polymarket_cache/; a miss means "no Polymarket candidates", never a failure.
+    polymarket_enabled: bool = True
+    polymarket_gamma_url: str = "https://gamma-api.polymarket.com"
+    polymarket_clob_url: str = "https://clob.polymarket.com"
     demo_offline: bool = False  # True blocks all outbound HTTP
     # Seed the example week (fixtures/examples/week_seed.json) into an empty db, marked as sample
     # data: /health reports `sample_week`, and a real desk run replaces that business/week's sample
@@ -132,7 +138,8 @@ class Settings(BaseSettings):
     avg_check_usd: Decimal = Decimal("35")
     avg_check_label: str = "assumed"
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
-    owner_token: str | None = None  # G1: off unless set
+    owner_token: str | None = None  # G1: off unless set (`make demo` sets one)
+    controller_token: str | None = None  # same for the controller (co-sign, period close)
     # Markets backend for desk runs: "auto" uses app.markets (Kalshi, PR #48) when it is
     # importable and falls back to fixtures/examples/hedge_*.json otherwise.
     markets_backend: Literal["auto", "kalshi", "fixture"] = "auto"
@@ -141,6 +148,27 @@ class Settings(BaseSettings):
     dewey_restaurants_dir: str | None = None
     dewey_msg_dir: str | None = None
     dewey_place_id: str | None = None  # chosen restaurant's raw ID_STORE; .env only, never commit
+    # QuickBooks Online (integrations/quickbooks.py). Live iff client id + secret are set and
+    # DEMO_OFFLINE is off; otherwise the SYNTHETIC demo company in fixtures/quickbooks_demo/.
+    qbo_client_id: str | None = None
+    qbo_client_secret: str | None = None
+    qbo_redirect_uri: str = "http://localhost:8000/integrations/quickbooks/callback"
+    qbo_environment: Literal["sandbox", "production"] = "sandbox"
+    frontend_url: str = "http://localhost:3000"  # where the OAuth callback sends the browser back
+    # --- Kalshi DEMO trading (markets/trading.py, docs/KALSHI_DEMO.md) ---
+    # Off by default. When on, not offline, and both key settings are present, the owner's
+    # approval places one immediate-or-cancel order on Kalshi's demo exchange (fake money).
+    # The client refuses any host but the demo hosts (trading.DEMO_HOSTS); no real-money trading.
+    kalshi_trading_enabled: bool = False
+    kalshi_demo_base_url: str = "https://demo-api.kalshi.co/trade-api/v2"
+    kalshi_api_key_id: str | None = None
+    kalshi_private_key_path: str | None = None  # PEM file; relative paths resolve from the repo root
+
+    # Increase bank (integrations/increase.py, docs/INCREASE.md): the bank leg of reconciliation.
+    # Used iff the key and account id are set and DEMO_OFFLINE is off; otherwise the simulated CSV.
+    increase_api_key: str | None = None
+    increase_account_id: str | None = None
+    increase_environment: Literal["sandbox", "production"] = "sandbox"
 
     @field_validator("demo_as_of", mode="before")
     @classmethod
@@ -165,6 +193,16 @@ class Settings(BaseSettings):
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
+
+    # --- QuickBooks write-back and sandbox seeding (integrations/quickbooks_sync.py, qbo_seed.py) ---
+    # Mirror the desk's ledger entries into the connected QuickBooks company as JournalEntries
+    # (demo mode: into the SYNTHETIC demo store). Beancount stays the system of record; a QBO
+    # failure never blocks a booking. False turns the mirror off without disconnecting.
+    qbo_mirror_enabled: bool = True
+    # The QBO bank account that Assets:Bank:Checking maps to (found by name, created if missing).
+    qbo_bank_account_name: str = "Checking"
+    # Seeder pacing: Intuit allows 40 batch requests a minute per company, so one every 1.6 s.
+    qbo_seed_batch_interval_s: float = 1.6
 
 
 @dataclass(frozen=True)
@@ -191,6 +229,9 @@ class Thresholds:
     # was the worst hedged option). Recorded only: sizing still caps contracts at the measured
     # same-day exposure (I1), so values above 1.0 need the multi-day loss measured first.
     rain_size_multiplier: float = 1.0
+    # Materiality (segregation of duties): a premium above this needs the controller's co-sign
+    # before the owner's approval books it. The controller alone may change it.
+    materiality_usd: Decimal = Decimal("200.00")
 
 
 @lru_cache

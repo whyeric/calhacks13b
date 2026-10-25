@@ -28,6 +28,13 @@ export const labels: Record<string, string> = {
   recent_ci_excludes_zero: "Recent range clear of zero",
   reconciliation: "Reconciliation",
   threshold_changed: "Settings changed",
+  order_placed: "Kalshi demo order placed",
+  order_filled: "Kalshi demo order filled",
+  order_partial: "Kalshi demo order partly filled",
+  order_failed: "Kalshi demo order failed",
+  order_skipped: "Kalshi demo order skipped",
+  qbo_posted: "Posted to QuickBooks",
+  qbo_post_failed: "QuickBooks posting failed",
 };
 export const label = (value: string) =>
   labels[value] ?? value.replaceAll("_", " ");

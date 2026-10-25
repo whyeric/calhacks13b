@@ -19,6 +19,8 @@ def test_non_owner_403_and_unchanged(client, action, body):
 
 
 def test_owner_approves_pending_and_proposed(client):
+    # hdg_02's premium is above materiality: the controller co-signs before the owner decides.
+    assert client.post("/hedges/hdg_02/cosign", json={"actor": "controller"}).status_code == 200
     for hid in ("hdg_02", "hdg_01"):  # D1: pending_approval and proposed both decidable
         r = client.post(f"/hedges/{hid}/approve", json={"actor": "owner", "note": "go"})
         assert r.status_code == 200, r.text
@@ -38,6 +40,7 @@ def test_owner_token_when_configured(client, monkeypatch):
 
     monkeypatch.setenv("OWNER_TOKEN", "s3cret")
     config.get_settings.cache_clear()
+    assert client.post("/hedges/hdg_02/cosign", json={"actor": "controller"}).status_code == 200
     assert client.post("/hedges/hdg_02/approve", json={"actor": "owner"}).status_code == 403
     r = client.post("/hedges/hdg_02/approve", json={"actor": "owner"}, headers={"X-Owner-Token": "s3cret"})
     assert r.status_code == 200

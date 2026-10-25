@@ -32,10 +32,19 @@ seed:
 seed-data:
 	cd backend && $(PY) -m app.data.dewey build && $(PY) -m app.data.build
 
+# Role tokens (segregation of duties): the API refuses owner actions without the owner's token and
+# controller actions without the controller's. The desk never holds either. The frontend's role
+# switcher sends the matching one. Demo values only; set your own outside the demo.
+OWNER_TOKEN      ?= demo-owner
+CONTROLLER_TOKEN ?= demo-controller
+ROLE_ENV := NEXT_PUBLIC_OWNER_TOKEN=$(OWNER_TOKEN) NEXT_PUBLIC_CONTROLLER_TOKEN=$(CONTROLLER_TOKEN)
+
+dev: export OWNER_TOKEN := $(OWNER_TOKEN)
+dev: export CONTROLLER_TOKEN := $(CONTROLLER_TOKEN)
 dev:
 	@trap 'kill 0' EXIT; \
 	(cd backend && $(PY) -m uvicorn app.main:app --reload --port $(API_PORT)) & \
-	(cd frontend && NEXT_PUBLIC_API_URL=$(API_URL) npm run dev -- --port $(WEB_PORT)) & \
+	(cd frontend && NEXT_PUBLIC_API_URL=$(API_URL) $(ROLE_ENV) npm run dev -- --port $(WEB_PORT)) & \
 	wait
 
 # Backend only (the API seeds an empty db on first start).
@@ -52,14 +61,17 @@ DEMO_AS_OF ?= 2026-10-24T19:00:00Z
 demo: export DEMO_OFFLINE := 1
 demo: export DEMO_AS_OF := $(DEMO_AS_OF)
 demo: export NEXT_TELEMETRY_DISABLED := 1
+demo: export OWNER_TOKEN := $(OWNER_TOKEN)
+demo: export CONTROLLER_TOKEN := $(CONTROLLER_TOKEN)
 demo: seed
 	@trap 'kill 0' EXIT; \
 	(cd backend && exec $(PY) -m uvicorn app.main:app --host 127.0.0.1 --port $(API_PORT)) & \
 	if [ "$(DEMO_WEB)" != 0 ]; then \
 	  (cd frontend && \
-	   if [ ! -f .next/BUILD_ID ] || [ "$$(cat .next/.api_url 2>/dev/null)" != "$(API_URL)" ] || \
+	   if [ ! -f .next/BUILD_ID ] || [ "$$(cat .next/.api_url 2>/dev/null)" != "$(API_URL) $(OWNER_TOKEN) $(CONTROLLER_TOKEN)" ] || \
 	      [ -n "$$(find app components lib public next.config.mjs package.json -newer .next/BUILD_ID 2>/dev/null | head -1)" ]; then \
-	     NEXT_PUBLIC_API_URL=$(API_URL) npm run build && echo "$(API_URL)" > .next/.api_url || exit 1; \
+	     NEXT_PUBLIC_API_URL=$(API_URL) $(ROLE_ENV) npm run build && \
+	     echo "$(API_URL) $(OWNER_TOKEN) $(CONTROLLER_TOKEN)" > .next/.api_url || exit 1; \
 	   fi && exec npm run start -- --port $(WEB_PORT)) & \
 	fi; \
 	for i in $$(seq 1 120); do \
@@ -77,7 +89,7 @@ demo: seed
 
 # Online once: fill fixtures/kalshi_cache/, then replay offline and diff.
 warm:
-	cd backend && $(PY) -m app.markets.warm
+	cd backend && DEMO_AS_OF=$(DEMO_AS_OF) $(PY) -m app.markets.warm
 
 test:
 	cd backend && $(PY) -m pytest -q

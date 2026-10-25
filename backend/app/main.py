@@ -20,14 +20,13 @@ from datetime import date
 from decimal import Decimal
 from typing import Any
 
-from fastapi import BackgroundTasks, Body, FastAPI, File, Form, Header, Query, Request, UploadFile
+from fastapi import BackgroundTasks, Body, FastAPI, Header, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app import analysis, clock, db, research
+from app import analysis, clock, db
 from app.config import get_settings
 from app.hedge_rules import UNDECIDED, apply_rules
 from app.models import (
@@ -38,15 +37,21 @@ from app.models import (
     Business,
     ChatReply,
     ChatRequest,
+    ControllerSignoff,
+    CosignRequest,
+    DecisionReceipt,
     DeskRunRequest,
     ErrorBody,
     Health,
     Hedge,
     LedgerResponse,
     LogEntry,
+    PeriodClose,
+    PeriodCloseRequest,
+    PeriodCloses,
+    ReconBenchmark,
     ReconResult,
     RejectRequest,
-    ResearchResponse,
     RunAccepted,
     RunStatus,
     Settings,
@@ -108,7 +113,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().cors_origin_list,
     allow_methods=["GET", "POST", "PUT", "OPTIONS"],
-    allow_headers=["Content-Type", "X-Owner-Token"],
+    allow_headers=["Content-Type", "X-Owner-Token", "X-Controller-Token", "X-Actor"],
 )
 
 
@@ -154,10 +159,17 @@ def _hedge(hedge_id: str) -> Hedge:
 
 
 def _labeled(h: Hedge, b: Business | None = None) -> Hedge:
-    """I6: a hedge for a business with estimated dollars says so (older rows predate the field)."""
+    """I6: a hedge for a business with estimated dollars says so (older rows predate the field).
+    Open hedges also say whether their premium needs the controller under today's materiality."""
+    from app.agent import policy
+
     b = b or db.get_business(h.business_id)
     if b is not None and b.estimated and not h.estimated:
-        return h.model_copy(update={"estimated": True})
+        h = h.model_copy(update={"estimated": True})
+    if h.status in OPEN_STATUSES:
+        need = policy.needs_controller(h, db.get_business_thresholds(h.business_id))
+        if need != h.needs_controller:
+            h = h.model_copy(update={"needs_controller": need})
     return h
 
 
@@ -198,15 +210,38 @@ def _expire_stale(hedges: list[Hedge]) -> list[Hedge]:
     return out
 
 
-def _require_owner(actor: str | None, token: str | None, action: str) -> None:
-    """I4: only exactly "owner" may approve or reject; optional X-Owner-Token (G1)."""
-    if actor != "owner":
-        raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; the desk never decides for you.",
-                       {"actor": actor})
+def _require_owner(actor: str | None, token: str | None, action: str, h: Hedge | None = None) -> None:
+    """I4: only exactly "owner" may approve or reject; X-Owner-Token when OWNER_TOKEN is set (G1;
+    `make demo` sets it, so a caller without the owner's token, like the desk, is refused).
+    Refusals on a hedge are logged (I5)."""
     expected = get_settings().owner_token
-    if expected and token != expected:
-        raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; the owner token is missing or wrong.",
-                       {"actor": actor})
+    why = None
+    if actor != "owner":
+        why = "the desk never decides for you"
+    elif expected and token != expected:
+        why = "the owner token is missing or wrong"
+    if why is None:
+        return
+    if h is not None:
+        _log({"business_id": h.business_id, "kind": "refusal", "actor": "system", "hedge_id": h.id,
+              "decision_id": h.decision.id, "summary": f"Refused {action} by {actor!r}: only the owner can {action}."})
+    raise ApiError(403, "owner_only", f"Only the owner can {action} a hedge; {why}.", {"actor": actor})
+
+
+def _require_controller(actor: str | None, token: str | None, action: str, business_id: str,
+                        hedge_id: str | None = None) -> None:
+    """Segregation of duties: only exactly "controller" (with X-Controller-Token when set) may
+    co-sign, change materiality or close the books. Refusals are logged (I5)."""
+    expected = get_settings().controller_token
+    why = None
+    if actor != "controller":
+        why = "the owner approves, the controller co-signs and closes; one person can't do both"
+    elif expected and token != expected:
+        why = "the controller token is missing or wrong"
+    if why:
+        _log({"business_id": business_id, "kind": "refusal", "actor": "system", "hedge_id": hedge_id,
+              "summary": f"Refused {action} by {actor!r}: only the controller can {action}."})
+        raise ApiError(403, "controller_only", f"Only the controller can {action}; {why}.", {"actor": actor})
 
 
 def _require_decidable(h: Hedge) -> None:
@@ -345,10 +380,13 @@ def approve(
     x_owner_token: str | None = Header(None),
 ) -> Hedge:
     h = _hedge(hedge_id)
-    _require_owner(body.actor if body else None, x_owner_token, "approve")
+    _require_owner(body.actor if body else None, x_owner_token, "approve", h)
     _require_decidable(h)
+    _require_cosign(h)
     from app.books import ledger  # looked up at call time so tests can patch book_approval
 
+    note = body.note.strip() if body and body.note and body.note.strip() else None
+    h = h.model_copy(update={"decision_note": note})
     try:  # validates the approved Hedge, books it (+ `booking` log event), then stores it
         approved, _entries = ledger.approve_hedge(h, "owner", at=clock.now())
     except Exception as e:
@@ -359,7 +397,10 @@ def approve(
     _log({"business_id": h.business_id, "kind": "approval", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "approved", "numbers": _hedge_numbers(approved),
           "summary": f"Owner approved {h.id}: {h.n_filled} {h.side.upper()} contracts for ${h.premium}."})
-    return approved
+    qbo_sync.mirror_entries(h.business_id, _entries)  # QuickBooks mirror; never raises, never blocks
+    from app.markets import trading  # Kalshi demo order on the owner's approval only (I4); never raises
+
+    return trading.on_owner_approval(approved, _log)
 
 
 @app.post("/hedges/{hedge_id}/reject", response_model=Hedge, responses=ERRORS | {403: {"model": ErrorBody}})
@@ -369,16 +410,106 @@ def reject(
     x_owner_token: str | None = Header(None),
 ) -> Hedge:
     h = _hedge(hedge_id)
-    _require_owner(body.actor if body else None, x_owner_token, "reject")
+    _require_owner(body.actor if body else None, x_owner_token, "reject", h)
     _require_decidable(h)
+    reason_text = body.reason.strip() if body and body.reason and body.reason.strip() else None
     rejected = Hedge.model_validate(h.model_dump() | {"status": "rejected", "decided_by": "owner",
-                                                      "decided_at": clock.now(), "alternative": None})
+                                                      "decided_at": clock.now(), "alternative": None,
+                                                      "decision_note": reason_text})
     db.put_hedge(rejected)
     reason = f" Reason: {body.reason}" if body and body.reason else ""
     _log({"business_id": h.business_id, "kind": "rejection", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "rejected", "numbers": _hedge_numbers(h),
           "summary": f"Owner rejected {h.id}.{reason}"})
     return _labeled(rejected)
+
+
+def _require_cosign(h: Hedge) -> None:
+    """A premium above materiality needs the controller's signature before the owner's approval."""
+    from app.agent import policy
+
+    th = db.get_business_thresholds(h.business_id)
+    if not policy.needs_controller(h, th):
+        return
+    if h.controller is None or h.controller.decision != "signed":
+        refused = h.controller is not None
+        code = "controller_refused" if refused else "needs_controller"
+        msg = (f"The controller refused to co-sign {h.id}; the owner can only reject it." if refused else
+               f"{h.id} costs ${h.premium}, above the ${th.materiality_usd} materiality threshold, so the "
+               "controller must co-sign before the owner's approval can book it.")
+        _log({"business_id": h.business_id, "kind": "refusal", "actor": "system", "hedge_id": h.id,
+              "decision_id": h.decision.id, "numbers": {"premium": h.premium, "materiality": th.materiality_usd},
+              "summary": f"Approval of {h.id} held: " + ("the controller refused to co-sign." if refused else
+                                                        "it needs the controller's co-sign first.")})
+        raise ApiError(409, code, msg, {"premium": str(h.premium), "materiality_usd": str(th.materiality_usd)})
+
+
+@app.post("/hedges/{hedge_id}/cosign", response_model=Hedge, responses=ERRORS | {403: {"model": ErrorBody}})
+def cosign(
+    hedge_id: str,
+    body: CosignRequest | None = Body(None),
+    x_controller_token: str | None = Header(None),
+) -> Hedge:
+    """The controller's co-sign (or refusal) on a hedge whose premium is above materiality. It
+    doesn't approve anything: the owner still decides, and a refusal leaves only reject open."""
+    from app.agent import log as desk_log
+    from app.agent import policy
+
+    h = _hedge(hedge_id)
+    _require_controller(body.actor if body else None, x_controller_token, "co-sign", h.business_id, h.id)
+    _require_decidable(h)
+    th = db.get_business_thresholds(h.business_id)
+    if not policy.needs_controller(h, th):
+        raise ApiError(409, "cosign_not_required", f"{h.id} is within the ${th.materiality_usd} materiality "
+                       "threshold; the owner decides alone.", {"premium": str(h.premium)})
+    if h.controller is not None:
+        raise ApiError(409, "already_cosigned", f"The controller already {h.controller.decision} {h.id}.",
+                       {"decision": h.controller.decision})
+    approve = body.approve if body else True
+    numbers = desk_log.allowed_numbers({"premium": h.premium, "materiality": th.materiality_usd})
+    note, _ = desk_log.sanitize(body.note.strip(), numbers) if body and body.note and body.note.strip() else (None, [])
+    signed = Hedge.model_validate(h.model_dump() | {
+        "needs_controller": True,
+        "controller": ControllerSignoff(decision="signed" if approve else "refused", at=clock.now(), note=note),
+    })
+    db.put_hedge(signed)
+    verb = "co-signed" if approve else "refused to co-sign"
+    _log({"business_id": h.business_id, "kind": "cosign" if approve else "cosign_refused", "actor": "controller",
+          "hedge_id": h.id, "decision_id": h.decision.id, "status": h.status, "numbers": numbers,
+          "summary": f"Controller {verb} {h.id} (${h.premium} premium, above ${th.materiality_usd} materiality)."
+                     + (f" Note: {note}" if note else "")
+                     + (" The owner decides next." if approve else " The owner can only reject it now.")})
+    return _labeled(signed)
+
+
+@app.get("/hedges/{hedge_id}/receipt", response_model=DecisionReceipt, responses=ERRORS)
+def receipt(hedge_id: str) -> DecisionReceipt:
+    """Everything behind one decision, from the record: the hedge with its checks, the exposure
+    it measured, today's thresholds, who must sign, and every log entry about it (oldest first)."""
+    from app.agent import policy
+
+    h = _labeled(_hedge(hedge_id))
+    th = db.get_business_settings(h.business_id).thresholds
+    exposure = None
+    try:
+        res = analysis.analyze(h.business_id, None)
+        exposure = next((e for e in res.exposures + res.dropped if e.id == h.exposure_id), None)
+    except analysis.AnalysisUnavailable:
+        pass
+    trail = [e for e in db.list_log(h.business_id, hedge_id=h.id) if not db.is_retired_sample_entry(e)]
+    need = ["owner"] + (["controller"] if policy.needs_controller(h, db.get_business_thresholds(h.business_id)) else [])
+    venue = {"kalshi": "Kalshi", "polymarket": "Polymarket"}[h.venue]
+    sources = [
+        "Exposure: OLS on the business's daily revenue (train year), with a refit on the recent window.",
+        f"Market and prices: {venue} public order book, read at {h.created_at.isoformat()}"
+        + (" (offline cache)." if get_settings().demo_offline else "."),
+        "Decline rules: code in markets/rules.py, judged against the thresholds below.",
+        "Summary text: written by Claude or the template, checked so every number matches a tool result (I2).",
+    ]
+    if h.estimated:
+        sources.append("Estimated: the business's dollars are visits x an assumed average check (I6).")
+    return DecisionReceipt(hedge=h, exposure=exposure, thresholds=th, trail=trail, approvals_required=need,
+                           sources=sources)
 
 
 # --- Books -------------------------------------------------------------------
@@ -410,6 +541,32 @@ def reconcile(business_id: str, _body: dict | None = Body(None)) -> ReconResult:
     result = recon.reconcile(business_id)
     db.put_analysis(business_id, "reconciliation", result, clock.now().isoformat())
     return result
+
+
+@app.get("/businesses/{business_id}/closes", response_model=PeriodCloses, responses=ERRORS)
+def closes(business_id: str) -> PeriodCloses:
+    _business(business_id)
+    from app.books import close as books_close
+
+    return books_close.list_closes(business_id)
+
+
+@app.post("/businesses/{business_id}/close", response_model=PeriodClose,
+          responses=ERRORS | {403: {"model": ErrorBody}})
+def close_books(
+    business_id: str, body: PeriodCloseRequest, x_controller_token: str | None = Header(None),
+) -> PeriodClose:
+    """Controller only: reconcile, take the trial balance and lock the books through `through`
+    (books/close.py). 409 `unreconciled` lists open mismatches unless they're acknowledged."""
+    _business(business_id)
+    _require_controller(body.actor, x_controller_token, "close the books", business_id)
+    from app.books import close as books_close
+
+    try:
+        return books_close.close_period(business_id, body.through, acknowledge_exceptions=body.acknowledge_exceptions,
+                                        note=body.note)
+    except books_close.CloseRefused as e:
+        raise ApiError(409, e.code, e.message, e.detail)
 
 
 # --- Chat --------------------------------------------------------------------
@@ -480,10 +637,17 @@ def get_settings_route(business_id: str) -> Settings:
 
 
 @app.put("/businesses/{business_id}/settings", response_model=Settings, responses=ERRORS)
-def put_settings_route(business_id: str, body: Settings) -> Settings:
+def put_settings_route(
+    business_id: str, body: Settings,
+    x_actor: str | None = Header(None), x_controller_token: str | None = Header(None),
+) -> Settings:
     """Store the overrides, then re-run the rules (no Claude) on this week's open hedges and
-    log each status flip (R14)."""
+    log each status flip (R14). Changing materiality is the controller's call (X-Actor:
+    controller + X-Controller-Token), so the owner can't lift the co-sign requirement alone."""
     _business(business_id)
+    current = db.get_business_settings(business_id).thresholds.materiality_usd
+    if body.thresholds.materiality_usd != current:
+        _require_controller(x_actor, x_controller_token, "change the materiality threshold", business_id)
     db.put_business_settings(business_id, body)
     th = db.get_business_thresholds(business_id)
     week = clock.desk_week()
@@ -502,20 +666,172 @@ def put_settings_route(business_id: str, body: Settings) -> Settings:
     return db.get_business_settings(business_id)
 
 
-# --- Research (upload your revenue) -------------------------------------------
+# --- Reconciliation benchmark ------------------------------------------------
 
 
-@app.post("/research", response_model=ResearchResponse, responses={422: {"model": ErrorBody}})
-async def research_route(
-    file: UploadFile | None = File(None),
-    name: str | None = Form(None, max_length=60),
-    kind: str | None = Form(None, max_length=40),
-) -> ResearchResponse:
-    """Run the research protocol on an uploaded daily-revenue CSV (docs/RESEARCH_CONTRACT.md).
-    Stateless and offline; `name`/`kind` are accepted but not used or stored."""
-    data = await file.read(research.MAX_BYTES + 1) if file is not None else None
+@app.get("/benchmarks/reconciliation", response_model=ReconBenchmark)
+def reconciliation_benchmark() -> ReconBenchmark:
+    """The real reconciler scored on a SIMULATED world with planted errors and an answer key
+    (`books.benchmark`). Deterministic, offline, never touches the app's books; memoized."""
+    from app.books import benchmark
+
+    return benchmark.cached()
+
+
+from app.integrations.increase_routes import router as increase_router  # noqa: E402
+
+app.include_router(increase_router)  # GET /integrations/increase/status (docs/INCREASE.md)
+
+
+# --- Research (live upload) --------------------------------------------------
+# POST /research: the research protocol (stats/research.py) run live on an uploaded daily-revenue
+# CSV. Stateless: the file is read in memory and nothing is stored. The body is the raw CSV
+# (Content-Type text/csv), so no multipart dependency is needed offline.
+
+from app.models import ResearchQuote, ResearchReport  # noqa: E402
+
+
+def _with_card(report: ResearchReport) -> ResearchReport:
+    """Attach the scripted "Send to the desk" card, sized from this report (markets/demo_card.py)."""
+    from app.markets import demo_card
+
+    return report.model_copy(update={"demo_hedge": demo_card.plan(report.hypotheses)})
+
+
+@app.post("/research", response_model=ResearchReport, responses={422: {"model": ErrorBody}})
+async def research(request: Request, name: str | None = Query(None, max_length=60)) -> ResearchReport:
+    import asyncio
+
+    from app.stats import research as protocol
+
+    raw = await request.body()
+    if not raw.strip():
+        raise ApiError(422, "bad_csv", "The upload is empty; send the CSV as the request body.")
     try:
-        rev = research.parse_csv(data)
-        return await run_in_threadpool(research.run, rev)
-    except research.ResearchError as e:
-        raise ApiError(422, e.code, e.message, e.detail) from None
+        report = await asyncio.to_thread(protocol.run, raw, name.strip() if name else None)
+    except protocol.ResearchInputError as e:
+        raise ApiError(422, e.code, e.message, e.detail)
+    return _with_card(report)
+
+
+@app.post("/research/quote", response_model=ResearchQuote, responses={409: {"model": ErrorBody}, 422: {"model": ErrorBody}})
+async def research_quote(
+    request: Request, hypothesis: str = Query(..., max_length=40), name: str | None = Query(None, max_length=60),
+) -> ResearchQuote:
+    """Price one FOUND downside from an uploaded CSV (same raw body as POST /research): the protocol
+    re-runs on the file, then the desk's pipeline quotes it on Kalshi and Polymarket. Stores nothing."""
+    import asyncio
+
+    from app.markets import quote as research_quote_mod
+    from app.stats import research as protocol
+
+    raw = await request.body()
+    if not raw.strip():
+        raise ApiError(422, "bad_csv", "The upload is empty; send the CSV as the request body.")
+    try:
+        report = await asyncio.to_thread(protocol.run, raw, name.strip() if name else None)
+    except protocol.ResearchInputError as e:
+        raise ApiError(422, e.code, e.message, e.detail)
+    row = next((h for h in report.hypotheses if h.id == hypothesis), None)
+    if row is None:
+        raise ApiError(422, "unknown_hypothesis", f"No hypothesis {hypothesis!r} in the report.",
+                       {"allowed": [h.id for h in report.hypotheses]})
+    try:
+        return await research_quote_mod.quote(row)
+    except research_quote_mod.QuoteRefused as e:
+        raise ApiError(409, e.code, e.message, {"hypothesis": hypothesis})
+
+
+# --- QuickBooks Online integration ---------------------------------------------
+# "Integrations, not uploads" (integrations/quickbooks.py, docs/QUICKBOOKS.md): revenue and
+# forward-looking commitments read from the books. Demo mode reads the SYNTHETIC Hudson Bike Co.
+# company; live mode runs Intuit's OAuth2 flow. The connection is stored in the app DB.
+
+from fastapi.responses import RedirectResponse  # noqa: E402
+
+from app.integrations import quickbooks_sync as qbo_sync  # noqa: E402
+from app.integrations.quickbooks_sync_routes import router as quickbooks_sync_router  # noqa: E402
+from app.models import Commitments, QuickBooksConnect, QuickBooksResearch, QuickBooksStatus  # noqa: E402
+
+app.include_router(quickbooks_sync_router)  # GET /integrations/quickbooks/sync (write-back drift check)
+
+QBO_ERRORS = {409: {"model": ErrorBody}, 502: {"model": ErrorBody}}
+
+
+def _qbo_call(fn, *args):
+    from app.integrations import quickbooks as qbo
+
+    try:
+        return fn(*args)
+    except qbo.QuickBooksError as e:
+        raise ApiError(e.status, e.code, e.message, e.detail)
+
+
+@app.get("/integrations/quickbooks/status", response_model=QuickBooksStatus)
+def quickbooks_status() -> QuickBooksStatus:
+    from app.integrations import quickbooks as qbo
+
+    return qbo.get().status()
+
+
+@app.post("/integrations/quickbooks/connect", response_model=QuickBooksConnect, responses=QBO_ERRORS)
+def quickbooks_connect() -> QuickBooksConnect:
+    """Demo: connects at once to the SYNTHETIC company. Live: returns Intuit's consent URL."""
+    from app.integrations import quickbooks as qbo
+
+    return _qbo_call(qbo.get().connect)
+
+
+@app.get("/integrations/quickbooks/callback", response_class=RedirectResponse, status_code=302,
+         responses={400: {"model": ErrorBody}})
+def quickbooks_callback(code: str | None = None, state: str | None = None, realmId: str | None = None,  # noqa: N803
+                        error: str | None = None) -> RedirectResponse:
+    """Intuit's OAuth redirect: exchange the code, then send the browser back to the app."""
+    from app.integrations import quickbooks as qbo
+
+    base = get_settings().frontend_url.rstrip("/")
+    try:
+        qbo.get().callback(code, state, realmId, error)
+    except qbo.BadState as e:
+        raise ApiError(e.status, e.code, e.message, e.detail)
+    except qbo.QuickBooksError as e:
+        log.warning("QuickBooks callback failed: %s %s", e.code, e.detail)
+        return RedirectResponse(f"{base}/?qbo=error", status_code=302)
+    return RedirectResponse(f"{base}/?qbo=connected", status_code=302)
+
+
+@app.post("/integrations/quickbooks/disconnect", response_model=QuickBooksStatus)
+def quickbooks_disconnect() -> QuickBooksStatus:
+    from app.integrations import quickbooks as qbo
+
+    return qbo.get().disconnect()
+
+
+@app.get("/integrations/quickbooks/commitments", response_model=Commitments, responses=QBO_ERRORS)
+def quickbooks_commitments() -> Commitments:
+    from app.integrations import quickbooks as qbo
+
+    return _qbo_call(qbo.get().commitments)
+
+
+@app.post("/integrations/quickbooks/research", response_model=QuickBooksResearch,
+          responses=QBO_ERRORS | {422: {"model": ErrorBody}})
+async def quickbooks_research(name: str | None = Query(None, max_length=60)) -> QuickBooksResearch:
+    """The research protocol on daily revenue pulled from the books (same protocol and 422s as
+    POST /research), plus the business's open commitments. Stores nothing."""
+    import asyncio
+
+    from app.integrations import quickbooks as qbo
+    from app.stats import research as protocol
+
+    try:
+        result = await asyncio.to_thread(_qbo_call, qbo.get().research, name.strip() if name else None)
+    except protocol.ResearchInputError as e:
+        raise ApiError(422, e.code, e.message, e.detail)
+    return result.model_copy(update={"report": _with_card(result.report)})
+
+
+# --- Kalshi demo trading status (integrations/kalshi_routes.py, docs/KALSHI_DEMO.md) ---
+from app.integrations.kalshi_routes import router as kalshi_router  # noqa: E402
+
+app.include_router(kalshi_router)

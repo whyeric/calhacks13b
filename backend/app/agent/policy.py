@@ -33,6 +33,10 @@ from app.models import Budget, Headline, Hedge, HedgeLite, PayoffRow
 
 OWNER = "owner"
 OWNER_ACTIONS = frozenset({"approve", "reject", "book"})
+# Segregation of duties: the controller co-signs material hedges, sets materiality and closes
+# the books; it can't approve. The owner can't do the controller's part, and the desk neither.
+CONTROLLER = "controller"
+CONTROLLER_ACTIONS = frozenset({"cosign", "set_materiality", "close_period"})
 DECIDABLE = ("proposed", "pending_approval")  # D1: every passing hedge waits for the owner
 
 
@@ -46,10 +50,18 @@ class PolicyError(PermissionError):
 
 
 def can_act(actor: object, action: str) -> bool:
-    """True only for the exact actor "owner" on approve/reject/book (I4)."""
+    """True only for the exact actor "owner" on approve/reject/book (I4), and the exact actor
+    "controller" on cosign/set_materiality/close_period. Every other pairing is refused."""
     if action in OWNER_ACTIONS:
         return isinstance(actor, str) and actor == OWNER
+    if action in CONTROLLER_ACTIONS:
+        return isinstance(actor, str) and actor == CONTROLLER
     return False
+
+
+def needs_controller(hedge: Hedge, thresholds) -> bool:
+    """A premium above the business's materiality threshold needs the controller's co-sign."""
+    return hedge.premium is not None and hedge.premium > thresholds.materiality_usd
 
 
 def week_start(d: date | datetime | None = None) -> date:
@@ -72,15 +84,15 @@ def classify(premium: Decimal, remaining_budget: Decimal) -> str:
     return "within" if premium <= remaining_budget else "over_budget"
 
 
-def _fee(fills: list[tuple[Decimal, int]]) -> Decimal:
-    raw = sum((Decimal("0.07") * c * p * (1 - p) for p, c in fills), Decimal(0))
+def _fee(fills: list[tuple[Decimal, int]], rate: Decimal = Decimal("0.07")) -> Decimal:
+    raw = sum((rate * c * p * (1 - p) for p, c in fills), Decimal(0))
     return raw.quantize(Decimal("0.01"), rounding=ROUND_CEILING)
 
 
 def within_budget_alternative(hedge: Hedge, remaining_budget: Decimal) -> HedgeLite | None:
     """Largest smaller hedge on the same market whose premium fits `remaining_budget` (G10).
 
-    Re-uses the hedge's own fills (cheapest levels first) and Kalshi's taker-fee formula, so
+    Re-uses the hedge's own fills (cheapest levels first) and the venue's taker-fee formula, so
     every figure is computed here from the sizing tool's output. None if nothing fits."""
     if remaining_budget <= 0 or not hedge.fills or hedge.payoff is None or hedge.headline is None:
         return None
@@ -97,7 +109,7 @@ def within_budget_alternative(hedge: Hedge, remaining_budget: Decimal) -> HedgeL
             take.append((p, k))
             left -= k
         cost = sum((p * k for p, k in take), Decimal(0)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        fee = _fee(take)
+        fee = _fee(take) if hedge.fee_rate is None else _fee(take, hedge.fee_rate)
         premium = cost + fee
         if premium <= remaining_budget:
             best = (n, take, cost, fee, premium)

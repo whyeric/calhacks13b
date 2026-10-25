@@ -45,11 +45,14 @@ CENT = Decimal("0.01")
 NY = ZoneInfo("America/New_York")
 
 CASH = "Assets:Kalshi:Cash"
+POLYMARKET_CASH = "Assets:Polymarket:Cash"  # a Polymarket hedge's premium and payout (markets/polymarket.py)
+VENUE_CASH = {"kalshi": CASH, "polymarket": POLYMARKET_CASH}
 BANK = "Assets:Bank:Checking"
 PREMIUMS = "Expenses:Hedging:Premiums"
 FEES = "Expenses:Hedging:Fees"
 PAYOUTS = "Income:Hedging:Payouts"
 ACCOUNTS = (CASH, BANK, PREMIUMS, FEES, PAYOUTS)
+EXTRA_ACCOUNTS = (POLYMARKET_CASH,)  # opened in the Beancount file only once a posting uses them
 OPEN_DATE = date(2026, 1, 1)
 
 OPENING_DEPOSIT = Decimal("500.00")  # simulated funding of the Kalshi account (ACCEPTANCE gap 2)
@@ -92,8 +95,8 @@ def payout_entry_id(hedge_id: str) -> str:
     return f"le_{hedge_id}_payout"
 
 
-def opening_entry_id(business_id: str) -> str:
-    return f"le_{business_id}_opening"
+def opening_entry_id(business_id: str, venue: str = "kalshi") -> str:
+    return f"le_{business_id}_opening" if venue == "kalshi" else f"le_{business_id}_opening_{venue}"
 
 
 def withdrawal_entry_id(business_id: str, on: date, hedge_ids: list[str]) -> str:
@@ -113,6 +116,25 @@ def _beancount_available() -> bool:
     return True
 
 
+# --- Period lock (books/close.py) --------------------------------------------------
+
+CLOSES_KEY = "period_closes"  # analysis-cache key holding the business's PeriodClose records
+
+
+def locked_through(business_id: str, engine: Engine | None = None) -> date | None:
+    closes = db.get_analysis(business_id, CLOSES_KEY, engine) or []
+    return max((date.fromisoformat(c["through"]) for c in closes), default=None)
+
+
+def posting_date(business_id: str, on: date, engine: Engine | None = None) -> tuple[date, str]:
+    """(date to book on, narration suffix). Nothing is dated inside a closed period: a late item
+    lands on the first open day and says which closed date it belongs to."""
+    lock = locked_through(business_id, engine)
+    if lock is None or on > lock:
+        return on, ""
+    return lock + timedelta(days=1), f" [belongs to {on.isoformat()}; books closed through {lock.isoformat()}]"
+
+
 def get_entry(business_id: str, entry_id: str, engine: Engine | None = None) -> LedgerEntry | None:
     for e in db.list_ledger_entries(business_id, engine):
         if e.id == entry_id:
@@ -128,19 +150,20 @@ def ensure_opening_deposit(
     on: date,
     engine: Engine | None = None,
     amount: Decimal = OPENING_DEPOSIT,
+    venue: str = "kalshi",
 ) -> LedgerEntry:
-    """Labeled simulated funding of Assets:Kalshi:Cash; created once per business."""
-    existing = get_entry(business_id, opening_entry_id(business_id), engine)
+    """Labeled simulated funding of the venue's cash account; created once per business and venue."""
+    existing = get_entry(business_id, opening_entry_id(business_id, venue), engine)
     if existing is not None:
         return existing
     amount = cents(amount)
     entry = LedgerEntry(
-        id=opening_entry_id(business_id),
+        id=opening_entry_id(business_id, venue),
         business_id=business_id,
         date=on,
         kind="opening_deposit",
-        narration="[SIMULATED] Opening deposit to Kalshi",
-        postings=[Posting(account=CASH, amount=amount), Posting(account=BANK, amount=-amount)],
+        narration=f"[SIMULATED] Opening deposit to {venue.capitalize()}",
+        postings=[Posting(account=VENUE_CASH[venue], amount=amount), Posting(account=BANK, amount=-amount)],
         meta=None,
         simulated=True,
     )
@@ -199,17 +222,20 @@ def book_entries(
         return [existing]
 
     booked_on = on or (ny_date(hedge.decided_at) if hedge.decided_at else datetime.now(NY).date())
-    ensure_opening_deposit(hedge.business_id, booked_on, engine)
+    booked_on, late = posting_date(hedge.business_id, booked_on, engine)
+    ensure_opening_deposit(hedge.business_id, booked_on, engine, venue=hedge.venue)
+    where = "" if hedge.venue == "kalshi" else f" ({hedge.venue.capitalize()})"
     entry = LedgerEntry(
         id=premium_entry_id(hedge.id),
         business_id=hedge.business_id,
         date=booked_on,
         kind="premium",
-        narration=("[SIMULATED] " if simulated else "") + f"Premium: {ticker} {hedge.side.upper()} x {hedge.n_filled}",
+        narration=("[SIMULATED] " if simulated else "") + f"Premium{where}: {ticker} {hedge.side.upper()} x {hedge.n_filled}"
+        + late,
         postings=[
             Posting(account=PREMIUMS, amount=cost),
             Posting(account=FEES, amount=fee),
-            Posting(account=CASH, amount=-premium),
+            Posting(account=VENUE_CASH[hedge.venue], amount=-premium),
         ],
         meta=hedge_meta(hedge),
         simulated=simulated,
@@ -362,10 +388,10 @@ def render_ledger(business_id: str, engine: Engine | None = None) -> str:
         'option "operating_currency" "USD"',
         "",
     ]
-    head += [f"{OPEN_DATE.isoformat()} open {a} USD" for a in ACCOUNTS]
-    blocks: list[tuple[date, int, str, list[str]]] = [
-        (e.date, 0, e.id, _entry_text(e)) for e in db.list_ledger_entries(business_id, engine)
-    ]
+    entries = db.list_ledger_entries(business_id, engine)
+    used = {p.account for e in entries for p in e.postings}
+    head += [f"{OPEN_DATE.isoformat()} open {a} USD" for a in ACCOUNTS + tuple(a for a in EXTRA_ACCOUNTS if a in used)]
+    blocks: list[tuple[date, int, str, list[str]]] = [(e.date, 0, e.id, _entry_text(e)) for e in entries]
     blocks += [(on, 1, hid, lines) for on, hid, lines in _notes(business_id, engine)]
     blocks.sort(key=lambda b: (b[0], b[1], b[2]))
     body: list[str] = []

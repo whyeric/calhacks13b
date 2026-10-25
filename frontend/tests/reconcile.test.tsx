@@ -42,6 +42,7 @@ describe("C7-A28 reconciliation mismatch", () => {
     expect(headers).toEqual([
       "Payout",
       "Expected",
+      "Venue (simulated)",
       "Kalshi ledger",
       "Bank (simulated)",
       "Result",

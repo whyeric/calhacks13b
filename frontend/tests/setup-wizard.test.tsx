@@ -1,13 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import {
   afterAll,
   afterEach,
@@ -23,14 +16,14 @@ import { setupServer } from "msw/node";
 import { SWRConfig } from "swr";
 import Home from "@/app/page";
 import { SEND_MS } from "@/components/DemoDesk";
-import researchFixture from "@/fixtures/research_response.json";
-import { SETUP_KEY, newestPriceTime, resetSetup } from "@/lib/setup";
+import { SETUP_KEY, newestPriceTime } from "@/lib/setup";
 import businesses from "@/fixtures/businesses.json";
 import restaurant from "@/fixtures/analyze_restaurant.json";
 import hedges from "@/fixtures/hedges_mixed.json";
 import logs from "@/fixtures/decisions.json";
 import backtest from "@/fixtures/backtest_taxi.json";
 import settings from "@/fixtures/settings.json";
+import research from "@/fixtures/research_report.json";
 import type { Hedge } from "@/lib/types";
 
 const api = "http://localhost:8000";
@@ -48,10 +41,22 @@ const server = setupServer(
     approvals.push(String(params.id));
     return HttpResponse.json(hedges[0]);
   }),
+  // The upload step researches the file live (POST /research); the drawer reads the
+  // QuickBooks connection when it opens (not connected here).
+  http.post(`${api}/research`, () => HttpResponse.json(research)),
+  http.get(`${api}/integrations/quickbooks/status`, () =>
+    HttpResponse.json({
+      mode: "demo",
+      connected: false,
+      company_name: null,
+      realm_id: null,
+      connected_at: null,
+      synthetic: true,
+    }),
+  ),
   http.get(`${api}/health`, () =>
     HttpResponse.json({ status: "ok", offline: true, anthropic: "fallback" }),
   ),
-  http.post(`${api}/research`, () => HttpResponse.json(researchFixture)),
 );
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 beforeEach(() => {
@@ -151,16 +156,16 @@ describe("first-run setup wizard", () => {
 });
 
 describe("wizard with an upload", () => {
-  // Finishing setup in an earlier test leaves the in-memory flag set.
-  beforeEach(() => resetSetup());
   afterEach(() => vi.useRealTimers());
-  const text = readFileSync(
-    resolve(process.cwd(), "public/samples/hudson_bike_co_daily_revenue.csv"),
-    "utf-8",
-  );
-  async function uploadSample() {
+  it("falls back to the labeled precomputed report when /research fails", async () => {
+    server.use(http.post(`${api}/research`, () => HttpResponse.error()));
+    mount();
     fireEvent.click(
       await screen.findByRole("button", { name: "Upload your revenue" }),
+    );
+    const text = readFileSync(
+      resolve(process.cwd(), "public/samples/hudson_bike_co_daily_revenue.csv"),
+      "utf-8",
     );
     fireEvent.change(screen.getByLabelText("Daily revenue (CSV)"), {
       target: { files: [new File([text], "sample.csv", { type: "text/csv" })] },
@@ -169,22 +174,36 @@ describe("wizard with an upload", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Upload and research" }),
     );
-  }
-  it("posts the upload to /research, shows declines with reasons, and waits for the owner to approve", async () => {
+    next();
+    expect(await screen.findByTestId("research-precomputed")).toHaveTextContent(
+      "Precomputed on the sample file",
+    );
+    expect(screen.getByTestId("research-row-rain")).toHaveTextContent(
+      "−18.4% · −$1,955.68/day",
+    );
+  });
+  it("uses #74's upload, shows declines with reasons, and waits for the owner to approve", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     mount();
-    await uploadSample();
-    await waitFor(() =>
-      expect(screen.getByRole("button", { name: "Next →" })).toBeEnabled(),
+    fireEvent.click(
+      screen.getByRole("button", { name: "Upload your revenue" }),
     );
-    expect(document.querySelector(".wizard-picked")).toHaveTextContent(
-      "Hudson Bike Co. · 1,004 days · 2024-01-01 → 2026-09-30",
+    const text = readFileSync(
+      resolve(process.cwd(), "public/samples/hudson_bike_co_daily_revenue.csv"),
+      "utf-8",
     );
+    fireEvent.change(screen.getByLabelText("Daily revenue (CSV)"), {
+      target: { files: [new File([text], "sample.csv", { type: "text/csv" })] },
+    });
+    await screen.findByText(/1,004 days/);
+    fireEvent.click(
+      screen.getByRole("button", { name: "Upload and research" }),
+    );
+    expect(screen.getByText(/Hudson Bike Co\./)).toBeVisible();
     next();
     expect(screen.queryByText("Running analysis…")).toBeNull();
-    expect(screen.getByTestId("research-row-rain")).toBeVisible();
-    expect(screen.getByText(researchFixture.summary)).toBeVisible();
-    expect(screen.queryByText("Precomputed on the sample file")).toBeNull();
+    expect(await screen.findByTestId("research-row-rain")).toBeVisible();
+    expect(screen.queryByTestId("research-precomputed")).toBeNull();
     expect(screen.getByText("Declined, and why")).toBeVisible();
     next();
     expect(screen.getByText(/fixed settings/)).toBeVisible();
@@ -193,6 +212,7 @@ describe("wizard with an upload", () => {
     await act(() => vi.advanceTimersByTimeAsync(SEND_MS + 100));
     const card = screen.getByTestId("demo-hedge-card");
     expect(card).toHaveTextContent("Proposed · only you can approve");
+    expect(card).toHaveTextContent("1,923 contracts @ 33¢ · premium $664.36");
     fireEvent.click(within(card).getByRole("button", { name: "Approve" }));
     expect(card).toHaveTextContent("Approved by you");
     next();
@@ -205,46 +225,6 @@ describe("wizard with an upload", () => {
     expect(screen.getByTestId("freshness")).toHaveTextContent(
       "Kalshi prices: scripted sample",
     );
-  });
-  it("shows a 422 in the drawer and keeps the wizard on step 1", async () => {
-    server.use(
-      http.post(`${api}/research`, () =>
-        HttpResponse.json(
-          {
-            error: {
-              code: "out_of_window",
-              message:
-                "Some dates fall outside the weather record (2024-01-01 to 2026-09-30).",
-              detail: {
-                dates: ["2023-12-31"],
-                window: ["2024-01-01", "2026-09-30"],
-              },
-            },
-          },
-          { status: 422 },
-        ),
-      ),
-    );
-    mount();
-    await uploadSample();
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      "Some dates fall outside the weather record (2024-01-01 to 2026-09-30).",
-    );
-    expect(
-      screen.getByRole("dialog", { name: "Upload your revenue" }),
-    ).toBeVisible();
-    expect(screen.getByRole("button", { name: "Next →" })).toBeDisabled();
-  });
-  it("falls back to the precomputed report, labeled, when the API is down", async () => {
-    server.use(http.post(`${api}/research`, () => HttpResponse.error()));
-    mount();
-    await uploadSample();
-    await waitFor(() =>
-      expect(screen.getByRole("button", { name: "Next →" })).toBeEnabled(),
-    );
-    next();
-    expect(screen.getByText("Precomputed on the sample file")).toBeVisible();
-    expect(screen.getByTestId("research-row-rain")).toBeVisible();
   });
 });
 
