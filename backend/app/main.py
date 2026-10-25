@@ -20,13 +20,14 @@ from datetime import date
 from decimal import Decimal
 from typing import Any
 
-from fastapi import BackgroundTasks, Body, FastAPI, Header, Query, Request
+from fastapi import BackgroundTasks, Body, FastAPI, File, Form, Header, Query, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app import analysis, clock, db
+from app import analysis, clock, db, research
 from app.config import get_settings
 from app.hedge_rules import UNDECIDED, apply_rules
 from app.models import (
@@ -45,6 +46,7 @@ from app.models import (
     LogEntry,
     ReconResult,
     RejectRequest,
+    ResearchResponse,
     RunAccepted,
     RunStatus,
     Settings,
@@ -498,3 +500,22 @@ def put_settings_route(business_id: str, body: Settings) -> Settings:
                   "reasons": new.decision.reasons,
                   "summary": f"Settings changed: {h.id} went from {h.status} to {new.status}."})
     return db.get_business_settings(business_id)
+
+
+# --- Research (upload your revenue) -------------------------------------------
+
+
+@app.post("/research", response_model=ResearchResponse, responses={422: {"model": ErrorBody}})
+async def research_route(
+    file: UploadFile | None = File(None),
+    name: str | None = Form(None, max_length=60),
+    kind: str | None = Form(None, max_length=40),
+) -> ResearchResponse:
+    """Run the research protocol on an uploaded daily-revenue CSV (docs/RESEARCH_CONTRACT.md).
+    Stateless and offline; `name`/`kind` are accepted but not used or stored."""
+    data = await file.read(research.MAX_BYTES + 1) if file is not None else None
+    try:
+        rev = research.parse_csv(data)
+        return await run_in_threadpool(research.run, rev)
+    except research.ResearchError as e:
+        raise ApiError(422, e.code, e.message, e.detail) from None
