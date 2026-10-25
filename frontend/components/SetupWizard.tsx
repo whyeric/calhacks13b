@@ -13,6 +13,7 @@ import {
 } from "@/lib/demoScript";
 import { fmtUsd } from "@/lib/format";
 import { label } from "@/lib/labels";
+import { BrandMark } from "./BrandMark";
 import { EstimatedBadge } from "./Header";
 import { ExposureList } from "./ExposureList";
 import { DeclineReasons, HedgeList } from "./HedgeCard";
@@ -71,11 +72,9 @@ export function SetupWizard({
       )}
       <header className="wizard-header">
         <div className="brand">
-          <span className="brand-icon" aria-hidden="true">
-            H
-          </span>
+          <BrandMark />
           <div>
-            <h1>Hedge Desk setup</h1>
+            <h1>Offset</h1>
             <p>Steadier weeks. Your call.</p>
           </div>
         </div>
