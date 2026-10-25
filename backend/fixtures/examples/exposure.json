@@ -16,5 +16,8 @@
   "hedgeable": true,
   "reasons": [],
   "strike": null,
-  "beta_settlement": "1265.00"
+  "beta_settlement": "1265.00",
+  "expected_count": null,
+  "estimated": false,
+  "basis_note": null
 }

@@ -167,6 +167,18 @@ class DeskContext:
             self.ids[exposure_id] = hid
         return self.ids[exposure_id]
 
+    def leg_hedge_id(self, exposure_id: str, leg: str) -> str:
+        """One hedge per contract leg of a multi-leg exposure (the season playoff hedge), same rules."""
+        key = f"{exposure_id}#{leg}"
+        if key not in self.ids:
+            e = self.exposures.get(exposure_id)
+            hid = f"hdg_{self.business_id}_{self.week_of:%Y%m%d}_{e.event if e else exposure_id}_{leg}"
+            old = db.get_hedge(hid, self.engine)
+            if old is not None and old.status not in ("proposed", "pending_approval", "declined"):
+                hid = f"{hid}_{self.run_id[-6:]}"
+            self.ids[key] = hid
+        return self.ids[key]
+
     def exposure(self, exposure_id: str) -> Exposure:
         if not self.exposures:
             self.get_exposures()

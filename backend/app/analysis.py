@@ -32,10 +32,40 @@ def compute(business_id: str, strike: float | None = None) -> AnalyzeResponse:
     thresholds = db.get_business_thresholds(business_id)
     result = fit_exposures(df, strikes, business_id=business_id, thresholds=thresholds)
     check = run_model_check(df, event="rain", strikes=strikes)
+    exposures, dropped = list(result.exposures), list(result.dropped)
+    playoff = playoff_exposure(business_id, df, thresholds)
+    if playoff is not None:
+        (exposures if playoff.hedgeable else dropped).append(playoff)
     # r2_holdout is None when the table has no holdout rows; the response carries null then.
-    return AnalyzeResponse(
-        exposures=result.exposures, dropped=result.dropped, model_check=check, r2_holdout=result.r2_holdout
-    )
+    return AnalyzeResponse(exposures=exposures, dropped=dropped, model_check=check, r2_holdout=result.r2_holdout)
+
+
+# Businesses next to MSG get the playoff home-game exposure (a pooled near-MSG estimate, I6).
+PLAYOFF_BUSINESSES = {"restaurant"}
+
+
+def playoff_exposure(business_id: str, df, thresholds):
+    """`playoff_home` for a business across from MSG, or None (other businesses, missing fixtures).
+
+    The expected number of home games comes from the season futures in the offline Kalshi cache;
+    a desk run refreshes that cache online and re-sizes from live prices.
+    """
+    if business_id not in PLAYOFF_BUSINESSES:
+        return None
+    from app.data.playoffs import read_games
+    from app.markets import season
+    from app.stats import playoffs
+
+    try:
+        quotes = season.cached_quotes()
+        expected = season.expected_home_games(quotes) if quotes else None
+    except ValueError:
+        expected = None
+    try:
+        return playoffs.measure(df, business_id=business_id, games=read_games(), expected_count=expected,
+                                thresholds=thresholds)
+    except FileNotFoundError:
+        return None
 
 
 def analyze(business_id: str, strike: float | None = None) -> AnalyzeResponse:

@@ -11,7 +11,8 @@ from app.models import DECIMAL_STR
 from .conftest import EXAMPLES, validate_example
 
 # Statistics and non-money parameters that stay JSON numbers (CONTRACTS R1).
-FLOAT_KEYS = {"p_value", "coverage", "reduction_pct", "priced_real_pct", "frac", "target", "strike", "basis_r2_min"}
+FLOAT_KEYS = {"p_value", "coverage", "reduction_pct", "priced_real_pct", "frac", "target", "strike", "basis_r2_min",
+              "expected_count"}  # expected_count: model-implied expected events (playoff home games)
 
 
 def _decimal_paths(obj, raw, path="$"):

@@ -19,5 +19,8 @@
     "not_significant"
   ],
   "strike": null,
-  "beta_settlement": null
+  "beta_settlement": null,
+  "expected_count": null,
+  "estimated": false,
+  "basis_note": null
 }

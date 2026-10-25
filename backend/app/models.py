@@ -103,7 +103,7 @@ class Contract(BaseModel):
 
 # --- Enums -------------------------------------------------------------------
 
-Event = Literal["rain", "hot", "home_win"]
+Event = Literal["rain", "hot", "home_win", "playoff_home"]
 Side = Literal["yes", "no"]
 Agent = Literal["claude", "fallback"]
 Actor = Literal["desk", "owner", "system"]
@@ -140,6 +140,13 @@ class Exposure(Contract):
     reasons: list[Literal["below_size", "not_significant", "thin_support"]]
     strike: float | None  # temperature strike in °F, `hot` only
     beta_settlement: Money | None
+    # `playoff_home` (and any class-rated exposure): `effect_usd` is $ per event, not per day.
+    # `expected_count` is the market-implied expected count this season (e.g. playoff home
+    # games); `estimated` marks a pooled estimate applied to this business (I6), and
+    # `basis_note` says where the number comes from. Defaults keep older payloads valid.
+    expected_count: float | None = None
+    estimated: bool = False
+    basis_note: str | None = None
 
     @model_validator(mode="after")
     def _consistent(self) -> "Exposure":
@@ -360,6 +367,12 @@ class Hedge(Contract):
     created_at: AwareDatetime
     decided_by: Literal["owner"] | None
     decided_at: AwareDatetime | None
+    # Multi-leg exposures (the season playoff hedge): every leg is its own Hedge with the same
+    # exposure_id. `leg_label` names the state the leg pays in ("Knicks miss the playoffs");
+    # `group_total_premium` is the sum of the legs' premiums, identical on every leg. Both are
+    # null on single-contract hedges.
+    leg_label: str | None = None
+    group_total_premium: Money | None = None
 
     @model_validator(mode="after")
     def _consistent(self) -> "Hedge":

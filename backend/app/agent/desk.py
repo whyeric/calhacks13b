@@ -214,6 +214,67 @@ async def _fallback_exposure(ctx: DeskContext, exposure_id: str, note: str | Non
         ctx.agent = prev_agent
 
 
+MULTI_LEG_EVENTS = {"playoff_home"}
+
+
+async def _season_quotes(markets: MarketsPort):
+    """Season futures from the markets port when it has them, else the offline Kalshi cache."""
+    from app.markets import season
+    from app.markets.kalshi import KalshiClient
+
+    fn = getattr(markets, "season_quotes", None)
+    if fn is not None:
+        return await fn()
+    async with KalshiClient(offline=True) as k:
+        return await season.fetch_quotes(k)
+
+
+async def _season_exposure(ctx: DeskContext, exposure_id: str) -> list[Hedge]:
+    """The season playoff hedge: one sized, rule-checked Hedge per futures leg, deterministic.
+
+    Code sizes (min-variance over the season futures) and judges (the existing six rules) every
+    leg; each gets a templated summary built from its own checks, logged once (I2, I5)."""
+    from app.markets import season
+    from app.markets.kalshi import CacheMiss, KalshiError
+    from app.markets.port import no_market_hedge
+
+    e = ctx.exposures[exposure_id]
+    prev_agent, ctx.agent = ctx.agent, "fallback"
+    hedges: list[Hedge] = []
+    try:
+        try:
+            sp = season.plan(e, await _season_quotes(ctx.markets))
+        except (CacheMiss, KalshiError, ValueError) as err:
+            logger.warning("season futures unavailable for %s: %s", exposure_id, err)
+            sp = None
+        if sp is None or not sp.legs:
+            hid = ctx.leg_hedge_id(exposure_id, "none")
+            b = ctx.budget_excluding(hid)
+            st = ctx._store(e, no_market_hedge(e, hedge_id=hid, week_of=ctx.week_of, now=ctx.now,
+                                               agent="fallback", remaining=b.remaining), b)
+            ctx.write_log(st, prompts.template_summary(st.hedge, st.budget), agent="fallback")
+            return [st.hedge]
+        # Cheapest premium first, so the budget goes to as many legs as it can cover.
+        for lp in sorted(sp.legs, key=lambda lp: lp.n_target * (season.best_ask(lp.quote.book, "no") or 1)):
+            hid = ctx.leg_hedge_id(exposure_id, lp.quote.leg.key)
+            b = ctx.budget_excluding(hid)  # earlier legs are stored, so they already count as pending
+            hedge = season.leg_hedge(e, sp, lp, hedge_id=hid, week_of=ctx.week_of, now=ctx.now, agent="fallback",
+                                     remaining=b.remaining, thresholds=ctx.thresholds)
+            st = ctx._store(e, hedge, b)
+            ctx.write_log(st, season.leg_summary(st.hedge, lp), agent="fallback")
+            hedges.append(st.hedge)
+            ctx.trace.append({"name": "season_hedge", "input": {"exposure_id": exposure_id, "ticker": lp.quote.leg.ticker},
+                              "output": st.hedge.model_dump(mode="json", include={"id", "ticker", "n_filled", "premium", "status"}),
+                              "agent": "fallback"})
+        hedges = season.with_group_total(hedges)
+        for h in hedges:
+            db.put_hedge(h, ctx.engine)
+            ctx.states[h.id].hedge = h
+        return hedges
+    finally:
+        ctx.agent = prev_agent
+
+
 async def run_week(
     business_id: str,
     week_of: date,
@@ -261,9 +322,19 @@ async def _run(business_id, week, run_id, client, now, engine, markets, model, m
     claude = _Claude(client, model, monotonic, sleep, monotonic() + RUN_DEADLINE_S) if use_claude else None
     cap = ctx.thresholds.max_tool_calls
 
-    existing = {h.exposure_id: h for h in db.list_hedges(business_id, week, OPEN_STATUSES, engine)}
+    open_hedges = db.list_hedges(business_id, week, OPEN_STATUSES, engine)
+    existing = {h.exposure_id: h for h in open_hedges}
     run = DeskRun(run_id=run_id, agent="claude", business_id=business_id, week_of=week)
     for exposure_id in ctx.exposures:
+        if ctx.exposures[exposure_id].event in MULTI_LEG_EVENTS:  # one hedge per contract leg
+            legs = [h for h in open_hedges if h.exposure_id == exposure_id]
+            if legs:  # G14 for every leg at once
+                run.skipped_existing.append(exposure_id)
+                run.hedges.extend(legs)
+            else:
+                run.fallback_reasons[exposure_id] = "season_hedge"
+                run.hedges.extend(await _season_exposure(ctx, exposure_id))
+            continue
         if exposure_id in existing:  # G14: same-week rerun reuses the open hedge
             run.skipped_existing.append(exposure_id)
             run.hedges.append(existing[exposure_id])
