@@ -49,6 +49,36 @@ describe("C7-A29 chat drawer", () => {
     expect(details.textContent).toContain('"hedge_id": "hdg_03"');
     expect(details.textContent).toContain('"overpay": "0.35"');
   });
+  it("renders the desk's Markdown as formatting, keeping every number as written", async () => {
+    server.use(
+      http.post(`${api}/businesses/:id/chat`, () =>
+        HttpResponse.json({
+          reply:
+            "The rain hedge, `hdg_taxi_20261026_rain`, was declined:\n\n- **No market (failed):** 0 candidates.\n- **Unstable:** $2,080.20 against $228.41\n  in the recent window.\n\n1. First\n2. Second <b>raw</b>",
+          tool_calls: [],
+        }),
+      ),
+    );
+    mount();
+    ask("Why?");
+    const desk = await screen.findByTestId("chat-desk");
+    expect(desk.textContent).not.toMatch(/\*\*|`/);
+    expect(within(desk).getByText("hdg_taxi_20261026_rain").tagName).toBe(
+      "CODE",
+    );
+    expect(within(desk).getByText("No market (failed):").tagName).toBe(
+      "STRONG",
+    );
+    const items = desk.querySelectorAll("ul > li");
+    expect(items).toHaveLength(2);
+    expect(items[1]).toHaveTextContent(
+      "Unstable: $2,080.20 against $228.41 in the recent window.",
+    );
+    expect(desk.querySelectorAll("ol > li")).toHaveLength(2);
+    // Text is never parsed as HTML.
+    expect(desk.querySelector("b")).toBeNull();
+    expect(desk.textContent).toContain("Second <b>raw</b>");
+  });
   it("keeps the typed question when the request fails", async () => {
     server.use(
       http.post(`${api}/businesses/:id/chat`, () =>

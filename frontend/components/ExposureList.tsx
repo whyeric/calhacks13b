@@ -123,7 +123,12 @@ export function ModelCheck({
       <p>
         Coverage {fmtPct(String(data.coverage))} · {data.n_seeds} trials
       </p>
-      <p>Holdout R²: {r2 ?? "Not available (no holdout rows)"}</p>
+      <p>
+        Holdout R²:{" "}
+        {r2 === null
+          ? "Not available (no holdout rows)"
+          : r2.toFixed(2).replace("-", "−")}
+      </p>
     </section>
   );
 }

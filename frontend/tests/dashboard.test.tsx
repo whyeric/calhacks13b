@@ -204,6 +204,19 @@ describe("dashboard contract rendering", () => {
     expect(screen.getByText("Coverage 90% · 50 trials")).toBeVisible();
     expect(screen.getByText("Holdout R²: 0.58")).toBeVisible();
   });
+  it("model check rounds a raw holdout R² to two places", () => {
+    const data = fixture<Analyze>(analyzeJson);
+    const { rerender } = render(
+      <ModelCheck data={data.model_check} r2={0.23632632956599453} />,
+    );
+    expect(screen.getByText("Holdout R²: 0.24")).toBeVisible();
+    rerender(<ModelCheck data={data.model_check} r2={-0.0712} />);
+    expect(screen.getByText("Holdout R²: −0.07")).toBeVisible();
+    rerender(<ModelCheck data={data.model_check} r2={null} />);
+    expect(
+      screen.getByText("Holdout R²: Not available (no holdout rows)"),
+    ).toBeVisible();
+  });
   it("C7-A26 dropped list is collapsed with count and reasons", () => {
     const { container } = render(
       <NotHedgedList dropped={fixture<Analyze>(analyzeJson).dropped} />,

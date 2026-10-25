@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { ChatReply, ToolCall } from "@/lib/types";
 import { apiPost } from "@/lib/api";
+import { ChatText } from "./ChatText";
 
 type Message =
   | { role: "owner"; text: string }
@@ -124,7 +125,11 @@ export function ChatDrawer({
             <span className="eyebrow">
               {row.role === "owner" ? "You" : "Desk"}
             </span>
-            <p>{row.text}</p>
+            {row.role === "desk" ? (
+              <ChatText text={row.text} />
+            ) : (
+              <p>{row.text}</p>
+            )}
             {row.role === "desk" &&
               row.tool_calls.map((call, i) => (
                 <ToolCallDetails key={i} call={call} />
