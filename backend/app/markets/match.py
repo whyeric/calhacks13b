@@ -8,13 +8,17 @@ decline downstream.
 from __future__ import annotations
 
 import asyncio
-from datetime import datetime, timedelta, timezone
+import re
+from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel
 
-from .kalshi import KalshiClient, Orderbook, Side, ask_levels, best_ask, best_bid
+from app.models import Side
+
+from .kalshi import KalshiClient, Orderbook, ask_levels, best_ask, best_bid
 from .shapes import field
 
 MAX_SLIP = Decimal("0.05")
@@ -32,6 +36,10 @@ SERIES_BY_VAR: dict[str, list[tuple[str, str | None]]] = {
     "home_win": [("KXNBAGAME", "NYK"), ("KXNHLGAME", "NYR")],
 }
 RAIN_CITY = "NYC"
+NY_TZ = ZoneInfo("America/New_York")
+_MONTHS = {m: i for i, m in enumerate(
+    ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"), start=1)}
+_EVENT_DATE = re.compile(r"-(\d{2})([A-Z]{3})(\d{2})")
 
 
 class Depth(BaseModel):
@@ -69,6 +77,17 @@ def _parse_time(s: str) -> datetime:
     return datetime.fromisoformat(s.replace("Z", "+00:00"))
 
 
+def event_date(market: dict) -> date | None:
+    """The day the market is about, from its event ticker (KXRAIN-26OCT25, KXNBAGAME-26OCT25ORLNYK).
+
+    Not `occurrence_datetime`: for KXRAIN it reads two days after the rain day.
+    """
+    m = _EVENT_DATE.search(market.get("event_ticker", ""))
+    if not m or m.group(2) not in _MONTHS:
+        return None
+    return date(2000 + int(m.group(1)), _MONTHS[m.group(2)], int(m.group(3)))
+
+
 def eligible(market: dict, settlement_var: str, team: str | None) -> bool:
     ticker = market["ticker"]
     if settlement_var == "rain":
@@ -80,6 +99,13 @@ def eligible(market: dict, settlement_var: str, team: str | None) -> bool:
         matchup = market["event_ticker"].split("-", 1)[-1]
         return ticker.rsplit("-", 1)[-1] == team and matchup.endswith(team)
     return False
+
+
+def _is_future_day(market: dict, today_ny: date) -> bool:
+    # A day that has started in New York is partly or wholly decided: never hedge it.
+    # Unparseable event tickers are skipped rather than guessed.
+    d = event_date(market)
+    return d is not None and d > today_ny
 
 
 def depth_within(book: Orderbook, side: Side, max_slip: Decimal = MAX_SLIP) -> int:
@@ -98,6 +124,7 @@ async def build_candidates(
         raise ValueError("now must be timezone-aware")
     now = now.astimezone(timezone.utc)
     horizon = now + timedelta(days=window_days)
+    today_ny = now.astimezone(NY_TZ).date()
 
     survivors: list[tuple[dict, dict]] = []
     for series_ticker, team in SERIES_BY_VAR.get(settlement_var, []):
@@ -109,6 +136,7 @@ async def build_candidates(
             if (
                 m.get("status") in OPEN_STATUSES
                 and now < _parse_time(m["close_time"]) <= horizon
+                and _is_future_day(m, today_ny)
                 and eligible(m, settlement_var, team)
             ):
                 survivors.append((m, series))

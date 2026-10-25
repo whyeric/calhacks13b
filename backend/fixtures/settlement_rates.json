@@ -1,0 +1,33 @@
+{
+  "rain": {
+    "p_hat": "0.3973",
+    "settlement_col": "settle_rain",
+    "series": "KXRAIN (-NYC markets)",
+    "station": "CLINYC, Central Park",
+    "latlon": [
+      "40.7789",
+      "-73.9692"
+    ],
+    "rule": "daily precipitation >= 0.01 in (contract: > 0 in; trace counts as 0)",
+    "train": [
+      "2024-10-01",
+      "2025-09-30"
+    ],
+    "n_train_days": 365,
+    "n_event_days": 145,
+    "source": "app.data.features.add_settlement + event_frequency on the taxi feature table (#20)"
+  },
+  "home_win": {
+    "p_hat": "0.5444",
+    "settlement_col": "home_win",
+    "universe": "home_game days (Knicks + Rangers at MSG)",
+    "series": "KXNBAGAME (NYK home), KXNHLGAME (NYR home)",
+    "train": [
+      "2024-10-01",
+      "2025-09-30"
+    ],
+    "n_train_days": 90,
+    "n_event_days": 49,
+    "source": "home_win / home_game on the taxi feature table (#20)"
+  }
+}

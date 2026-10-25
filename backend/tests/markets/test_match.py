@@ -121,3 +121,16 @@ def test_deterministic_pick_uses_hedge_side_depth():
     assert deterministic_pick(cs, "yes").ticker == "A"
     assert deterministic_pick(cs, "no").ticker == "B"
     assert deterministic_pick([], "no") is None
+
+
+@pytest.mark.parametrize("now,kept", [
+    (datetime(2026, 10, 25, 3, 30, tzinfo=timezone.utc), ["KXRAIN-26OCT25-NYC", "KXRAIN-26OCT26-NYC"]),  # 23:30 ET Oct 24
+    (datetime(2026, 10, 25, 4, 30, tzinfo=timezone.utc), ["KXRAIN-26OCT26-NYC"]),  # 00:30 ET Oct 25
+])
+async def test_skips_markets_whose_new_york_day_has_started(now, kept, tmp_path):
+    close = datetime(2026, 10, 28, tzinfo=timezone.utc)  # all still open by close_time
+    rain = [mkt(f"KXRAIN-26OCT{d}-NYC", close) for d in (24, 25, 26)]
+    mock = MockKalshi(routes({"KXRAIN": rain}))
+    async with KalshiClient(BASE, offline=False, cache_dir=tmp_path, transport=mock.transport) as k:
+        got = await build_candidates(k, {"settlement_var": "rain"}, now)
+    assert sorted(c.ticker for c in got) == kept

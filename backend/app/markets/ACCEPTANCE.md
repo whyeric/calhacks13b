@@ -5,12 +5,12 @@
 | | |
 |---|---|
 | **Scope** | Kalshi public-API client + disk cache, candidate matching, hedge sizing (book walk, fee, premium, payoff), six decline rules. Also owns confirm-check **C1** (open NYC Kalshi markets this week). Never places orders. |
-| **Files** | `backend/app/markets/kalshi.py`, `match.py`, `sizing.py`, `rules.py`; cache dir `fixtures/kalshi_cache/` |
+| **Files** | `backend/app/markets/kalshi.py`, `match.py`, `sizing.py`, `rules.py`; cache dir `backend/fixtures/kalshi_cache/` |
 | **Spec sections** | §3 C1, §6 Market layer, §7 Sizing, §8 Decline rules; invariants **I1** (contracts ≤ exposure ÷ $1, h ≤ 1) and **I3** (propose only if every rule passes; declines shown with reasons) |
 | **Owner role** | Stats and markets |
 | **Depends on** | **C2 Stats** (Exposure objects, `p̂` train frequency, basis R² and `β_S`). **C6 API/models/db** (shared pydantic models for Hedge/Decision/Candidate; Decimal-as-string serialization). **C1 Data** (none directly). **C8** supplies `DEMO_OFFLINE` and cache warm-up in the Makefile. |
 | **Consumed by** | **C4 Agent** (`search_markets`, `match_market`, `size_hedge`, `evaluate_hedge` tools; budget input), **C5 Books** (Hedge fills/fee/premium), **C7 Frontend** (Hedge/Decision JSON), **C2 backtest** (`list_settled`, `candles`, `taker_fee`, rules 3–5 reused) |
-| **Gate** | **3:30 PM**: C1 answered (list of open NYC tickers checked into `fixtures/kalshi_cache/` + noted below) and the Interfaces section frozen with example JSON checked in. **9 PM**: exposure → market → size → decide works on live Kalshi data. **Midnight**: decline moment verified on live data. **2 AM**: cache warm; `DEMO_OFFLINE=1` replay passes. |
+| **Gate** | **3:30 PM**: C1 answered (list of open NYC tickers checked into `backend/fixtures/kalshi_cache/` + noted below) and the Interfaces section frozen with example JSON checked in. **9 PM**: exposure → market → size → decide works on live Kalshi data. **Midnight**: decline moment verified on live data. **2 AM**: cache warm; `DEMO_OFFLINE=1` replay passes. |
 
 ## Interfaces
 
@@ -19,7 +19,7 @@ All money, prices, probabilities are `decimal.Decimal` in Python and **strings**
 ### kalshi.py
 | Signature | Behavior |
 |---|---|
-| `KalshiClient(base_url=env KALSHI_BASE_URL, offline=env DEMO_OFFLINE=="1", cache_dir="fixtures/kalshi_cache", transport=None)` | One shared `httpx.AsyncClient`, 10 s timeout, 3 retries (timeouts, 429, 5xx; not other 4xx), exponential backoff. `transport` is injectable for tests. |
+| `KalshiClient(base_url=env KALSHI_BASE_URL, offline=env DEMO_OFFLINE=="1", cache_dir="backend/fixtures/kalshi_cache", transport=None)` | One shared `httpx.AsyncClient`, 10 s timeout, 3 retries (timeouts, 429, 5xx; not other 4xx), exponential backoff. `transport` is injectable for tests. |
 | `async list_series(category: str) -> list[dict]` | `GET /series?category=`. Each dict keeps `ticker`, `title`, `fee_type`, `fee_multiplier`, settlement sources. |
 | `async list_markets(series_ticker, status="open", min_close_ts=None, max_close_ts=None) -> list[dict]` | Follows `cursor` pagination until exhausted. |
 | `async get_market(ticker) -> dict` | Includes `rules_primary`, `floor_strike`, `close_time`, `result` when settled. |
@@ -31,7 +31,7 @@ All money, prices, probabilities are `decimal.Decimal` in Python and **strings**
 | `ask_levels(book, side) -> list[Level]` | Ascending ask ladder derived by inverting the opposite bids (`ask = 1 − bid`, same count). |
 | `class CacheMiss(Exception)` | Raised in offline mode when a request has no cache file. Never falls through to the network. |
 
-Cache: key = `sha1(method + path + sorted query)`; file `fixtures/kalshi_cache/<key>.json` holding `{request, response, fetched_at}` plus a human-readable `index.json` mapping key to path+query. Online mode writes every successful response; offline mode only reads.
+Cache: key = `sha1(method + path + sorted query)`; file `backend/fixtures/kalshi_cache/<key>.json` holding `{request, response, fetched_at}` plus a human-readable `index.json` mapping key to path+query. Online mode writes every successful response; offline mode only reads.
 
 ### match.py
 | Signature | Behavior |
@@ -110,7 +110,7 @@ Cache: key = `sha1(method + path + sorted query)`; file `fixtures/kalshi_cache/<
 
 ## Automated acceptance tests
 
-Test dir: `backend/tests/markets/`. Hand-built fixtures under `fixtures/markets_test/` (books as JSON) unless noted. `pytest` + `pytest-asyncio`; network blocked by default via a transport that raises.
+Test dir: `backend/tests/markets/`. Hand-built fixtures under `backend/fixtures/markets_test/` (books as JSON) unless noted. `pytest` + `pytest-asyncio`; network blocked by default via a transport that raises.
 
 | ID | Test name | Future test file | Setup / fixture | Assertion |
 |---|---|---|---|---|
@@ -142,7 +142,7 @@ Test dir: `backend/tests/markets/`. Hand-built fixtures under `fixtures/markets_
 | C3-A26 | retry_policy | `test_kalshi_retry.py` | MockTransport: 500,500,200 then 404, then timeout×4 | Third attempt succeeds (3 tries); 404 not retried; 4 timeouts raise a typed `KalshiError`. |
 | C3-A27 | offline_replay_zero_network | `test_kalshi_offline.py` | Cache populated by A25 replay (or committed demo cache); `DEMO_OFFLINE=1`; transport that fails the test on any call | `list_series`, `list_markets`, `get_market`, `get_orderbook` return identical data as online; request counter on transport == 0; uncached request raises `CacheMiss` (not network). |
 | C3-A28 | end_to_end_offline_pipeline | `test_pipeline_offline.py` | committed demo cache + sample Exposure JSON for taxi rain and bar rain | candidates → pick → size → evaluate completes offline; both Hedge JSONs validate against C6 pydantic model; Decimal fields serialize as strings. |
-| C3-A29 | order_book_shape_tolerant | `test_kalshi_book.py` | recorded real response (`fixtures/kalshi_cache/`) | Parser handles the shape Kalshi actually returns (see open question G1); unknown extra keys ignored; counts int, prices Decimal. |
+| C3-A29 | order_book_shape_tolerant | `test_kalshi_book.py` | recorded real response (`backend/fixtures/kalshi_cache/`) | Parser handles the shape Kalshi actually returns (see open question G1); unknown extra keys ignored; counts int, prices Decimal. |
 
 ## Human review checklist
 
@@ -164,14 +164,14 @@ Test dir: `backend/tests/markets/`. Hand-built fixtures under `fixtures/markets_
 
 | Path | Content | Who |
 |---|---|---|
-| `fixtures/kalshi_cache/` | Warm cache: series list (Climate and Weather, NBA, NHL), open markets for the demo week, one orderbook per candidate, a few settled markets + candles | C3 (warm online once, commit); C8 re-warms at 2 AM |
-| `fixtures/markets_test/book_basic.json` | A4 book (YES/NO bids as above) | C3 |
-| `fixtures/markets_test/book_3level.json`, `book_boundary.json`, `book_thin.json`, `book_empty.json` | Ladders for A6–A8, A14 | C3 |
-| `fixtures/markets_test/candidates_*.json` | Candidate lists (empty, 2 items, mixed-city) | C3 |
-| `fixtures/markets_test/series_fee_{standard,x2,flat}.json` | Fee variants | C3 |
-| `fixtures/businesses/exposure_taxi_rain.json`, `exposure_bar_rain.json`, `exposure_taxi_hot.json`, `exposure_taxi_homewin.json` | Sample Exposure objects (spec §5 format) incl. `hedge_side` | C2 (C3 consumes) |
-| `fixtures/markets_test/basis_*.json` | `{r2, beta_s}` pairs for A16 | C2/C3 |
-| `fixtures/samples/hedge_*.json`, `decision_*.json` | One proposed, declined (spec example), pending_approval, no_market, partial; frozen at 3:30 PM for C4/C5/C7 | C3 |
+| `backend/fixtures/kalshi_cache/` | Warm cache: series list (Climate and Weather, NBA, NHL), open markets for the demo week, one orderbook per candidate, a few settled markets + candles | C3 (warm online once, commit); C8 re-warms at 2 AM |
+| `backend/fixtures/markets_test/book_basic.json` | A4 book (YES/NO bids as above) | C3 |
+| `backend/fixtures/markets_test/book_3level.json`, `book_boundary.json`, `book_thin.json`, `book_empty.json` | Ladders for A6–A8, A14 | C3 |
+| `backend/fixtures/markets_test/candidates_*.json` | Candidate lists (empty, 2 items, mixed-city) | C3 |
+| `backend/fixtures/markets_test/series_fee_{standard,x2,flat}.json` | Fee variants | C3 |
+| `backend/fixtures/markets_test/exposure_taxi_rain.json`, `exposure_bar_rain.json` | Sample Exposure objects (spec §5 format) incl. `hedge_side` | C2 (C3 consumes) |
+| `backend/fixtures/markets_test/basis_*.json` | `{r2, beta_s}` pairs for A16 | C2/C3 |
+| `backend/fixtures/samples/hedge_*.json`, `decision_*.json` | One proposed, declined (spec example), pending_approval, no_market, partial; frozen at 3:30 PM for C4/C5/C7 | C3 |
 
 ## Definition of done
 
@@ -205,7 +205,7 @@ Test dir: `backend/tests/markets/`. Hand-built fixtures under `fixtures/markets_
 
 ## C1 inventory (live public API, no key, 2026-10-24 23:10 UTC)
 
-Cache: `fixtures/kalshi_cache/` (re-warm: `cd backend && python -m scripts.warm_kalshi_cache`). Both `external-api.kalshi.com` and `api.elections.kalshi.com` answer unauthenticated reads. Asks are derived from the book (`1 − best opposite bid`).
+Cache: `backend/fixtures/kalshi_cache/` (re-warm: `make warm`, i.e. `cd backend && python -m app.markets.warm`). Both `external-api.kalshi.com` and `api.elections.kalshi.com` answer unauthenticated reads. Asks are derived from the book (`1 − best opposite bid`).
 
 | Exposure | Series | Open tickers in 8-day window | Close (UTC) | YES ask | NO ask | Go? |
 |---|---|---|---|---|---|---|
@@ -214,10 +214,10 @@ Cache: `fixtures/kalshi_cache/` (re-warm: `cd backend && python -m scripts.warm_
 | home_win | `KXNBAGAME` (NYK home), `KXNHLGAME` (NYR home) | `KXNBAGAME-26OCT25ORLNYK-NYK`, `KXNHLGAME-26OCT26LANYR-NYR`, `KXNBAGAME-26OCT27DETNYK-NYK` | Oct 27 23:00, Oct 28 23:00, Oct 30 00:00 | 0.76, 0.57, 0.69 | 0.26, 0.47, 0.36 | **GO** |
 
 Findings that affect other chunks:
-- Daily weather markets list only ~1 day ahead (created ~09:30 UTC for the next day), so the 8-day window holds today + tomorrow only.
+- Daily weather markets list only ~1 day ahead (created ~09:30 UTC for the next day). Matching skips any market whose event date (America/New_York, from the event ticker) is today or earlier, so weather candidates are **tomorrow only**. For a Sunday-morning demo, warm the cache after ~09:30 UTC Sunday (`make warm`) so the Monday markets exist; a cache warmed Saturday holds only Sunday markets, which are skipped on Sunday.
 - `KXHIGHNY` resolves YES iff Central Park (CLINYC) max temp is **strictly greater than** `floor_strike` (T71 = "72° or above"). Spec §5 says `hot = tmax ≥ strike`: C2 should use `tmax > floor_strike`.
-- `KXRAIN-…-NYC` resolves YES iff CLINYC precipitation is strictly > 0 in, per The Weather Company.
-- NBA/NHL series have `fee_type: "quadratic_with_maker_fees"` (weather: `"quadratic"`), both with multiplier 1. #43's `fee_unverified = fee_type != "quadratic"` would flag every game hedge.
+- `KXRAIN-…-NYC` resolves YES iff CLINYC (Central Park) total precipitation is strictly > 0 in, per The Weather Company; `rules_secondary`: trace (T) and missing values count as 0. With hundredths-of-an-inch reporting that is **≥ 0.01 in**. `fair` uses p̂ of `settle_rain` (Central Park, ≥ 0.01 in) on train 2024-10-01..2025-09-30: 145/365 = **0.3973**, recorded with provenance in `backend/fixtures/settlement_rates.json` by `scripts/settlement_rates.py` (#20's feature table).
+- NBA/NHL series have `fee_type: "quadratic_with_maker_fees"` (weather: `"quadratic"`), both with multiplier 1. Kalshi's docs (changelog 2026-08-22) describe the maker fee as the same quadratic at a quarter of the taker rate, charged only on resting orders; the taker fee is unchanged. The desk only takes, so both types count as verified (`fee_unverified=false`). Example: 100 YES on `KXNBAGAME-26OCT25ORLNYK-NYK` at 0.76 → 0.07·100·0.76·0.24 = 1.2768 → **$1.28**. The kalshi.com fee-schedule page/PDF rejected automated fetches (HTTP 429); C3-H3 should still eyeball it.
 - Game tickers read `<date><AWAY><HOME>-<YES team>`; `close_time` is ~2 days after tip-off (`occurrence_datetime`).
 - Book shape (G1): `{"orderbook_fp": {"yes_dollars": [[price, size]], "no_dollars": [...]}}`, ascending, sizes fractional (`"1334302.28"`, floored to whole contracts), empty side = `[]`.
 - `status=open` queries return markets with `status: "active"`; `status=settled` returns `"finalized"`.

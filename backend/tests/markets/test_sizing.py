@@ -44,9 +44,23 @@ def test_fee_multiplier_and_unverified_flag():
     assert taker_fee(10, D("0.62"), D(2)) == D("0.33")  # 0.32984 -> 0.33
     flags = {}
     for name, fee in {"std": STD, "x2": {"fee_type": "quadratic", "fee_multiplier": "2"},
-                      "flat": {"fee_type": "flat", "fee_multiplier": "1"}}.items():
+                      "flat": {"fee_type": "flat", "fee_multiplier": "1"},
+                      "maker": {"fee_type": "quadratic_with_maker_fees", "fee_multiplier": "1"}}.items():
         flags[name] = size_hedge(exposure(100, "yes"), CAND, BOOK, D(1), D("0.27"), fee).fee_unverified
-    assert flags == {"std": False, "x2": True, "flat": True}
+    # Maker fees only charge resting orders; the desk only takes, so its fee is the plain quadratic.
+    assert flags == {"std": False, "x2": True, "flat": True, "maker": False}
+
+
+async def test_cached_nba_game_taker_fee():
+    from app.markets.kalshi import KalshiClient, ask_levels
+    async with KalshiClient(offline=True) as k:
+        series = await k.get_series("KXNBAGAME")
+        book = await k.get_orderbook("KXNBAGAME-26OCT25ORLNYK-NYK")
+    assert (series["fee_type"], series["fee_multiplier"]) == ("quadratic_with_maker_fees", 1)
+    best = ask_levels(book, "yes")[0]
+    assert best.price == D("0.76")
+    # Kalshi taker fee: ceil_cent(0.07 · C · P · (1 − P)) = 0.07 · 100 · 0.76 · 0.24 = 1.2768 -> 1.28
+    assert order_fee([Level(price=best.price, count=100)], D(series["fee_multiplier"])) == D("1.28")
 
 
 def test_side_comes_only_from_hedge_side():
@@ -107,6 +121,8 @@ def test_expected_cost_premium_and_no_side_fair():
     hd = size_hedge(exposure(-100, "yes"), CAND, book, D(1), D("0.27"), STD)
     assert (hd.n_filled, hd.cost, hd.fee, hd.premium) == (70, D("30.30"), D("1.21"), D("31.51"))
     assert hd.expected_cost == D("12.61")
+    cheap = size_hedge(exposure(-100, "yes"), CAND, book, D(1), D("0.60"), STD)  # pays 0.43 vs fair 0.60
+    assert cheap.expected_cost == cheap.fee  # one-sided: a below-fair price is never a "saving"
     assert size_hedge(exposure(100, "no"), CAND, BOOK, D(1), D("0.27"), STD).fair == D("0.73")
 
 

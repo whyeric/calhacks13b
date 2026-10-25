@@ -1,0 +1,53 @@
+{
+  "id": "dec_sample_no_market",
+  "status": "declined",
+  "checks": [
+    {
+      "code": "no_market",
+      "passed": false,
+      "metric": {
+        "n_candidates": 0
+      }
+    },
+    {
+      "code": "illiquid",
+      "passed": null,
+      "metric": {
+        "skipped": "no_market"
+      }
+    },
+    {
+      "code": "overpriced",
+      "passed": null,
+      "metric": {
+        "skipped": "no_market"
+      }
+    },
+    {
+      "code": "basis_too_loose",
+      "passed": null,
+      "metric": {
+        "skipped": "no_market"
+      }
+    },
+    {
+      "code": "too_expensive",
+      "passed": null,
+      "metric": {
+        "skipped": "no_market"
+      }
+    },
+    {
+      "code": "over_budget",
+      "passed": true,
+      "metric": {
+        "premium": "0.00",
+        "remaining": "250.00"
+      }
+    }
+  ],
+  "reasons": [
+    "no_market"
+  ],
+  "summary": null
+}
