@@ -83,8 +83,8 @@ numbers come from really running the protocol offline on the sample file. Full d
    presenter's copy is in `~/Downloads/`.
 2. On `make demo`, click **Upload your revenue** and choose the file. The app shows the file's real
    row count and dates (1,004 days, 2024-01-01 to 2026-09-30).
-3. Click **Research my risks** and let the animation run: the mechanisms first, then the protocol
-   steps, then the report.
+3. Click **Upload and research**. A "Running analysis…" bar runs for about 7 seconds, then the
+   report appears.
    - Rain is FOUND: −18.4% (−$1,955.68/day) on 2024, −20.4% on 2025–26, placebo p 0.38.
    - Cold <40 °F is FOUND (−27.0% / −26.4%), and warm >80 °F is FOUND as an upside
      (+10.9% / +15.5%).

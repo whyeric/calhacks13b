@@ -19,7 +19,7 @@ business: **Hudson Bike Co.**, a fictional NYC bike-rental shop.
 | **The sample file** `hudson_bike_co_daily_revenue.csv` | **Synthetic revenue on real weather.** Hudson Bike Co. is fictional. Its daily revenue is generated, but the weather days it reacts to are the **real NOAA Central Park record** (USW00094728, the same Central Park station Kalshi's NYC weather contracts settle on; since 2026-08-14 Kalshi uses The Weather Company's reading there, so NOAA is a close proxy). The file header says so. |
 | The effects planted in the file | About **−20% on rain days, −28% below 40 °F, and +10% above 80 °F** (from the file header). No game effect is planted. |
 | The upload step | **Partly real.** The browser reads the file and shows its real row count and date range. Nothing is stored or sent anywhere. |
-| "Claude pre-registers mechanisms" and the protocol steps | **A staged animation.** It shows the steps the protocol runs, in order. Claude is not called during the demo. |
+| The "Running analysis…" progress bar | **Staged.** A few seconds of progress before the report appears. Claude is not called during the demo; the mechanisms shown were written before the protocol was run on this file. |
 | **The report's numbers** | **Real outputs of our protocol**, computed offline on this file and hardcoded into the frontend. |
 | "Send to the desk" and the hedge it shows | **Scripted**, with the numbers hardcoded from a desk calculation. No hedge is proposed through the backend, and nothing is sent to Kalshi. |
 
@@ -33,8 +33,7 @@ we put in, and reject what we didn't? It isn't evidence about real bike shops.
 1. `make demo`, then open <http://localhost:3000>.
 2. Click **Upload your revenue** and choose `hudson_bike_co_daily_revenue.csv`. A copy is in
    `frontend/public/samples/`, and the drawer links it; the presenter's copy is in `~/Downloads/`.
-3. Click **Research my risks** and let the animation run: the mechanisms are written first, then
-   the protocol steps.
+3. Click **Upload and research** and wait for the "Running analysis…" bar (about 7 seconds).
 4. Read the report (§3). On the rain row, click **Send to the desk** to see the hedge.
 
 The flow works with no network and no API key, like the rest of `make demo`.

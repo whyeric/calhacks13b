@@ -61,8 +61,8 @@ file and shows 1,004 days, 2024 to September 2026.
 > "Here's what our research protocol finds on a bike shop's revenue. Hudson Bike Co. is a
 > fictional shop, with synthetic sales on real Central Park weather."
 
-*Click **Research my risks**.* The animation shows the mechanisms being written, then the
-protocol's steps.
+*Click **Upload and research**.* A "Running analysis…" bar runs for a few seconds; talk over it, then the
+report appears with each risk's mechanism written above its numbers.
 
 > "The mechanism is written down before anything is tested: rain keeps riders home. Then every
 > idea gets the same protocol: fit on 2024, check on 2025 and 2026 separately, correct for how

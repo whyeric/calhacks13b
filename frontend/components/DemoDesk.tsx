@@ -18,34 +18,28 @@ import {
   DEMO_KINDS,
   DEMO_SAMPLE,
   FOREST_DOMAIN,
-  HYPOTHESES,
-  HYPOTHESIS_PAUSE_MS,
   PRIVACY_NOTE,
   PROTOCOL_CHIPS,
   RESEARCH_ROWS,
-  SEND_STEPS,
   SUMMARY,
-  TYPE_MS,
   csvSummary,
   demoBusiness,
   demoLog,
   parseRevenueCsv,
-  researchSteps,
   type DemoHedgeStatus,
   type ParsedCsv,
   type ResearchRow,
-  type Step,
 } from "@/lib/demoScript";
-import { intervalSpan, position } from "@/lib/chartScale";
+import { columnSpan, position, progressPercent } from "@/lib/chartScale";
+import { fmtUsd } from "@/lib/format";
 import { Drawer } from "./ChatDrawer";
-import { PayoffChart } from "./HedgeCard";
 import { DecisionLog } from "./DecisionLog";
 
 export type DemoUpload = { name: string; kind: string; csv: ParsedCsv };
 type HedgeState = { status: "sending" | DemoHedgeStatus; startedAt: number };
-const totalMs = (steps: Step[]) =>
-  steps.reduce((sum, step) => sum + step.ms, 0);
-const SEND_MS = totalMs(SEND_STEPS);
+// How long the analysis and the hedge pricing take on screen.
+export const RESEARCH_MS = 7000;
+export const SEND_MS = 2600;
 
 // --- State (lives in the page so switching businesses keeps the demo) -------
 export function useDemo() {
@@ -73,12 +67,10 @@ export function useDemo() {
     setHedge(null);
     setLog([]);
   }, []);
+  // Tests only: jump to the end of the analysis.
   const skip = useCallback(() => {
-    if (upload)
-      setStartedAt(
-        Date.now() - totalMs(researchSteps(upload.csv.rows, upload.kind)),
-      );
-  }, [upload]);
+    setStartedAt(Date.now() - RESEARCH_MS);
+  }, []);
   const send = useCallback(() => {
     if (!upload) return;
     setHedge({ status: "sending", startedAt: Date.now() });
@@ -249,125 +241,91 @@ export function DemoUploadDrawer({
   );
 }
 
-// --- Staged progress ----------------------------------------------------------
-function StepIcon({ state }: { state: "done" | "active" | "waiting" }) {
-  if (state === "done")
-    return (
-      <span className="step-icon done" aria-label="done">
-        ✓
-      </span>
-    );
-  if (state === "active")
-    return <span className="step-icon spinner" aria-label="working" />;
-  return <span className="step-icon waiting" aria-hidden="true" />;
+// --- Progress -----------------------------------------------------------------
+// Uneven pace (fast, stall, catch up) so the bar reads like real work.
+const PACE: [number, number][] = [
+  [0, 0], [0.1, 0.16], [0.24, 0.27], [0.36, 0.31], [0.52, 0.55],
+  [0.66, 0.62], [0.8, 0.79], [0.92, 0.93], [1, 1],
+];
+function paced(t: number): number {
+  if (t <= 0) return 0;
+  if (t >= 1) return 1;
+  for (let i = 1; i < PACE.length; i++) {
+    const [t1, p1] = PACE[i];
+    if (t <= t1) {
+      const [t0, p0] = PACE[i - 1];
+      return p0 + ((t - t0) / (t1 - t0)) * (p1 - p0);
+    }
+  }
+  return 1;
 }
-export function StepList({
-  steps,
+function RunningBar({
+  label,
   elapsed,
-  children,
+  total,
 }: {
-  steps: Step[];
+  label: string;
   elapsed: number;
-  children?: (step: Step, local: number) => React.ReactNode;
+  total: number;
 }) {
-  let offset = 0;
-  const all = totalMs(steps);
-  const shown = steps.map((step) => {
-    const begin = offset;
-    offset += step.ms;
-    return { step, begin };
-  });
+  const pct = progressPercent(paced(total ? elapsed / total : 1));
   return (
-    <ol className="demo-steps">
-      {shown
-        .filter(({ begin }) => begin <= elapsed)
-        .map(({ step, begin }) => {
-          const finished =
-            elapsed >= begin + step.ms && (step.ms > 0 || elapsed >= all);
-          return (
-            <li key={step.id} className={finished ? "is-done" : "is-active"}>
-              <StepIcon state={finished ? "done" : "active"} />
-              <div>
-                <span>{step.text}</span>
-                {children?.(step, elapsed - begin)}
-              </div>
-            </li>
-          );
-        })}
-    </ol>
-  );
-}
-// Pre-registered mechanisms, typed one by one during the "claude" step.
-function Typewriter({ local }: { local: number }) {
-  let offset = 400;
-  return (
-    <ul className="typed-hypotheses">
-      {HYPOTHESES.map((row) => {
-        const begin = offset;
-        offset += row.mechanism.length * TYPE_MS + HYPOTHESIS_PAUSE_MS;
-        if (local < begin) return null;
-        const typed = ((local - begin) / TYPE_MS) | 0;
-        const text = row.mechanism.slice(0, typed);
-        const typing = typed < row.mechanism.length;
-        return (
-          <li key={row.label}>
-            <strong>{row.label}:</strong> “{text}
-            {typing ? <span className="caret" aria-hidden="true" /> : "”"}
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-function ProgressBar({ elapsed, total }: { elapsed: number; total: number }) {
-  const pct = total ? (elapsed >= total ? 100 : (elapsed / total) * 100) : 100;
-  return (
-    <div
-      className="demo-progress"
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={pct | 0}
-    >
-      <span style={{ width: `${pct}%` }} />
+    <div className="running" role="status" aria-live="polite">
+      <div className="running-label">
+        <span className="step-icon spinner" aria-hidden="true" />
+        <span>{label}</span>
+        <span className="running-pct">{pct}%</span>
+      </div>
+      <div
+        className="demo-progress"
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={pct}
+      >
+        <span style={{ width: `${pct}%` }} />
+      </div>
     </div>
   );
 }
 
 // --- Report --------------------------------------------------------------------
+// Forest plot: $/day effect with 90% interval, 2024 (grey) over 2025–26 (green).
+const FW = 240; // SVG width units
+const fx = (value: string) => (position(value, FOREST_DOMAIN) / 100) * FW;
 function Forest({ row }: { row: ResearchRow }) {
-  const zero = position("0", FOREST_DOMAIN);
-  const bar = (
-    plot: string[] | null,
-    cls: "train" | "unseen",
-    title: string,
-  ) => {
-    if (!plot) return null;
-    const point = position(plot[0], FOREST_DOMAIN);
-    const ci =
-      plot.length === 3 ? intervalSpan(plot[1], plot[2], FOREST_DOMAIN) : null;
-    return (
-      <span className={`forest-row ${cls}`} title={title}>
-        {ci && (
-          <span
-            className="forest-ci"
-            style={{ left: `${ci.x}%`, width: `${ci.width}%` }}
-          />
-        )}
-        <span className="forest-point" style={{ left: `${point}%` }} />
-      </span>
-    );
-  };
+  const line = (plot: [string, string, string], y: number, cls: string) => (
+    <g className={cls}>
+      <line x1={fx(plot[1])} x2={fx(plot[2])} y1={y} y2={y} className="whisker" />
+      <line x1={fx(plot[1])} x2={fx(plot[1])} y1={y - 4} y2={y + 4} className="whisker" />
+      <line x1={fx(plot[2])} x2={fx(plot[2])} y1={y - 4} y2={y + 4} className="whisker" />
+      <circle cx={fx(plot[0])} cy={y} r={4.5} className="dot" />
+    </g>
+  );
   return (
-    <div
+    <svg
       className="forest"
+      viewBox={`0 0 ${FW} 34`}
       role="img"
-      aria-label={`${row.label}: training ${row.train.text}; unseen ${row.unseen.text}`}
+      aria-label={`${row.label}: 2024 ${row.train.text}; 2025–26 ${row.unseen.text}`}
     >
-      <span className="forest-zero" style={{ left: `${zero}%` }} />
-      {bar(row.train.plot, "train", `Training year: ${row.train.text}`)}
-      {bar(row.unseen.plot, "unseen", `Unseen: ${row.unseen.text}`)}
-    </div>
+      <line x1={fx("0")} x2={fx("0")} y1={0} y2={34} className="zero" />
+      {line(row.train.plot, 10, "train")}
+      {line(row.unseen.plot, 24, "unseen")}
+    </svg>
+  );
+}
+function ForestAxis() {
+  const ticks = ["-3000", "-1500", "0", "1500", "3000"];
+  const label = (v: string) => (v === "0" ? "$0" : fmtUsd(v).replace(",000", "k").replace("$1,500", "$1.5k"));
+  return (
+    <svg className="forest forest-axis" viewBox={`0 0 ${FW} 16`} aria-hidden="true">
+      {ticks.map((v) => (
+        <text key={v} x={fx(v)} y={11} textAnchor="middle">
+          {label(v)}
+        </text>
+      ))}
+    </svg>
   );
 }
 function Verdict({ row }: { row: ResearchRow }) {
@@ -413,6 +371,7 @@ export function ResearchTable({
                 <span className="key unseen" />
                 2025–26
               </span>
+              <ForestAxis />
             </th>
             <th scope="col">Placebo</th>
             <th scope="col">Verdict</th>
@@ -433,8 +392,8 @@ export function ResearchTable({
               </td>
               <td>
                 <strong>{row.unseen.text}</strong>
-                {row.unseen.ci && <small>{row.unseen.ci}</small>}
-                {row.unseen.days && <small>{row.unseen.days}</small>}
+                <small>{row.unseen.ci}</small>
+                <small>{row.unseen.days}</small>
               </td>
               <td className="forest-cell">
                 <Forest row={row} />
@@ -457,6 +416,74 @@ export function ResearchTable({
                 )}
               </td>
               <td className="kalshi-cell">{row.kalshi}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// --- Payoff: losses drawn below zero, unhedged (grey) vs hedged net (green) ---
+const PAYOFF_DOMAIN: [number, number] = [-2200, 0];
+function DemoPayoff() {
+  const rows = DEMO_HEDGE.payoff;
+  const names = ["It rains", "It stays dry"];
+  const W = 320, top = 18, H = 120;
+  const zeroY = columnSpan("0", PAYOFF_DOMAIN, top, H).y;
+  const bar = (v: string, x: number, cls: string) => {
+    const span = columnSpan(v, PAYOFF_DOMAIN, top, H);
+    return (
+      <g className={cls}>
+        <rect x={x} y={span.y} width={56} height={span.height} rx={3} />
+        <text x={x + 28} y={span.labelY} textAnchor="middle">
+          {fmtUsd(v)}
+        </text>
+      </g>
+    );
+  };
+  return (
+    <div className="payoff">
+      <svg className="payoff-svg" viewBox={`0 0 ${W} ${top + H + 40}`} role="img"
+        aria-label="Unhedged revenue change vs hedged net, if it rains and if it stays dry">
+        <line x1={0} x2={W} y1={zeroY} y2={zeroY} className="zero" />
+        <text x={2} y={zeroY - 5} className="axis-note">$0 (a normal day)</text>
+        {rows.map((row, i) => {
+          const cx = 40 + i * 150;
+          return (
+            <g key={row.outcome}>
+              {bar(row.revenue_vs_base, cx, "unhedged")}
+              {bar(row.net_vs_base, cx + 62, "hedged")}
+              <text x={cx + 59} y={top + H + 34} textAnchor="middle" className="outcome">
+                {names[i]}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+      <p className="legend">
+        <span className="key train" /> Unhedged revenue change
+        <span className="key unseen" /> Hedged net, including the premium
+      </p>
+      <table>
+        <caption>Both outcomes, including the premium</caption>
+        <thead>
+          <tr>
+            <th scope="col">Outcome</th>
+            <th scope="col">Revenue</th>
+            <th scope="col">Payout</th>
+            <th scope="col">Premium</th>
+            <th scope="col">Net</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={row.outcome}>
+              <th scope="row">{names[i]}</th>
+              <td>{fmtUsd(row.revenue_vs_base)}</td>
+              <td>{row.contract_payout === "0.00" ? "$0" : `$${row.contract_payout.replace(/\B(?=(\d{3})+(?!\d))/, ",")}`}</td>
+              <td>{fmtUsd(row.premium)}</td>
+              <td>{fmtUsd(row.net_vs_base)}</td>
             </tr>
           ))}
         </tbody>
@@ -489,7 +516,7 @@ export function DemoHedgeCard({
       <h3>{DEMO_HEDGE.title}</h3>
       <p className="muted">{DEMO_HEDGE.ticker}</p>
       <p className="headline">{DEMO_HEDGE.line}</p>
-      <PayoffChart rows={DEMO_HEDGE.payoff} event="rain" />
+      <DemoPayoff />
       <p>{DEMO_HEDGE.expectedCost}</p>
       <ul className="checks demo-checks">
         {DEMO_HEDGE.checks.map((check) => (
@@ -524,8 +551,7 @@ export function DemoDesk({
   onRemoved: () => void;
 }) {
   const { upload, startedAt, hedge } = demo;
-  const steps = upload ? researchSteps(upload.csv.rows, upload.kind) : [];
-  const total = totalMs(steps);
+  const total = RESEARCH_MS;
   // Clock: ticks every 50 ms only while something is animating.
   const [now, setNow] = useState(() => Date.now());
   const elapsed = now - startedAt;
@@ -546,7 +572,6 @@ export function DemoDesk({
         aria-label="Research report"
         data-testid="demo-research"
       >
-        <span className="scripted-label">Scripted demo</span>
         <div className="section-heading">
           <div>
             <span className="eyebrow">Research my risks</span>
@@ -555,9 +580,6 @@ export function DemoDesk({
             </h2>
           </div>
           <div className="demo-actions">
-            {!researchDone && (
-              <button onClick={demo.skip}>Skip animation</button>
-            )}
             <button
               onClick={() => {
                 demo.remove();
@@ -568,12 +590,9 @@ export function DemoDesk({
             </button>
           </div>
         </div>
-        <ProgressBar elapsed={elapsed} total={total} />
-        <StepList steps={steps} elapsed={elapsed}>
-          {(step, local) =>
-            step.id === "claude" ? <Typewriter local={local} /> : null
-          }
-        </StepList>
+        {!researchDone && (
+          <RunningBar label="Running analysis…" elapsed={elapsed} total={total} />
+        )}
         {researchDone && (
           <div className="demo-report">
             <p className="demo-summary">{SUMMARY}</p>
@@ -604,8 +623,7 @@ export function DemoDesk({
           </div>
           {hedge?.status === "sending" ? (
             <div className="panel">
-              <ProgressBar elapsed={sendElapsed} total={SEND_MS} />
-              <StepList steps={SEND_STEPS} elapsed={sendElapsed} />
+              <RunningBar label="Pricing protection…" elapsed={sendElapsed} total={SEND_MS} />
             </div>
           ) : hedge ? (
             <DemoHedgeCard

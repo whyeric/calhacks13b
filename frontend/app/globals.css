@@ -1287,3 +1287,90 @@ input[aria-invalid="true"] {
     grid-template-columns: 1fr;
   }
 }
+
+/* Upload demo: running bar, SVG forest plot, payoff chart */
+.running {
+  margin: 8px 0 4px;
+}
+.running-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.running-pct {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  color: #5c6b62;
+  font-weight: 500;
+}
+.forest-cell {
+  min-width: 260px;
+}
+svg.forest {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+svg.forest .zero,
+.payoff-svg .zero {
+  stroke: #909d96;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+svg.forest .whisker {
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+svg.forest .train .whisker {
+  stroke: #9aa99e;
+}
+svg.forest .train .dot {
+  fill: #9aa99e;
+}
+svg.forest .unseen .whisker {
+  stroke: #247153;
+}
+svg.forest .unseen .dot {
+  fill: #247153;
+}
+svg.forest-axis text {
+  font-size: 9px;
+  fill: #5c6b62;
+}
+.payoff-svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 8px 0 4px;
+}
+.payoff-svg .unhedged rect {
+  fill: #9aa99e;
+}
+.payoff-svg .hedged rect {
+  fill: #247153;
+}
+.payoff-svg text {
+  font-size: 10px;
+  fill: #26332b;
+  font-variant-numeric: tabular-nums;
+}
+.payoff-svg .outcome {
+  font-size: 11px;
+  font-weight: 600;
+}
+.payoff-svg .axis-note {
+  font-size: 9px;
+  fill: #5c6b62;
+}
+.payoff .legend .key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin: 0 4px 0 10px;
+  vertical-align: -1px;
+}

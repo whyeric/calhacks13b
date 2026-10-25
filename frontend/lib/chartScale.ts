@@ -36,3 +36,19 @@ export function intervalSpan(
   const b = position(high, domain);
   return { x: Math.min(a, b), width: Math.abs(b - a) };
 }
+// Vertical bar from zero to `value` (both in `domain`), in SVG units, plus a label baseline.
+export function columnSpan(
+  value: string,
+  domain: [number, number],
+  top: number,
+  height: number,
+): { y: number; height: number; labelY: number } {
+  const at = (v: string) => top + (1 - position(v, domain) / 100) * height;
+  const y0 = at("0");
+  const y1 = at(value);
+  return { y: Math.min(y0, y1), height: Math.max(Math.abs(y1 - y0), 1.5), labelY: Math.max(y0, y1) + 14 };
+}
+// Whole-number percent for a progress bar driven by an easing function.
+export function progressPercent(fraction: number): number {
+  return Math.round(Math.min(Math.max(fraction, 0), 1) * 100);
+}

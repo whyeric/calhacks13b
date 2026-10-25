@@ -25,12 +25,12 @@ import Home from "@/app/page";
 import {
   DemoDesk,
   DemoUploadDrawer,
+  RESEARCH_MS,
   useDemo,
   type DemoUpload,
 } from "@/components/DemoDesk";
 import {
   DEMO_ID,
-  HYPOTHESES,
   RESEARCH_ROWS,
   parseRevenueCsv,
 } from "@/lib/demoScript";
@@ -108,48 +108,23 @@ describe("upload drawer", () => {
   });
 });
 
-describe("staged research animation", () => {
+describe("running analysis", () => {
   afterEach(() => vi.useRealTimers());
-  it("walks every step, types the mechanisms and reaches Done", () => {
+  it("shows a single running bar, then the report", () => {
     vi.useFakeTimers();
     render(<Harness />);
-    expect(screen.getByText("Reading 1,004 days of revenue")).toBeVisible();
-    expect(screen.queryByText(/Matching NOAA/)).not.toBeInTheDocument();
-    advance(1200);
-    expect(
-      screen.getByText(
-        "Matching NOAA Central Park weather (the same station Kalshi's NYC contracts settle on)",
-      ),
-    ).toBeVisible();
-    advance(2600);
-    expect(
-      screen.getByText(
-        "Claude is choosing hypotheses for a bike-rental business…",
-      ),
-    ).toBeVisible();
-    advance(5000);
-    for (const row of HYPOTHESES)
-      expect(
-        screen.getByText(new RegExp(row.mechanism.replace(".", "\\."))),
-      ).toBeVisible();
-    expect(screen.queryByText("Done: 3 risks hold up, 3 don't.")).toBeNull();
-    advance(6000);
-    for (const text of [
-      "Testing each on 2024 (training year)…",
-      "Re-testing on 2025–26: data the model never saw…",
-      "Placebo check: same flags shifted 7 days…",
-      "Correcting for 6 hypotheses tested…",
-      "Done: 3 risks hold up, 3 don't.",
-    ])
-      expect(screen.getByText(text)).toBeVisible();
-    expect(screen.queryByLabelText("working")).not.toBeInTheDocument();
-    expect(screen.getByRole("progressbar")).toHaveAttribute(
-      "aria-valuenow",
-      "100",
-    );
-    expect(
-      screen.getByText(/Rain and cold reliably cost you money/),
-    ).toBeVisible();
+    expect(screen.getByText("Running analysis…")).toBeVisible();
+    const bar = screen.getByRole("progressbar");
+    expect(Number(bar.getAttribute("aria-valuenow"))).toBeLessThan(100);
+    expect(screen.queryByTestId("research-row-rain")).toBeNull();
+    advance(RESEARCH_MS / 2);
+    const mid = Number(screen.getByRole("progressbar").getAttribute("aria-valuenow"));
+    expect(mid).toBeGreaterThan(0);
+    expect(mid).toBeLessThan(100);
+    advance(RESEARCH_MS);
+    expect(screen.queryByText("Running analysis…")).toBeNull();
+    expect(screen.getByText(/Rain and cold reliably cost you money/)).toBeVisible();
+    expect(screen.getByTestId("research-row-rain")).toBeVisible();
   });
 });
 
@@ -181,6 +156,8 @@ describe("research report", () => {
     expect(row("warm")).toHaveTextContent("90% CI +$706.87 to +$1,630.36");
     expect(row("warm")).toHaveTextContent("upside, no protection needed");
     expect(row("hot")).toHaveTextContent("−2.2% · −$267.65/day");
+    expect(row("hot")).toHaveTextContent("90% CI −$1,000.13 to +$512.89");
+    expect(row("knicks_home")).toHaveTextContent("+2.9% · +$354.37/day");
     expect(row("knicks_home")).toHaveTextContent("None (games are scheduled)");
     expect(row("knicks_win")).toHaveTextContent(
       "90% CI −$2,362.83 to +$3,354.79",
@@ -192,7 +169,7 @@ describe("research report", () => {
     expect(
       screen.getAllByRole("button", { name: /Send to the desk/ }),
     ).toHaveLength(RESEARCH_ROWS.filter((r) => r.sendable).length);
-    expect(screen.getAllByRole("img", { name: /training/ })).toHaveLength(6);
+    expect(screen.getAllByRole("img", { name: /: 2024 / })).toHaveLength(6);
   });
   it("send to the desk animates, proposes the hedge and approve logs it", () => {
     vi.useFakeTimers();
@@ -201,9 +178,7 @@ describe("research report", () => {
     expect(screen.getByTestId("remaining")).toHaveTextContent("1000.00");
     fireEvent.click(screen.getByRole("button", { name: /Send to the desk/ }));
     advance(100);
-    expect(
-      screen.getByText("Finding a market… KXRAIN-26OCT28-NYC"),
-    ).toBeVisible();
+    expect(screen.getByText("Pricing protection…")).toBeVisible();
     advance(3300);
     const card = screen.getByTestId("demo-hedge-card");
     for (const text of [
@@ -299,19 +274,17 @@ describe("dashboard integration (live mode, msw)", () => {
       screen.getByRole("option", { name: "Hudson Bike Co. · Uploaded" }),
     ).toBeInTheDocument();
     expect(screen.getByText("Uploaded · sample")).toBeVisible();
-    expect(screen.getByText("Scripted demo")).toBeVisible();
     expect(screen.getByRole("button", { name: "Run desk →" })).toBeDisabled();
-    fireEvent.click(screen.getByRole("button", { name: "Skip animation" }));
+    expect(screen.getByText("Running analysis…")).toBeVisible();
     expect(
-      await screen.findByText("Done: 3 risks hold up, 3 don't."),
+      await screen.findByTestId("research-row-rain", {}, { timeout: 10000 }),
     ).toBeVisible();
-    expect(screen.getByTestId("research-row-rain")).toBeVisible();
     fireEvent.change(screen.getByLabelText("Your business"), {
       target: { value: "taxi" },
     });
     await waitFor(() =>
-      expect(screen.queryByText("Scripted demo")).not.toBeInTheDocument(),
+      expect(screen.queryByTestId("demo-research")).not.toBeInTheDocument(),
     );
     expect(demoCalls).toEqual([]);
-  });
+  }, 20000);
 });
