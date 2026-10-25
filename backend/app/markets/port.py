@@ -202,8 +202,10 @@ class KalshiMarkets:
         from app.markets.kalshi import KalshiClient
         from app.markets.match import build_candidates
 
+        from app import clock
+
         async with KalshiClient(offline=get_settings().demo_offline) as k:
-            cands = await build_candidates(k, exposure, now)
+            cands = await build_candidates(k, exposure, now, week_of=clock.desk_week(now))
 
         def p(x):
             return None if x is None else str(x)
@@ -231,7 +233,7 @@ class KalshiMarkets:
         sizing = None
         try:
             async with KalshiClient(offline=get_settings().demo_offline) as k:
-                cands = await build_candidates(k, exposure, now)
+                cands = await build_candidates(k, exposure, now, week_of=week_of)
                 chosen = [c for c in cands if c.ticker == ticker]  # Claude's validated pick, if any
                 pick = chosen[0] if chosen else deterministic_pick(cands, exposure.hedge_side)
                 if pick is not None:

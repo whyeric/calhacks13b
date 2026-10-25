@@ -116,14 +116,26 @@ def depth_within(book: Orderbook, side: Side, max_slip: Decimal = MAX_SLIP) -> i
     return sum(lv.count for lv in levels if lv.price - best <= max_slip)
 
 
+def in_week(market: dict, week_of: date | None) -> bool:
+    """The market's day falls in the desk week [Mon week_of, Sun week_of + 6]. `None` = no week filter."""
+    if week_of is None:
+        return True
+    d = event_date(market)
+    return d is not None and week_of <= d <= week_of + timedelta(days=6)
+
+
 async def build_candidates(
-    client: KalshiClient, exposure: Any, now: datetime, window_days: int = 8,
+    client: KalshiClient, exposure: Any, now: datetime, window_days: int = 8, *, week_of: date | None = None,
 ) -> list[Candidate]:
+    """`week_of` (the desk week's Monday) keeps only markets about a day in that week, so a
+    Saturday run for next week never picks Sunday's market."""
     settlement_var = field(exposure, "settlement_var")
     if now.tzinfo is None:
         raise ValueError("now must be timezone-aware")
     now = now.astimezone(timezone.utc)
     horizon = now + timedelta(days=window_days)
+    if week_of is not None:  # the week's last day settles the morning after; leave a margin
+        horizon = max(horizon, datetime.combine(week_of + timedelta(days=9), datetime.min.time(), timezone.utc))
     today_ny = now.astimezone(NY_TZ).date()
 
     survivors: list[tuple[dict, dict]] = []
@@ -137,6 +149,7 @@ async def build_candidates(
                 m.get("status") in OPEN_STATUSES
                 and now < _parse_time(m["close_time"]) <= horizon
                 and _is_future_day(m, today_ny)
+                and in_week(m, week_of)
                 and eligible(m, settlement_var, team)
             ):
                 survivors.append((m, series))

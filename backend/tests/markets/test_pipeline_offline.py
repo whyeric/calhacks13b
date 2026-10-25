@@ -91,3 +91,21 @@ async def test_dropped_taxi_exposures_are_refused_never_proposed():
     assert not_hedged_summary(home_win) == (
         "Not hedged: the measured effect (+$517/day) isn't distinguishable from zero "
         "(90% CI −$2,631 to +$3,665).")
+
+
+async def test_week_filter_only_keeps_markets_in_the_desk_week():
+    """e2e bug: a Saturday run for the week of Mon Oct 26 matched KXRAIN-26OCT25-NYC (Sunday).
+    With `week_of`, only markets about a day in [Mon, Sun] of the desk week survive."""
+    from app.markets.match import event_date
+
+    week = date(2026, 10, 26)
+    rain = load("markets_test/exposure_taxi_rain.json")
+    games = {"settlement_var": "home_win", "hedge_side": "no"}
+    async with KalshiClient(offline=True) as k:
+        assert [c.ticker for c in await build_candidates(k, rain, T0)] == ["KXRAIN-26OCT25-NYC"]
+        assert await build_candidates(k, rain, T0, week_of=week) == []  # the cache has no Oct 26+ rain day
+        in_week = await build_candidates(k, games, T0, week_of=week)
+        unfiltered = await build_candidates(k, games, T0)
+    days = {event_date({"event_ticker": c.ticker.rsplit("-", 1)[0]}) for c in in_week}
+    assert in_week and all(week <= d <= date(2026, 11, 1) for d in days)
+    assert {c.ticker for c in in_week} < {c.ticker for c in unfiltered}  # the Oct 25 game is dropped
