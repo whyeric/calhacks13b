@@ -983,6 +983,91 @@ class ResearchQuote(Contract):
     basis_note: str
 
 
+# --- QuickBooks Online integration ---------------------------------------------
+# /integrations/quickbooks/* (integrations/quickbooks.py): the books replace the CSV upload as the
+# research input, and add forward-looking commitments. `synthetic` is true in demo mode (I6).
+
+# A quantity (units on hand): up to 4 dp, serialized as given ("24", "12.5").
+Quantity = Annotated[
+    Decimal,
+    BeforeValidator(_reject_float),
+    AfterValidator(_max_places(4)),
+    PlainSerializer(lambda v: format(v, "f"), return_type=str, when_used="json"),
+]
+
+
+class QuickBooksStatus(Contract):
+    mode: Literal["demo", "live"]
+    connected: bool
+    company_name: str | None
+    realm_id: str | None
+    connected_at: AwareDatetime | None
+    synthetic: bool  # demo mode: the SYNTHETIC Hudson Bike Co. company, not real books
+
+
+class QuickBooksConnect(Contract):
+    """POST /integrations/quickbooks/connect. Demo connects at once (`authorize_url` null); live
+    returns Intuit's consent URL and stays unconnected until the callback."""
+
+    status: QuickBooksStatus
+    authorize_url: str | None
+
+
+class CommitmentLine(Contract):
+    id: str
+    kind: Literal["purchase_order", "bill", "estimate"]
+    counterparty: str
+    description: str
+    amount: Money  # PO total, bill's unpaid balance, or estimate total
+    due_date: date | None
+    status: str  # QBO's own status ("Open", "Pending", "Accepted"; bills "Unpaid"/"Partially paid")
+
+
+class InventoryLine(Contract):
+    id: str
+    name: str
+    sku: str | None
+    qty_on_hand: Quantity
+    unit_cost: Money
+    value: Money  # qty_on_hand x unit_cost
+
+
+class Commitments(Contract):
+    """GET /integrations/quickbooks/commitments: what the business is committed to, not what it spent."""
+
+    as_of: date
+    synthetic: bool
+    purchase_orders: list[CommitmentLine]
+    bills: list[CommitmentLine]
+    estimates: list[CommitmentLine]
+    inventory: list[InventoryLine]
+    committed_spend: Money  # open PO totals + unpaid bill balances
+    expected_revenue: Money  # pending/accepted estimates
+    inventory_value: Money
+
+    @model_validator(mode="after")
+    def _totals(self) -> "Commitments":
+        if self.committed_spend != sum((x.amount for x in self.purchase_orders + self.bills), Decimal("0")):
+            raise ValueError("committed_spend is the sum of open POs and unpaid bills")
+        if self.expected_revenue != sum((x.amount for x in self.estimates), Decimal("0")):
+            raise ValueError("expected_revenue is the sum of pending estimates")
+        if self.inventory_value != sum((x.value for x in self.inventory), Decimal("0")):
+            raise ValueError("inventory_value is the sum of inventory values")
+        return self
+
+
+class QuickBooksResearch(Contract):
+    """POST /integrations/quickbooks/research: the research protocol on revenue pulled from the books."""
+
+    report: ResearchReport
+    revenue_source: str
+    days: int  # days with revenue in the books
+    first_day: date
+    last_day: date
+    commitments: Commitments
+    synthetic: bool
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -993,6 +1078,7 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         ApproveRequest, RejectRequest, ChatRequest, ChatReply, Health, ErrorBody,
         ReconBenchmark, CosignRequest, DecisionReceipt, PeriodCloseRequest, PeriodClose, PeriodCloses,
         ResearchReport, ResearchQuote,
+        QuickBooksStatus, QuickBooksConnect, CommitmentLine, InventoryLine, Commitments, QuickBooksResearch,
     )
 }
 

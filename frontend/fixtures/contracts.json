@@ -342,6 +342,168 @@
         "title": "Check",
         "type": "object"
       },
+      "CommitmentLine": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "purchase_order",
+              "bill",
+              "estimate"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "counterparty": {
+            "title": "Counterparty",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "string"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "counterparty",
+          "description",
+          "amount",
+          "due_date",
+          "status"
+        ],
+        "title": "CommitmentLine",
+        "type": "object"
+      },
+      "Commitments": {
+        "additionalProperties": false,
+        "description": "GET /integrations/quickbooks/commitments: what the business is committed to, not what it spent.",
+        "properties": {
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "synthetic": {
+            "title": "Synthetic",
+            "type": "boolean"
+          },
+          "purchase_orders": {
+            "items": {
+              "$ref": "#/components/schemas/CommitmentLine"
+            },
+            "title": "Purchase Orders",
+            "type": "array"
+          },
+          "bills": {
+            "items": {
+              "$ref": "#/components/schemas/CommitmentLine"
+            },
+            "title": "Bills",
+            "type": "array"
+          },
+          "estimates": {
+            "items": {
+              "$ref": "#/components/schemas/CommitmentLine"
+            },
+            "title": "Estimates",
+            "type": "array"
+          },
+          "inventory": {
+            "items": {
+              "$ref": "#/components/schemas/InventoryLine"
+            },
+            "title": "Inventory",
+            "type": "array"
+          },
+          "committed_spend": {
+            "title": "Committed Spend",
+            "type": "string"
+          },
+          "expected_revenue": {
+            "title": "Expected Revenue",
+            "type": "string"
+          },
+          "inventory_value": {
+            "title": "Inventory Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "as_of",
+          "synthetic",
+          "purchase_orders",
+          "bills",
+          "estimates",
+          "inventory",
+          "committed_spend",
+          "expected_revenue",
+          "inventory_value"
+        ],
+        "title": "Commitments",
+        "type": "object"
+      },
+      "ControllerSignoff": {
+        "additionalProperties": false,
+        "description": "The controller's co-sign (or refusal) on a hedge above materiality.",
+        "properties": {
+          "decision": {
+            "enum": [
+              "signed",
+              "refused"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "required": [
+          "decision",
+          "at",
+          "note"
+        ],
+        "title": "ControllerSignoff",
+        "type": "object"
+      },
       "Decision": {
         "additionalProperties": false,
         "description": "Spec \u00a78. Only `summary` is written by Claude.\n\n`reasons` lists the failed decline checks (1\u20135) in table order; if none failed it is\n`[\"over_budget\"]` when the budget check failed (that pauses, it doesn't decline).",
@@ -970,6 +1132,66 @@
             "default": false,
             "title": "Estimated",
             "type": "boolean"
+          },
+          "venue": {
+            "default": "kalshi",
+            "enum": [
+              "kalshi",
+              "polymarket"
+            ],
+            "title": "Venue",
+            "type": "string"
+          },
+          "fee_rate": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Fee Rate"
+          },
+          "needs_controller": {
+            "default": false,
+            "title": "Needs Controller",
+            "type": "boolean"
+          },
+          "controller": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ControllerSignoff"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "decision_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Decision Note"
+          },
+          "owner_history": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OwnerHistory"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
           }
         },
         "required": [
@@ -1066,6 +1288,122 @@
           "headline"
         ],
         "title": "HedgeLite",
+        "type": "object"
+      },
+      "HistoryOutcome": {
+        "additionalProperties": false,
+        "properties": {
+          "hedge_id": {
+            "title": "Hedge Id",
+            "type": "string"
+          },
+          "week_of": {
+            "format": "date",
+            "title": "Week Of",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proposed",
+              "pending_approval",
+              "approved",
+              "rejected",
+              "declined",
+              "expired_unapproved",
+              "settled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "premium": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Premium"
+          },
+          "payout": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payout"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "required": [
+          "hedge_id",
+          "week_of",
+          "status",
+          "premium",
+          "payout",
+          "note"
+        ],
+        "title": "HistoryOutcome",
+        "type": "object"
+      },
+      "InventoryLine": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "sku": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sku"
+          },
+          "qty_on_hand": {
+            "title": "Qty On Hand",
+            "type": "string"
+          },
+          "unit_cost": {
+            "title": "Unit Cost",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "sku",
+          "qty_on_hand",
+          "unit_cost",
+          "value"
+        ],
+        "title": "InventoryLine",
         "type": "object"
       },
       "LedgerEntry": {
@@ -1244,7 +1582,10 @@
               "threshold_changed",
               "chat",
               "run_failed",
-              "refusal"
+              "refusal",
+              "cosign",
+              "cosign_refused",
+              "period_close"
             ],
             "title": "Kind",
             "type": "string"
@@ -1258,6 +1599,7 @@
             "enum": [
               "desk",
               "owner",
+              "controller",
               "system"
             ],
             "title": "Actor",
@@ -1481,6 +1823,67 @@
         "title": "ModelCheckExample",
         "type": "object"
       },
+      "OwnerHistory": {
+        "additionalProperties": false,
+        "description": "The same exposure's earlier hedges for this business, newest first (at most 5 shown).\n\n`pattern` is set when the owner's recent decisions should change how the desk asks:\n\"rejected_recently\" when the last two decided hedges were both rejected.",
+        "properties": {
+          "n_earlier": {
+            "title": "N Earlier",
+            "type": "integer"
+          },
+          "n_approved": {
+            "title": "N Approved",
+            "type": "integer"
+          },
+          "n_rejected": {
+            "title": "N Rejected",
+            "type": "integer"
+          },
+          "n_expired_unapproved": {
+            "title": "N Expired Unapproved",
+            "type": "integer"
+          },
+          "total_premium": {
+            "title": "Total Premium",
+            "type": "string"
+          },
+          "total_payout": {
+            "title": "Total Payout",
+            "type": "string"
+          },
+          "recent": {
+            "items": {
+              "$ref": "#/components/schemas/HistoryOutcome"
+            },
+            "title": "Recent",
+            "type": "array"
+          },
+          "pattern": {
+            "anyOf": [
+              {
+                "const": "rejected_recently",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pattern"
+          }
+        },
+        "required": [
+          "n_earlier",
+          "n_approved",
+          "n_rejected",
+          "n_expired_unapproved",
+          "total_premium",
+          "total_payout",
+          "recent",
+          "pattern"
+        ],
+        "title": "OwnerHistory",
+        "type": "object"
+      },
       "PayoffRow": {
         "additionalProperties": false,
         "properties": {
@@ -1560,6 +1963,142 @@
           "amount"
         ],
         "title": "Posting",
+        "type": "object"
+      },
+      "QuickBooksConnect": {
+        "additionalProperties": false,
+        "description": "POST /integrations/quickbooks/connect. Demo connects at once (`authorize_url` null); live\nreturns Intuit's consent URL and stays unconnected until the callback.",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/QuickBooksStatus"
+          },
+          "authorize_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Authorize Url"
+          }
+        },
+        "required": [
+          "status",
+          "authorize_url"
+        ],
+        "title": "QuickBooksConnect",
+        "type": "object"
+      },
+      "QuickBooksResearch": {
+        "additionalProperties": false,
+        "description": "POST /integrations/quickbooks/research: the research protocol on revenue pulled from the books.",
+        "properties": {
+          "report": {
+            "$ref": "#/components/schemas/ResearchReport"
+          },
+          "revenue_source": {
+            "title": "Revenue Source",
+            "type": "string"
+          },
+          "days": {
+            "title": "Days",
+            "type": "integer"
+          },
+          "first_day": {
+            "format": "date",
+            "title": "First Day",
+            "type": "string"
+          },
+          "last_day": {
+            "format": "date",
+            "title": "Last Day",
+            "type": "string"
+          },
+          "commitments": {
+            "$ref": "#/components/schemas/Commitments"
+          },
+          "synthetic": {
+            "title": "Synthetic",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "report",
+          "revenue_source",
+          "days",
+          "first_day",
+          "last_day",
+          "commitments",
+          "synthetic"
+        ],
+        "title": "QuickBooksResearch",
+        "type": "object"
+      },
+      "QuickBooksStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "enum": [
+              "demo",
+              "live"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "connected": {
+            "title": "Connected",
+            "type": "boolean"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "realm_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Realm Id"
+          },
+          "connected_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Connected At"
+          },
+          "synthetic": {
+            "title": "Synthetic",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "mode",
+          "connected",
+          "company_name",
+          "realm_id",
+          "connected_at",
+          "synthetic"
+        ],
+        "title": "QuickBooksStatus",
         "type": "object"
       },
       "ReconBenchmark": {
@@ -2442,6 +2981,11 @@
             "minimum": 1.0,
             "title": "Rain Size Multiplier",
             "type": "number"
+          },
+          "materiality_usd": {
+            "default": "200.00",
+            "title": "Materiality Usd",
+            "type": "string"
           }
         },
         "required": [

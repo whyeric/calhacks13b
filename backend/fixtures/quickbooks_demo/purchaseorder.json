@@ -1,0 +1,381 @@
+{
+  "QueryResponse": {
+    "PurchaseOrder": [
+      {
+        "Id": "7001",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-09-02T11:05:00-07:00",
+          "LastUpdatedTime": "2026-09-02T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2039",
+        "TxnDate": "2026-09-02",
+        "DueDate": "2026-09-28",
+        "POStatus": "Closed",
+        "Memo": "Fall tire restock (received)",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "102",
+          "name": "Kettle Rubber Co."
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "700c city tires",
+            "Amount": 2280.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 60,
+              "UnitPrice": 38.0
+            }
+          }
+        ],
+        "TotalAmt": 2280.0
+      },
+      {
+        "Id": "7002",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-06T11:05:00-07:00",
+          "LastUpdatedTime": "2026-10-06T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2041",
+        "TxnDate": "2026-10-06",
+        "DueDate": "2027-02-15",
+        "POStatus": "Open",
+        "Memo": "Spring fleet: 6 Class 1 commuter e-bikes",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "101",
+          "name": "Velo Supply Wholesale"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Class 1 commuter e-bike",
+            "Amount": 11100.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 6,
+              "UnitPrice": 1850.0
+            }
+          }
+        ],
+        "TotalAmt": 11100.0
+      },
+      {
+        "Id": "7003",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-12T11:05:00-07:00",
+          "LastUpdatedTime": "2026-10-12T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2042",
+        "TxnDate": "2026-10-12",
+        "DueDate": "2026-11-05",
+        "POStatus": "Open",
+        "Memo": "Winter tires and tubes",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "102",
+          "name": "Kettle Rubber Co."
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "700c studded winter tires",
+            "Amount": 3320.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 80,
+              "UnitPrice": 41.5
+            }
+          },
+          {
+            "Id": "2",
+            "LineNum": 2,
+            "Description": "700c inner tubes",
+            "Amount": 1250.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 200,
+              "UnitPrice": 6.25
+            }
+          }
+        ],
+        "TotalAmt": 4570.0
+      },
+      {
+        "Id": "7004",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-14T11:05:00-07:00",
+          "LastUpdatedTime": "2026-10-14T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2043",
+        "TxnDate": "2026-10-14",
+        "DueDate": "2026-11-12",
+        "POStatus": "Open",
+        "Memo": "Helmet replacement cycle",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "103",
+          "name": "SafeRide Helmets"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Adult helmet, M/L",
+            "Amount": 2520.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 60,
+              "UnitPrice": 42.0
+            }
+          },
+          {
+            "Id": "2",
+            "LineNum": 2,
+            "Description": "Kids helmet",
+            "Amount": 620.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 20,
+              "UnitPrice": 31.0
+            }
+          }
+        ],
+        "TotalAmt": 3140.0
+      },
+      {
+        "Id": "7005",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-16T11:05:00-07:00",
+          "LastUpdatedTime": "2026-10-16T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2044",
+        "TxnDate": "2026-10-16",
+        "DueDate": "2026-11-18",
+        "POStatus": "Open",
+        "Memo": "Winter storage racks for off-season fleet",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "104",
+          "name": "Ironclad Storage Systems"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Vertical storage rack, 10-bike",
+            "Amount": 5100.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 4,
+              "UnitPrice": 1275.0
+            }
+          }
+        ],
+        "TotalAmt": 5100.0
+      },
+      {
+        "Id": "7006",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-19T11:05:00-07:00",
+          "LastUpdatedTime": "2026-10-19T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2045",
+        "TxnDate": "2026-10-19",
+        "DueDate": "2026-11-08",
+        "POStatus": "Open",
+        "Memo": "Chains, brake pads, cables",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "101",
+          "name": "Velo Supply Wholesale"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Chain, 8-speed",
+            "Amount": 856.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 40,
+              "UnitPrice": 21.4
+            }
+          },
+          {
+            "Id": "2",
+            "LineNum": 2,
+            "Description": "Brake pads (pair)",
+            "Amount": 702.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 90,
+              "UnitPrice": 7.8
+            }
+          },
+          {
+            "Id": "3",
+            "LineNum": 3,
+            "Description": "Brake cable kit",
+            "Amount": 280.5,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 30,
+              "UnitPrice": 9.35
+            }
+          }
+        ],
+        "TotalAmt": 1838.5
+      },
+      {
+        "Id": "7007",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-21T11:05:00-07:00",
+          "LastUpdatedTime": "2026-10-21T11:05:00-07:00"
+        },
+        "DocNumber": "PO-2046",
+        "TxnDate": "2026-10-21",
+        "DueDate": "2026-11-15",
+        "POStatus": "Open",
+        "Memo": "Winter hours and holiday-ride signage",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "105",
+          "name": "Harbor Lights Signage"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Outdoor banner set",
+            "Amount": 780.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "80",
+                "name": "Inventory Asset"
+              },
+              "BillableStatus": "NotBillable",
+              "Qty": 1,
+              "UnitPrice": 780.0
+            }
+          }
+        ],
+        "TotalAmt": 780.0
+      }
+    ],
+    "startPosition": 1,
+    "maxResults": 7
+  },
+  "time": "2026-10-25T09:00:00.000-07:00"
+}

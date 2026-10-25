@@ -1,0 +1,619 @@
+{
+  "report": {
+    "name": "Hudson Bike Co. (SYNTHETIC)",
+    "n_rows": 1004,
+    "n_days": 1004,
+    "n_closed_days": 0,
+    "n_outside_window": 0,
+    "first": "2024-01-01",
+    "last": "2026-09-30",
+    "train": {
+      "start": "2024-01-01",
+      "end": "2024-12-31"
+    },
+    "holdout": {
+      "start": "2025-01-01",
+      "end": "2026-09-30"
+    },
+    "station": "NOAA GHCN-Daily USW00094728 (Central Park)",
+    "protocol": [
+      "Training year, then unseen data fitted independently",
+      "Day-of-week + month controls",
+      "90% intervals",
+      "Placebo: flags shifted 7 days",
+      "Corrected for 6 tests (BH 10%)",
+      "At least 10 event days"
+    ],
+    "notes": [
+      "Pulled from QuickBooks: Hudson Bike Co. is a SYNTHETIC demo company (fixtures/quickbooks_demo/).",
+      "Its sales were generated to match the sample revenue file, whose weather effects were planted: about -20% on rain days, -28% below 40F, +10% above 80F, on real NOAA Central Park days."
+    ],
+    "hypotheses": [
+      {
+        "id": "rain",
+        "label": "Rain day",
+        "rule": "Central Park precipitation ≥ 0.01 in",
+        "mechanism": "Customers stay in when it rains.",
+        "train": {
+          "pct": -18.2,
+          "effect_usd": "-1923.43",
+          "ci90": [
+            "-2137.76",
+            "-1703.67"
+          ],
+          "ci_excludes_zero": true,
+          "p_value": 0.0,
+          "n_event_days": 125,
+          "n_days": 366,
+          "start": "2024-01-01",
+          "end": "2024-12-31",
+          "mean_revenue": "10590.80"
+        },
+        "holdout": {
+          "pct": -20.4,
+          "effect_usd": "-2488.09",
+          "ci90": [
+            "-2660.85",
+            "-2312.19"
+          ],
+          "ci_excludes_zero": true,
+          "p_value": 0.0,
+          "n_event_days": 228,
+          "n_days": 638,
+          "start": "2025-01-01",
+          "end": "2026-09-30",
+          "mean_revenue": "12174.38"
+        },
+        "placebo_p": 0.2852,
+        "bh_q": 0.0,
+        "verdict": "FOUND",
+        "reasons": [],
+        "direction": "negative",
+        "upside": false,
+        "venue": "Kalshi KXRAIN (NYC, Central Park) · Polymarket “Where will it rain” (NYC, NWS Central Park report)",
+        "sendable": true
+      },
+      {
+        "id": "cold",
+        "label": "Cold day <40°F",
+        "rule": "Central Park high below 40°F",
+        "mechanism": "Few people come out in the cold.",
+        "train": {
+          "pct": -26.5,
+          "effect_usd": "-2804.78",
+          "ci90": [
+            "-3165.90",
+            "-2426.09"
+          ],
+          "ci_excludes_zero": true,
+          "p_value": 0.0,
+          "n_event_days": 28,
+          "n_days": 366,
+          "start": "2024-01-01",
+          "end": "2024-12-31",
+          "mean_revenue": "10590.80"
+        },
+        "holdout": {
+          "pct": -26.4,
+          "effect_usd": "-3210.72",
+          "ci90": [
+            "-3536.86",
+            "-2872.26"
+          ],
+          "ci_excludes_zero": true,
+          "p_value": 0.0,
+          "n_event_days": 89,
+          "n_days": 638,
+          "start": "2025-01-01",
+          "end": "2026-09-30",
+          "mean_revenue": "12174.38"
+        },
+        "placebo_p": 0.1282,
+        "bh_q": 0.0,
+        "verdict": "FOUND",
+        "reasons": [],
+        "direction": "negative",
+        "upside": false,
+        "venue": "KXHIGHNY strikes sit near the forecast; a fixed <40°F strike is rarely listed",
+        "sendable": false
+      },
+      {
+        "id": "warm",
+        "label": "Warm day >80°F",
+        "rule": "Central Park high above 80°F",
+        "mechanism": "Nice weather brings casual customers.",
+        "train": {
+          "pct": 10.9,
+          "effect_usd": "1151.68",
+          "ci90": [
+            "698.13",
+            "1623.44"
+          ],
+          "ci_excludes_zero": true,
+          "p_value": 0.0,
+          "n_event_days": 84,
+          "n_days": 366,
+          "start": "2024-01-01",
+          "end": "2024-12-31",
+          "mean_revenue": "10590.80"
+        },
+        "holdout": {
+          "pct": 15.5,
+          "effect_usd": "1892.44",
+          "ci90": [
+            "1505.91",
+            "2289.89"
+          ],
+          "ci_excludes_zero": true,
+          "p_value": 0.0,
+          "n_event_days": 160,
+          "n_days": 638,
+          "start": "2025-01-01",
+          "end": "2026-09-30",
+          "mean_revenue": "12174.38"
+        },
+        "placebo_p": 0.8232,
+        "bh_q": 0.0,
+        "verdict": "FOUND",
+        "reasons": [],
+        "direction": "positive",
+        "upside": true,
+        "venue": "KXHIGHNY (Central Park) · Polymarket NYC high settles at LaGuardia, a different station",
+        "sendable": false
+      },
+      {
+        "id": "hot",
+        "label": "Hot day >90°F",
+        "rule": "Central Park high above 90°F",
+        "mechanism": "Extreme heat might keep customers indoors.",
+        "train": {
+          "pct": 0.8,
+          "effect_usd": "80.65",
+          "ci90": [
+            "-500.67",
+            "695.46"
+          ],
+          "ci_excludes_zero": false,
+          "p_value": 0.8237,
+          "n_event_days": 15,
+          "n_days": 366,
+          "start": "2024-01-01",
+          "end": "2024-12-31",
+          "mean_revenue": "10590.80"
+        },
+        "holdout": {
+          "pct": -2.1,
+          "effect_usd": "-257.69",
+          "ci90": [
+            "-996.62",
+            "530.09"
+          ],
+          "ci_excludes_zero": false,
+          "p_value": 0.5825,
+          "n_event_days": 19,
+          "n_days": 638,
+          "start": "2025-01-01",
+          "end": "2026-09-30",
+          "mean_revenue": "12174.38"
+        },
+        "placebo_p": 0.1359,
+        "bh_q": 0.8237,
+        "verdict": "NOT FOUND",
+        "reasons": [
+          "not_significant"
+        ],
+        "direction": "positive",
+        "upside": false,
+        "venue": "KXHIGHNY (Central Park) · Polymarket NYC high settles at LaGuardia, a different station",
+        "sendable": false
+      },
+      {
+        "id": "knicks_home",
+        "label": "Knicks home game",
+        "rule": "Knicks play at Madison Square Garden",
+        "mechanism": "Game crowds near MSG might change traffic.",
+        "train": {
+          "pct": 5.7,
+          "effect_usd": "422.41",
+          "ci90": [
+            "-285.15",
+            "1199.78"
+          ],
+          "ci_excludes_zero": false,
+          "p_value": 0.3354,
+          "n_event_days": 14,
+          "n_days": 71,
+          "start": "2024-10-22",
+          "end": "2024-12-31",
+          "mean_revenue": "7456.99"
+        },
+        "holdout": {
+          "pct": 3.0,
+          "effect_usd": "359.61",
+          "ci90": [
+            "-121.88",
+            "860.33"
+          ],
+          "ci_excludes_zero": false,
+          "p_value": 0.2215,
+          "n_event_days": 85,
+          "n_days": 638,
+          "start": "2025-01-01",
+          "end": "2026-09-30",
+          "mean_revenue": "12174.38"
+        },
+        "placebo_p": 0.8951,
+        "bh_q": 0.5031,
+        "verdict": "NOT FOUND",
+        "reasons": [
+          "not_significant"
+        ],
+        "direction": "positive",
+        "upside": false,
+        "venue": "None: games are scheduled, so there is nothing uncertain to hedge",
+        "sendable": false
+      },
+      {
+        "id": "knicks_win",
+        "label": "Knicks win",
+        "rule": "Knicks win a home game (home games controlled)",
+        "mechanism": "Celebrations might bring extra customers.",
+        "train": {
+          "pct": 4.1,
+          "effect_usd": "308.44",
+          "ci90": [
+            "-1538.50",
+            "2731.74"
+          ],
+          "ci_excludes_zero": false,
+          "p_value": 0.8061,
+          "n_event_days": 10,
+          "n_days": 71,
+          "start": "2024-10-22",
+          "end": "2024-12-31",
+          "mean_revenue": "7456.99"
+        },
+        "holdout": {
+          "pct": 2.8,
+          "effect_usd": "345.55",
+          "ci90": [
+            "-561.49",
+            "1323.44"
+          ],
+          "ci_excludes_zero": false,
+          "p_value": 0.5404,
+          "n_event_days": 58,
+          "n_days": 638,
+          "start": "2025-01-01",
+          "end": "2026-09-30",
+          "mean_revenue": "12174.38"
+        },
+        "placebo_p": 0.7854,
+        "bh_q": 0.8237,
+        "verdict": "NOT FOUND",
+        "reasons": [
+          "not_significant"
+        ],
+        "direction": "positive",
+        "upside": false,
+        "venue": "Kalshi KXNBAGAME · Polymarket NBA moneyline",
+        "sendable": false
+      }
+    ],
+    "summary": "Rain days and cold days (<40°F) reliably cost you money; warm days (>80°F) help. Hot days (>90°F), Knicks home games and Knicks wins make no difference we can measure. The desk can price protection for rain days on Kalshi and Polymarket.",
+    "plot_max_usd": "3536.86"
+  },
+  "revenue_source": "QuickBooks Online: SalesReceipt + Invoice TotalAmt summed by TxnDate (accrual basis: an invoice counts on its date, not when it is paid)",
+  "days": 1004,
+  "first_day": "2024-01-01",
+  "last_day": "2026-09-30",
+  "commitments": {
+    "as_of": "2026-10-25",
+    "synthetic": true,
+    "purchase_orders": [
+      {
+        "id": "PO-2042",
+        "kind": "purchase_order",
+        "counterparty": "Kettle Rubber Co.",
+        "description": "Winter tires and tubes",
+        "amount": "4570.00",
+        "due_date": "2026-11-05",
+        "status": "Open"
+      },
+      {
+        "id": "PO-2045",
+        "kind": "purchase_order",
+        "counterparty": "Velo Supply Wholesale",
+        "description": "Chains, brake pads, cables",
+        "amount": "1838.50",
+        "due_date": "2026-11-08",
+        "status": "Open"
+      },
+      {
+        "id": "PO-2043",
+        "kind": "purchase_order",
+        "counterparty": "SafeRide Helmets",
+        "description": "Helmet replacement cycle",
+        "amount": "3140.00",
+        "due_date": "2026-11-12",
+        "status": "Open"
+      },
+      {
+        "id": "PO-2046",
+        "kind": "purchase_order",
+        "counterparty": "Harbor Lights Signage",
+        "description": "Winter hours and holiday-ride signage",
+        "amount": "780.00",
+        "due_date": "2026-11-15",
+        "status": "Open"
+      },
+      {
+        "id": "PO-2044",
+        "kind": "purchase_order",
+        "counterparty": "Ironclad Storage Systems",
+        "description": "Winter storage racks for off-season fleet",
+        "amount": "5100.00",
+        "due_date": "2026-11-18",
+        "status": "Open"
+      },
+      {
+        "id": "PO-2041",
+        "kind": "purchase_order",
+        "counterparty": "Velo Supply Wholesale",
+        "description": "Spring fleet: 6 Class 1 commuter e-bikes",
+        "amount": "11100.00",
+        "due_date": "2027-02-15",
+        "status": "Open"
+      }
+    ],
+    "bills": [
+      {
+        "id": "HPR-2611",
+        "kind": "bill",
+        "counterparty": "Hudson Pier Realty",
+        "description": "November rent, Pier 40 storefront",
+        "amount": "18500.00",
+        "due_date": "2026-11-01",
+        "status": "Unpaid"
+      },
+      {
+        "id": "VSW-88213",
+        "kind": "bill",
+        "counterparty": "Velo Supply Wholesale",
+        "description": "Repair parts: derailleurs, spokes",
+        "amount": "1317.40",
+        "due_date": "2026-11-10",
+        "status": "Partially paid"
+      },
+      {
+        "id": "BCI-Q4-26",
+        "kind": "bill",
+        "counterparty": "Bluestone Commercial Insurance",
+        "description": "Q4 general liability and fleet insurance",
+        "amount": "6240.00",
+        "due_date": "2026-11-15",
+        "status": "Unpaid"
+      },
+      {
+        "id": "MPG-1026",
+        "kind": "bill",
+        "counterparty": "Metro Power & Gas",
+        "description": "Electric, e-bike charging room",
+        "amount": "1145.22",
+        "due_date": "2026-11-18",
+        "status": "Unpaid"
+      },
+      {
+        "id": "CDN-1026",
+        "kind": "bill",
+        "counterparty": "CityCycle Dock Network",
+        "description": "Dock station access fee, 3 stations (Nov)",
+        "amount": "2850.00",
+        "due_date": "2026-11-30",
+        "status": "Unpaid"
+      },
+      {
+        "id": "HPR-2612",
+        "kind": "bill",
+        "counterparty": "Hudson Pier Realty",
+        "description": "December rent, Pier 40 storefront",
+        "amount": "18500.00",
+        "due_date": "2026-12-01",
+        "status": "Unpaid"
+      },
+      {
+        "id": "GBM-0412",
+        "kind": "bill",
+        "counterparty": "Gotham Bike Mechanics",
+        "description": "Fall fleet tune-up, 66 bikes",
+        "amount": "1980.00",
+        "due_date": "2026-12-05",
+        "status": "Unpaid"
+      },
+      {
+        "id": "KRC-55190",
+        "kind": "bill",
+        "counterparty": "Kettle Rubber Co.",
+        "description": "Tire restock (net 60)",
+        "amount": "1320.00",
+        "due_date": "2026-12-15",
+        "status": "Unpaid"
+      },
+      {
+        "id": "HPR-2701",
+        "kind": "bill",
+        "counterparty": "Hudson Pier Realty",
+        "description": "January rent, Pier 40 storefront",
+        "amount": "18500.00",
+        "due_date": "2027-01-01",
+        "status": "Unpaid"
+      }
+    ],
+    "estimates": [
+      {
+        "id": "EST-312",
+        "kind": "estimate",
+        "counterparty": "Five Boroughs Run Club",
+        "description": "Marathon weekend spectator rentals",
+        "amount": "4400.00",
+        "due_date": "2026-11-01",
+        "status": "Accepted"
+      },
+      {
+        "id": "EST-311",
+        "kind": "estimate",
+        "counterparty": "Lumen Labs (offsites)",
+        "description": "Team offsite ride, Hudson River Greenway",
+        "amount": "5600.00",
+        "due_date": "2026-11-07",
+        "status": "Pending"
+      },
+      {
+        "id": "EST-314",
+        "kind": "estimate",
+        "counterparty": "Northbank Consulting Group",
+        "description": "Fall team ride and lunch stop",
+        "amount": "3850.00",
+        "due_date": "2026-11-14",
+        "status": "Pending"
+      },
+      {
+        "id": "EST-315",
+        "kind": "estimate",
+        "counterparty": "Greenway School Trips",
+        "description": "8th-grade field trip, helmets included",
+        "amount": "2940.00",
+        "due_date": "2026-11-20",
+        "status": "Accepted"
+      },
+      {
+        "id": "EST-317",
+        "kind": "estimate",
+        "counterparty": "Pier 62 Events LLC",
+        "description": "Holiday lights night ride (private event)",
+        "amount": "14250.00",
+        "due_date": "2026-12-12",
+        "status": "Accepted"
+      },
+      {
+        "id": "EST-318",
+        "kind": "estimate",
+        "counterparty": "Meridian Hotel Concierge",
+        "description": "Holiday-season guest rental block, Dec 19-31",
+        "amount": "9800.00",
+        "due_date": "2026-12-19",
+        "status": "Pending"
+      }
+    ],
+    "inventory": [
+      {
+        "id": "201",
+        "name": "Class 1 commuter e-bike",
+        "sku": "EB-C1-COM",
+        "qty_on_hand": "24",
+        "unit_cost": "1850.00",
+        "value": "44400.00"
+      },
+      {
+        "id": "202",
+        "name": "City cruiser bike",
+        "sku": "BK-CRZ-7",
+        "qty_on_hand": "60",
+        "unit_cost": "420.00",
+        "value": "25200.00"
+      },
+      {
+        "id": "205",
+        "name": "Adult helmet, M/L",
+        "sku": "HL-ADT-ML",
+        "qty_on_hand": "140",
+        "unit_cost": "42.00",
+        "value": "5880.00"
+      },
+      {
+        "id": "204",
+        "name": "Tandem bike",
+        "sku": "BK-TDM",
+        "qty_on_hand": "6",
+        "unit_cost": "980.00",
+        "value": "5880.00"
+      },
+      {
+        "id": "203",
+        "name": "Kids bike 20in",
+        "sku": "BK-KID-20",
+        "qty_on_hand": "18",
+        "unit_cost": "260.00",
+        "value": "4680.00"
+      },
+      {
+        "id": "208",
+        "name": "700c city tire",
+        "sku": "PT-TIRE-700",
+        "qty_on_hand": "85",
+        "unit_cost": "38.00",
+        "value": "3230.00"
+      },
+      {
+        "id": "209",
+        "name": "U-lock with cable",
+        "sku": "AC-LOCK-U",
+        "qty_on_hand": "120",
+        "unit_cost": "24.50",
+        "value": "2940.00"
+      },
+      {
+        "id": "207",
+        "name": "700c inner tube",
+        "sku": "PT-TUBE-700",
+        "qty_on_hand": "300",
+        "unit_cost": "6.25",
+        "value": "1875.00"
+      },
+      {
+        "id": "211",
+        "name": "Chain, 8-speed",
+        "sku": "PT-CHN-8",
+        "qty_on_hand": "75",
+        "unit_cost": "21.40",
+        "value": "1605.00"
+      },
+      {
+        "id": "206",
+        "name": "Kids helmet",
+        "sku": "HL-KID",
+        "qty_on_hand": "45",
+        "unit_cost": "31.00",
+        "value": "1395.00"
+      },
+      {
+        "id": "210",
+        "name": "Brake pads (pair)",
+        "sku": "PT-BRK-PAD",
+        "qty_on_hand": "160",
+        "unit_cost": "7.80",
+        "value": "1248.00"
+      },
+      {
+        "id": "213",
+        "name": "Rain poncho (resale)",
+        "sku": "AC-PONCHO",
+        "qty_on_hand": "400",
+        "unit_cost": "3.10",
+        "value": "1240.00"
+      },
+      {
+        "id": "212",
+        "name": "Phone mount",
+        "sku": "AC-PHN-MNT",
+        "qty_on_hand": "90",
+        "unit_cost": "12.75",
+        "value": "1147.50"
+      }
+    ],
+    "committed_spend": "96881.12",
+    "expected_revenue": "40840.00",
+    "inventory_value": "100720.50"
+  },
+  "synthetic": true
+}

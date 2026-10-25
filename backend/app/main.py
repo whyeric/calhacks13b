@@ -724,3 +724,87 @@ async def research_quote(
         return await research_quote_mod.quote(row)
     except research_quote_mod.QuoteRefused as e:
         raise ApiError(409, e.code, e.message, {"hypothesis": hypothesis})
+
+
+# --- QuickBooks Online integration ---------------------------------------------
+# "Integrations, not uploads" (integrations/quickbooks.py, docs/QUICKBOOKS.md): revenue and
+# forward-looking commitments read from the books. Demo mode reads the SYNTHETIC Hudson Bike Co.
+# company; live mode runs Intuit's OAuth2 flow. The connection lives in process memory only.
+
+from fastapi.responses import RedirectResponse  # noqa: E402
+
+from app.models import Commitments, QuickBooksConnect, QuickBooksResearch, QuickBooksStatus  # noqa: E402
+
+QBO_ERRORS = {409: {"model": ErrorBody}, 502: {"model": ErrorBody}}
+
+
+def _qbo_call(fn, *args):
+    from app.integrations import quickbooks as qbo
+
+    try:
+        return fn(*args)
+    except qbo.QuickBooksError as e:
+        raise ApiError(e.status, e.code, e.message, e.detail)
+
+
+@app.get("/integrations/quickbooks/status", response_model=QuickBooksStatus)
+def quickbooks_status() -> QuickBooksStatus:
+    from app.integrations import quickbooks as qbo
+
+    return qbo.get().status()
+
+
+@app.post("/integrations/quickbooks/connect", response_model=QuickBooksConnect, responses=QBO_ERRORS)
+def quickbooks_connect() -> QuickBooksConnect:
+    """Demo: connects at once to the SYNTHETIC company. Live: returns Intuit's consent URL."""
+    from app.integrations import quickbooks as qbo
+
+    return _qbo_call(qbo.get().connect)
+
+
+@app.get("/integrations/quickbooks/callback", response_class=RedirectResponse, status_code=302,
+         responses={400: {"model": ErrorBody}})
+def quickbooks_callback(code: str | None = None, state: str | None = None, realmId: str | None = None,  # noqa: N803
+                        error: str | None = None) -> RedirectResponse:
+    """Intuit's OAuth redirect: exchange the code, then send the browser back to the app."""
+    from app.integrations import quickbooks as qbo
+
+    base = get_settings().frontend_url.rstrip("/")
+    try:
+        qbo.get().callback(code, state, realmId, error)
+    except qbo.BadState as e:
+        raise ApiError(e.status, e.code, e.message, e.detail)
+    except qbo.QuickBooksError as e:
+        log.warning("QuickBooks callback failed: %s %s", e.code, e.detail)
+        return RedirectResponse(f"{base}/?qbo=error", status_code=302)
+    return RedirectResponse(f"{base}/?qbo=connected", status_code=302)
+
+
+@app.post("/integrations/quickbooks/disconnect", response_model=QuickBooksStatus)
+def quickbooks_disconnect() -> QuickBooksStatus:
+    from app.integrations import quickbooks as qbo
+
+    return qbo.get().disconnect()
+
+
+@app.get("/integrations/quickbooks/commitments", response_model=Commitments, responses=QBO_ERRORS)
+def quickbooks_commitments() -> Commitments:
+    from app.integrations import quickbooks as qbo
+
+    return _qbo_call(qbo.get().commitments)
+
+
+@app.post("/integrations/quickbooks/research", response_model=QuickBooksResearch,
+          responses=QBO_ERRORS | {422: {"model": ErrorBody}})
+async def quickbooks_research(name: str | None = Query(None, max_length=60)) -> QuickBooksResearch:
+    """The research protocol on daily revenue pulled from the books (same protocol and 422s as
+    POST /research), plus the business's open commitments. Stores nothing."""
+    import asyncio
+
+    from app.integrations import quickbooks as qbo
+    from app.stats import research as protocol
+
+    try:
+        return await asyncio.to_thread(_qbo_call, qbo.get().research, name.strip() if name else None)
+    except protocol.ResearchInputError as e:
+        raise ApiError(422, e.code, e.message, e.detail)

@@ -148,6 +148,13 @@ class Settings(BaseSettings):
     dewey_restaurants_dir: str | None = None
     dewey_msg_dir: str | None = None
     dewey_place_id: str | None = None  # chosen restaurant's raw ID_STORE; .env only, never commit
+    # QuickBooks Online (integrations/quickbooks.py). Live iff client id + secret are set and
+    # DEMO_OFFLINE is off; otherwise the SYNTHETIC demo company in fixtures/quickbooks_demo/.
+    qbo_client_id: str | None = None
+    qbo_client_secret: str | None = None
+    qbo_redirect_uri: str = "http://localhost:8000/integrations/quickbooks/callback"
+    qbo_environment: Literal["sandbox", "production"] = "sandbox"
+    frontend_url: str = "http://localhost:3000"  # where the OAuth callback sends the browser back
 
     @field_validator("demo_as_of", mode="before")
     @classmethod

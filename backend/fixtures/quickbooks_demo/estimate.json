@@ -1,0 +1,385 @@
+{
+  "QueryResponse": {
+    "Estimate": [
+      {
+        "Id": "9001",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-09T14:05:00-07:00",
+          "LastUpdatedTime": "2026-10-09T14:05:00-07:00"
+        },
+        "DocNumber": "EST-311",
+        "TxnDate": "2026-10-09",
+        "ShipDate": "2026-11-07",
+        "ExpirationDate": "2026-10-31",
+        "TxnStatus": "Pending",
+        "CustomerMemo": {
+          "value": "Team offsite ride, Hudson River Greenway"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "11",
+          "name": "Lumen Labs (offsites)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Team offsite ride, Hudson River Greenway",
+            "Amount": 5600.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 40,
+              "UnitPrice": 140.0
+            }
+          },
+          {
+            "Amount": 5600.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 5600.0
+      },
+      {
+        "Id": "9002",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-10T14:05:00-07:00",
+          "LastUpdatedTime": "2026-10-10T14:05:00-07:00"
+        },
+        "DocNumber": "EST-312",
+        "TxnDate": "2026-10-10",
+        "ShipDate": "2026-11-01",
+        "ExpirationDate": "2026-10-29",
+        "TxnStatus": "Accepted",
+        "CustomerMemo": {
+          "value": "Marathon weekend spectator rentals"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "17",
+          "name": "Five Boroughs Run Club"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Marathon weekend spectator rentals",
+            "Amount": 4400.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 55,
+              "UnitPrice": 80.0
+            }
+          },
+          {
+            "Amount": 4400.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 4400.0
+      },
+      {
+        "Id": "9003",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-15T14:05:00-07:00",
+          "LastUpdatedTime": "2026-10-15T14:05:00-07:00"
+        },
+        "DocNumber": "EST-314",
+        "TxnDate": "2026-10-15",
+        "ShipDate": "2026-11-14",
+        "ExpirationDate": "2026-11-07",
+        "TxnStatus": "Pending",
+        "CustomerMemo": {
+          "value": "Fall team ride and lunch stop"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "13",
+          "name": "Northbank Consulting Group"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Fall team ride and lunch stop",
+            "Amount": 3850.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 25,
+              "UnitPrice": 154.0
+            }
+          },
+          {
+            "Amount": 3850.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 3850.0
+      },
+      {
+        "Id": "9004",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-16T14:05:00-07:00",
+          "LastUpdatedTime": "2026-10-16T14:05:00-07:00"
+        },
+        "DocNumber": "EST-315",
+        "TxnDate": "2026-10-16",
+        "ShipDate": "2026-11-20",
+        "ExpirationDate": "2026-11-13",
+        "TxnStatus": "Accepted",
+        "CustomerMemo": {
+          "value": "8th-grade field trip, helmets included"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "14",
+          "name": "Greenway School Trips"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "8th-grade field trip, helmets included",
+            "Amount": 2940.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 42,
+              "UnitPrice": 70.0
+            }
+          },
+          {
+            "Amount": 2940.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 2940.0
+      },
+      {
+        "Id": "9005",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-20T14:05:00-07:00",
+          "LastUpdatedTime": "2026-10-20T14:05:00-07:00"
+        },
+        "DocNumber": "EST-317",
+        "TxnDate": "2026-10-20",
+        "ShipDate": "2026-12-12",
+        "ExpirationDate": "2026-11-30",
+        "TxnStatus": "Accepted",
+        "CustomerMemo": {
+          "value": "Holiday lights night ride (private event)"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "12",
+          "name": "Pier 62 Events LLC"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Holiday lights night ride (private event)",
+            "Amount": 14250.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 95,
+              "UnitPrice": 150.0
+            }
+          },
+          {
+            "Amount": 14250.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 14250.0
+      },
+      {
+        "Id": "9006",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-22T14:05:00-07:00",
+          "LastUpdatedTime": "2026-10-22T14:05:00-07:00"
+        },
+        "DocNumber": "EST-318",
+        "TxnDate": "2026-10-22",
+        "ShipDate": "2026-12-19",
+        "ExpirationDate": "2026-12-05",
+        "TxnStatus": "Pending",
+        "CustomerMemo": {
+          "value": "Holiday-season guest rental block, Dec 19-31"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "15",
+          "name": "Meridian Hotel Concierge"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Holiday-season guest rental block, Dec 19-31",
+            "Amount": 9800.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 140,
+              "UnitPrice": 70.0
+            }
+          },
+          {
+            "Amount": 9800.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 9800.0
+      },
+      {
+        "Id": "9007",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-09-12T14:05:00-07:00",
+          "LastUpdatedTime": "2026-09-12T14:05:00-07:00"
+        },
+        "DocNumber": "EST-305",
+        "TxnDate": "2026-09-12",
+        "ShipDate": "2026-10-03",
+        "ExpirationDate": "2026-09-26",
+        "TxnStatus": "Closed",
+        "CustomerMemo": {
+          "value": "Bike-and-walk combo tour (invoiced)"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "16",
+          "name": "Harborline Walking Tours"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Bike-and-walk combo tour (invoiced)",
+            "Amount": 2850.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "4",
+                "name": "Guided tour"
+              },
+              "Qty": 30,
+              "UnitPrice": 95.0
+            }
+          },
+          {
+            "Amount": 2850.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 2850.0
+      },
+      {
+        "Id": "9008",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-09-30T14:05:00-07:00",
+          "LastUpdatedTime": "2026-09-30T14:05:00-07:00"
+        },
+        "DocNumber": "EST-309",
+        "TxnDate": "2026-09-30",
+        "ShipDate": "2026-10-17",
+        "ExpirationDate": "2026-10-10",
+        "TxnStatus": "Rejected",
+        "CustomerMemo": {
+          "value": "Leaf-peeping day trip"
+        },
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "CustomerRef": {
+          "value": "11",
+          "name": "Lumen Labs (offsites)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Leaf-peeping day trip",
+            "Amount": 6300.0,
+            "DetailType": "SalesItemLineDetail",
+            "SalesItemLineDetail": {
+              "ItemRef": {
+                "value": "3",
+                "name": "Group rental package"
+              },
+              "Qty": 35,
+              "UnitPrice": 180.0
+            }
+          },
+          {
+            "Amount": 6300.0,
+            "DetailType": "SubTotalLineDetail",
+            "SubTotalLineDetail": {}
+          }
+        ],
+        "TotalAmt": 6300.0
+      }
+    ],
+    "startPosition": 1,
+    "maxResults": 8
+  },
+  "time": "2026-10-25T09:00:00.000-07:00"
+}

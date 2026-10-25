@@ -1,0 +1,9 @@
+{
+  "id": "PO-2042",
+  "kind": "purchase_order",
+  "counterparty": "Kettle Rubber Co.",
+  "description": "Winter tires and tubes",
+  "amount": "4570.00",
+  "due_date": "2026-11-05",
+  "status": "Open"
+}

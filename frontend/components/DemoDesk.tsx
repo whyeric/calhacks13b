@@ -1,6 +1,8 @@
 "use client";
 // "Upload your revenue": the report is LIVE (POST /research runs the protocol on the uploaded
-// CSV; nothing is stored). The hedge card after "Send to the desk" is still scripted
+// CSV; nothing is stored). Connecting QuickBooks Online is the primary path: the backend pulls
+// daily income and commitments from the books and runs the same protocol
+// (POST /integrations/quickbooks/research), and the same report view renders it. The hedge card after "Send to the desk" is still scripted
 // (lib/demoScript.ts, labeled). Client-only business; works in live and mock mode.
 import {
   useCallback,
@@ -12,7 +14,13 @@ import {
 import Link from "next/link";
 import type {
   Business,
+  CommitmentLine,
+  Commitments,
+  InventoryLine,
   LogEntry,
+  QuickBooksConnect,
+  QuickBooksResearch,
+  QuickBooksStatus,
   ResearchHypothesis,
   ResearchReport,
 } from "@/lib/types";
@@ -39,7 +47,21 @@ import {
   tickLabel,
 } from "@/lib/chartScale";
 import { fmtUsd } from "@/lib/format";
-import { postResearch } from "@/lib/api";
+import {
+  connectQuickBooks,
+  disconnectQuickBooks,
+  getQuickBooksStatus,
+  postQuickBooksResearch,
+  postResearch,
+} from "@/lib/api";
+import {
+  QBO_NAME,
+  QBO_RETURN_ERROR,
+  byDueDate,
+  fmtQty,
+  quickBooksErrorText,
+  quickBooksSummary,
+} from "@/lib/quickbooks";
 import {
   ciText,
   daysText,
@@ -52,24 +74,40 @@ import {
 import { Drawer } from "./ChatDrawer";
 import { DecisionLog } from "./DecisionLog";
 
-export type DemoUpload = {
+export type CsvUpload = {
   name: string;
   kind: string;
   csv: ParsedCsv;
   text: string;
 };
+// Connected books: the backend pulls the revenue itself, so there is no file.
+export type QuickBooksUpload = {
+  name: string;
+  kind: string;
+  source: "quickbooks";
+};
+export type DemoUpload = CsvUpload | QuickBooksUpload;
+const isQuickBooks = (u: DemoUpload): u is QuickBooksUpload => "source" in u;
 type HedgeState = { status: "sending" | DemoHedgeStatus; startedAt: number };
-type ResearchState = { report: ResearchReport } | { error: string };
+type ResearchState =
+  | { report: ResearchReport; quickbooks?: QuickBooksResearch }
+  | { error: string };
 export type ResearchFn = (csv: string, name: string) => Promise<ResearchReport>;
+export type QuickBooksResearchFn = (name: string) => Promise<QuickBooksResearch>;
 const liveResearch: ResearchFn = (csv, name) =>
   postResearch<ResearchReport>(csv, name);
+const liveQuickBooksResearch: QuickBooksResearchFn = (name) =>
+  postQuickBooksResearch<QuickBooksResearch>(name);
 // Minimum time the analysis bar stays on screen (the real run is usually faster), and
 // how long the (scripted) hedge pricing takes.
 export const RESEARCH_MS = 2500;
 export const SEND_MS = 2600;
 
 // --- State (lives in the page so switching businesses keeps the demo) -------
-export function useDemo(research: ResearchFn = liveResearch) {
+export function useDemo(
+  research: ResearchFn = liveResearch,
+  quickBooksResearch: QuickBooksResearchFn = liveQuickBooksResearch,
+) {
   const [upload, setUpload] = useState<DemoUpload | null>(null);
   const [startedAt, setStartedAt] = useState(0);
   const [result, setResult] = useState<ResearchState | null>(null);
@@ -92,22 +130,29 @@ export function useDemo(research: ResearchFn = liveResearch) {
       setResult(null);
       setHedge(null);
       setLog([]);
-      research(next.text, next.name).then(
-        (report) => {
-          if (runId.current === id) setResult({ report });
+      const run: Promise<ResearchState> = isQuickBooks(next)
+        ? quickBooksResearch(next.name).then((quickbooks) => ({
+            report: quickbooks.report,
+            quickbooks,
+          }))
+        : research(next.text, next.name).then((report) => ({ report }));
+      run.then(
+        (state) => {
+          if (runId.current === id) setResult(state);
         },
         (err: unknown) => {
           if (runId.current === id)
             setResult({
-              error:
-                err instanceof Error
+              error: isQuickBooks(next)
+                ? quickBooksErrorText(err, "The analysis failed. Please retry.")
+                : err instanceof Error
                   ? err.message
                   : "The analysis failed. Please retry.",
             });
         },
       );
     },
-    [research],
+    [research, quickBooksResearch],
   );
   const remove = useCallback(() => {
     if (timer.current) clearTimeout(timer.current);
@@ -150,7 +195,12 @@ export function useDemo(research: ResearchFn = liveResearch) {
         ? DEMO_BUDGETS.approved
         : DEMO_BUDGETS.open;
   const business: Business | null = upload
-    ? demoBusiness(upload.name, budget)
+    ? isQuickBooks(upload)
+      ? {
+          ...demoBusiness(upload.name, budget),
+          revenue_source: `${QBO_NAME} (researched live, not stored)`,
+        }
+      : demoBusiness(upload.name, budget)
     : null;
   return {
     upload,
@@ -178,14 +228,172 @@ async function readText(file: File): Promise<string> {
     reader.readAsText(file);
   });
 }
+// --- QuickBooks Online: the primary path ("integrations, not uploads") --------
+export type QuickBooksReturn = "connected" | "error" | null;
+export function QuickBooksConnectCard({
+  open,
+  returned = null,
+  onPull,
+}: {
+  open: boolean;
+  /** `?qbo=` from the OAuth callback redirect, if the page loaded with one. */
+  returned?: QuickBooksReturn;
+  onPull: (status: QuickBooksStatus) => void;
+}) {
+  const [status, setStatus] = useState<QuickBooksStatus | null>(null);
+  const [busy, setBusy] = useState<
+    "loading" | "connecting" | "redirecting" | "disconnecting" | null
+  >(null);
+  const [error, setError] = useState("");
+  // Fetch the connection each time the drawer opens (also after the OAuth redirect).
+  useEffect(() => {
+    if (!open) return;
+    let live = true;
+    setBusy("loading");
+    getQuickBooksStatus<QuickBooksStatus>().then(
+      (next) => {
+        if (!live) return;
+        setStatus(next);
+        setBusy(null);
+      },
+      (err: unknown) => {
+        if (!live) return;
+        setBusy(null);
+        // Quiet unless the owner just came back from connecting.
+        if (returned === "connected")
+          setError(
+            quickBooksErrorText(err, "We couldn’t load your QuickBooks connection."),
+          );
+      },
+    );
+    return () => {
+      live = false;
+    };
+  }, [open, returned]);
+  async function connect() {
+    setBusy("connecting");
+    setError("");
+    try {
+      const res = await connectQuickBooks<QuickBooksConnect>();
+      if (res.authorize_url) {
+        // Live mode: Intuit's consent page; the callback redirects back to /?qbo=…
+        setBusy("redirecting");
+        window.location.assign(res.authorize_url);
+        return;
+      }
+      setStatus(res.status);
+    } catch (err) {
+      setError(quickBooksErrorText(err, "QuickBooks didn’t connect. Please retry."));
+    }
+    setBusy(null);
+  }
+  async function disconnect() {
+    setBusy("disconnecting");
+    setError("");
+    try {
+      setStatus(await disconnectQuickBooks<QuickBooksStatus>());
+    } catch (err) {
+      setError(quickBooksErrorText(err, "QuickBooks didn’t disconnect. Please retry."));
+    }
+    setBusy(null);
+  }
+  const connected = !!status?.connected;
+  const shownError =
+    error || (returned === "error" && !connected ? QBO_RETURN_ERROR : "");
+  return (
+    <section
+      className="qbo-connect"
+      aria-label="QuickBooks Online"
+      aria-live="polite"
+      data-testid="qbo-connect"
+    >
+      <div className="row">
+        <span className="eyebrow">Connect your books</span>
+        {status && (
+          <span className="badge" data-testid="qbo-mode">
+            {status.mode === "demo" ? "Demo mode" : "Live"}
+          </span>
+        )}
+      </div>
+      {connected && status ? (
+        <>
+          <p className="qbo-company">
+            <span className="qbo-dot" aria-hidden="true" />
+            <span>
+              <strong>{status.company_name ?? "Your QuickBooks company"}</strong>
+              <small>
+                Connected to {QBO_NAME}
+                {status.connected_at && ` · since ${status.connected_at.slice(0, 10)}`}
+              </small>
+            </span>
+          </p>
+          {status.synthetic && (
+            <p className="badge synthetic" data-testid="qbo-synthetic">
+              Synthetic demo data: a fictional company, not real books
+            </p>
+          )}
+          <button
+            className="primary"
+            type="button"
+            disabled={busy !== null}
+            onClick={() => onPull(status)}
+          >
+            Pull revenue and research
+          </button>
+          <button
+            className="link-button"
+            type="button"
+            disabled={busy !== null}
+            onClick={disconnect}
+          >
+            {busy === "disconnecting" ? "Disconnecting…" : "Disconnect"}
+          </button>
+        </>
+      ) : (
+        <>
+          <p>
+            Connect {QBO_NAME} and the desk reads your daily income, plus what
+            you’re already committed to: open purchase orders, unpaid bills,
+            pending estimates and inventory. Read-only.
+          </p>
+          {status?.mode === "demo" && (
+            <p className="muted upload-note">
+              Demo mode connects a synthetic company (Hudson Bike Co.).
+            </p>
+          )}
+          <button
+            className="primary"
+            type="button"
+            disabled={busy !== null && busy !== "loading"}
+            onClick={connect}
+          >
+            {busy === "connecting"
+              ? "Connecting…"
+              : busy === "redirecting"
+                ? "Opening QuickBooks…"
+                : "Connect QuickBooks"}
+          </button>
+        </>
+      )}
+      {shownError && (
+        <p role="alert" className="field-error">
+          {shownError}
+        </p>
+      )}
+    </section>
+  );
+}
+
 export function DemoUploadDrawer({
   open,
   onClose,
   onStart,
+  quickBooksReturn = null,
 }: {
   open: boolean;
   onClose: () => void;
   onStart: (upload: DemoUpload) => void;
+  quickBooksReturn?: QuickBooksReturn;
 }) {
   const [name, setName] = useState(DEMO_DEFAULTS.name);
   const [kind, setKind] = useState(DEMO_DEFAULTS.kind);
@@ -234,6 +442,18 @@ export function DemoUploadDrawer({
         Add your daily revenue and the desk will test which weather and game
         days really move it.
       </p>
+      <QuickBooksConnectCard
+        open={open}
+        returned={quickBooksReturn}
+        onPull={(status) =>
+          onStart({
+            name: status.company_name ?? "QuickBooks company",
+            kind,
+            source: "quickbooks",
+          })
+        }
+      />
+      <p className="eyebrow upload-or">Or upload a CSV</p>
       <form className="upload-form" onSubmit={submit}>
         <label htmlFor="upload-name">Business name</label>
         <input
@@ -624,6 +844,129 @@ export function DemoHedgeCard({
   );
 }
 
+// --- "What you're committed to" (QuickBooks): format only; totals come from the API ---
+function CommitmentList({
+  title,
+  rows,
+  empty,
+}: {
+  title: string;
+  rows: CommitmentLine[];
+  empty: string;
+}) {
+  return (
+    <div className="commitment-list">
+      <h4>
+        {title} <span className="muted">· {rows.length}</span>
+      </h4>
+      {rows.length === 0 ? (
+        <p className="muted">{empty}</p>
+      ) : (
+        <ul aria-label={title}>
+          {byDueDate(rows).map((row) => (
+            <li key={row.id} data-testid={`commitment-${row.id}`}>
+              <span>
+                <strong>{row.counterparty}</strong>
+                <small>{row.description}</small>
+              </span>
+              <span className="commitment-amount">
+                <strong>{fmtUsd(row.amount)}</strong>
+                <small>
+                  {row.due_date ? `due ${row.due_date}` : "no due date"}
+                </small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+function InventoryList({ rows }: { rows: InventoryLine[] }) {
+  return (
+    <div className="commitment-list">
+      <h4>
+        Inventory <span className="muted">· {rows.length}</span>
+      </h4>
+      {rows.length === 0 ? (
+        <p className="muted">No inventory tracked.</p>
+      ) : (
+        <ul aria-label="Inventory">
+          {rows.map((row) => (
+            <li key={row.id} data-testid={`inventory-${row.id}`}>
+              <span>
+                <strong>{row.name}</strong>
+                <small>
+                  {row.sku ? `${row.sku} · ` : ""}
+                  {fmtQty(row.qty_on_hand)} on hand × {fmtUsd(row.unit_cost)}
+                </small>
+              </span>
+              <span className="commitment-amount">
+                <strong>{fmtUsd(row.value)}</strong>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+export function CommitmentsPanel({ commitments }: { commitments: Commitments }) {
+  const c = commitments;
+  return (
+    <section
+      className="commitments"
+      aria-label="What you’re committed to"
+      data-testid="qbo-commitments"
+    >
+      <div className="commitments-head">
+        <h3>What you’re committed to</h3>
+        <span className="muted">
+          From {QBO_NAME}, as of {c.as_of}
+        </span>
+        {c.synthetic && (
+          <span className="badge synthetic">Synthetic demo data</span>
+        )}
+      </div>
+      <dl className="commitment-totals">
+        <div>
+          <dt>Committed spend</dt>
+          <dd data-testid="committed-spend">{fmtUsd(c.committed_spend)}</dd>
+          <small>Open purchase orders and unpaid bills</small>
+        </div>
+        <div>
+          <dt>Booked future sales</dt>
+          <dd data-testid="expected-revenue">{fmtUsd(c.expected_revenue)}</dd>
+          <small>Pending estimates</small>
+        </div>
+        <div>
+          <dt>Inventory value</dt>
+          <dd data-testid="inventory-value">{fmtUsd(c.inventory_value)}</dd>
+          <small>On hand, at cost</small>
+        </div>
+      </dl>
+      <div className="commitment-lists">
+        <CommitmentList
+          title="Open purchase orders"
+          rows={c.purchase_orders}
+          empty="No open purchase orders."
+        />
+        <CommitmentList
+          title="Unpaid bills"
+          rows={c.bills}
+          empty="No unpaid bills."
+        />
+        <CommitmentList
+          title="Pending estimates"
+          rows={c.estimates}
+          empty="No pending estimates."
+        />
+        <InventoryList rows={c.inventory} />
+      </div>
+    </section>
+  );
+}
+
 // --- The demo business view -------------------------------------------------
 export function DemoDesk({
   demo,
@@ -639,6 +982,7 @@ export function DemoDesk({
   const elapsed = now - startedAt;
   const report = result && "report" in result ? result.report : null;
   const failed = result && "error" in result ? result.error : null;
+  const books = result && "quickbooks" in result ? result.quickbooks : undefined;
   const waiting = !result;
   const ticking =
     !!upload &&
@@ -665,8 +1009,21 @@ export function DemoDesk({
           <div>
             <span className="eyebrow">Research my risks</span>
             <h2>
-              {upload.name} · {csvSummary(upload.csv)}
+              {upload.name} ·{" "}
+              {isQuickBooks(upload)
+                ? books
+                  ? quickBooksSummary(books)
+                  : QBO_NAME
+                : csvSummary(upload.csv)}
             </h2>
+            {books && (
+              <p className="qbo-source" data-testid="qbo-source">
+                {books.synthetic && (
+                  <span className="badge synthetic">Synthetic demo data</span>
+                )}{" "}
+                Revenue: {books.revenue_source}
+              </p>
+            )}
           </div>
           <div className="demo-actions">
             <button
@@ -675,7 +1032,7 @@ export function DemoDesk({
                 onRemoved();
               }}
             >
-              Remove upload
+              {isQuickBooks(upload) ? "Clear report" : "Remove upload"}
             </button>
           </div>
         </div>
@@ -691,7 +1048,7 @@ export function DemoDesk({
           <div className="demo-report">
             {report.notes.length > 0 && (
               <p className="badge sample" data-testid="research-file-notes">
-                From your file: {report.notes.join(" ")}
+                From your {books ? "books" : "file"}: {report.notes.join(" ")}
               </p>
             )}
             <p className="demo-summary">{report.summary}</p>
@@ -708,7 +1065,8 @@ export function DemoDesk({
               sendState={hedge?.status ?? null}
             />
             <p className="muted demo-footnote">
-              Computed live on your file against {report.station}:{" "}
+              Computed live on your {books ? "QuickBooks revenue" : "file"}{" "}
+              against {report.station}:{" "}
               {report.n_days.toLocaleString("en-US")} days used
               {report.n_closed_days > 0 &&
                 `, ${report.n_closed_days.toLocaleString("en-US")} zero-revenue days left out`}
@@ -721,6 +1079,7 @@ export function DemoDesk({
               placebo shows nothing.{" "}
               <Link href="/research">How this works</Link>
             </p>
+            {books && <CommitmentsPanel commitments={books.commitments} />}
           </div>
         )}
       </section>

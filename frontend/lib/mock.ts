@@ -14,6 +14,8 @@ import chatFixture from "@/fixtures/chat_reply.json";
 import settingsFixture from "@/fixtures/settings.json";
 import healthFixture from "@/fixtures/health.json";
 import researchFixture from "@/fixtures/research_report.json";
+import qboConnectedFixture from "@/fixtures/quickbooks_status_connected.json";
+import qboResearchFixture from "@/fixtures/quickbooks_research.json";
 import playoffFixture from "@/fixtures/hedges_playoff.json";
 import unstableFixture from "@/fixtures/hedge_declined_unstable.json";
 import playoffExposure from "@/fixtures/exposure_playoff_home.json";
@@ -50,7 +52,21 @@ function initialHedges() {
 let hedges = initialHedges();
 let decisions = clone<LogEntry[]>(decisionsFixture);
 let settings: Record<string, Settings> = {};
+// QuickBooks (demo mode): starts disconnected; connect links the synthetic company.
+let qboConnected = false;
+function qboStatus() {
+  return qboConnected
+    ? clone(qboConnectedFixture)
+    : {
+        ...clone<object>(qboConnectedFixture),
+        connected: false,
+        company_name: null,
+        realm_id: null,
+        connected_at: null,
+      };
+}
 export function resetMock() {
+  qboConnected = false;
   hedges = initialHedges();
   decisions = clone<LogEntry[]>(decisionsFixture);
   settings = {};
@@ -221,6 +237,21 @@ export async function mockRequest<T>(
   } else if (method === "POST" && route.endsWith("/chat")) result = chatFixture;
   // Fixture mode answers every upload with the Hudson Bike Co. report (a real backend run).
   else if (method === "POST" && route === "/research") result = researchFixture;
+  else if (route.startsWith("/integrations/quickbooks/")) {
+    const action = route.split("/")[3];
+    if (action === "connect") {
+      qboConnected = true;
+      result = { status: qboStatus(), authorize_url: null };
+    } else if (action === "disconnect") {
+      qboConnected = false;
+      result = qboStatus();
+    } else if (action === "status") result = qboStatus();
+    else if (!qboConnected)
+      throw new ApiError("QuickBooks isn't connected.", 409, "not_connected");
+    else if (action === "commitments")
+      result = qboResearchFixture.commitments;
+    else if (action === "research") result = qboResearchFixture;
+  }
   else if (route.endsWith("/settings")) {
     if (method === "PUT") {
       const next = clone<Settings>(body);

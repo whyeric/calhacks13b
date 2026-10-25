@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { MOCK_MODE, apiGet, apiPost, errorCode } from "@/lib/api";
 import type {
@@ -32,6 +32,7 @@ import {
   DemoDesk,
   DemoUploadDrawer,
   useDemo,
+  type QuickBooksReturn,
 } from "@/components/DemoDesk";
 
 export default function Home() {
@@ -43,6 +44,18 @@ export default function Home() {
     null,
   );
   const activeBusiness = useRef(selectedId);
+  // Back from QuickBooks' OAuth consent (?qbo=connected|error): reopen the drawer, which
+  // re-reads the connection, and drop the flag from the URL.
+  const [qboReturn, setQboReturn] = useState<QuickBooksReturn>(null);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const flag = url.searchParams.get("qbo");
+    if (flag !== "connected" && flag !== "error") return;
+    setQboReturn(flag);
+    setDrawer("upload");
+    url.searchParams.delete("qbo");
+    window.history.replaceState(window.history.state, "", url.toString());
+  }, []);
   const businesses = useSWR<Business[]>(["/businesses", "all"], () =>
     apiGet("/businesses"),
   );
@@ -350,7 +363,11 @@ export default function Home() {
       />
       <DemoUploadDrawer
         open={drawer === "upload"}
-        onClose={() => setDrawer(null)}
+        onClose={() => {
+          setDrawer(null);
+          setQboReturn(null);
+        }}
+        quickBooksReturn={qboReturn}
         onStart={(upload) => {
           demo.start(upload);
           setDrawer(null);

@@ -5,6 +5,8 @@ the desk" flow runs the research protocol **live** on a business's own daily rev
 offers one example file, **Hudson Bike Co.**, a fictional NYC bike-rental shop, but any CSV in the
 right shape works.
 
+Instead of a CSV, the same revenue can come straight from the books: see [QUICKBOOKS.md](QUICKBOOKS.md)
+(QuickBooks Online, with a SYNTHETIC demo company, plus open POs, unpaid bills, estimates and inventory).
 
 > **What's live and what isn't.** The report is computed live: the browser sends the CSV to
 > `POST /research`, the backend runs the protocol (`backend/app/stats/research.py`) and returns

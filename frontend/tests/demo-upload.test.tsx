@@ -288,6 +288,17 @@ describe("dashboard integration (live mode, msw)", () => {
       return HttpResponse.json(research);
     }),
     http.get(`${api}/businesses`, () => HttpResponse.json(businesses)),
+    // The drawer reads the QuickBooks connection when it opens; not connected here.
+    http.get(`${api}/integrations/quickbooks/status`, () =>
+      HttpResponse.json({
+        mode: "demo",
+        connected: false,
+        company_name: null,
+        realm_id: null,
+        connected_at: null,
+        synthetic: true,
+      }),
+    ),
     http.all(`${api}/businesses/${DEMO_ID}/*`, ({ request }) => {
       demoCalls.push(request.url);
       return HttpResponse.json({}, { status: 404 });

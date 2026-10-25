@@ -4,8 +4,11 @@ import sys
 from pathlib import Path
 root = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(root / "frontend/.python-tools"), str(root / "backend")]
+import app.models as models
 from app.models import (Business, AnalyzeResponse, Hedge, LogEntry, Budget, BacktestResult, LedgerResponse,
     ChatReply, Settings, Health, ReconBenchmark, ResearchReport)
+# QuickBooks fixtures validate once the backend models land; until then they are skipped (and said so).
+QBO_MODELS = {"quickbooks_status": "QuickBooksStatus", "quickbooks_research": "QuickBooksResearch"}
 fixtures = root / "frontend/fixtures"
 count = 0
 for path in fixtures.glob("*.json"):
@@ -14,6 +17,14 @@ for path in fixtures.glob("*.json"):
         for snapshot in json.loads(path.read_text(encoding="utf-8")).values():
             Budget.model_validate(snapshot)
             count += 1
+        continue
+    qbo = next((m for prefix, m in QBO_MODELS.items() if name.startswith(prefix)), None)
+    if qbo is not None:
+        if not hasattr(models, qbo):
+            print(f"skipped {path.name}: app.models has no {qbo} yet")
+            continue
+        getattr(models, qbo).model_validate(json.loads(path.read_text(encoding="utf-8")))
+        count += 1
         continue
     model = (Business if name.startswith("businesses") else AnalyzeResponse if name.startswith("analyze_")
         else Hedge if name.startswith("hedge") else LogEntry if name == "decisions"

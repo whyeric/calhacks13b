@@ -1,0 +1,11 @@
+{
+  "status": {
+    "mode": "demo",
+    "connected": true,
+    "company_name": "Hudson Bike Co. (SYNTHETIC)",
+    "realm_id": "demo-hudson-bike-co",
+    "connected_at": "2026-10-25T17:00:00Z",
+    "synthetic": true
+  },
+  "authorize_url": null
+}

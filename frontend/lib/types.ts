@@ -59,3 +59,10 @@ export type HedgeLeg = Hedge & {
   /** Total premium across every leg of the set, computed by the API. */
   group_total_premium?: string | null;
 };
+// QuickBooks Online integration (/integrations/quickbooks/*). Money is a Decimal string.
+export type QuickBooksStatus = components["schemas"]["QuickBooksStatus"];
+export type QuickBooksConnect = components["schemas"]["QuickBooksConnect"];
+export type CommitmentLine = components["schemas"]["CommitmentLine"];
+export type InventoryLine = components["schemas"]["InventoryLine"];
+export type Commitments = components["schemas"]["Commitments"];
+export type QuickBooksResearch = components["schemas"]["QuickBooksResearch"];

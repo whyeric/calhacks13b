@@ -132,6 +132,71 @@ export interface components {
         [key: string]: boolean | number | string | null;
       };
     };
+    /** CommitmentLine */
+    CommitmentLine: {
+      /** Id */
+      id: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "purchase_order" | "bill" | "estimate";
+      /** Counterparty */
+      counterparty: string;
+      /** Description */
+      description: string;
+      /** Amount */
+      amount: string;
+      /** Due Date */
+      due_date: string | null;
+      /** Status */
+      status: string;
+    };
+    /**
+     * Commitments
+     * @description GET /integrations/quickbooks/commitments: what the business is committed to, not what it spent.
+     */
+    Commitments: {
+      /**
+       * As Of
+       * Format: date
+       */
+      as_of: string;
+      /** Synthetic */
+      synthetic: boolean;
+      /** Purchase Orders */
+      purchase_orders: components["schemas"]["CommitmentLine"][];
+      /** Bills */
+      bills: components["schemas"]["CommitmentLine"][];
+      /** Estimates */
+      estimates: components["schemas"]["CommitmentLine"][];
+      /** Inventory */
+      inventory: components["schemas"]["InventoryLine"][];
+      /** Committed Spend */
+      committed_spend: string;
+      /** Expected Revenue */
+      expected_revenue: string;
+      /** Inventory Value */
+      inventory_value: string;
+    };
+    /**
+     * ControllerSignoff
+     * @description The controller's co-sign (or refusal) on a hedge above materiality.
+     */
+    ControllerSignoff: {
+      /**
+       * Decision
+       * @enum {string}
+       */
+      decision: "signed" | "refused";
+      /**
+       * At
+       * Format: date-time
+       */
+      at: string;
+      /** Note */
+      note: string | null;
+    };
     /**
      * Decision
      * @description Spec §8. Only `summary` is written by Claude.
@@ -366,6 +431,31 @@ export interface components {
        * @default false
        */
       estimated: boolean;
+      /**
+       * Venue
+       * @default kalshi
+       * @enum {string}
+       */
+      venue: "kalshi" | "polymarket";
+      /**
+       * Fee Rate
+       * @default null
+       */
+      fee_rate: string | null;
+      /**
+       * Needs Controller
+       * @default false
+       */
+      needs_controller: boolean;
+      /** @default null */
+      controller: components["schemas"]["ControllerSignoff"] | null;
+      /**
+       * Decision Note
+       * @default null
+       */
+      decision_note: string | null;
+      /** @default null */
+      owner_history: components["schemas"]["OwnerHistory"] | null;
     };
     /**
      * HedgeLite
@@ -389,6 +479,49 @@ export interface components {
       /** Payoff */
       payoff: components["schemas"]["PayoffRow"][];
       headline: components["schemas"]["Headline"];
+    };
+    /** HistoryOutcome */
+    HistoryOutcome: {
+      /** Hedge Id */
+      hedge_id: string;
+      /**
+       * Week Of
+       * Format: date
+       */
+      week_of: string;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status:
+        | "proposed"
+        | "pending_approval"
+        | "approved"
+        | "rejected"
+        | "declined"
+        | "expired_unapproved"
+        | "settled";
+      /** Premium */
+      premium: string | null;
+      /** Payout */
+      payout: string | null;
+      /** Note */
+      note: string | null;
+    };
+    /** InventoryLine */
+    InventoryLine: {
+      /** Id */
+      id: string;
+      /** Name */
+      name: string;
+      /** Sku */
+      sku: string | null;
+      /** Qty On Hand */
+      qty_on_hand: string;
+      /** Unit Cost */
+      unit_cost: string;
+      /** Value */
+      value: string;
     };
     /** LedgerEntry */
     LedgerEntry: {
@@ -477,7 +610,10 @@ export interface components {
         | "threshold_changed"
         | "chat"
         | "run_failed"
-        | "refusal";
+        | "refusal"
+        | "cosign"
+        | "cosign_refused"
+        | "period_close";
       /**
        * Created At
        * Format: date-time
@@ -487,7 +623,7 @@ export interface components {
        * Actor
        * @enum {string}
        */
-      actor: "desk" | "owner" | "system";
+      actor: "desk" | "owner" | "controller" | "system";
       /** Agent */
       agent: ("claude" | "fallback") | null;
       /** Hedge Id */
@@ -557,6 +693,31 @@ export interface components {
       /** Contains Truth */
       contains_truth: boolean;
     };
+    /**
+     * OwnerHistory
+     * @description The same exposure's earlier hedges for this business, newest first (at most 5 shown).
+     *
+     *     `pattern` is set when the owner's recent decisions should change how the desk asks:
+     *     "rejected_recently" when the last two decided hedges were both rejected.
+     */
+    OwnerHistory: {
+      /** N Earlier */
+      n_earlier: number;
+      /** N Approved */
+      n_approved: number;
+      /** N Rejected */
+      n_rejected: number;
+      /** N Expired Unapproved */
+      n_expired_unapproved: number;
+      /** Total Premium */
+      total_premium: string;
+      /** Total Payout */
+      total_payout: string;
+      /** Recent */
+      recent: components["schemas"]["HistoryOutcome"][];
+      /** Pattern */
+      pattern: "rejected_recently" | null;
+    };
     /** PayoffRow */
     PayoffRow: {
       /**
@@ -588,6 +749,58 @@ export interface components {
       account: string;
       /** Amount */
       amount: string;
+    };
+    /**
+     * QuickBooksConnect
+     * @description POST /integrations/quickbooks/connect. Demo connects at once (`authorize_url` null); live
+     *     returns Intuit's consent URL and stays unconnected until the callback.
+     */
+    QuickBooksConnect: {
+      status: components["schemas"]["QuickBooksStatus"];
+      /** Authorize Url */
+      authorize_url: string | null;
+    };
+    /**
+     * QuickBooksResearch
+     * @description POST /integrations/quickbooks/research: the research protocol on revenue pulled from the books.
+     */
+    QuickBooksResearch: {
+      report: components["schemas"]["ResearchReport"];
+      /** Revenue Source */
+      revenue_source: string;
+      /** Days */
+      days: number;
+      /**
+       * First Day
+       * Format: date
+       */
+      first_day: string;
+      /**
+       * Last Day
+       * Format: date
+       */
+      last_day: string;
+      commitments: components["schemas"]["Commitments"];
+      /** Synthetic */
+      synthetic: boolean;
+    };
+    /** QuickBooksStatus */
+    QuickBooksStatus: {
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "demo" | "live";
+      /** Connected */
+      connected: boolean;
+      /** Company Name */
+      company_name: string | null;
+      /** Realm Id */
+      realm_id: string | null;
+      /** Connected At */
+      connected_at: string | null;
+      /** Synthetic */
+      synthetic: boolean;
     };
     /** ReconBenchmark */
     ReconBenchmark: {
@@ -961,6 +1174,11 @@ export interface components {
        * @default 1
        */
       rain_size_multiplier: number;
+      /**
+       * Materiality Usd
+       * @default 200.00
+       */
+      materiality_usd: string;
     };
     /** ToolCall */
     ToolCall: {

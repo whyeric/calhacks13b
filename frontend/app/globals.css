@@ -1387,3 +1387,168 @@ svg.forest-axis text {
   margin: 0 4px 0 10px;
   vertical-align: -1px;
 }
+
+/* QuickBooks Online connection (upload drawer) and the commitments panel (DemoDesk.tsx) */
+.badge.synthetic {
+  background: #faf0d9;
+  color: #684611;
+  font-weight: 600;
+}
+.qbo-connect {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 14px;
+  margin: 12px 0 6px;
+  border: 1px solid #c9d6cb;
+  border-radius: 10px;
+  background: #fff;
+}
+.qbo-connect > .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.qbo-connect p {
+  margin: 0;
+  font-size: 14px;
+}
+.qbo-connect .badge.synthetic {
+  align-self: flex-start;
+}
+.qbo-company {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.qbo-company > span:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.qbo-company small {
+  color: #52645a;
+  font-size: 12px;
+}
+.qbo-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #247153;
+}
+button.link-button {
+  align-self: flex-start;
+  border: none;
+  background: none;
+  padding: 2px 0;
+  font-size: 13px;
+  color: #20583f;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+button.link-button:hover:not(:disabled) {
+  background: none;
+  color: #143c2a;
+}
+.upload-or {
+  margin: 18px 0 8px;
+  color: #52645a;
+}
+.qbo-source {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #52645a;
+  overflow-wrap: anywhere;
+}
+.commitments {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #e3e7df;
+}
+.commitments-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+}
+.commitments-head h3 {
+  margin: 0;
+  font-size: 17px;
+}
+.commitments-head .muted {
+  font-size: 13px;
+}
+.commitment-totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.commitment-totals > div {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f3f5ef;
+}
+.commitment-totals dt {
+  font-size: 12px;
+  font-weight: bold;
+}
+.commitment-totals dd {
+  margin: 2px 0;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+.commitment-totals small {
+  font-size: 12px;
+  color: #52645a;
+}
+.commitment-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px 18px;
+}
+.commitment-list {
+  min-width: 0;
+}
+.commitment-list h4 {
+  margin: 6px 0;
+  font-size: 14px;
+}
+.commitment-list > p {
+  font-size: 13px;
+  margin: 0;
+}
+.commitment-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+.commitment-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eef1ea;
+}
+.commitment-list li > span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.commitment-list small {
+  color: #52645a;
+  font-size: 12px;
+}
+.commitment-amount {
+  flex: none;
+  align-items: flex-end;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
