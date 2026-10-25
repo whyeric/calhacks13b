@@ -1,0 +1,136 @@
+{
+  "source": "recorded",
+  "method": "manual",
+  "scenes": [
+    {
+      "scene": "S1",
+      "file": "vo/S1.m4a",
+      "start": 0.0,
+      "duration": 3.91,
+      "lead": 0.836,
+      "len": 1.827
+    },
+    {
+      "scene": "S2",
+      "file": "vo/S2.m4a",
+      "start": 3.91,
+      "duration": 4.23,
+      "lead": 0.1,
+      "len": 2.531
+    },
+    {
+      "scene": "S3",
+      "file": "vo/S3.m4a",
+      "start": 8.14,
+      "duration": 5.21,
+      "lead": 0.097,
+      "len": 3.993
+    },
+    {
+      "scene": "S4",
+      "file": "vo/S4.m4a",
+      "start": 13.35,
+      "duration": 11.51,
+      "lead": 0.854,
+      "len": 9.187
+    },
+    {
+      "scene": "S5",
+      "file": "vo/S5.m4a",
+      "start": 24.86,
+      "duration": 4.62,
+      "lead": 0.099,
+      "len": 3.375
+    },
+    {
+      "scene": "S6",
+      "file": "vo/S6.m4a",
+      "start": 29.48,
+      "duration": 5.8,
+      "lead": 0.104,
+      "len": 4.114
+    },
+    {
+      "scene": "S7",
+      "file": "vo/S7.m4a",
+      "start": 35.28,
+      "duration": 6.42,
+      "lead": 0.095,
+      "len": 4.317
+    },
+    {
+      "scene": "S8",
+      "file": "vo/S8.m4a",
+      "start": 41.7,
+      "duration": 6.66,
+      "lead": 0.102,
+      "len": 4.916
+    },
+    {
+      "scene": "S9",
+      "file": "vo/S9.m4a",
+      "start": 48.36,
+      "duration": 14.27,
+      "lead": 0.097,
+      "len": 13.967
+    },
+    {
+      "scene": "S10",
+      "file": "vo/S10.m4a",
+      "start": 62.63,
+      "duration": 7.01,
+      "lead": 0.104,
+      "len": 5.015
+    },
+    {
+      "scene": "S11",
+      "file": "vo/S11.m4a",
+      "start": 69.64,
+      "duration": 8.18,
+      "lead": 0.098,
+      "len": 6.032
+    },
+    {
+      "scene": "S12",
+      "file": "vo/S12.m4a",
+      "start": 77.82,
+      "duration": 10.35,
+      "lead": 0.097,
+      "len": 8.766
+    },
+    {
+      "scene": "S13",
+      "file": "vo/S13.m4a",
+      "start": 88.17,
+      "duration": 5.13,
+      "lead": 0.698,
+      "len": 2.066
+    },
+    {
+      "scene": "S14",
+      "file": "vo/S14.m4a",
+      "start": 93.3,
+      "duration": 6.48,
+      "lead": 0.098,
+      "len": 3.407
+    },
+    {
+      "scene": "S15",
+      "file": "vo/S15.m4a",
+      "start": 99.78,
+      "duration": 9.95,
+      "lead": 0.102,
+      "len": 7.995
+    },
+    {
+      "scene": "S16",
+      "file": "vo/S16.m4a",
+      "start": 109.73,
+      "duration": 4.025,
+      "lead": 0.104,
+      "len": 2.926
+    }
+  ],
+  "full": "vo/full.m4a",
+  "total": 113.755
+}
