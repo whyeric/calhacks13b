@@ -172,6 +172,16 @@ def test_resolve_dirs_autodetects_msg(tmp_path):
     assert dewey.resolve_dirs(tmp_path) == (tmp_path / "aaa", tmp_path / "bbb")
 
 
+def test_resolve_dirs_skips_non_dewey_folders(tmp_path):
+    weekly = pd.read_parquet(WEEKLY)
+    for name in ("aaa", "bbb", "tlc"):
+        (tmp_path / name).mkdir()
+    weekly.to_parquet(tmp_path / "aaa" / "x.parquet")
+    weekly[weekly["ID_STORE"] == "s_keep"].to_parquet(tmp_path / "bbb" / "x.parquet")
+    pd.DataFrame({"PULocationID": [186], "fare_amount": [9.5]}).to_parquet(tmp_path / "tlc" / "yellow.parquet")
+    assert dewey.resolve_dirs(tmp_path) == (tmp_path / "aaa", tmp_path / "bbb")
+
+
 def test_resolve_dirs_env_override(tmp_path, monkeypatch):
     for name in ("r", "m"):
         (tmp_path / name).mkdir()
