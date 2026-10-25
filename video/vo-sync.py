@@ -2,6 +2,7 @@
 """Re-sync scene timing to a human narration recording.
 
 Usage: python video/vo-sync.py [recording] [--outdir video/assets/vo] [--method auto|whisper|silence]
+       [--starts 0,3.91,...]   (hand-set scene starts in seconds; overrides --method)
 
 Reads scene text from video/notes/vo.txt ("S1: ..." paragraphs), finds where each
 scene starts in the recording, cuts per-scene clips, copies the recording to
@@ -9,7 +10,11 @@ scene starts in the recording, cuts per-scene clips, copies the recording to
 
 Boundary finding: word timestamps from local openai-whisper (aligned to the script
 with difflib, so ad-libs and small misreads are tolerated); falls back to ffmpeg
-silencedetect, taking the N-1 longest pauses as scene breaks.
+silencedetect, taking the N-1 longest pauses as scene breaks. Check the result: one long pause can be
+detected as two, which pushes every later break off by one. Then pass the right starts with --starts.
+
+Each scene also gets "lead" (speech onset after the scene start) and "len" (speech length), from
+silencedetect inside the scene, so scenes time their animations to the speech, not to the pauses.
 """
 import argparse, difflib, json, os, re, shutil, subprocess, sys
 
@@ -95,11 +100,36 @@ def starts_from_silence(rec, n):
     return [0.0] + sorted(round(e - 0.1, 3) for _, _, e in breaks)
 
 
+def speech_bounds(rec, starts, total):
+    """[(lead, len)] per scene: first and last speech (>= 0.2 s runs) inside each scene's range."""
+    log = subprocess.run(["ffmpeg", "-hide_banner", "-i", rec, "-af", "silencedetect=noise=-38dB:d=0.12",
+                          "-f", "null", "-"], capture_output=True, text=True).stderr
+    ss = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", log)]
+    se = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", log)]
+    segs, prev = [], 0.0
+    for s, e in zip(ss, se):
+        if s - prev >= 0.2:
+            segs.append((prev, s))
+        prev = e
+    if total - prev >= 0.2:
+        segs.append((prev, total))
+    out = []
+    for i, a in enumerate(starts):
+        b = starts[i + 1] if i + 1 < len(starts) else total
+        inside = [(max(x, a), min(y, b)) for x, y in segs if y > a and x < b and min(y, b) - max(x, a) >= 0.2]
+        if not inside:
+            out.append((0.0, round(b - a, 3)))
+            continue
+        out.append((round(inside[0][0] - a, 3), round(inside[-1][1] - inside[0][0], 3)))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("recording", nargs="?")
     ap.add_argument("--outdir", default=os.path.join(HERE, "assets", "vo"))
     ap.add_argument("--method", choices=["auto", "whisper", "silence"], default="auto")
+    ap.add_argument("--starts", help="comma-separated scene starts (s), one per scene in vo.txt")
     a = ap.parse_args()
     rec = a.recording or next((os.path.join(a.outdir, f"user.{x}") for x in ("m4a", "wav", "mp3")
                                if os.path.exists(os.path.join(a.outdir, f"user.{x}"))), None)
@@ -109,7 +139,12 @@ def main():
     os.makedirs(a.outdir, exist_ok=True)
 
     method = a.method
-    if method in ("auto", "whisper"):
+    if a.starts:
+        starts = [float(x) for x in a.starts.split(",")]
+        if len(starts) != len(scenes):
+            sys.exit(f"--starts has {len(starts)} values, vo.txt has {len(scenes)} scenes")
+        method = "manual"
+    elif method in ("auto", "whisper"):
         try:
             starts = starts_from_whisper(rec, scenes)
             method = "whisper"
@@ -131,19 +166,20 @@ def main():
     total = round(duration(full), 3)
 
     rows = []
+    bounds = speech_bounds(full, starts, total)
     for i, (name, _) in enumerate(scenes):
         end = starts[i + 1] if i + 1 < len(scenes) else total
         clip = os.path.join(a.outdir, f"{name}.m4a")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", full, "-ss", str(starts[i]),
                         "-to", str(end), "-c:a", "aac", "-b:a", "192k", clip], check=True)
         rows.append({"scene": name, "file": f"vo/{name}.m4a", "start": starts[i],
-                     "duration": round(end - starts[i], 3)})
+                     "duration": round(end - starts[i], 3), "lead": bounds[i][0], "len": bounds[i][1]})
 
     timing = {"source": "recorded", "method": method, "scenes": rows, "full": "vo/full.m4a",
               "total": total}
     json.dump(timing, open(os.path.join(a.outdir, "timing.json"), "w"), indent=2)
     for r in rows:
-        print(f"{r['scene']:>4}  start {r['start']:7.2f}  dur {r['duration']:6.2f}")
+        print(f"{r['scene']:>4}  start {r['start']:7.2f}  dur {r['duration']:6.2f}  speech {r['lead']:5.2f}+{r['len']:.2f}")
     print(f"total {total:.2f}s via {method}")
 
 

@@ -1,16 +1,16 @@
 S1: Rain on a Saturday empties the shop.
-S2: A home game packs the street, or it doesn't.
-S3: Either way, your week swings, and you can't plan around it.
-S4: Offset measures that swing in real dollars, from your own revenue.
-S5: Then it finds a Kalshi contract that pays when it hits. And you decide.
-S6: Here's a bike shop: fictional sales, real weather. Upload its daily revenue.
-S7: Rain costs it about $1,956 a day, and that held up on data the model never saw.
-S8: Knicks games? Nothing there. And a planted test effect lands inside the model's interval, so the check is honest.
-S9: The desk matches Kalshi's Central Park rain contract, the same station we measured.
-S10: It sizes protection to the measured loss and never more: 1,955 contracts, with the full premium shown up front.
-S11: But not every risk gets a hedge. For a taxi fleet, rain looked big last year, then almost vanished. So the desk says no, and shows you why.
-S12: And nothing happens until the owner approves.
-S13: Every proposal, decline and approval gets a receipt in the log.
-S14: Approved hedges are booked to a real ledger, and reconciliation catches a deposit that came in short, and names the fee as the cause.
-S15: The desk never approves its own hedge. Every number comes from a tool, not the AI. And anything estimated or simulated says so.
-S16: Offset. Steadier weeks. Your call.
+S2: A home game could crowd the street, or it might not.
+S3: Either way, as an owner, your week swings, and you can't plan around it.
+S4: Offset is built on four principles. Measured, not guessed. Built for steady income. The owner's call, every time. And interpretable, human-facing.
+S5: Offset measures that swing in real dollars, from your own revenue.
+S6: It finds a Kalshi contract that pays out when that risk hits. And you decide.
+S7: Here's a bike shop with fictional sales but real weather. Upload its daily revenue.
+S8: Rain costs it nearly $2,000 a day, and that holds up on data the model never saw.
+S9: Knicks games? No real effect. In our research we tested about forty risks like this, and most were noise. And a fake effect we planted lands inside the model's range, so the test is reliable.
+S10: The desk picks Kalshi's rain contract for Central Park, the same weather station we measured with.
+S11: It buys only enough contracts to cover the measured loss, and not more, and shows the full cost up front.
+S12: But not every risk gets a hedge. For a taxi fleet, rain looked big last year, then almost vanished. So Offset says no, and explains why.
+S13: And nothing happens until the owner approves.
+S14: Every proposal, decline and approval is logged with its reasons.
+S15: Approved hedges go into the books, and Offset even caught a deposit that came in eighty-nine cents short, and named the fee as the cause.
+S16: Offset. Steady income in an unsteady week.

@@ -1,55 +1,71 @@
-// S7 · Rain costs. "Rain costs it about $1,956 a day, and that held up on data the model never saw."
-// Same window and spot as S6, so the dissolve only swaps the page. The camera eases from the whole
-// table to the Risk → Verdict span (all six rows stay whole). One ring travels: the training-year
-// loss as it counts up → the forest whiskers as they draw → the unseen years → FOUND · hedgeable.
-import { shot, A } from "../lib.js";
-import { line, labelChip, BIKE_LABEL } from "./S06.js";
+// S7 · Upload. "Here's a bike shop with fictional sales but real weather. Upload its daily revenue."
+// The wizard rises into frame, with the fictional-shop label as a chip under the window. The camera
+// pushes in on the upload button, a click lands, and the ring glides down to the status line
+// as 1,004 days count up.
+import { caption, shot, A } from "../lib.js";
 
-// Word onsets in the VO clip (whisper): Rain 0.00, $1,956 0.90, a day 2.50, held 4.12, data 4.66, never 5.30.
-const W = { rain: 0.0, amount: 0.9, aday: 2.5, held: 4.12, data: 4.66, never: 5.3 };
+// Word onsets after the speech starts (user.m4a; phrase pauses from silencedetect, words spread within a phrase): bike 0.59, fictional 1.22,
+// sales 1.61, real 2.24, upload 2.93, daily 3.60.
+const W = { bike: 0.59, fictional: 1.22, sales: 1.61, real: 2.24, upload: 2.93, daily: 3.6 };
+
+// A caption line built from segments that each land on their own word: [[text, at], ...].
+export function line(k, segs, out, style = {}) {
+  const c = k.el("div", "cap");
+  segs.forEach(([txt, t], i) => {
+    const e = caption(k, txt, t, null, { parent: c, cls: "seg" });
+    e.style.display = "inline";
+    if (i < segs.length - 1) c.append(" ");
+  });
+  if (out != null) k.exit(c, out);
+  Object.assign(c.style, style);
+  return c;
+}
+
+// The I6 label as a chip under the window, right-aligned to the default window's right edge (1710).
+// The same wording and spot are used from S7 through S11, so it holds still across the dissolves.
+export const BIKE_LABEL = "Fictional shop · synthetic sales · real weather";
+export function labelChip(k, text = BIKE_LABEL, { cls = "warn", right = 1710, top = 866, at = null } = {}) {
+  const c = k.el("div", "chip abs " + cls, text);
+  Object.assign(c.style, { right: 1920 - right + "px", top: top + "px", font: "600 22px/28px var(--sans)", letterSpacing: "0.04em",
+    padding: "6px 14px", borderRadius: "999px", transformOrigin: "100% 50%", whiteSpace: "nowrap" });
+  if (at != null) k.enter(c, at, { y: 8 });
+  return c;
+}
 
 export default {
   id: "S7",
-  label: "Rain costs",
+  label: "Upload",
   build(k) {
     const at = w => k.vo.lead + W[w];
-    const F = "shot-02-wizard-research-table.png";
-    // Window height chosen so the table exactly fills it at the push-in zoom (no half rows).
-    const s = shot(k, F, { h: 690 });
-    s.vp.style.background = "#fffefa"; // the table's own paper, so z < fill shows no bands
-    // Fractions of this image from CSS px (the table is 1582 x 564 CSS px).
-    const css = (x, y, w, h) => [x / 1582, y / 564, w / 1582, h / 564];
-    const train = A(F, "rain_train_text", css(253, 73, 180, 58)), unseen = A(F, "rain_unseen_text", css(454, 73, 180, 58));
-    const v = A(F, "rain_verdict_text", css(1135, 76, 43, 14)), verdict = [v[0], v[1], 122 / 1582, v[3]]; // FOUND · hedgeable
-    const whisk = css(668, 70, 108, 70);
+    const F = "shot-01-wizard-upload.png";
+    const s = shot(k, F, { h: 690 }); // same window as S7, so the dissolve only swaps the page
+    // Image fractions from CSS px (the capture is 1440 x 900 CSS px).
+    const css = (x, y, w, h) => [x / 1440, y / 900, w / 1440, h / 900];
 
+    // Rise into frame. Framed on the header, tabs and card, ending above Back / Next (they start at 510 CSS px).
+    k.tween(s.win, { y: [60, 0], scale: [0.97, 1] }, { at: 0, dur: 0.9 });
     k.cue("whoosh", 0);
-    s.set(css(0, 0, 1582, 564), { z: 1 });
-    // Risk column through the Verdict, full height: z = 1582 / 1300.
-    s.focus(css(0, 0, 1300, 564), 0.1, 1.0, { z: 1582 / 1300 });
+    s.set(css(198, 19, 1044, 462), { z: 1.35 });
+    s.kenburns(1, 1.03);
+    const btn = A(F, "upload_btn", css(219, 264, 179, 46)), status = A(F, "status_text", css(219, 330, 548, 22));
+    // Push in on the upload row once the "fictional" beat has read (z 1.84 x 1.03 is about 1:1).
+    s.focus(css(200, 250, 620, 115), at("upload") - 1.05, 1.0, { z: 1.84 });
 
-    // Forest whiskers for the Rain row draw outward from the zero line.
-    const wipe = k.el("div", "abs", null, s.vp);
-    Object.assign(wipe.style, { background: "#fffefa", left: 0, top: 0 });
-    const Wp = { p: 0 };
-    k.tween(Wp, { p: [0, 1] }, { at: at("aday") - 0.1, dur: 0.9, ease: "out" });
-    k.after(() => {
-      const [x0, y0] = s.point(whisk[0], whisk[1]), [x1, y1] = s.point(whisk[0] + whisk[2], whisk[1] + whisk[3]);
-      Object.assign(wipe.style, { left: x0 + "px", top: y0 - 41 + "px", width: x1 - x0 + "px", height: y1 - y0 + "px",
-        clipPath: `inset(0 ${(Wp.p * 100).toFixed(2)}% 0 0)` });
-    });
+    // The I6 label: lands with "fictional sales" and stays.
+    const chip = labelChip(k, BIKE_LABEL, { at: at("fictional") - 0.1 });
+    k.tween(chip, { scale: [1, 1.06] }, { at: at("fictional") + 0.4, dur: 0.25, ease: "move" });
+    k.tween(chip, { scale: [1.06, 1] }, { at: at("fictional") + 0.65, dur: 0.5, ease: "move" });
+    k.cue("tick", at("fictional"));
 
-    // One ring: training-year loss → the whiskers → the unseen years → FOUND (turning green).
-    s.ring(train, at("amount") - 0.05, null, { pad: 10 })
-      .to(whisk, at("aday") - 0.15, 0.6)
-      .to(unseen, at("held") - 0.1, 0.6)
-      .to(verdict, at("data") + 0.2, 0.7, { color: "green" });
-    k.cue("tick", at("amount") - 0.05);
-    k.cue("tick", at("held") - 0.1);
-    k.cue("stamp", at("data") + 0.9);
+    // Click on Upload, then the ring glides to the status line.
+    s.ring(btn, at("upload") + 0.05, null, { pad: 8 }).to(status, at("upload") + 0.45, 0.55);
+    const rp = k.el("div", "ripple", null, s.vp);
+    k.tween(rp, { opacity: [0, 0] }, { at: 0, dur: 0 });
+    k.after(() => { const [px, py] = s.point(btn[0] + btn[2] / 2, btn[1] + btn[3] / 2); rp.style.left = px + "px"; rp.style.top = py - 41 + "px"; });
+    k.tween(rp, { opacity: [0.9, 0], scale: [0.3, 1.5] }, { at: at("upload") + 0.2, dur: 0.6 });
+    k.cue("click", at("upload") + 0.2);
 
-    labelChip(k, BIKE_LABEL);
-    line(k, [["Rain:", at("amount") - 0.2], ["*{−$1,955.68}/day*", at("amount")]], at("held") - 0.4);
-    line(k, [["Held on data the model never saw:", at("held")], ["*−20.4%*", at("data") - 0.2]], k.dur - 0.3);
+    line(k, [["A bike shop.", at("bike")], ["Fictional sales,", at("fictional")], ["*real weather.*", at("real")]], at("upload") - 0.1);
+    line(k, [["Upload daily revenue:", at("upload")], ["*{1,004} days*", at("upload") + 0.4]], k.dur - 0.3);
   },
 };

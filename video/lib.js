@@ -283,3 +283,23 @@ export function rail(k, part) {
     caption(k, "*You decide.*", k.v(0.78), null);
   }
 }
+
+// ---------- Principles ----------
+// Offset's four principles, worded exactly as on the slide. S4 shows all four; later scenes call back
+// to one with a small corner tag.
+export const PRINCIPLES = [
+  { n: 1, name: "Measured, not guessed", body: "Every number comes from harness or tool output. Estimates and simulations are labeled." },
+  { n: 2, name: "Built for steady income", body: "Hedges are sized to cancel a measured exposure, not to make money. Our goal is to stabilize." },
+  { n: 3, name: "Owner’s call, every time", body: "Offset is human-first; only the owner can approve. Offset can’t approve its own hedge." },
+  { n: 4, name: "Interpretable, human-facing", body: "Every accepted or declined hedge comes with its evidence." },
+];
+
+// Corner tag "#n Name", top right above the screenshot windows (they start at y ≥ 64), so it never
+// covers a screenshot's numbers. `at`: entry time; `rise: false` for a scene that continues the
+// previous scene's tag (it dissolves in place instead of rising again).
+export function principleTag(k, n, { at = 0.35, rise = true } = {}) {
+  const p = PRINCIPLES[n - 1];
+  const t = k.el("div", "ptag abs", `<b>#${p.n}</b><span>${p.name}</span>`);
+  if (rise) k.enter(t, at, { y: -8 }); else k.tween(t, { opacity: [0, 1] }, { at, dur: 0.3 });
+  return t;
+}

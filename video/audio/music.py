@@ -2,11 +2,11 @@
 """Offset music bed, synthesized from scratch (royalty-free, deterministic: same args give the same file).
 
   python3 audio/music.py                                  -> audio/music.wav, default timeline (~100 s)
-  python3 audio/music.py --markers S4=9.2,S11=56,S12=66.5,S16=85.8 --length 92 --out /tmp/m.wav
+  python3 audio/music.py --markers S4=9.2,S12=56,S13=66.5,S16=85.8 --length 92 --out /tmp/m.wav
 
 Warm and minimal: Imaj7-vi7-IVmaj7-V in D around 84 bpm. Detuned additive pad, felt-piano arpeggios,
 a soft sine-bass pulse, a hall reverb and gentle tape-style saturation. The tempo is nudged so the logo
-(S16) lands on a bar line; S11 (the decline) thins out; the bar nearest S12 (the approval) opens the
+(S16) lands on a bar line; S12 (the decline) thins out; the bar nearest S13 (the approval) opens the
 filter and adds an octave lift after a one-bar swell. The closing line is spoken over a quiet held V, and
 the music resolves to Dmaj9 and blooms on `end` (the last word of S16), or on the logo if `end` is absent.
 mix.py calls render() with the real scene times, so the arrangement follows the picture.
@@ -22,7 +22,7 @@ from dsp import SR, filt, limit, lufs, make_ir, peq, reverb, sos, undb, write_wa
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 # Scene starts of the current cut (sample_schedule.json); mix.py passes the real ones.
-DEFAULT_MARKERS = {"S4": 10.34, "S11": 52.74, "S12": 63.40, "S16": 87.12, "end": 89.85}
+DEFAULT_MARKERS = {"S4": 10.89, "S12": 66.29, "S13": 77.95, "S16": 93.42, "end": 96.10}
 DEFAULT_LENGTH = 100.0
 
 # Chords, cycle position 0..3. bass, pad voicing, arpeggio tones (MIDI).
@@ -51,8 +51,8 @@ class Arrangement:
         self.n_logo = bars
         to_bar = lambda t: int(np.clip(round(t / self.bar), 0, bars))  # noqa: E731
         self.b_main = max(1, to_bar(m["S4"]))
-        self.b_pull = max(self.b_main, int(m["S11"] // self.bar))
-        self.b_lift = int(np.clip(to_bar(m["S12"]), self.b_pull + 1, bars - 1))
+        self.b_pull = max(self.b_main, int(m["S12"] // self.bar))
+        self.b_lift = int(np.clip(to_bar(m["S13"]), self.b_pull + 1, bars - 1))
         self.t_end = max(logo, m.get("end") or logo)  # the resolution: after the closing line, never under it
         self.length = max(length, self.t_end + 3)
 
@@ -294,7 +294,7 @@ def render(markers=None, length=DEFAULT_LENGTH, target_lufs=-20.0, seed=84, verb
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--markers", help="scene starts (+ end = last word of S16), e.g. S4=9.2,S11=56,S12=66.5,S16=85.8,end=88.6")
+    ap.add_argument("--markers", help="scene starts (+ end = last word of S16), e.g. S4=9.2,S12=56,S13=66.5,S16=85.8,end=88.6")
     ap.add_argument("--length", type=float, default=DEFAULT_LENGTH)
     ap.add_argument("--out", default=os.path.join(HERE, "music.wav"))
     a = ap.parse_args()

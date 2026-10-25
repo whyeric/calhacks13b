@@ -1,10 +1,11 @@
-// S3 · Swings. "Either way, your week swings, and you can't plan around it."
+// S3 · Swings. "Either way, as an owner, your week swings, and you can't plan around it."
 // Four weeks of an illustrative daily revenue line draw on, with rain-day dips and game-night
 // spikes marked; the line lurches once on "swings", then a week of question marks lands on "can't plan".
 import { clamp, caption, rand } from "../lib.js";
 
-// Word onsets in the VO clip (whisper): Either 0.00, week 0.90, swings 1.08, can't 2.08, plan 2.40.
-const W = { either: 0.0, week: 0.9, swings: 1.08, cant: 2.08, plan: 2.4 };
+// Word onsets after the speech starts (user.m4a; phrase pauses from silencedetect, words spread within a phrase): Either 0.00, week 1.85,
+// swings 2.10, can't 3.06, plan 3.30.
+const W = { either: 0.0, week: 1.85, swings: 2.1, cant: 3.06, plan: 3.3 };
 
 const N = 28, X0 = 160, X1 = 1760, Y0 = 560;
 const RAIN = new Set([4, 11, 19, 24]), GAME = new Set([8, 16, 22]);

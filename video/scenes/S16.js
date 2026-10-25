@@ -1,5 +1,6 @@
-// S16 · Offset. The shield draws in its lockup place and its left half fills from the base up (half the
-// week covered) as the wordmark wipes in, landing on "Offset"; the tagline follows the VO. Rest.
+// S16 · Offset. "Offset. Steady income in an unsteady week." The shield draws in its lockup place and its
+// left half fills from the base up (half the week covered) as the wordmark wipes in, landing on "Offset";
+// the tagline follows the VO. Rest.
 import { style, cue } from "./_polishB.js";
 
 const MARK = 168, GAP = 44, WORD = 128;
@@ -45,9 +46,9 @@ export default {
     // Tagline, on the VO.
     const tag = k.el("div", "abs");
     Object.assign(tag.style, { left: "0", width: "1920px", top: cy + 140 + "px", textAlign: "center", font: "400 40px/52px var(--sans)", color: "#a4ada4" });
-    const a = k.el("span", null, "Steadier weeks. ", tag), b = k.el("span", null, "Your call.", tag);
+    const a = k.el("span", null, "Steady income ", tag), b = k.el("span", null, "in an unsteady week.", tag);
     b.style.color = "#f3f5ef"; b.style.fontWeight = "500";
     [a, b].forEach(e => { e.style.display = "inline-block"; e.style.whiteSpace = "pre"; });
-    k.tween(a, { opacity: [0, 1], y: [12, 0] }, { at: k.v(0.27), dur: 0.5 });
-    k.tween(b, { opacity: [0, 1], y: [12, 0] }, { at: k.v(0.72), dur: 0.5 });
+    k.tween(a, { opacity: [0, 1], y: [12, 0] }, { at: k.v(0.2), dur: 0.5 });     // "Steady" 0.54 s
+    k.tween(b, { opacity: [0, 1], y: [12, 0] }, { at: k.v(0.64), dur: 0.5 });    // "in" 1.73 s
   }};

@@ -1,85 +1,58 @@
-// S4 · Measure. "Offset measures that swing in real dollars, from your own revenue."
-// The shield draws on, the wordmark wipes in, and the Measure → Match → Propose rail staggers in
-// with Measure lit. S5 cuts in on exactly this end frame (it imports the layout from here).
-import { caption, LOGO } from "../lib.js";
+// S4 · Principles. "Offset is built on four principles. Measured, not guessed. Built for steady income.
+// The owner's call, every time. And interpretable, human-facing."
+// The shield and a title, then all four principles (the slide's exact wording) in a 2 x 2 grid. All four
+// stay up for the whole line; each card's number lights orange as the VO names it, then they all rest even.
+import { caption, LOGO, PRINCIPLES } from "../lib.js";
 
-// Word onsets in the VO clip (whisper): Offset 0.00, measures 0.32, swing 0.92, real 1.32, own 2.66.
-const W = { offset: 0.0, measures: 0.32, swing: 0.92, real: 1.32, own: 2.66 };
+// Word onsets after the speech starts (user.m4a; phrase pauses from silencedetect, words spread within a phrase): principles 1.25,
+// Measured 2.38, Built 3.85, The (owner's) 5.43, And (interpretable) 7.20.
+const W = { principles: 1.25, p1: 2.38, p2: 3.85, p3: 5.43, p4: 7.2 };
 
-export const STEPS = ["Measure", "Match", "Propose", "You decide"];
-const WIDTHS = [264, 224, 254, 290], GAP = 96, PILL_Y = 560;
-// Left edge of each pill when the row holds n pills, centred on the stage.
-export function rowX(n) {
-  const total = WIDTHS.slice(0, n).reduce((a, b) => a + b, 0) + GAP * (n - 1);
-  let x = (1920 - total) / 2;
-  return WIDTHS.map(w => { const at = x; x += w + GAP; return at; });
-}
-
-// The lockup and the rail, positioned for a row of `n` pills. Returns handles for animating.
-export function buildRail(k, n) {
-  const lock = k.el("div", "abs");
-  Object.assign(lock.style, { left: 0, width: "1920px", top: "250px", display: "flex", justifyContent: "center", alignItems: "center", gap: "30px" });
-  const mark = k.el("div", null, LOGO(116), lock);
-  const word = k.el("div", "hero", "Offset", lock);
-  Object.assign(word.style, { color: "#f3f5ef", fontSize: "112px", lineHeight: "1" });
-
-  const row = k.el("div", "abs will"); Object.assign(row.style, { left: 0, top: 0, width: "1920px", height: "1080px" });
-  const xs = rowX(n);
-  const pills = STEPS.map((s, i) => {
-    const p = k.el("div", "pill will" + (i === 3 ? " owner" : ""), `${s}<div class="lit">${s}</div>`, row);
-    Object.assign(p.style, { left: xs[i] + "px", top: PILL_Y + "px", width: WIDTHS[i] + "px", padding: 0 });
-    return p;
-  });
-  const links = [0, 1, 2].map(i => {
-    const l = k.el("div", "abs", null, row);
-    Object.assign(l.style, { left: xs[i] + WIDTHS[i] + 14 + "px", top: PILL_Y + 37 + "px", width: GAP - 28 + "px", height: "2px",
-      background: "rgba(243,245,239,0.35)", borderRadius: "1px" });
-    const dot = k.el("div", "abs", null, row);
-    Object.assign(dot.style, { left: xs[i] + WIDTHS[i] + 8 + "px", top: PILL_Y + 32 + "px", width: "12px", height: "12px",
-      borderRadius: "50%", background: "#F28C28", opacity: 0, boxShadow: "0 0 14px 4px rgba(242,140,40,0.45)" });
-    return { l, dot };
-  });
-  const lit = i => pills[i].querySelector(".lit");
-  // Light pill i, with a spark travelling along the link into it.
-  const light = (i, t) => {
-    if (i > 0) {
-      const { dot } = links[i - 1];
-      k.tween(dot, { opacity: [0, 1] }, { at: t - 0.42, dur: 0.12 });
-      k.tween(dot, { x: [0, GAP - 16] }, { at: t - 0.42, dur: 0.42, ease: "move" });
-      k.tween(dot, { opacity: [1, 0] }, { at: t - 0.05, dur: 0.2, ease: "in" });
-    }
-    k.tween(lit(i), { opacity: [0, 1] }, { at: t, dur: 0.35 });
-    k.tween(pills[i], { scale: [1, 1.04] }, { at: t, dur: 0.18, ease: "move" });
-    k.tween(pills[i], { scale: [1.04, 1] }, { at: t + 0.18, dur: 0.4, ease: "move" });
-    k.cue("tick", t);
-  };
-  return { lock, mark, word, row, pills, links, lit, light, lo: mark.querySelector(".lo"), lf: mark.querySelector(".lf") };
-}
+const X = 160, Y = 330, CW = 776, CH = 270, GX = 48, GY = 40;
 
 export default {
   id: "S4",
-  label: "Measure",
+  label: "Principles",
   build(k) {
     const at = w => k.vo.lead + W[w];
-    const R = buildRail(k, 3);
-    R.pills[3].style.display = "none";
-    R.links[2].l.style.display = "none";
 
-    // Shield draws on with the first word, then fills; the wordmark wipes in beside it.
-    k.tween(R.mark, { opacity: [0, 1], scale: [0.94, 1] }, { at: 0.15, dur: 0.7 });
-    k.tween(R.lo, { dash: [0, 1] }, { at: 0.2, dur: 0.9, ease: "move" });
-    k.tween(R.lf, { opacity: [0, 1] }, { at: 0.7, dur: 0.5 });
-    k.tween(R.word, { clipR: [100, 0] }, { at: 0.42, dur: 0.8, ease: "move" });
-    k.cue("logo", 0.2);
+    const head = k.el("div", "abs");
+    Object.assign(head.style, { left: X + "px", top: "128px", display: "flex", alignItems: "center", gap: "28px" });
+    const mark = k.el("div", null, LOGO(84), head);
+    mark.querySelector(".lo").style.strokeDasharray = "none";
+    const title = caption(k, "Built on *four principles*", 0.15, null, { cls: "section", parent: head, y: 12 });
+    Object.assign(title.style, { position: "relative", fontSize: "72px", lineHeight: "80px", color: "#f3f5ef" });
+    k.tween(mark, { opacity: [0, 1], scale: [0.96, 1] }, { at: 0.05, dur: 0.5 });
+    k.cue("whoosh", 0);
 
-    // Rail staggers in, links draw between the pills.
-    [0, 1, 2].forEach(i => k.enter(R.pills[i], at("measures") - 0.15 + i * 0.08, { y: 16, dur: 0.55 }));
-    [0, 1].forEach(i => k.tween(R.links[i].l, { clipR: [100, 0] }, { at: at("measures") + 0.05 + i * 0.08, dur: 0.5, ease: "move" }));
-    R.light(0, at("measures") + 0.25);
+    const cards = PRINCIPLES.map((p, i) => {
+      const c = k.el("div", "abs will");
+      Object.assign(c.style, { left: X + (i % 2) * (CW + GX) + "px", top: Y + Math.floor(i / 2) * (CH + GY) + "px", width: CW + "px", height: CH + "px",
+        padding: "34px 38px", borderRadius: "18px", background: "rgba(243,245,239,0.05)", border: "1.5px solid rgba(243,245,239,0.16)" });
+      const num = k.el("div", null, `#${p.n}`, c);
+      Object.assign(num.style, { font: "500 28px/1 var(--mono)", color: "var(--muted-d)", marginBottom: "18px" });
+      const name = k.el("div", null, p.name, c);
+      Object.assign(name.style, { font: "600 46px/54px var(--serif)", letterSpacing: "-0.015em", color: "#f3f5ef", marginBottom: "16px" });
+      const body = k.el("div", null, p.body, c);
+      Object.assign(body.style, { font: "400 28px/38px var(--sans)", color: "var(--muted-d)" });
+      // All four arrive together before the first is named (60-80 ms sibling stagger).
+      k.enter(c, at("principles") - 0.55 + i * 0.07, { y: 16, dur: 0.55 });
+      return { c, num };
+    });
 
-    const cap = caption(k, "The swing, in *real dollars,*", at("swing"), k.dur - 0.32, { wordStagger: 0.08 });
-    Object.assign(cap.style, { left: 0, width: "1920px", top: "720px", textAlign: "center", fontSize: "48px", lineHeight: "60px" });
-    const cap2 = caption(k, "from your own revenue.", at("own") - 0.15, k.dur - 0.32, { wordStagger: 0.08 });
-    Object.assign(cap2.style, { left: 0, width: "1920px", top: "788px", textAlign: "center", fontSize: "40px", color: "var(--muted-d)" });
+    // The named card lights (orange number, brighter edge); it settles back as the next is named.
+    const beats = [at("p1"), at("p2"), at("p3"), at("p4")], rest = k.dur - 0.6;
+    cards.forEach(({ c, num }, i) => {
+      const on = beats[i], off = i < 3 ? beats[i + 1] : rest;
+      const L = { v: 0 };
+      k.tween(L, { v: [0, 1] }, { at: on - 0.1, dur: 0.35, ease: "move" });
+      k.tween(L, { v: [1, 0] }, { at: off - 0.1, dur: 0.45, ease: "move" });
+      k.cue("tick", on - 0.1);
+      k.after(() => {
+        num.style.color = L.v > 0.5 ? "#F28C28" : "var(--muted-d)";
+        c.style.borderColor = `rgba(242,140,40,${(0.16 + 0.64 * L.v).toFixed(3)})`;
+        c.style.background = `rgba(243,245,239,${(0.05 + 0.04 * L.v).toFixed(3)})`;
+      });
+    });
   },
 };

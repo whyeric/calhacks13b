@@ -132,7 +132,7 @@ def get_music(starts, total, static, last_word):
     if not static:
         try:
             import music
-            mk = {k: starts.get(k) for k in ("S4", "S11", "S12", "S16")}
+            mk = {k: starts.get(k) for k in ("S4", "S12", "S13", "S16")}
             if mk["S16"] is None and starts:
                 mk["S16"] = max(starts.values())
             mk["end"] = round(last_word + 0.15, 2)  # resolve after the closing line, not under it

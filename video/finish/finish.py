@@ -226,7 +226,7 @@ def master(src, dst, lufs, tmp):
 
 
 def teaser(src, dst, sched, root, tmp):
-    """Hook (S1) -> hedge card (S10) -> DECLINED (S11, last sentence) -> logo (S16 with the full tagline), crossfaded,
+    """Hook (S1) -> hedge card (S11) -> DECLINED (S12, last sentence) -> logo (S16 with the full tagline), crossfaded,
     ending in a fade to black. Inner cuts land in VO pauses so no word is clipped; the logo hold absorbs the slack."""
     fps = probe(src)["fps"]
     by = {s["id"]: s for s in sched}
@@ -241,13 +241,13 @@ def teaser(src, dst, sched, root, tmp):
         want = s["voStart"] + frac * s["voDur"]
         return min(pauses(s), key=lambda g: abs(g - want), default=want)
 
-    s1, s10, s11, s16 = by["S1"], by["S10"], by["S11"], by["S16"]
+    s1, s10, s11, s16 = by["S1"], by["S11"], by["S12"], by["S16"]   # hedge card, decline (after the S4 principles card)
     vo_end = lambda s: s["voStart"] + s["voDur"]
     hook = (s1["start"], min(s1["start"] + s1["dur"], vo_end(s1) + XFADE))  # "Rain on a Saturday empties the shop."
-    decline = (pause_near(s11, 0.68) - 0.1, min(s11["start"] + s11["dur"], vo_end(s11) + 0.6))  # "So the desk says no..." + stamp
+    decline = (pause_near(s11, 0.68) - 0.1, min(s11["start"] + s11["dur"], vo_end(s11) + 0.6))  # "So Offset says no..." + stamp
     logo_min, logo_max = vo_end(s16) + 1.0 - s16["start"], s16["dur"]  # always the whole tagline; the end fade if it fits
     fixed = (hook[1] - hook[0]) + (decline[1] - decline[0]) - 3 * XFADE
-    # Hedge card: run to the latest VO pause that still leaves room for the logo ("...never more: 1,955 contracts").
+    # Hedge card: run to the latest VO pause that still leaves room for the logo ("...cover the measured loss").
     ends = sorted(g + 0.15 for g in pauses(s10)) or [vo_end(s10)]
     fit = [e for e in ends if fixed + (e - s10["start"]) + logo_min <= TEASER_LEN + 0.05]
     hedge = (s10["start"], fit[-1] if fit else ends[0])
@@ -282,7 +282,7 @@ def contact_sheet(src, dst, dur, fps, every=3, cols=6):
     n = int(round(dur * fps) - 1) // step + 1
     rows = math.ceil(n / cols)
     label = ""
-    if font():
+    if font() and "drawtext" in subprocess.run(["ffmpeg", "-hide_banner", "-filters"], capture_output=True, text=True).stdout:
         label = (f",drawtext=fontfile='{font()}':text='%{{pts\\:hms}}':x=8:y=h-th-8:fontsize=18:fontcolor=white:"
                  "box=1:boxcolor=black@0.6:boxborderw=4")
     ff("-i", src, "-vf", f"select='not(mod(n\\,{step}))',scale=384:-2{label},tile={cols}x{rows}:padding=4:margin=4:color=0x0f1a14",
@@ -417,8 +417,8 @@ def main():
     print(f"schedule  {len(sched)} scenes, {total:.2f}s, from {how}")
     if abs(p["duration"] - total) > 1 / fps + 0.05:
         warn(f"master runs {p['duration']:.2f}s but the schedule is {total:.2f}s (stale or partial render?)")
-    if not 85 <= p["duration"] <= 95:
-        warn(f"duration {p['duration']:.2f}s is outside 85-95s")
+    if not 85 <= p["duration"] < 120:
+        warn(f"duration {p['duration']:.2f}s is outside 85-120s")
 
     lufs = loudness(src)
     qc["loudness_input"] = lufs

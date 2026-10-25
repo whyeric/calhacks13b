@@ -16,7 +16,7 @@ for (const s of shots.shots || []) {
   anchors[s.file] = Object.fromEntries(Object.entries(s.anchors).map(([k, b]) => [k, [b.x, b.y, b.width, b.height]]));
 }
 const block = `// @inline-start (written by inline-data.mjs from assets/vo/timing.json and assets/shots.json)
-let TIMING = ${JSON.stringify({ source: timing.source, full: timing.full, total: timing.total, scenes: timing.scenes.map(({ scene, file, duration, start }) => ({ scene, file, duration, start })) })};
+let TIMING = ${JSON.stringify({ source: timing.source, full: timing.full, total: timing.total, scenes: timing.scenes.map(({ scene, file, duration, start, lead, len }) => ({ scene, file, duration, start, lead, len })) })};
 let SHOTS = ${JSON.stringify({ dsf: shots.deviceScaleFactor || 2, anchors })};
 // @inline-end`;
 const app = path.join(HERE, "app.js");

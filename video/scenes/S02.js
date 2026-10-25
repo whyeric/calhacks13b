@@ -1,12 +1,13 @@
-// S2 · Game night. "A home game packs the street, or it doesn't."
+// S2 · Game night. "A home game could crowd the street, or it might not."
 // The arena's floodlights come on one by one, a crowd fills the street in front of it, and on
-// "or it doesn't" most of that crowd drains away again.
+// "or it might not" most of that crowd drains away again.
 import { caption, rand } from "../lib.js";
 
 const NS = "http://www.w3.org/2000/svg";
 
-// Word onsets in the VO clip (whisper): home 0.06, game 0.22, packs 0.48, street 0.98, or 1.62, doesn't 1.90.
-const W = { home: 0.06, game: 0.22, packs: 0.48, street: 0.98, or: 1.62, doesnt: 1.9 };
+// Word onsets after the speech starts (user.m4a; phrase pauses from silencedetect, words spread within a phrase): home 0.19, game 0.46,
+// crowd 0.89, street 1.35, or 1.60, might 2.07.
+const W = { home: 0.19, game: 0.46, crowd: 0.89, street: 1.35, or: 1.6, might: 2.07 };
 
 export default {
   id: "S2",
@@ -65,7 +66,7 @@ export default {
     k.tween(glow, { opacity: [0, 1] }, { at: at("game"), dur: 0.9 });
     k.tween(pool, { opacity: [0, 1] }, { at: at("game") + 0.2, dur: 0.9 });
 
-    // The crowd: silhouettes along the street, filling from the arena outwards on "packs".
+    // The crowd: silhouettes along the street, filling from the arena outwards on "crowd".
     const people = Array.from({ length: 64 }, (_, i) => {
       const x = 520 + (i / 63) * 1400 + (rand(i, 21) - 0.5) * 36, row = rand(i, 22), s = 1.0 + row * 0.7;
       const y = 930 + row * 140, el = document.createElementNS(NS, "g");
@@ -73,7 +74,7 @@ export default {
       el.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
       crowdG.appendChild(el);
       const d = Math.abs(x - CX) / 1300;
-      return { el, at: at("packs") + d * 0.55 + rand(i, 23) * 0.12, stays: rand(i, 24) < 0.22, y };
+      return { el, at: at("crowd") + d * 0.55 + rand(i, 23) * 0.12, stays: rand(i, 24) < 0.22, y };
     });
     people.sort((a, b) => a.y - b.y).forEach(p => crowdG.appendChild(p.el));
     people.forEach((p, i) => {
@@ -85,9 +86,9 @@ export default {
 
     const title = caption(k, "Game night.", at("home"), null, { cls: "hero abs", wordStagger: 0.09 });
     Object.assign(title.style, { left: "160px", top: "400px", fontSize: "136px", lineHeight: "1", color: "#f3f5ef" });
-    const sub = k.el("div", "abs", "Or it doesn’t.");
+    const sub = k.el("div", "abs", "Or it might not.");
     Object.assign(sub.style, { left: "166px", top: "566px", font: "400 italic 64px/1.1 var(--serif)", color: "var(--muted-d)" });
-    k.enter(sub, at("doesnt") - 0.12, { y: 10 });
+    k.enter(sub, at("might") - 0.12, { y: 10 });
     k.exit(title, k.dur - 0.3, { dur: 0.3 }); k.exit(sub, k.dur - 0.3, { dur: 0.3 });
 
     const Cam = { s: 1 };
