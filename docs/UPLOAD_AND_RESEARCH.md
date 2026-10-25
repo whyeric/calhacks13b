@@ -78,7 +78,7 @@ These are the same rules as the hand research in [RESEARCH.md](RESEARCH.md):
 
 | Hypothesis | Train (2024) | Holdout (2025–26) | Verdict |
 |---|---|---|---|
-| **Rain** (≥ 0.01 in) | **−18.4%**: −$1,955.68/day, 90% CI −$2,171.00 to −$1,734.86, 124 rain days | **−20.4%**: −$2,485.41/day | **FOUND**. Placebo p = 0.38. Hedgeable via `KXRAINNYC`. |
+| **Rain** (≥ 0.01 in) | **−18.4%**: −$1,955.68/day, 90% CI −$2,171.00 to −$1,734.86, 124 rain days | **−20.4%**: −$2,485.41/day | **FOUND**. Placebo p = 0.38. Hedgeable via `KXRAIN` (NYC). |
 | **Cold** (tmax < 40 °F) | **−27.0%** | **−26.4%** | **FOUND** |
 | **Warm** (tmax > 80 °F) | **+10.9%** | **+15.5%** | **FOUND**, as an upside |
 | Hot (tmax > 90 °F) | not distinguishable from zero | | NOT FOUND |
