@@ -1,6 +1,5 @@
 """C6-A25 analyze (stub and real taxi), C6-A26 chat, C6-A28 backtest, R14 settings."""
 
-import re
 from decimal import Decimal
 
 from app import analysis, db
@@ -45,10 +44,13 @@ def test_chat_fallback_numbers_come_from_tools(client):
     assert body["reply"] and isinstance(body["tool_calls"], list)
     call = body["tool_calls"][0]
     assert set(call) == {"name", "input", "output"}
-    out = repr(call["output"])
-    for num in re.findall(r"\d+(?:\.\d+)?", body["reply"].replace(",", "")):
-        assert num in out, num
-    assert db.list_log("taxi")[-1].kind == "chat"
+    from app.agent import log as dlog
+
+    allowed = dlog.allowed_numbers([c["output"] for c in body["tool_calls"]])
+    assert dlog.validate_summary(body["reply"], allowed) == []  # I2 on the reply (R18, G4)
+    before = len(db.list_log("taxi"))
+    client.post("/businesses/taxi/chat", json={"message": "why that hedge?"})
+    assert len(db.list_log("taxi")) == before  # chat replies are not logged (G4)
 
 
 def test_backtest_served_from_cache(client):

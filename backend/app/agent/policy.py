@@ -12,6 +12,12 @@
 - `reject(hedge_id, actor)` / `approve(hedge_id, actor, ledger_entry_ids)`: owner-only state
   changes from `proposed` or `pending_approval` (D1 default), each logged (I5). Booking the
   ledger is C5's `book_hedge`; it must call `can_act` too and pass its entry ids here.
+- `sweep(now, business_id=None)`: approval timing (spec §11, C4-A24/A25, G8). For every open
+  hedge (`proposed` or `pending_approval`, D1 default) with a `close_time`: one `nudge` entry
+  once `now >= close_time - NUDGE_BEFORE_CLOSE` (3 h), never twice; at `now >= close_time` the
+  hedge becomes `expired_unapproved` (R5 terminal, so approve answers 409) with one logged
+  entry. Idempotent; returns the new log ids. Run by the 60 s loop in `main.py` and at the
+  start of every desk run.
 """
 
 from __future__ import annotations
@@ -28,6 +34,9 @@ from app.models import Budget, Headline, Hedge, HedgeLite, PayoffRow
 OWNER = "owner"
 OWNER_ACTIONS = frozenset({"approve", "reject", "book"})
 DECIDABLE = ("proposed", "pending_approval")  # D1: every passing hedge waits for the owner
+
+
+NUDGE_BEFORE_CLOSE = timedelta(hours=3)
 
 
 class PolicyError(PermissionError):
@@ -180,3 +189,57 @@ def reject(
     engine: Engine | None = None,
 ) -> Hedge:
     return _decide(hedge_id, actor, "reject", "rejected", "rejection", [], reason, now, engine)
+
+
+# --- Approval timing: nudge and expiry (C4-A24/A25) ------------------------------------
+
+
+def _nudged(hedge_id: str, engine: Engine | None) -> bool:
+    return any(e.kind == "nudge" for e in db.list_log(hedge_id=hedge_id, engine=engine))
+
+
+def _timing_entry(hedge: Hedge, kind: str, status: str, summary: str, now: datetime,
+                  engine: Engine | None) -> str:
+    numbers = log.allowed_numbers({"n_filled": hedge.n_filled, "premium": hedge.premium})
+    summary, _ = log.sanitize(summary, numbers)
+    return log.append(
+        dict(
+            business_id=hedge.business_id, kind=kind, actor="system", agent=None, hedge_id=hedge.id,
+            decision_id=hedge.decision.id, run_id=None, status=status, checks=[], reasons=[],
+            numbers=numbers, summary=summary, created_at=now,
+        ),
+        engine,
+    )
+
+
+def _what(hedge: Hedge) -> str:
+    if hedge.premium is None:
+        return hedge.id
+    return f"{hedge.id} ({hedge.n_filled} {hedge.side.upper()} contracts for ${hedge.premium:,.2f})"
+
+
+def sweep(now: datetime | None = None, *, business_id: str | None = None,
+          engine: Engine | None = None, nudge_before_close: timedelta = NUDGE_BEFORE_CLOSE) -> list[str]:
+    """Nudge once at close - 3 h, expire at close. Returns the log ids it appended."""
+    from app import clock
+
+    now = now or clock.now()
+    out: list[str] = []
+    for hedge in db.list_hedges(business_id, None, DECIDABLE, engine):
+        close = hedge.close_time
+        if close is None:
+            continue
+        if now >= close:
+            expired = Hedge.model_validate(hedge.model_dump() | {"status": "expired_unapproved", "alternative": None})
+            db.put_hedge(expired, engine)
+            out.append(_timing_entry(
+                hedge, "expired_unapproved", "expired_unapproved",
+                f"Expired unapproved: {_what(hedge)}. The market closed before the owner decided, "
+                "so it can no longer be booked.", now, engine))
+        elif now >= close - nudge_before_close and not _nudged(hedge.id, engine):
+            out.append(_timing_entry(
+                hedge, "nudge", hedge.status,
+                f"Reminder: {_what(hedge)} is still waiting on you, and its market closes at "
+                f"{close.astimezone(timezone.utc):%H:%M} UTC. If you don't decide by then, it expires.",
+                now, engine))
+    return out

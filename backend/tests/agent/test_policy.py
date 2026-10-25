@@ -1,10 +1,12 @@
-"""C4-A21 (self-approval refused), C4-A22 (over budget goes pending), C4-A23 (budget accounting, D4)."""
+"""C4-A21 (self-approval refused), C4-A22 (over budget goes pending), C4-A23 (budget accounting, D4),
+C4-A24 (nudge once at T-3h) and C4-A25 (expire unapproved at T) with a fake clock (#46 part B)."""
 
 import asyncio
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 
 import pytest
+from fastapi.testclient import TestClient
 
 from app import db
 from app.agent import desk, log, policy
@@ -80,3 +82,94 @@ def test_reject_from_proposed_D1():
     assert h.status == "rejected" and h.decided_by == "owner"
     with pytest.raises(policy.PolicyError):
         policy.reject(RAIN_HID, "owner")  # already decided
+
+
+# --- C4-A24 / C4-A25: approval timing sweep -------------------------------------------------
+
+HID = "hdg_02"  # seeded taxi hedge, pending_approval
+T = datetime(2026, 10, 29, 4, 59, tzinfo=timezone.utc)  # its market's close_time
+
+
+def kinds(hid=HID):
+    return [e.kind for e in log.list("taxi", hedge_id=hid)]
+
+
+def test_A24_nudge_once_at_T_minus_3h(fake_clock):
+    assert db.get_hedge(HID).close_time == T and db.get_hedge(HID).status == "pending_approval"
+    fake_clock.set(T - timedelta(hours=3, minutes=1))
+    policy.sweep()
+    assert "nudge" not in kinds()
+    fake_clock.set(T - timedelta(hours=3))
+    new = policy.sweep()
+    nudges = [e for e in log.list("taxi", hedge_id=HID) if e.kind == "nudge"]
+    assert len(nudges) == 1 and nudges[0].log_id in new
+    n = nudges[0]
+    assert n.actor == "system" and n.status == "pending_approval"
+    assert log.validate_summary(n.summary, n.numbers) == []  # I2 holds on the nudge text
+    assert "waiting on you" in n.summary and "$942.80" in n.summary
+    for minutes in (0, 30, 179):  # later sweeps before close: no duplicate
+        fake_clock.set(T - timedelta(hours=3) + timedelta(minutes=minutes))
+        policy.sweep()
+    assert kinds().count("nudge") == 1
+    assert db.get_hedge(HID).status == "pending_approval"  # a nudge changes nothing else
+
+
+def test_A25_expire_unapproved_at_close_then_not_bookable(fake_clock):
+    fake_clock.set(T - timedelta(hours=2))
+    policy.sweep()
+    fake_clock.set(T - timedelta(minutes=1))
+    policy.sweep()
+    assert "expired_unapproved" not in kinds()
+    fake_clock.set(T)
+    policy.sweep()
+    assert kinds().count("expired_unapproved") == 1 and kinds().count("nudge") == 1
+    h = db.get_hedge(HID)
+    assert h.status == "expired_unapproved" and h.ledger_entry_ids == [] and h.alternative is None
+    exp = next(e for e in log.list("taxi", hedge_id=HID) if e.kind == "expired_unapproved")
+    assert log.validate_summary(exp.summary, exp.numbers) == []
+    fake_clock.set(T + timedelta(hours=5))
+    policy.sweep()
+    assert kinds().count("expired_unapproved") == 1  # idempotent
+
+    with pytest.raises(policy.PolicyError) as e:  # policy gate: terminal state
+        policy.approve(HID, "owner", ledger_entry_ids=["led_x"])
+    assert e.value.code == "conflict"
+
+    from app.main import app
+
+    with TestClient(app) as c:  # API: approve after expiry is a 409, nothing booked
+        r = c.post(f"/hedges/{HID}/approve", json={"actor": "owner"})
+        assert r.status_code == 409 and r.json()["error"]["code"] == "invalid_state"
+    assert db.list_ledger_entries("taxi") == [] and "approval" not in kinds()
+    assert db.get_hedge(HID).status == "expired_unapproved"
+
+
+def test_expire_sweep_skips_terminal_hedges(fake_clock):
+    fake_clock.set(T + timedelta(days=1))
+    policy.sweep()
+    assert db.get_hedge("hdg_03").status == "declined"  # declined is terminal, never "expired"
+    assert "expired_unapproved" not in kinds("hdg_03")
+
+
+def test_desk_run_sweeps_first_expire(fake_clock):
+    """Every desk run calls the sweep: the seeded week's open hedges closed Oct 29."""
+    asyncio.run(desk.run_week("taxi", WEEK, run_id="run_sweep"))
+    assert db.get_hedge(HID).status == "expired_unapproved"
+    assert db.get_hedge("hdg_04").status == "proposed"  # another business, untouched by a taxi run
+
+
+def test_background_loop_runs_sweep_nudge(fake_clock):
+    from app import main
+
+    fake_clock.set(T - timedelta(hours=1))
+
+    async def run_briefly():
+        task = asyncio.create_task(main._sweep_loop(0.01))
+        for _ in range(200):
+            await asyncio.sleep(0.01)
+            if "nudge" in kinds():
+                break
+        task.cancel()
+
+    asyncio.run(run_briefly())
+    assert kinds().count("nudge") == 1

@@ -394,27 +394,58 @@ def reconcile(business_id: str, _body: dict | None = Body(None)) -> ReconResult:
 
 
 @app.post("/businesses/{business_id}/chat", response_model=ChatReply, responses=ERRORS)
-def chat(business_id: str, body: ChatRequest) -> ChatReply:
-    """Templated fallback (TODO(#45 chat): Claude with read-only tools). Never 5xx: the reply
-    quotes the latest logged decision, whose numbers came from tool results (I2)."""
+async def chat(business_id: str, body: ChatRequest) -> ChatReply:
+    """Chat "why?" (#46): `agent.chat.chat` with read-only tools, the I2 validator on the reply
+    and code-enforced guards; deterministic answer without ANTHROPIC_API_KEY. Not logged (G4).
+    Never 5xx."""
     _business(business_id)
+    from app.agent import chat as agent_chat  # looked up at call time so tests can patch it
+
     try:
-        entries = [e for e in reversed(db.list_log(business_id)) if e.kind in LOG_DECISION_KINDS]
-        latest = entries[:1]
-        output = [{"log_id": e.log_id, "kind": e.kind, "hedge_id": e.hedge_id, "reasons": list(e.reasons),
-                   "numbers": e.model_dump(mode="json")["numbers"], "summary": e.summary} for e in latest]
-        call = ToolCall(name="read_log", input={"business_id": business_id, "limit": 1}, output=output)
-        if latest:
-            reply = f"The latest decision: {latest[0].summary}"
-            numbers = latest[0].numbers
-        else:
-            reply, numbers = "There are no decisions logged for this business yet.", {}
-        _log({"business_id": business_id, "kind": "chat", "actor": "desk", "agent": "fallback",
-              "hedge_id": latest[0].hedge_id if latest else None, "numbers": numbers, "summary": reply})
-        return ChatReply(reply=reply, tool_calls=[call])
+        out = await agent_chat.chat(business_id, body.message)
+        calls = [ToolCall(name=c["name"], input=c["input"], output=c["output"]) for c in out["tool_calls"]]
+        return ChatReply(reply=out["reply"], tool_calls=calls)
     except Exception:
         log.exception("chat failed")
         return ChatReply(reply="The desk can't answer right now; the decision log has the details.", tool_calls=[])
+
+
+# --- Approval timing sweep (#46, G8) -----------------------------------------
+# Nudge once 3 h before close, expire at close (`agent.policy.sweep`). A 60 s loop wraps the
+# app's lifespan here, so the startup code above stays untouched.
+
+SWEEP_INTERVAL_S = 60.0
+
+
+async def _sweep_loop(interval: float = SWEEP_INTERVAL_S) -> None:
+    import asyncio
+
+    from app.agent import policy
+
+    while True:
+        await asyncio.sleep(interval)
+        try:
+            await asyncio.to_thread(policy.sweep, clock.now())
+        except Exception:  # contained: a failed sweep never takes the API down
+            log.exception("approval sweep failed")
+
+
+def _with_sweep(inner):
+    @asynccontextmanager
+    async def lifespan_with_sweep(a: FastAPI):
+        import asyncio
+
+        async with inner(a) as state:
+            task = asyncio.create_task(_sweep_loop())
+            try:
+                yield state
+            finally:
+                task.cancel()
+
+    return lifespan_with_sweep
+
+
+app.router.lifespan_context = _with_sweep(app.router.lifespan_context)
 
 
 # --- Settings ----------------------------------------------------------------

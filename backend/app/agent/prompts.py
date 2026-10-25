@@ -8,7 +8,8 @@ validator before it is written (`log.append`).
 
 from __future__ import annotations
 
-from decimal import Decimal
+import re
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Any
 
 from app.models import Budget, Exposure, Hedge
@@ -62,7 +63,8 @@ def usd(x: Decimal) -> str:
 
 
 def _pct(ratio: Any) -> str:
-    return f"{(Decimal(str(ratio)) * 100).quantize(Decimal('0.1'))}%"
+    # half-up, the validator's rounding (half-even would show 36.6% for 0.3665 and fail I2)
+    return f"{(Decimal(str(ratio)) * 100).quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)}%"
 
 
 def _contracts(h: Hedge) -> str:
@@ -81,6 +83,17 @@ def _decline_clause(code: str, m: dict[str, Any], h: Hedge) -> str:
     if code == "too_expensive":
         return f"the hedge would cost {_pct(m['ratio'])} of the swing it removes"
     return code.replace("_", " ")
+
+
+decline_clause = _decline_clause  # public name, used by chat's "why?" answers
+
+# A27 / C4-H6: the one shared word list for "a hedge makes money" claims. Chat replies, guard
+# replies and templates are checked against it; keep any new word here.
+PROFIT_DENYLIST = re.compile(
+    r"\b(?:profit\w*|make[s]? money|making money|made money|earn\w*|gain\w*|returns?|win money|come out ahead|"
+    r"guaranteed?|pays? off)\b",
+    re.IGNORECASE,
+)
 
 
 def template_summary(hedge: Hedge, budget: Budget | None = None) -> str:
