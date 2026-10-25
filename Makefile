@@ -23,9 +23,10 @@ install: $(PY)
 	$(PY) -m pip install -q -e "backend[$(EXTRAS)]"
 	cd frontend && if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
-# Fixtures only, no network; idempotent.
+# Fixtures only, no network; idempotent. Also stores the walk-forward backtest for every
+# business with data (missing rows only), so GET /businesses/{id}/backtest is served offline.
 seed:
-	cd backend && $(PY) -m app.db seed && $(PY) -m app.books.seed
+	cd backend && $(PY) -m app.db seed && $(PY) -m app.books.seed && $(PY) -m scripts.run_backtest --if-missing
 
 # Optional: needs raw data/ and network. Dewey first, so the feature build sees the restaurant series.
 seed-data:
@@ -45,7 +46,11 @@ api:
 # The frontend is rebuilt only when its sources or API_URL changed since the last build.
 # DEMO_WEB=0 serves the API alone (used by the C8-A1/A3 boot test).
 DEMO_WEB ?= 1
+# The cached demo week: fixtures/kalshi_cache/ was warmed Sat 2026-10-24 ~23:10 UTC, so the clock
+# starts there, the desk week is Mon 2026-10-26, and the demo no longer depends on the wall clock.
+DEMO_AS_OF ?= 2026-10-24T19:00:00Z
 demo: export DEMO_OFFLINE := 1
+demo: export DEMO_AS_OF := $(DEMO_AS_OF)
 demo: export NEXT_TELEMETRY_DISABLED := 1
 demo: seed
 	@trap 'kill 0' EXIT; \

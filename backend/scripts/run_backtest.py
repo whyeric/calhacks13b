@@ -16,55 +16,15 @@ disagree, because the repo's weather pipeline is still Open-Meteo, not NOAA.
 from __future__ import annotations
 
 import argparse
-import json
 from collections import Counter
 from decimal import Decimal
 from pathlib import Path
 
-import pandas as pd
-
 from app import clock, config, db
 from app.data import features
 from app.models import BacktestResult
-from app.stats.backtest import BacktestConfig, default_contracts, quotes_from_history, simulate
-from app.stats.exposure import fit_exposures
-
-HISTORY_DIR = config.FIXTURES_DIR / "kalshi_history"
-RAIN_THRESHOLD_IN = 0.01  # KXRAIN/KXRAINNYC: "strictly greater than 0 in"; the gauge reports hundredths
-CACHE_KEY = "backtest"
-
-
-def _history(var: str) -> dict:
-    path = HISTORY_DIR / f"{var}.json"
-    return json.loads(path.read_text()) if path.exists() else {"markets": {}}
-
-
-def frame(business_id: str, strike: float | None, fixtures_dir: Path) -> tuple[pd.DataFrame, dict, dict]:
-    df = features.build(business_id, fixtures_dir=fixtures_dir)
-    df = features.add_settlement(df, rain_threshold=RAIN_THRESHOLD_IN, strike=strike, fixtures_dir=fixtures_dir)
-    df.attrs["business_id"] = business_id
-    quotes, notes = {}, {}
-    dates = pd.to_datetime(df["date"]).dt.date
-    for var, col in (("rain", "settle_rain"), ("home_win", "home_win")):
-        q, results = quotes_from_history(_history(var))
-        quotes[var] = q
-        official = dates.map(results)
-        have = official.notna()
-        disagree = int((official[have].astype(bool) != df.loc[have, col]).sum())
-        notes[var] = {"days_with_market": int(have.sum()), "disagree_with_repo_flag": disagree}
-        if var == "rain" and have.any():
-            df.loc[have, col] = official[have].astype(bool)  # settle on what the contract settled on
-    return df, quotes, notes
-
-
-def backtest(business_id: str, strike: float | None, fixtures_dir: Path, markup: Decimal, real: bool = True):
-    df, quotes, notes = frame(business_id, strike, fixtures_dir)
-    strikes = {"hot": strike} if strike is not None else None
-    th = db.get_business_thresholds(business_id)
-    fit = fit_exposures(df, strikes, business_id=business_id, thresholds=th)
-    contracts = default_contracts(quotes if real else None)
-    cfg = BacktestConfig(thresholds=th, markup=markup, strikes=strikes)
-    return simulate(df, contracts, fit, cfg), fit, notes
+from app import backtest_job
+from app.backtest_job import CACHE_KEY, HISTORY_DIR, RAIN_THRESHOLD_IN, backtest, frame  # noqa: F401 (re-exported)
 
 
 def _print(business_id: str, run, fit, notes) -> None:
@@ -95,9 +55,15 @@ def main() -> None:
     ap.add_argument("--markup", type=Decimal, default=config.FALLBACK_MARKUP)
     ap.add_argument("--fixtures-dir", type=Path, default=config.FIXTURES_DIR)
     ap.add_argument("--no-store", action="store_true")
+    ap.add_argument("--if-missing", action="store_true",
+                    help="only store businesses with no stored backtest, quietly (used by `make seed`)")
     ap.add_argument("--sweep", action="store_true", help="also print the frequency-tier markup stress sweep (G2)")
     args = ap.parse_args()
     db.create_schema()  # per-business threshold overrides are read from the db
+    if args.if_missing:
+        for b, outcome in backtest_job.ensure(args.business, fixtures_dir=args.fixtures_dir).items():
+            print(f"backtest {b}: {outcome}")
+        return
     for b in args.business:
         try:
             run, fit, notes = backtest(b, args.strike, args.fixtures_dir, args.markup)

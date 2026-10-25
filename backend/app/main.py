@@ -88,6 +88,16 @@ async def lifespan(_app: FastAPI):
         dropped = db.remove_sample_hedges()
         if dropped:
             log.info("DEMO_SAMPLE_WEEK off: removed sample hedges %s", [h.id for h in dropped])
+    if get_settings().backtest_on_startup:  # missing rows only; offline (fixtures + kalshi_history)
+        import asyncio
+
+        from app import backtest_job
+
+        try:
+            outcome = await asyncio.to_thread(backtest_job.ensure)
+            log.info("backtest at startup: %s", outcome)
+        except Exception:  # contained: the API starts without a backtest (409 backtest_not_ready)
+            log.exception("backtest at startup failed")
     yield
 
 

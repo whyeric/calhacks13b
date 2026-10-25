@@ -236,7 +236,9 @@ def new_log_id() -> str:
 
 
 def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+    from app import clock
+
+    return clock.now()  # DEMO_AS_OF-aware
 
 
 def append(entry: LogEntry | Mapping[str, Any], engine: Engine | None = None) -> str:

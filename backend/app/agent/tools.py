@@ -23,7 +23,7 @@ from typing import Any
 
 from sqlalchemy.engine import Engine
 
-from app import analysis, db
+from app import analysis, clock, db
 from app.agent import log, policy, prompts
 from app.config import Thresholds
 from app.markets.port import MarketsPort, get_markets, no_market_hedge
@@ -323,7 +323,7 @@ class DeskContext:
         kind = "decline" if h.decision.status == "declined" else "proposal"
         entry = LogEntry(
             log_id=log.new_log_id(), business_id=self.business_id, kind=kind,
-            created_at=datetime.now(timezone.utc), actor="desk", agent=agent, hedge_id=h.id,
+            created_at=clock.now(), actor="desk", agent=agent, hedge_id=h.id,
             decision_id=h.decision.id, run_id=self.run_id, status=h.status, checks=h.decision.checks,
             reasons=h.decision.reasons, numbers=numbers, summary=summary,
         )

@@ -1,10 +1,15 @@
 import json
+import os
 from pathlib import Path
 
 import httpx
 import pytest
 
 FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"  # backend/fixtures
+
+# API tests start the app many times on fresh dbs; the startup backtest is tested on its own
+# (tests/api/test_backtest_startup.py), so it is off by default here.
+os.environ.setdefault("BACKTEST_ON_STARTUP", "0")
 
 
 @pytest.fixture(autouse=True)
