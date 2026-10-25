@@ -6,6 +6,8 @@ backend/fixtures/msg_visits_daily.parquet
 .env
 
 # Secrets and local data
+/secrets/
+*.pem
 .naming-denylist
 *.db
 *.db-wal

@@ -122,6 +122,8 @@ LogKind = Literal[
     "proposal", "decline", "approval", "rejection", "booking", "settlement", "expired",
     "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed", "refusal",
     "cosign", "cosign_refused", "period_close",
+    # Kalshi demo orders placed on the owner's approval (markets/trading.py)
+    "order_placed", "order_filled", "order_partial", "order_failed", "order_skipped",
 ]
 
 
@@ -422,6 +424,9 @@ class Hedge(Contract):
     decision_note: str | None = None
     # What happened to this exposure's earlier hedges (the desk's memory across weeks).
     owner_history: "OwnerHistory | None" = None
+    # The venue order placed on the owner's approval (Kalshi demo, markets/trading.py): what was
+    # actually filled, next to the approved figures the ledger booked. Null when no order was sent.
+    venue_order: "VenueOrder | None" = None
 
     @model_validator(mode="after")
     def _consistent(self) -> "Hedge":
@@ -1081,6 +1086,70 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         QuickBooksStatus, QuickBooksConnect, CommitmentLine, InventoryLine, Commitments, QuickBooksResearch,
     )
 }
+
+
+# --- Kalshi demo trading (markets/trading.py, docs/KALSHI_DEMO.md) -------------------------
+
+OrderOutcome = Literal["filled", "partial", "failed", "skipped"]
+
+
+class VenueOrder(Contract):
+    """The order placed on the venue when the owner approved a hedge (`Hedge.venue_order`).
+
+    Booking stays at the approved figures; this records what the venue actually did, so
+    reconciliation can flag a fill that differs from what was booked. Prices are in the hedge's
+    own side (a NO hedge's `avg_price` is the NO price), whatever book side carried the order.
+    `mode` "kalshi_demo" is Kalshi's demo exchange: fake money, labeled as such (I6)."""
+
+    mode: Literal["kalshi_demo"]
+    status: OrderOutcome
+    client_order_id: str  # uuid5 of the hedge id (trading.client_order_id): retries are idempotent
+    order_id: str | None  # the venue's id; null when nothing was accepted
+    ticker: str | None  # the market the order was sent to (a demo stand-in when `stand_in`)
+    production_ticker: str | None  # the hedge's own market
+    stand_in: bool  # true: a configured demo stand-in, not the production contract
+    side: Side
+    book_side: Literal["bid", "ask"] | None  # Kalshi V2 quotes YES: bid = buy YES, ask = buy NO
+    time_in_force: Literal["immediate_or_cancel", "fill_or_kill"]
+    requested: int  # <= the hedge's filled contracts (I1)
+    limit_price: Price | None  # <= the hedge's worst quoted level
+    filled: int
+    avg_price: Price | None
+    cost: Money | None  # filled x avg_price
+    fee: Money | None
+    differs_from_booked: bool  # filled count or average price differs from the approved hedge
+    reason: str | None
+    at: AwareDatetime
+
+    @model_validator(mode="after")
+    def _consistent(self) -> "VenueOrder":
+        if not 0 <= self.filled <= self.requested:
+            raise ValueError("filled must be between 0 and requested")
+        want = ("failed", "skipped") if self.filled == 0 else ("filled",) if self.filled == self.requested else ("partial",)
+        if self.status not in want:
+            raise ValueError(f"status {self.status!r} does not match {self.filled} of {self.requested} filled")
+        if (self.filled > 0) != (self.avg_price is not None):
+            raise ValueError("avg_price is set iff something filled")
+        return self
+
+
+class KalshiStatus(Contract):
+    """GET /integrations/kalshi/status: whether approvals place demo orders, and why not."""
+
+    mode: Literal["off", "demo"]
+    reason: str | None  # why the mode is off
+    trading_enabled: bool
+    offline: bool
+    key_id_present: bool
+    private_key_present: bool
+    base_url: str
+    host_allowed: bool  # the base URL is a Kalshi demo host
+    reachable: bool | None  # null when no authenticated call was attempted
+    balance: Money | None  # demo balance (fake money), when reachable
+    error: str | None
+
+
+CONTRACT_MODELS.update({m.__name__: m for m in (VenueOrder, KalshiStatus)})
 
 
 Hedge.model_rebuild()

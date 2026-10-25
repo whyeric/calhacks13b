@@ -1,0 +1,9 @@
+{
+  "notes": [
+    "Demo stand-in markets for markets/trading.py: series ticker -> a market ticker open on Kalshi's DEMO exchange.",
+    "Used only when the hedge's own ticker is not listed (open) on demo. An order on a stand-in is logged and labeled 'demo stand-in, not the production contract'.",
+    "Checked 2026-10-25 against https://demo-api.kalshi.co/trade-api/v2: demo lists the same series and tickers as production for KXRAIN (incl. -NYC), KXHIGHNY, KXNBAGAME, KXNHLGAME, KXNBAPLAYOFF, KXNHLPLAYOFF, so no stand-in is needed today. KXNBASERIES/KXNHLSERIES had no open markets (off-season), and the retired KXRAINNYC series has none.",
+    "Example: \"stand_ins\": {\"KXNBASERIES\": \"KXNBAGAME-26OCT28NYKCHI-NYK\"}. Daily/game tickers expire, so update before a demo."
+  ],
+  "stand_ins": {}
+}

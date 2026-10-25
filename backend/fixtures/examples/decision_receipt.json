@@ -173,7 +173,8 @@
       "note": "Checked against this week's budget."
     },
     "decision_note": null,
-    "owner_history": null
+    "owner_history": null,
+    "venue_order": null
   },
   "exposure": {
     "id": "exp_rain",

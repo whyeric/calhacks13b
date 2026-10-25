@@ -397,7 +397,9 @@ def approve(
     _log({"business_id": h.business_id, "kind": "approval", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "approved", "numbers": _hedge_numbers(approved),
           "summary": f"Owner approved {h.id}: {h.n_filled} {h.side.upper()} contracts for ${h.premium}."})
-    return approved
+    from app.markets import trading  # Kalshi demo order on the owner's approval only (I4); never raises
+
+    return trading.on_owner_approval(approved, _log)
 
 
 @app.post("/hedges/{hedge_id}/reject", response_model=Hedge, responses=ERRORS | {403: {"model": ErrorBody}})
@@ -808,3 +810,9 @@ async def quickbooks_research(name: str | None = Query(None, max_length=60)) -> 
         return await asyncio.to_thread(_qbo_call, qbo.get().research, name.strip() if name else None)
     except protocol.ResearchInputError as e:
         raise ApiError(422, e.code, e.message, e.detail)
+
+
+# --- Kalshi demo trading status (integrations/kalshi_routes.py, docs/KALSHI_DEMO.md) ---
+from app.integrations.kalshi_routes import router as kalshi_router  # noqa: E402
+
+app.include_router(kalshi_router)
