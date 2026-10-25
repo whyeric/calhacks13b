@@ -5,7 +5,7 @@ Backtest, books, chat and settings remain in #28.
 
 Run `npm ci`, then `npm run dev`. Set `NEXT_PUBLIC_API_URL` to the API origin
 (default `http://localhost:8000`). The API must allow the frontend origin via CORS.
-Set `NEXT_PUBLIC_MOCK=1` before starting Next to use the same components with
+Set `NEXT_PUBLIC_MOCK=1` (or its alias `NEXT_PUBLIC_FIXTURES=1`) before starting Next to use the same components with
 contract-validated JSON fixtures. The page visibly labels this mode MOCK DATA.
 Scenarios: `?scenario=default|empty|error|slow|longtext|negative`.
 Mock changes are in memory, isolated by business, and reset on page reload.

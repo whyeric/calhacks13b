@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import useSWR from "swr";
-import { apiGet, apiPost } from "@/lib/api";
+import { MOCK_MODE, apiGet, apiPost } from "@/lib/api";
 import type { Analyze, Business, Hedge, LogEntry, Run } from "@/lib/types";
 import { Header, EstimatedBadge } from "@/components/Header";
 import {
@@ -73,7 +73,7 @@ export default function Home() {
   }
   return (
     <main>
-      {process.env.NEXT_PUBLIC_MOCK === "1" && (
+      {MOCK_MODE && (
         <div className="mock-banner">MOCK DATA · Demonstration only</div>
       )}
       <StateBoundary
