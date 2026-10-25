@@ -1,7 +1,10 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
+import { SETUP_KEY } from "@/lib/setup";
 afterEach(cleanup);
+// Dashboard tests start past the first-run wizard; wizard tests clear this.
+beforeEach(() => window.localStorage.setItem(SETUP_KEY, "1"));
 global.ResizeObserver = class {
   observe() {}
   unobserve() {}
