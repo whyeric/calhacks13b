@@ -9,6 +9,7 @@ import taxi from "@/fixtures/analyze_taxi.json";
 import restaurant from "@/fixtures/analyze_restaurant.json";
 import hedges from "@/fixtures/hedges_mixed.json";
 import logs from "@/fixtures/decisions.json";
+import backtest from "@/fixtures/backtest_taxi.json";
 const api = "http://localhost:8000";
 const server = setupServer(
   http.get(`${api}/businesses`, () => HttpResponse.json(businesses)),
@@ -17,6 +18,10 @@ const server = setupServer(
   ),
   http.get(`${api}/businesses/:id/hedges`, () => HttpResponse.json(hedges)),
   http.get(`${api}/businesses/:id/decisions`, () => HttpResponse.json(logs)),
+  http.get(`${api}/businesses/:id/backtest`, () => HttpResponse.json(backtest)),
+  http.get(`${api}/health`, () =>
+    HttpResponse.json({ status: "ok", offline: true, anthropic: "fallback" }),
+  ),
 );
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => server.resetHandlers());
@@ -66,10 +71,14 @@ it("C7-A20 each region has its own loading skeleton", async () => {
       await delay(200);
       return HttpResponse.json(logs);
     }),
+    http.get(`${api}/businesses/:id/backtest`, async () => {
+      await delay(200);
+      return HttpResponse.json(backtest);
+    }),
   );
   mount();
   await screen.findByLabelText("Your business");
-  expect(screen.getAllByLabelText("Loading region")).toHaveLength(3);
+  expect(screen.getAllByLabelText("Loading region")).toHaveLength(4);
   await screen.findByText("Revenue rises on event days");
 });
 it("C7-A21 empty state has no invalid numeric tokens", async () => {

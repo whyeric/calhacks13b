@@ -15,7 +15,39 @@ export interface components {
       dropped: components["schemas"]["Exposure"][];
       model_check: components["schemas"]["ModelCheck"];
       /** R2 Holdout */
-      r2_holdout: number;
+      r2_holdout: number | null;
+    };
+    /** BacktestResult */
+    BacktestResult: {
+      /** Std Unhedged */
+      std_unhedged: string;
+      /** Std Hedged */
+      std_hedged: string;
+      /** Reduction Pct */
+      reduction_pct: number;
+      worst_week_unhedged: components["schemas"]["WeekIncome"];
+      worst_week_hedged: components["schemas"]["WeekIncome"];
+      /** Total Premium */
+      total_premium: string;
+      /** N Hedges */
+      n_hedges: number;
+      /** N Declined */
+      n_declined: number;
+      /** Priced Real Pct */
+      priced_real_pct: number;
+      /** Per Exposure */
+      per_exposure: {
+        [key: string]: components["schemas"]["PerExposure"];
+      };
+      /** Weekly */
+      weekly: components["schemas"]["WeeklyRow"][];
+      /**
+       * Pricing Tier
+       * @enum {string}
+       */
+      pricing_tier: "real" | "mixed" | "frequency";
+      /** Estimated */
+      estimated: boolean;
     };
     /**
      * Budget
@@ -63,6 +95,13 @@ export interface components {
       /** Avg Check Label */
       avg_check_label: ("assumed" | "menu") | null;
       budget: components["schemas"]["Budget"];
+    };
+    /** ChatReply */
+    ChatReply: {
+      /** Reply */
+      reply: string;
+      /** Tool Calls */
+      tool_calls: components["schemas"]["ToolCall"][];
     };
     /**
      * Check
@@ -175,6 +214,21 @@ export interface components {
       hedged_swing: string;
       /** Cost */
       cost: string;
+    };
+    /** Health */
+    Health: {
+      /**
+       * Status
+       * @constant
+       */
+      status: "ok";
+      /** Offline */
+      offline: boolean;
+      /**
+       * Anthropic
+       * @enum {string}
+       */
+      anthropic: "configured" | "fallback";
     };
     /**
      * Hedge
@@ -293,6 +347,58 @@ export interface components {
       payoff: components["schemas"]["PayoffRow"][];
       headline: components["schemas"]["Headline"];
     };
+    /** LedgerEntry */
+    LedgerEntry: {
+      /** Id */
+      id: string;
+      /** Business Id */
+      business_id: string;
+      /**
+       * Date
+       * Format: date
+       */
+      date: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "premium" | "payout" | "withdrawal" | "opening_deposit";
+      /** Narration */
+      narration: string;
+      /** Postings */
+      postings: components["schemas"]["Posting"][];
+      meta: components["schemas"]["LedgerMeta"] | null;
+      /** Simulated */
+      simulated: boolean;
+    };
+    /** LedgerMeta */
+    LedgerMeta: {
+      /** Hedge Id */
+      hedge_id: string;
+      /** Ticker */
+      ticker: string;
+      /** Decision Id */
+      decision_id: string;
+      /**
+       * Approved By
+       * @constant
+       */
+      approved_by: "owner";
+    };
+    /**
+     * LedgerResponse
+     * @description GET /businesses/{id}/ledger (R10).
+     */
+    LedgerResponse: {
+      /** Entries */
+      entries: components["schemas"]["LedgerEntry"][];
+      reconciliation: components["schemas"]["ReconResult"] | null;
+      /**
+       * Simulated
+       * @constant
+       */
+      simulated: true;
+    };
     /** Level */
     Level: {
       /** Price */
@@ -327,7 +433,8 @@ export interface components {
         | "nudge"
         | "threshold_changed"
         | "chat"
-        | "run_failed";
+        | "run_failed"
+        | "refusal";
       /**
        * Created At
        * Format: date-time
@@ -422,6 +529,101 @@ export interface components {
       /** Net Vs Base */
       net_vs_base: string;
     };
+    /** PerExposure */
+    PerExposure: {
+      /** Reduction Pct */
+      reduction_pct: number;
+      /** Total Premium */
+      total_premium: string;
+      /** Ineffective */
+      ineffective: boolean;
+    };
+    /** Posting */
+    Posting: {
+      /** Account */
+      account: string;
+      /** Amount */
+      amount: string;
+    };
+    /** ReconMatch */
+    ReconMatch: {
+      /** Hedge Id */
+      hedge_id: string;
+      /** Ticker */
+      ticker: string;
+      /** Expected */
+      expected: string;
+      /** Kalshi Ledger */
+      kalshi_ledger: string;
+      /** Bank */
+      bank: string;
+    };
+    /** ReconMismatch */
+    ReconMismatch: {
+      /** Hedge Id */
+      hedge_id: string;
+      /** Ticker */
+      ticker: string;
+      /** Expected */
+      expected: string;
+      /** Kalshi Ledger */
+      kalshi_ledger: string;
+      /** Bank */
+      bank: string;
+      /** Difference */
+      difference: string;
+      /**
+       * Source Pair
+       * @enum {string}
+       */
+      source_pair:
+        | "expected_vs_kalshi_ledger"
+        | "kalshi_ledger_vs_bank"
+        | "expected_vs_bank";
+      /** Explanation */
+      explanation: string;
+      /** Likely Cause */
+      likely_cause: string;
+      /**
+       * Action
+       * @constant
+       */
+      action: "ask_owner";
+      /** Question */
+      question: string;
+    };
+    /**
+     * ReconResult
+     * @description C5 shape everywhere (R9); the `reconcile` tool returns it unchanged.
+     */
+    ReconResult: {
+      /** Business Id */
+      business_id: string;
+      /**
+       * As Of
+       * Format: date
+       */
+      as_of: string;
+      /**
+       * Simulated
+       * @constant
+       */
+      simulated: true;
+      /** Matches */
+      matches: components["schemas"]["ReconMatch"][];
+      /** Mismatches */
+      mismatches: components["schemas"]["ReconMismatch"][];
+      summary: components["schemas"]["ReconSummary"];
+    };
+    /** ReconSummary */
+    ReconSummary: {
+      /** N Matched */
+      n_matched: number;
+      /** N Mismatched */
+      n_mismatched: number;
+      /** Total Difference */
+      total_difference: string;
+    };
     /**
      * RunAccepted
      * @description 202 body of POST /businesses/{id}/desk/run.
@@ -457,6 +659,74 @@ export interface components {
       finished_at: string | null;
       /** Error */
       error: string | null;
+    };
+    /**
+     * Settings
+     * @description GET/PUT /businesses/{id}/settings (R14).
+     */
+    Settings: {
+      thresholds: components["schemas"]["ThresholdSettings"];
+      /** Weekly Budget */
+      weekly_budget: string;
+    };
+    /**
+     * ThresholdSettings
+     * @description Mirrors `config.Thresholds` field for field.
+     */
+    ThresholdSettings: {
+      /** Min Size Usd */
+      min_size_usd: string;
+      /** Min Support */
+      min_support: number;
+      /** Overpay Max */
+      overpay_max: string;
+      /** Cost Ratio Max */
+      cost_ratio_max: string;
+      /** Fill Decline */
+      fill_decline: string;
+      /** Fill Full */
+      fill_full: string;
+      /** Max Slip */
+      max_slip: string;
+      /** Basis R2 Min */
+      basis_r2_min: number;
+      /** Max Tool Calls */
+      max_tool_calls: number;
+    };
+    /** ToolCall */
+    ToolCall: {
+      /** Name */
+      name: string;
+      /** Input */
+      input: {
+        [key: string]: unknown;
+      };
+      /** Output */
+      output: unknown;
+    };
+    /** WeekIncome */
+    WeekIncome: {
+      /**
+       * Week Start
+       * Format: date
+       */
+      week_start: string;
+      /** Income */
+      income: string;
+    };
+    /** WeeklyRow */
+    WeeklyRow: {
+      /**
+       * Week Start
+       * Format: date
+       */
+      week_start: string;
+      /** Unhedged */
+      unhedged: string;
+      /** Hedged */
+      hedged: string;
+      /** Premium */
+      premium: string;
     };
   };
   responses: never;

@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "offline": true,
+  "anthropic": "fallback",
+  "sample_week": true,
+  "sample_businesses": [
+    "taxi",
+    "restaurant"
+  ]
+}

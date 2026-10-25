@@ -1,0 +1,28 @@
+{
+  "reply": "The rain contract costs 62¢ but it has rained on 27% of comparable days, so you'd overpay by 35¢ per contract.",
+  "tool_calls": [
+    {
+      "name": "read_log",
+      "input": {
+        "business_id": "restaurant",
+        "hedge_id": "hdg_03",
+        "limit": 1
+      },
+      "output": [
+        {
+          "log_id": "log_0006",
+          "kind": "decline",
+          "reasons": [
+            "overpriced",
+            "too_expensive"
+          ],
+          "numbers": {
+            "avg_price": "0.62",
+            "fair": "0.27",
+            "overpay": "0.35"
+          }
+        }
+      ]
+    }
+  ]
+}

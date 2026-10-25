@@ -56,3 +56,15 @@ for states in product(["proposed", "approved", "rejected"], ["pending_approval",
     pending = sum((Decimal(row["premium"]) for row, status in zip(rows, states) if status in ("proposed", "pending_approval")), Decimal(0))
     snapshots["|".join(states)] = {"budget":"250.00", "spent":str(spent.quantize(Decimal(".01"))), "pending":str(pending.quantize(Decimal(".01"))), "remaining":str((Decimal("250")-spent-pending).quantize(Decimal(".01"))), "week_start":"2026-10-26"}
 write("budget_snapshots", snapshots)
+
+# Issue #28 panels: backtest, ledger/reconciliation, chat, settings, health.
+backtest = read("backtest_result")
+write("backtest_taxi", backtest)
+restaurant_backtest = copy.deepcopy(backtest)
+restaurant_backtest["estimated"] = True
+write("backtest_restaurant", restaurant_backtest)
+write("ledger_with_mismatch", read("ledger_response"))
+write("chat_reply", read("chat_reply"))
+write("settings", read("settings"))
+# Mock mode serves the seeded sample week for every business, so mock health says so (PR #60 shape).
+write("health", {**read("health"), "sample_week": True, "sample_businesses": [b["id"] for b in businesses]})

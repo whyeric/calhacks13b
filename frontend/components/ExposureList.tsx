@@ -79,7 +79,13 @@ export function NotHedgedList({ dropped }: { dropped: Exposure[] }) {
     </details>
   );
 }
-export function ModelCheck({ data, r2 }: { data: ModelCheckData; r2: number }) {
+export function ModelCheck({
+  data,
+  r2,
+}: {
+  data: ModelCheckData;
+  r2: number | null;
+}) {
   return (
     <section className="subsection">
       <h3>Model check</h3>
@@ -101,7 +107,7 @@ export function ModelCheck({ data, r2 }: { data: ModelCheckData; r2: number }) {
       <p>
         Coverage {fmtPct(String(data.coverage))} · {data.n_seeds} trials
       </p>
-      <p>Holdout R²: {r2}</p>
+      <p>Holdout R²: {r2 ?? "Not available (no holdout rows)"}</p>
     </section>
   );
 }
