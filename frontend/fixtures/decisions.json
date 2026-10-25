@@ -1,0 +1,198 @@
+[
+  {
+    "log_id": "log_0004",
+    "business_id": "taxi",
+    "kind": "proposal",
+    "created_at": "2026-10-24T15:00:10Z",
+    "actor": "desk",
+    "agent": "claude",
+    "hedge_id": "hdg_01",
+    "decision_id": "dec_01",
+    "run_id": "run_0007",
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 4
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 180,
+          "n_filled": 150,
+          "fill_ratio": "0.8333",
+          "partial": true
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.4260",
+          "fair": "0.38",
+          "overpay": "0.0460"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.84",
+          "beta_s": "-180.00",
+          "beta": "-210.00",
+          "h": "0.8571",
+          "resized": true
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "9.47",
+          "swing": "210.00",
+          "ratio": "0.0451"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "66.47",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [],
+    "numbers": {
+      "n_candidates": 4,
+      "n_target": 180,
+      "n_filled": 150,
+      "fill_ratio": "0.8333",
+      "avg_price": "0.4260",
+      "fair": "0.38",
+      "overpay": "0.0460",
+      "r2": "0.84",
+      "beta_s": "-180.00",
+      "beta": "-210.00",
+      "h": "0.8571",
+      "expected_cost": "9.47",
+      "swing": "210.00",
+      "ratio": "0.0451",
+      "premium": "66.47",
+      "remaining": "250.00",
+      "floor_strike": "65",
+      "unhedged_swing": "210.00",
+      "hedged_swing": "60.00"
+    },
+    "summary": "Proposed: 150 YES contracts on NYC topping 65°F on Oct 28 for $66.47. The book filled 150 of the 180 wanted, and the Central Park reading tracks your zone well enough to size at 0.8571 of the exposure."
+  },
+  {
+    "log_id": "log_0001",
+    "business_id": "taxi",
+    "kind": "approval",
+    "created_at": "2026-10-12T15:02:00Z",
+    "actor": "owner",
+    "agent": null,
+    "hedge_id": "hdg_s02",
+    "decision_id": "dec_s02",
+    "run_id": null,
+    "status": "approved",
+    "checks": [],
+    "reasons": [],
+    "numbers": {
+      "n_filled": 60,
+      "premium": "29.85",
+      "fee": "1.05"
+    },
+    "summary": "Owner approved hdg_s02: 60 NO contracts for $29.85."
+  },
+  {
+    "log_id": "log_0007",
+    "business_id": "restaurant",
+    "kind": "proposal",
+    "created_at": "2026-10-24T15:05:20Z",
+    "actor": "desk",
+    "agent": "fallback",
+    "hedge_id": "hdg_04",
+    "decision_id": "dec_04",
+    "run_id": "run_0008",
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 1
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 420,
+          "n_filled": 420,
+          "fill_ratio": "1",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.5057",
+          "fair": "0.48",
+          "overpay": "0.0257"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "skipped": "no_basis_needed",
+          "h": "1",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "18.15",
+          "swing": "420.00",
+          "ratio": "0.0432"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "219.75",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [],
+    "numbers": {
+      "n_candidates": 1,
+      "n_target": 420,
+      "n_filled": 420,
+      "fill_ratio": "1",
+      "avg_price": "0.5057",
+      "fair": "0.48",
+      "overpay": "0.0257",
+      "h": "1",
+      "expected_cost": "18.15",
+      "swing": "420.00",
+      "ratio": "0.0432",
+      "premium": "219.75",
+      "remaining": "250.00",
+      "unhedged_swing": "420.00",
+      "hedged_swing": "0.00"
+    },
+    "summary": "Proposed: buy 420 NO contracts for $219.75. Unhedged swing $420.00, hedged swing $0.00."
+  }
+]

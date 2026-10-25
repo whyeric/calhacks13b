@@ -1,0 +1,38 @@
+[
+  {
+    "id": "taxi",
+    "name": "Midtown taxi fleet",
+    "kind": "taxi",
+    "data_label": "real",
+    "estimated": false,
+    "revenue_source": "NYC TLC yellow-taxi metered fares, pickups in the Penn Station/Madison Sq West zone",
+    "zone_id": 186,
+    "avg_check_usd": null,
+    "avg_check_label": null,
+    "budget": {
+      "budget": "250.00",
+      "spent": "0.00",
+      "remaining": "250.00",
+      "pending": "0.00",
+      "week_start": "2026-10-26"
+    }
+  },
+  {
+    "id": "restaurant",
+    "name": "Bar across from MSG",
+    "kind": "restaurant",
+    "data_label": "estimated",
+    "estimated": true,
+    "revenue_source": "Advan daily visits x average check (dollars estimated)",
+    "zone_id": null,
+    "avg_check_usd": "35.00",
+    "avg_check_label": "assumed",
+    "budget": {
+      "budget": "250.00",
+      "spent": "0.00",
+      "remaining": "250.00",
+      "pending": "0.00",
+      "week_start": "2026-10-26"
+    }
+  }
+]

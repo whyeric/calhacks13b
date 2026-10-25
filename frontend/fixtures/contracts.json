@@ -1,0 +1,1266 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Hedge Desk contracts",
+    "version": "1"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "AnalyzeResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "exposures": {
+            "items": {
+              "$ref": "#/components/schemas/Exposure"
+            },
+            "title": "Exposures",
+            "type": "array"
+          },
+          "dropped": {
+            "items": {
+              "$ref": "#/components/schemas/Exposure"
+            },
+            "title": "Dropped",
+            "type": "array"
+          },
+          "model_check": {
+            "$ref": "#/components/schemas/ModelCheck"
+          },
+          "r2_holdout": {
+            "title": "R2 Holdout",
+            "type": "number"
+          }
+        },
+        "required": [
+          "exposures",
+          "dropped",
+          "model_check",
+          "r2_holdout"
+        ],
+        "title": "AnalyzeResponse",
+        "type": "object"
+      },
+      "Budget": {
+        "additionalProperties": false,
+        "description": "R7. `remaining = budget \u2212 spent \u2212 pending` (D4); negative when over-committed.",
+        "properties": {
+          "budget": {
+            "title": "Budget",
+            "type": "string"
+          },
+          "spent": {
+            "title": "Spent",
+            "type": "string"
+          },
+          "remaining": {
+            "title": "Remaining",
+            "type": "string"
+          },
+          "pending": {
+            "title": "Pending",
+            "type": "string"
+          },
+          "week_start": {
+            "format": "date",
+            "title": "Week Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "budget",
+          "spent",
+          "remaining",
+          "pending",
+          "week_start"
+        ],
+        "title": "Budget",
+        "type": "object"
+      },
+      "Business": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "taxi",
+              "restaurant"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "data_label": {
+            "enum": [
+              "real",
+              "estimated"
+            ],
+            "title": "Data Label",
+            "type": "string"
+          },
+          "estimated": {
+            "title": "Estimated",
+            "type": "boolean"
+          },
+          "revenue_source": {
+            "title": "Revenue Source",
+            "type": "string"
+          },
+          "zone_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Zone Id"
+          },
+          "avg_check_usd": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Check Usd"
+          },
+          "avg_check_label": {
+            "anyOf": [
+              {
+                "enum": [
+                  "assumed",
+                  "menu"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Check Label"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/Budget"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "data_label",
+          "estimated",
+          "revenue_source",
+          "zone_id",
+          "avg_check_usd",
+          "avg_check_label",
+          "budget"
+        ],
+        "title": "Business",
+        "type": "object"
+      },
+      "Check": {
+        "additionalProperties": false,
+        "description": "One decline rule. `passed` is null when skipped (e.g. no market to evaluate).",
+        "properties": {
+          "code": {
+            "enum": [
+              "no_market",
+              "illiquid",
+              "overpriced",
+              "basis_too_loose",
+              "too_expensive",
+              "over_budget"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "passed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Passed"
+          },
+          "metric": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Metric",
+            "type": "object"
+          }
+        },
+        "required": [
+          "code",
+          "passed",
+          "metric"
+        ],
+        "title": "Check",
+        "type": "object"
+      },
+      "Decision": {
+        "additionalProperties": false,
+        "description": "Spec \u00a78. Only `summary` is written by Claude.\n\n`reasons` lists the failed decline checks (1\u20135) in table order; if none failed it is\n`[\"over_budget\"]` when the budget check failed (that pauses, it doesn't decline).",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proposed",
+              "declined",
+              "pending_approval"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/Check"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "reasons": {
+            "items": {
+              "enum": [
+                "no_market",
+                "illiquid",
+                "overpriced",
+                "basis_too_loose",
+                "too_expensive",
+                "over_budget"
+              ],
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "checks",
+          "reasons",
+          "summary"
+        ],
+        "title": "Decision",
+        "type": "object"
+      },
+      "Exposure": {
+        "additionalProperties": false,
+        "description": "Spec \u00a75. Dropped exposures are the same object with `hedgeable: false` and reasons.",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "event": {
+            "enum": [
+              "rain",
+              "hot",
+              "home_win"
+            ],
+            "title": "Event",
+            "type": "string"
+          },
+          "effect_usd": {
+            "title": "Effect Usd",
+            "type": "string"
+          },
+          "ci90": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Ci90",
+            "type": "array"
+          },
+          "se": {
+            "title": "Se",
+            "type": "string"
+          },
+          "p_value": {
+            "title": "P Value",
+            "type": "number"
+          },
+          "n_events_train": {
+            "title": "N Events Train",
+            "type": "integer"
+          },
+          "direction": {
+            "enum": [
+              "positive",
+              "negative"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "hedge_side": {
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "title": "Hedge Side",
+            "type": "string"
+          },
+          "settlement_var": {
+            "enum": [
+              "rain",
+              "hot",
+              "home_win"
+            ],
+            "title": "Settlement Var",
+            "type": "string"
+          },
+          "hedgeable": {
+            "title": "Hedgeable",
+            "type": "boolean"
+          },
+          "reasons": {
+            "items": {
+              "enum": [
+                "below_size",
+                "not_significant",
+                "thin_support"
+              ],
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "strike": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strike"
+          },
+          "beta_settlement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Beta Settlement"
+          }
+        },
+        "required": [
+          "id",
+          "business_id",
+          "event",
+          "effect_usd",
+          "ci90",
+          "se",
+          "p_value",
+          "n_events_train",
+          "direction",
+          "hedge_side",
+          "settlement_var",
+          "hedgeable",
+          "reasons",
+          "strike",
+          "beta_settlement"
+        ],
+        "title": "Exposure",
+        "type": "object"
+      },
+      "Headline": {
+        "additionalProperties": false,
+        "description": "'Unhedged swing $X \u00b7 hedged swing $Y \u00b7 cost $Z'. Cost is the premium (R16).",
+        "properties": {
+          "unhedged_swing": {
+            "title": "Unhedged Swing",
+            "type": "string"
+          },
+          "hedged_swing": {
+            "title": "Hedged Swing",
+            "type": "string"
+          },
+          "cost": {
+            "title": "Cost",
+            "type": "string"
+          }
+        },
+        "required": [
+          "unhedged_swing",
+          "hedged_swing",
+          "cost"
+        ],
+        "title": "Headline",
+        "type": "object"
+      },
+      "Hedge": {
+        "additionalProperties": false,
+        "description": "A sized hedge with its embedded decision. Declined hedges keep the attempted sizing;\nwith no market, the market and sizing fields are null and only `decision` matters.",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "exposure_id": {
+            "title": "Exposure Id",
+            "type": "string"
+          },
+          "week_of": {
+            "format": "date",
+            "title": "Week Of",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proposed",
+              "pending_approval",
+              "approved",
+              "rejected",
+              "declined",
+              "expired_unapproved",
+              "settled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "ticker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ticker"
+          },
+          "market_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Market Title"
+          },
+          "market_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Market Url"
+          },
+          "close_time": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Close Time"
+          },
+          "side": {
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "title": "Side",
+            "type": "string"
+          },
+          "match_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Match Reason"
+          },
+          "h": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "H"
+          },
+          "n_target": {
+            "title": "N Target",
+            "type": "integer"
+          },
+          "n_filled": {
+            "title": "N Filled",
+            "type": "integer"
+          },
+          "n_unfilled": {
+            "title": "N Unfilled",
+            "type": "integer"
+          },
+          "partial": {
+            "title": "Partial",
+            "type": "boolean"
+          },
+          "resized": {
+            "title": "Resized",
+            "type": "boolean"
+          },
+          "fills": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Level"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fills"
+          },
+          "avg_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Price"
+          },
+          "cost": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost"
+          },
+          "fee": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fee"
+          },
+          "premium": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Premium"
+          },
+          "fair": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fair"
+          },
+          "expected_cost": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Cost"
+          },
+          "fee_unverified": {
+            "title": "Fee Unverified",
+            "type": "boolean"
+          },
+          "payoff": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PayoffRow"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payoff"
+          },
+          "headline": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Headline"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "decision": {
+            "$ref": "#/components/schemas/Decision"
+          },
+          "alternative": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HedgeLite"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "agent": {
+            "enum": [
+              "claude",
+              "fallback"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "ledger_entry_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Ledger Entry Ids",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "decided_by": {
+            "anyOf": [
+              {
+                "const": "owner",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided By"
+          },
+          "decided_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decided At"
+          }
+        },
+        "required": [
+          "id",
+          "business_id",
+          "exposure_id",
+          "week_of",
+          "status",
+          "ticker",
+          "market_title",
+          "market_url",
+          "close_time",
+          "side",
+          "match_reason",
+          "h",
+          "n_target",
+          "n_filled",
+          "n_unfilled",
+          "partial",
+          "resized",
+          "fills",
+          "avg_price",
+          "cost",
+          "fee",
+          "premium",
+          "fair",
+          "expected_cost",
+          "fee_unverified",
+          "payoff",
+          "headline",
+          "decision",
+          "alternative",
+          "agent",
+          "ledger_entry_ids",
+          "created_at",
+          "decided_by",
+          "decided_at"
+        ],
+        "title": "Hedge",
+        "type": "object"
+      },
+      "HedgeLite": {
+        "additionalProperties": false,
+        "description": "Within-budget alternative for an over-budget hedge (G8).",
+        "properties": {
+          "h": {
+            "title": "H",
+            "type": "string"
+          },
+          "n_target": {
+            "title": "N Target",
+            "type": "integer"
+          },
+          "n_filled": {
+            "title": "N Filled",
+            "type": "integer"
+          },
+          "avg_price": {
+            "title": "Avg Price",
+            "type": "string"
+          },
+          "cost": {
+            "title": "Cost",
+            "type": "string"
+          },
+          "fee": {
+            "title": "Fee",
+            "type": "string"
+          },
+          "premium": {
+            "title": "Premium",
+            "type": "string"
+          },
+          "payoff": {
+            "items": {
+              "$ref": "#/components/schemas/PayoffRow"
+            },
+            "title": "Payoff",
+            "type": "array"
+          },
+          "headline": {
+            "$ref": "#/components/schemas/Headline"
+          }
+        },
+        "required": [
+          "h",
+          "n_target",
+          "n_filled",
+          "avg_price",
+          "cost",
+          "fee",
+          "premium",
+          "payoff",
+          "headline"
+        ],
+        "title": "HedgeLite",
+        "type": "object"
+      },
+      "Level": {
+        "additionalProperties": false,
+        "properties": {
+          "price": {
+            "title": "Price",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "price",
+          "count"
+        ],
+        "title": "Level",
+        "type": "object"
+      },
+      "LogEntry": {
+        "additionalProperties": false,
+        "description": "Append-only decision log row (R8, G4). `agent` is null for entries no model wrote\n(owner actions, system bookings). `numbers` is the I2 allowed-number set (R18).",
+        "properties": {
+          "log_id": {
+            "title": "Log Id",
+            "type": "string"
+          },
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "proposal",
+              "decline",
+              "approval",
+              "rejection",
+              "booking",
+              "settlement",
+              "expired",
+              "reconciliation",
+              "expired_unapproved",
+              "nudge",
+              "threshold_changed",
+              "chat",
+              "run_failed"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "actor": {
+            "enum": [
+              "desk",
+              "owner",
+              "system"
+            ],
+            "title": "Actor",
+            "type": "string"
+          },
+          "agent": {
+            "anyOf": [
+              {
+                "enum": [
+                  "claude",
+                  "fallback"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agent"
+          },
+          "hedge_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hedge Id"
+          },
+          "decision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Decision Id"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "proposed",
+                  "pending_approval",
+                  "approved",
+                  "rejected",
+                  "declined",
+                  "expired_unapproved",
+                  "settled"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/Check"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "reasons": {
+            "items": {
+              "enum": [
+                "no_market",
+                "illiquid",
+                "overpriced",
+                "basis_too_loose",
+                "too_expensive",
+                "over_budget"
+              ],
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "numbers": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Numbers",
+            "type": "object"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          }
+        },
+        "required": [
+          "log_id",
+          "business_id",
+          "kind",
+          "created_at",
+          "actor",
+          "agent",
+          "hedge_id",
+          "decision_id",
+          "run_id",
+          "status",
+          "checks",
+          "reasons",
+          "numbers",
+          "summary"
+        ],
+        "title": "LogEntry",
+        "type": "object"
+      },
+      "ModelCheck": {
+        "additionalProperties": false,
+        "description": "Planted-effect check, spec \u00a75.1 (R6 shape).",
+        "properties": {
+          "planted_usd": {
+            "title": "Planted Usd",
+            "type": "string"
+          },
+          "frac": {
+            "title": "Frac",
+            "type": "number"
+          },
+          "n_seeds": {
+            "title": "N Seeds",
+            "type": "integer"
+          },
+          "example": {
+            "$ref": "#/components/schemas/ModelCheckExample"
+          },
+          "coverage": {
+            "title": "Coverage",
+            "type": "number"
+          },
+          "mean_recovered": {
+            "title": "Mean Recovered",
+            "type": "string"
+          },
+          "target": {
+            "title": "Target",
+            "type": "number"
+          }
+        },
+        "required": [
+          "planted_usd",
+          "frac",
+          "n_seeds",
+          "example",
+          "coverage",
+          "mean_recovered",
+          "target"
+        ],
+        "title": "ModelCheck",
+        "type": "object"
+      },
+      "ModelCheckExample": {
+        "additionalProperties": false,
+        "properties": {
+          "seed": {
+            "title": "Seed",
+            "type": "integer"
+          },
+          "recovered": {
+            "title": "Recovered",
+            "type": "string"
+          },
+          "ci90": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Ci90",
+            "type": "array"
+          },
+          "contains_truth": {
+            "title": "Contains Truth",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "seed",
+          "recovered",
+          "ci90",
+          "contains_truth"
+        ],
+        "title": "ModelCheckExample",
+        "type": "object"
+      },
+      "PayoffRow": {
+        "additionalProperties": false,
+        "properties": {
+          "outcome": {
+            "enum": [
+              "event",
+              "no_event"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "revenue_vs_base": {
+            "title": "Revenue Vs Base",
+            "type": "string"
+          },
+          "contract_payout": {
+            "title": "Contract Payout",
+            "type": "string"
+          },
+          "premium": {
+            "title": "Premium",
+            "type": "string"
+          },
+          "net_vs_base": {
+            "title": "Net Vs Base",
+            "type": "string"
+          }
+        },
+        "required": [
+          "outcome",
+          "revenue_vs_base",
+          "contract_payout",
+          "premium",
+          "net_vs_base"
+        ],
+        "title": "PayoffRow",
+        "type": "object"
+      },
+      "RunAccepted": {
+        "additionalProperties": false,
+        "description": "202 body of POST /businesses/{id}/desk/run.",
+        "properties": {
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "status": {
+            "const": "queued",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "status"
+        ],
+        "title": "RunAccepted",
+        "type": "object"
+      },
+      "RunStatus": {
+        "additionalProperties": false,
+        "description": "GET /runs/{run_id} (R15).",
+        "properties": {
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "done",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "agent": {
+            "anyOf": [
+              {
+                "enum": [
+                  "claude",
+                  "fallback"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Agent"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "required": [
+          "run_id",
+          "business_id",
+          "status",
+          "agent",
+          "started_at",
+          "finished_at",
+          "error"
+        ],
+        "title": "RunStatus",
+        "type": "object"
+      }
+    }
+  }
+}

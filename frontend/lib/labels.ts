@@ -1,0 +1,23 @@
+export const labels: Record<string, string> = {
+  rain: "Rain",
+  hot: "Hot weather",
+  home_win: "Home-team result",
+  proposed: "Proposed",
+  declined: "Declined",
+  pending_approval: "Over budget · needs approval",
+  approved: "Approved",
+  rejected: "Rejected",
+  expired_unapproved: "Expired without approval",
+  settled: "Settled",
+  no_market: "No open market",
+  illiquid: "Not enough contracts available",
+  overpriced: "Price above historical frequency",
+  basis_too_loose: "The weather source does not match your business hours",
+  too_expensive: "Protection costs too much",
+  over_budget: "Above your remaining weekly budget",
+  below_size: "Effect too small to protect",
+  not_significant: "Evidence is not strong enough",
+  thin_support: "Too few event days",
+};
+export const label = (value: string) =>
+  labels[value] ?? value.replaceAll("_", " ");
