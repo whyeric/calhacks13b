@@ -18,7 +18,10 @@
       "hedgeable": true,
       "reasons": [],
       "strike": null,
-      "beta_settlement": "1265.00"
+      "beta_settlement": "1265.00",
+      "expected_count": null,
+      "estimated": false,
+      "basis_note": null
     },
     {
       "id": "exp_hot",
@@ -38,7 +41,10 @@
       "hedgeable": true,
       "reasons": [],
       "strike": 65.0,
-      "beta_settlement": "-180.00"
+      "beta_settlement": "-180.00",
+      "expected_count": null,
+      "estimated": false,
+      "basis_note": null
     }
   ],
   "dropped": [
@@ -63,7 +69,10 @@
         "not_significant"
       ],
       "strike": null,
-      "beta_settlement": null
+      "beta_settlement": null,
+      "expected_count": null,
+      "estimated": false,
+      "basis_note": null
     }
   ],
   "model_check": {

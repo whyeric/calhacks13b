@@ -1,0 +1,560 @@
+date,team,season,playoff,home,round,opponent,won
+2023-10-12,rangers,2024,False,False,,BUF,True
+2023-10-14,rangers,2024,False,False,,CBJ,False
+2023-10-16,rangers,2024,False,True,,ARI,True
+2023-10-19,rangers,2024,False,True,,NSH,False
+2023-10-21,rangers,2024,False,False,,SEA,True
+2023-10-24,rangers,2024,False,False,,CGY,True
+2023-10-25,knicks,2024,False,True,,BOS,False
+2023-10-26,rangers,2024,False,False,,EDM,True
+2023-10-27,knicks,2024,False,False,,ATL,True
+2023-10-28,knicks,2024,False,False,,NO,False
+2023-10-28,rangers,2024,False,False,,VAN,True
+2023-10-30,rangers,2024,False,False,,WPG,True
+2023-10-31,knicks,2024,False,False,,CLE,True
+2023-11-01,knicks,2024,False,True,,CLE,False
+2023-11-02,rangers,2024,False,True,,CAR,True
+2023-11-03,knicks,2024,False,False,,MIL,False
+2023-11-04,rangers,2024,False,False,,MIN,False
+2023-11-06,knicks,2024,False,True,,LAC,True
+2023-11-07,rangers,2024,False,True,,DET,True
+2023-11-08,knicks,2024,False,True,,SA,True
+2023-11-09,rangers,2024,False,True,,MIN,True
+2023-11-12,knicks,2024,False,True,,CHA,True
+2023-11-12,rangers,2024,False,True,,CBJ,True
+2023-11-13,knicks,2024,False,False,,BOS,False
+2023-11-15,knicks,2024,False,False,,ATL,True
+2023-11-17,knicks,2024,False,False,,WSH,True
+2023-11-18,knicks,2024,False,False,,CHA,True
+2023-11-18,rangers,2024,False,False,,NJ,True
+2023-11-20,knicks,2024,False,False,,MIN,False
+2023-11-20,rangers,2024,False,False,,DAL,False
+2023-11-22,rangers,2024,False,False,,PIT,True
+2023-11-24,knicks,2024,False,True,,MIA,True
+2023-11-24,rangers,2024,False,False,,PHI,True
+2023-11-25,rangers,2024,False,True,,BOS,True
+2023-11-26,knicks,2024,False,True,,PHX,False
+2023-11-27,rangers,2024,False,True,,BUF,False
+2023-11-28,knicks,2024,False,True,,CHA,True
+2023-11-29,rangers,2024,False,True,,DET,True
+2023-11-30,knicks,2024,False,True,,DET,True
+2023-12-01,knicks,2024,False,False,,TOR,True
+2023-12-02,rangers,2024,False,False,,NSH,True
+2023-12-03,rangers,2024,False,True,,SJ,True
+2023-12-05,knicks,2024,False,False,,MIL,False
+2023-12-05,rangers,2024,False,False,,OTT,False
+2023-12-08,knicks,2024,False,False,,BOS,False
+2023-12-09,rangers,2024,False,False,,WSH,False
+2023-12-10,rangers,2024,False,True,,LA,True
+2023-12-11,knicks,2024,False,True,,TOR,True
+2023-12-12,rangers,2024,False,True,,TOR,False
+2023-12-13,knicks,2024,False,False,,UTAH,False
+2023-12-15,knicks,2024,False,False,,PHX,True
+2023-12-15,rangers,2024,False,True,,ANA,True
+2023-12-16,knicks,2024,False,False,,LAC,False
+2023-12-16,rangers,2024,False,False,,BOS,True
+2023-12-18,knicks,2024,False,False,,LAL,True
+2023-12-19,rangers,2024,False,False,,TOR,True
+2023-12-20,knicks,2024,False,False,,BKN,True
+2023-12-22,rangers,2024,False,True,,EDM,False
+2023-12-23,knicks,2024,False,True,,MIL,False
+2023-12-23,rangers,2024,False,True,,BUF,True
+2023-12-25,knicks,2024,False,True,,MIL,True
+2023-12-27,knicks,2024,False,False,,OKC,False
+2023-12-27,rangers,2024,False,True,,WSH,True
+2023-12-29,knicks,2024,False,False,,ORL,False
+2023-12-29,rangers,2024,False,False,,FLA,False
+2023-12-30,knicks,2024,False,False,,IND,False
+2023-12-30,rangers,2024,False,False,,TB,True
+2024-01-01,knicks,2024,False,True,,MIN,True
+2024-01-02,rangers,2024,False,True,,CAR,False
+2024-01-03,knicks,2024,False,True,,CHI,True
+2024-01-04,rangers,2024,False,True,,CHI,True
+2024-01-05,knicks,2024,False,False,,PHI,True
+2024-01-06,knicks,2024,False,False,,WSH,True
+2024-01-06,rangers,2024,False,False,,MTL,False
+2024-01-08,rangers,2024,False,True,,VAN,False
+2024-01-09,knicks,2024,False,True,,POR,True
+2024-01-11,knicks,2024,False,False,,DAL,False
+2024-01-11,rangers,2024,False,False,,STL,False
+2024-01-13,knicks,2024,False,False,,MEM,True
+2024-01-13,rangers,2024,False,False,,WSH,False
+2024-01-14,rangers,2024,False,True,,WSH,True
+2024-01-15,knicks,2024,False,True,,ORL,False
+2024-01-16,rangers,2024,False,True,,SEA,True
+2024-01-17,knicks,2024,False,True,,HOU,True
+2024-01-18,knicks,2024,False,True,,WSH,True
+2024-01-18,rangers,2024,False,False,,VGK,False
+2024-01-20,knicks,2024,False,True,,TOR,True
+2024-01-20,rangers,2024,False,False,,LA,False
+2024-01-21,rangers,2024,False,False,,ANA,True
+2024-01-23,knicks,2024,False,False,,BKN,True
+2024-01-23,rangers,2024,False,False,,SJ,False
+2024-01-25,knicks,2024,False,True,,DEN,True
+2024-01-26,rangers,2024,False,True,,VGK,False
+2024-01-27,knicks,2024,False,True,,MIA,True
+2024-01-27,rangers,2024,False,False,,OTT,True
+2024-01-29,knicks,2024,False,False,,CHA,True
+2024-01-30,knicks,2024,False,True,,UTAH,True
+2024-02-01,knicks,2024,False,True,,IND,True
+2024-02-03,knicks,2024,False,True,,LAL,False
+2024-02-05,rangers,2024,False,True,,COL,True
+2024-02-06,knicks,2024,False,True,,MEM,True
+2024-02-07,rangers,2024,False,True,,TB,True
+2024-02-08,knicks,2024,False,True,,DAL,False
+2024-02-09,rangers,2024,False,False,,CHI,True
+2024-02-10,knicks,2024,False,True,,IND,False
+2024-02-12,knicks,2024,False,False,,HOU,False
+2024-02-12,rangers,2024,False,True,,CGY,True
+2024-02-14,knicks,2024,False,False,,ORL,False
+2024-02-15,rangers,2024,False,True,,MTL,True
+2024-02-18,rangers,2024,False,False,,NYI,True
+2024-02-20,rangers,2024,False,True,,DAL,True
+2024-02-22,knicks,2024,False,False,,PHI,True
+2024-02-22,rangers,2024,False,False,,NJ,True
+2024-02-24,knicks,2024,False,True,,BOS,False
+2024-02-24,rangers,2024,False,False,,PHI,True
+2024-02-25,rangers,2024,False,False,,CBJ,False
+2024-02-26,knicks,2024,False,True,,DET,True
+2024-02-27,knicks,2024,False,True,,NO,False
+2024-02-28,rangers,2024,False,True,,CBJ,True
+2024-02-29,knicks,2024,False,True,,GS,False
+2024-03-02,rangers,2024,False,False,,TOR,False
+2024-03-03,knicks,2024,False,False,,CLE,True
+2024-03-04,rangers,2024,False,True,,FLA,False
+2024-03-05,knicks,2024,False,True,,ATL,False
+2024-03-08,knicks,2024,False,True,,ORL,True
+2024-03-09,rangers,2024,False,True,,STL,True
+2024-03-10,knicks,2024,False,True,,PHI,False
+2024-03-11,rangers,2024,False,True,,NJ,True
+2024-03-12,knicks,2024,False,True,,PHI,True
+2024-03-12,rangers,2024,False,False,,CAR,True
+2024-03-14,knicks,2024,False,False,,POR,True
+2024-03-14,rangers,2024,False,False,,TB,False
+2024-03-16,knicks,2024,False,False,,SAC,True
+2024-03-16,rangers,2024,False,False,,PIT,True
+2024-03-17,rangers,2024,False,True,,NYI,True
+2024-03-18,knicks,2024,False,False,,GS,True
+2024-03-19,rangers,2024,False,True,,WPG,False
+2024-03-21,knicks,2024,False,False,,DEN,False
+2024-03-21,rangers,2024,False,False,,BOS,True
+2024-03-23,knicks,2024,False,True,,BKN,True
+2024-03-23,rangers,2024,False,True,,FLA,True
+2024-03-25,knicks,2024,False,True,,DET,True
+2024-03-26,rangers,2024,False,True,,PHI,True
+2024-03-27,knicks,2024,False,False,,TOR,True
+2024-03-28,rangers,2024,False,False,,COL,True
+2024-03-29,knicks,2024,False,False,,SA,False
+2024-03-30,rangers,2024,False,False,,ARI,True
+2024-03-31,knicks,2024,False,True,,OKC,False
+2024-04-01,rangers,2024,False,True,,PIT,False
+2024-04-02,knicks,2024,False,False,,MIA,False
+2024-04-03,rangers,2024,False,True,,NJ,True
+2024-04-04,knicks,2024,False,True,,SAC,True
+2024-04-05,knicks,2024,False,False,,CHI,False
+2024-04-05,rangers,2024,False,False,,DET,True
+2024-04-07,knicks,2024,False,False,,MIL,True
+2024-04-07,rangers,2024,False,True,,MTL,True
+2024-04-09,knicks,2024,False,False,,CHI,True
+2024-04-09,rangers,2024,False,False,,NYI,False
+2024-04-11,knicks,2024,False,False,,BOS,True
+2024-04-11,rangers,2024,False,True,,PHI,False
+2024-04-12,knicks,2024,False,True,,BKN,True
+2024-04-13,rangers,2024,False,True,,NYI,True
+2024-04-14,knicks,2024,False,True,,CHI,True
+2024-04-15,rangers,2024,False,True,,OTT,True
+2024-04-20,knicks,2024,True,True,East 1st Round,PHI,True
+2024-04-21,rangers,2024,True,True,East 1st Round,WSH,True
+2024-04-22,knicks,2024,True,True,East 1st Round,PHI,True
+2024-04-23,rangers,2024,True,True,East 1st Round,WSH,True
+2024-04-25,knicks,2024,True,False,East 1st Round,PHI,False
+2024-04-26,rangers,2024,True,False,East 1st Round,WSH,True
+2024-04-28,knicks,2024,True,False,East 1st Round,PHI,True
+2024-04-28,rangers,2024,True,False,East 1st Round,WSH,True
+2024-04-30,knicks,2024,True,True,East 1st Round,PHI,False
+2024-05-02,knicks,2024,True,False,East 1st Round,PHI,True
+2024-05-05,rangers,2024,True,True,East 2nd Round,CAR,True
+2024-05-06,knicks,2024,True,True,East Semifinals,IND,True
+2024-05-07,rangers,2024,True,True,East 2nd Round,CAR,True
+2024-05-08,knicks,2024,True,True,East Semifinals,IND,True
+2024-05-09,rangers,2024,True,False,East 2nd Round,CAR,True
+2024-05-10,knicks,2024,True,False,East Semifinals,IND,False
+2024-05-11,rangers,2024,True,False,East 2nd Round,CAR,False
+2024-05-12,knicks,2024,True,False,East Semifinals,IND,False
+2024-05-13,rangers,2024,True,True,East 2nd Round,CAR,False
+2024-05-14,knicks,2024,True,True,East Semifinals,IND,True
+2024-05-16,rangers,2024,True,False,East 2nd Round,CAR,True
+2024-05-17,knicks,2024,True,False,East Semifinals,IND,False
+2024-05-19,knicks,2024,True,True,East Semifinals,IND,False
+2024-05-22,rangers,2024,True,True,East Final,FLA,False
+2024-05-24,rangers,2024,True,True,East Final,FLA,True
+2024-05-26,rangers,2024,True,False,East Final,FLA,True
+2024-05-28,rangers,2024,True,False,East Final,FLA,False
+2024-05-30,rangers,2024,True,True,East Final,FLA,False
+2024-06-01,rangers,2024,True,False,East Final,FLA,False
+2024-10-09,rangers,2025,False,False,,PIT,True
+2024-10-12,rangers,2025,False,True,,UTAH,False
+2024-10-14,rangers,2025,False,True,,DET,True
+2024-10-17,rangers,2025,False,False,,DET,True
+2024-10-19,rangers,2025,False,False,,TOR,True
+2024-10-22,knicks,2025,False,False,,BOS,False
+2024-10-22,rangers,2025,False,False,,MTL,True
+2024-10-24,rangers,2025,False,True,,FLA,False
+2024-10-25,knicks,2025,False,True,,IND,True
+2024-10-26,rangers,2025,False,True,,ANA,True
+2024-10-28,knicks,2025,False,True,,CLE,False
+2024-10-29,rangers,2025,False,False,,WSH,False
+2024-10-30,knicks,2025,False,False,,MIA,True
+2024-11-01,knicks,2025,False,False,,DET,True
+2024-11-01,rangers,2025,False,True,,OTT,True
+2024-11-03,rangers,2025,False,True,,NYI,True
+2024-11-04,knicks,2025,False,False,,HOU,False
+2024-11-06,knicks,2025,False,False,,ATL,False
+2024-11-07,rangers,2025,False,True,,BUF,False
+2024-11-08,knicks,2025,False,True,,MIL,True
+2024-11-09,rangers,2025,False,False,,DET,True
+2024-11-10,knicks,2025,False,False,,IND,False
+2024-11-12,knicks,2025,False,False,,PHI,True
+2024-11-12,rangers,2025,False,True,,WPG,False
+2024-11-13,knicks,2025,False,True,,CHI,False
+2024-11-14,rangers,2025,False,True,,SJ,True
+2024-11-15,knicks,2025,False,True,,BKN,True
+2024-11-17,knicks,2025,False,True,,BKN,True
+2024-11-17,rangers,2025,False,False,,SEA,True
+2024-11-18,knicks,2025,False,True,,WSH,True
+2024-11-19,rangers,2025,False,False,,VAN,True
+2024-11-20,knicks,2025,False,False,,PHX,True
+2024-11-21,rangers,2025,False,False,,CGY,False
+2024-11-23,knicks,2025,False,False,,UTAH,False
+2024-11-23,rangers,2025,False,False,,EDM,False
+2024-11-25,knicks,2025,False,False,,DEN,True
+2024-11-25,rangers,2025,False,True,,STL,False
+2024-11-27,knicks,2025,False,False,,DAL,False
+2024-11-27,rangers,2025,False,False,,CAR,False
+2024-11-29,knicks,2025,False,False,,CHA,True
+2024-11-29,rangers,2025,False,False,,PHI,False
+2024-11-30,rangers,2025,False,True,,MTL,True
+2024-12-01,knicks,2025,False,True,,NO,True
+2024-12-02,rangers,2025,False,True,,NJ,False
+2024-12-03,knicks,2025,False,True,,ORL,True
+2024-12-05,knicks,2025,False,True,,CHA,True
+2024-12-06,rangers,2025,False,True,,PIT,True
+2024-12-07,knicks,2025,False,True,,DET,False
+2024-12-08,rangers,2025,False,True,,SEA,False
+2024-12-09,knicks,2025,False,False,,TOR,True
+2024-12-09,rangers,2025,False,True,,CHI,False
+2024-12-11,knicks,2025,False,True,,ATL,False
+2024-12-11,rangers,2025,False,False,,BUF,True
+2024-12-14,rangers,2025,False,True,,LA,False
+2024-12-15,knicks,2025,False,False,,ORL,True
+2024-12-15,rangers,2025,False,False,,STL,False
+2024-12-17,rangers,2025,False,False,,NSH,False
+2024-12-19,knicks,2025,False,False,,MIN,True
+2024-12-20,rangers,2025,False,False,,DAL,True
+2024-12-21,knicks,2025,False,False,,NO,True
+2024-12-22,rangers,2025,False,True,,CAR,False
+2024-12-23,knicks,2025,False,True,,TOR,True
+2024-12-23,rangers,2025,False,False,,NJ,False
+2024-12-25,knicks,2025,False,True,,SA,True
+2024-12-27,knicks,2025,False,False,,ORL,True
+2024-12-28,knicks,2025,False,False,,WSH,True
+2024-12-28,rangers,2025,False,False,,TB,False
+2024-12-30,knicks,2025,False,False,,WSH,True
+2024-12-30,rangers,2025,False,False,,FLA,False
+2025-01-01,knicks,2025,False,True,,UTAH,True
+2025-01-02,rangers,2025,False,True,,BOS,True
+2025-01-03,knicks,2025,False,False,,OKC,False
+2025-01-04,knicks,2025,False,False,,CHI,False
+2025-01-04,rangers,2025,False,False,,WSH,False
+2025-01-05,rangers,2025,False,False,,CHI,True
+2025-01-06,knicks,2025,False,True,,ORL,False
+2025-01-07,rangers,2025,False,True,,DAL,False
+2025-01-08,knicks,2025,False,True,,TOR,True
+2025-01-09,rangers,2025,False,True,,NJ,True
+2025-01-10,knicks,2025,False,True,,OKC,False
+2025-01-11,rangers,2025,False,False,,VGK,True
+2025-01-12,knicks,2025,False,True,,MIL,True
+2025-01-13,knicks,2025,False,True,,DET,False
+2025-01-14,rangers,2025,False,False,,COL,False
+2025-01-15,knicks,2025,False,False,,PHI,True
+2025-01-16,rangers,2025,False,False,,UTAH,True
+2025-01-17,knicks,2025,False,True,,MIN,False
+2025-01-18,rangers,2025,False,True,,CBJ,True
+2025-01-19,rangers,2025,False,False,,MTL,False
+2025-01-20,knicks,2025,False,True,,ATL,True
+2025-01-21,knicks,2025,False,False,,BKN,True
+2025-01-21,rangers,2025,False,True,,OTT,True
+2025-01-23,rangers,2025,False,True,,PHI,True
+2025-01-25,knicks,2025,False,True,,SAC,True
+2025-01-26,rangers,2025,False,True,,COL,False
+2025-01-27,knicks,2025,False,True,,MEM,True
+2025-01-28,rangers,2025,False,True,,CAR,False
+2025-01-29,knicks,2025,False,True,,DEN,True
+2025-02-01,knicks,2025,False,True,,LAL,False
+2025-02-01,rangers,2025,False,False,,BOS,False
+2025-02-02,rangers,2025,False,True,,VGK,True
+2025-02-03,knicks,2025,False,True,,HOU,True
+2025-02-04,knicks,2025,False,False,,TOR,True
+2025-02-05,rangers,2025,False,True,,BOS,True
+2025-02-07,rangers,2025,False,True,,PIT,False
+2025-02-08,knicks,2025,False,True,,BOS,False
+2025-02-08,rangers,2025,False,False,,CBJ,True
+2025-02-11,knicks,2025,False,False,,IND,True
+2025-02-12,knicks,2025,False,True,,ATL,True
+2025-02-20,knicks,2025,False,True,,CHI,True
+2025-02-21,knicks,2025,False,False,,CLE,False
+2025-02-22,rangers,2025,False,False,,BUF,False
+2025-02-23,knicks,2025,False,False,,BOS,False
+2025-02-23,rangers,2025,False,False,,PIT,True
+2025-02-25,rangers,2025,False,False,,NYI,True
+2025-02-26,knicks,2025,False,True,,PHI,True
+2025-02-28,knicks,2025,False,False,,MEM,True
+2025-02-28,rangers,2025,False,True,,TOR,False
+2025-03-02,knicks,2025,False,False,,MIA,True
+2025-03-02,rangers,2025,False,True,,NSH,True
+2025-03-03,rangers,2025,False,True,,NYI,True
+2025-03-04,knicks,2025,False,True,,GS,False
+2025-03-05,rangers,2025,False,True,,WSH,False
+2025-03-06,knicks,2025,False,False,,LAL,False
+2025-03-07,knicks,2025,False,False,,LAC,False
+2025-03-08,rangers,2025,False,False,,OTT,False
+2025-03-09,rangers,2025,False,True,,CBJ,False
+2025-03-10,knicks,2025,False,False,,SAC,True
+2025-03-11,rangers,2025,False,False,,WPG,False
+2025-03-12,knicks,2025,False,False,,POR,True
+2025-03-13,rangers,2025,False,False,,MIN,True
+2025-03-15,knicks,2025,False,False,,GS,False
+2025-03-15,rangers,2025,False,False,,CBJ,True
+2025-03-16,rangers,2025,False,True,,EDM,False
+2025-03-17,knicks,2025,False,True,,MIA,True
+2025-03-18,rangers,2025,False,True,,CGY,False
+2025-03-19,knicks,2025,False,False,,SA,False
+2025-03-20,knicks,2025,False,False,,CHA,False
+2025-03-20,rangers,2025,False,True,,TOR,False
+2025-03-22,knicks,2025,False,True,,WSH,True
+2025-03-22,rangers,2025,False,True,,VAN,True
+2025-03-25,knicks,2025,False,True,,DAL,True
+2025-03-25,rangers,2025,False,False,,LA,False
+2025-03-26,knicks,2025,False,True,,LAC,False
+2025-03-28,knicks,2025,False,False,,MIL,True
+2025-03-28,rangers,2025,False,False,,ANA,False
+2025-03-29,rangers,2025,False,False,,SJ,True
+2025-03-30,knicks,2025,False,True,,POR,True
+2025-04-01,knicks,2025,False,True,,PHI,True
+2025-04-02,knicks,2025,False,False,,CLE,False
+2025-04-02,rangers,2025,False,True,,MIN,True
+2025-04-05,knicks,2025,False,False,,ATL,True
+2025-04-05,rangers,2025,False,False,,NJ,False
+2025-04-06,knicks,2025,False,True,,PHX,True
+2025-04-07,rangers,2025,False,True,,TB,False
+2025-04-08,knicks,2025,False,True,,BOS,False
+2025-04-09,rangers,2025,False,True,,PHI,False
+2025-04-10,knicks,2025,False,False,,DET,False
+2025-04-10,rangers,2025,False,False,,NYI,True
+2025-04-11,knicks,2025,False,True,,CLE,False
+2025-04-12,rangers,2025,False,False,,CAR,False
+2025-04-13,knicks,2025,False,False,,BKN,True
+2025-04-14,rangers,2025,False,False,,FLA,True
+2025-04-17,rangers,2025,False,True,,TB,True
+2025-04-19,knicks,2025,True,True,East 1st Round,DET,True
+2025-04-21,knicks,2025,True,True,East 1st Round,DET,False
+2025-04-24,knicks,2025,True,False,East 1st Round,DET,True
+2025-04-27,knicks,2025,True,False,East 1st Round,DET,True
+2025-04-29,knicks,2025,True,True,East 1st Round,DET,False
+2025-05-01,knicks,2025,True,False,East 1st Round,DET,True
+2025-05-05,knicks,2025,True,False,East Semifinals,BOS,True
+2025-05-07,knicks,2025,True,False,East Semifinals,BOS,True
+2025-05-10,knicks,2025,True,True,East Semifinals,BOS,False
+2025-05-12,knicks,2025,True,True,East Semifinals,BOS,True
+2025-05-14,knicks,2025,True,False,East Semifinals,BOS,False
+2025-05-16,knicks,2025,True,True,East Semifinals,BOS,True
+2025-05-21,knicks,2025,True,True,East Finals,IND,False
+2025-05-23,knicks,2025,True,True,East Finals,IND,False
+2025-05-25,knicks,2025,True,False,East Finals,IND,True
+2025-05-27,knicks,2025,True,False,East Finals,IND,False
+2025-05-29,knicks,2025,True,True,East Finals,IND,True
+2025-05-31,knicks,2025,True,False,East Finals,IND,False
+2025-10-07,rangers,2026,False,True,,PIT,False
+2025-10-09,rangers,2026,False,False,,BUF,True
+2025-10-11,rangers,2026,False,False,,PIT,True
+2025-10-12,rangers,2026,False,True,,WSH,False
+2025-10-14,rangers,2026,False,True,,EDM,False
+2025-10-16,rangers,2026,False,False,,TOR,False
+2025-10-18,rangers,2026,False,False,,MTL,True
+2025-10-20,rangers,2026,False,True,,MIN,False
+2025-10-22,knicks,2026,False,True,,CLE,True
+2025-10-23,rangers,2026,False,True,,SJ,False
+2025-10-24,knicks,2026,False,True,,BOS,True
+2025-10-26,knicks,2026,False,False,,MIA,False
+2025-10-26,rangers,2026,False,False,,CGY,False
+2025-10-28,knicks,2026,False,False,,MIL,False
+2025-10-28,rangers,2026,False,False,,VAN,True
+2025-10-30,rangers,2026,False,False,,EDM,True
+2025-10-31,knicks,2026,False,False,,CHI,False
+2025-11-01,rangers,2026,False,False,,SEA,True
+2025-11-02,knicks,2026,False,True,,CHI,True
+2025-11-03,knicks,2026,False,True,,WSH,True
+2025-11-04,rangers,2026,False,True,,CAR,False
+2025-11-05,knicks,2026,False,True,,MIN,True
+2025-11-07,rangers,2026,False,False,,DET,True
+2025-11-08,rangers,2026,False,True,,NYI,False
+2025-11-09,knicks,2026,False,True,,BKN,True
+2025-11-10,rangers,2026,False,True,,NSH,True
+2025-11-11,knicks,2026,False,True,,MEM,True
+2025-11-12,knicks,2026,False,True,,ORL,False
+2025-11-12,rangers,2026,False,False,,TB,True
+2025-11-14,knicks,2026,False,True,,MIA,True
+2025-11-15,rangers,2026,False,False,,CBJ,True
+2025-11-16,rangers,2026,False,True,,DET,False
+2025-11-17,knicks,2026,False,False,,MIA,False
+2025-11-18,rangers,2026,False,False,,VGK,False
+2025-11-19,knicks,2026,False,False,,DAL,True
+2025-11-20,rangers,2026,False,False,,COL,False
+2025-11-22,knicks,2026,False,False,,ORL,False
+2025-11-22,rangers,2026,False,False,,UTA,False
+2025-11-24,knicks,2026,False,False,,BKN,True
+2025-11-24,rangers,2026,False,True,,STL,True
+2025-11-26,knicks,2026,False,False,,CHA,True
+2025-11-26,rangers,2026,False,False,,CAR,True
+2025-11-28,knicks,2026,False,True,,MIL,True
+2025-11-28,rangers,2026,False,False,,BOS,True
+2025-11-29,rangers,2026,False,True,,TB,False
+2025-11-30,knicks,2026,False,True,,TOR,True
+2025-12-02,knicks,2026,False,False,,BOS,False
+2025-12-02,rangers,2026,False,True,,DAL,True
+2025-12-03,knicks,2026,False,True,,CHA,True
+2025-12-04,rangers,2026,False,False,,OTT,True
+2025-12-05,knicks,2026,False,True,,UTAH,True
+2025-12-06,rangers,2026,False,True,,COL,False
+2025-12-07,knicks,2026,False,True,,ORL,True
+2025-12-07,rangers,2026,False,True,,VGK,False
+2025-12-09,knicks,2026,False,False,,TOR,True
+2025-12-10,rangers,2026,False,False,,CHI,False
+2025-12-13,knicks,2026,False,False,,ORL,True
+2025-12-13,rangers,2026,False,True,,MTL,True
+2025-12-15,rangers,2026,False,True,,ANA,False
+2025-12-16,knicks,2026,False,False,,SA,True
+2025-12-16,rangers,2026,False,True,,VAN,False
+2025-12-18,knicks,2026,False,False,,IND,True
+2025-12-18,rangers,2026,False,False,,STL,True
+2025-12-19,knicks,2026,False,True,,PHI,False
+2025-12-20,rangers,2026,False,True,,PHI,True
+2025-12-21,knicks,2026,False,True,,MIA,True
+2025-12-21,rangers,2026,False,False,,NSH,False
+2025-12-23,knicks,2026,False,False,,MIN,False
+2025-12-23,rangers,2026,False,False,,WSH,True
+2025-12-25,knicks,2026,False,True,,CLE,True
+2025-12-27,knicks,2026,False,False,,ATL,True
+2025-12-27,rangers,2026,False,False,,NYI,False
+2025-12-29,knicks,2026,False,False,,NO,True
+2025-12-29,rangers,2026,False,False,,CAR,False
+2025-12-31,knicks,2026,False,False,,SA,False
+2025-12-31,rangers,2026,False,False,,WSH,False
+2026-01-02,knicks,2026,False,True,,ATL,False
+2026-01-02,rangers,2026,False,False,,FLA,True
+2026-01-03,knicks,2026,False,True,,PHI,False
+2026-01-05,knicks,2026,False,False,,DET,False
+2026-01-05,rangers,2026,False,True,,UTA,False
+2026-01-07,knicks,2026,False,True,,LAC,True
+2026-01-08,rangers,2026,False,True,,BUF,False
+2026-01-09,knicks,2026,False,False,,PHX,False
+2026-01-10,rangers,2026,False,False,,BOS,False
+2026-01-11,knicks,2026,False,False,,POR,True
+2026-01-12,rangers,2026,False,True,,SEA,False
+2026-01-14,knicks,2026,False,False,,SAC,False
+2026-01-14,rangers,2026,False,True,,OTT,False
+2026-01-15,knicks,2026,False,False,,GS,False
+2026-01-17,knicks,2026,False,True,,PHX,False
+2026-01-17,rangers,2026,False,False,,PHI,True
+2026-01-19,knicks,2026,False,True,,DAL,False
+2026-01-19,rangers,2026,False,False,,ANA,False
+2026-01-20,rangers,2026,False,False,,LA,False
+2026-01-21,knicks,2026,False,True,,BKN,True
+2026-01-23,rangers,2026,False,False,,SJ,False
+2026-01-24,knicks,2026,False,False,,PHI,True
+2026-01-26,rangers,2026,False,True,,BOS,True
+2026-01-27,knicks,2026,False,True,,SAC,True
+2026-01-28,knicks,2026,False,False,,TOR,True
+2026-01-28,rangers,2026,False,False,,NYI,False
+2026-01-29,rangers,2026,False,True,,NYI,False
+2026-01-30,knicks,2026,False,True,,POR,True
+2026-01-31,rangers,2026,False,False,,PIT,False
+2026-02-01,knicks,2026,False,True,,LAL,True
+2026-02-03,knicks,2026,False,False,,WSH,True
+2026-02-04,knicks,2026,False,True,,DEN,True
+2026-02-05,rangers,2026,False,True,,CAR,False
+2026-02-06,knicks,2026,False,False,,DET,False
+2026-02-08,knicks,2026,False,False,,BOS,True
+2026-02-10,knicks,2026,False,True,,IND,False
+2026-02-11,knicks,2026,False,False,,PHI,True
+2026-02-19,knicks,2026,False,True,,DET,False
+2026-02-21,knicks,2026,False,True,,HOU,True
+2026-02-22,knicks,2026,False,False,,CHI,True
+2026-02-24,knicks,2026,False,False,,CLE,False
+2026-02-26,rangers,2026,False,True,,PHI,False
+2026-02-27,knicks,2026,False,False,,MIL,True
+2026-02-28,rangers,2026,False,True,,PIT,True
+2026-03-01,knicks,2026,False,True,,SA,True
+2026-03-02,rangers,2026,False,True,,CBJ,False
+2026-03-03,knicks,2026,False,False,,TOR,True
+2026-03-04,knicks,2026,False,True,,OKC,False
+2026-03-05,rangers,2026,False,True,,TOR,True
+2026-03-06,knicks,2026,False,False,,DEN,True
+2026-03-07,rangers,2026,False,False,,NJ,False
+2026-03-08,knicks,2026,False,False,,LAL,False
+2026-03-09,knicks,2026,False,False,,LAC,False
+2026-03-09,rangers,2026,False,False,,PHI,True
+2026-03-10,rangers,2026,False,True,,CGY,True
+2026-03-11,knicks,2026,False,False,,UTAH,True
+2026-03-12,rangers,2026,False,False,,WPG,True
+2026-03-13,knicks,2026,False,False,,IND,True
+2026-03-14,rangers,2026,False,False,,MIN,True
+2026-03-15,knicks,2026,False,True,,GS,True
+2026-03-16,rangers,2026,False,True,,LA,False
+2026-03-17,knicks,2026,False,True,,IND,True
+2026-03-18,rangers,2026,False,True,,NJ,False
+2026-03-19,rangers,2026,False,False,,CBJ,False
+2026-03-20,knicks,2026,False,False,,BKN,True
+2026-03-22,knicks,2026,False,True,,WSH,True
+2026-03-22,rangers,2026,False,True,,WPG,False
+2026-03-23,rangers,2026,False,True,,OTT,False
+2026-03-24,knicks,2026,False,True,,NO,True
+2026-03-25,rangers,2026,False,False,,TOR,False
+2026-03-26,knicks,2026,False,False,,CHA,False
+2026-03-27,rangers,2026,False,True,,CHI,True
+2026-03-29,knicks,2026,False,False,,OKC,False
+2026-03-29,rangers,2026,False,True,,FLA,True
+2026-03-31,knicks,2026,False,False,,HOU,False
+2026-03-31,rangers,2026,False,True,,NJ,True
+2026-04-01,knicks,2026,False,False,,MEM,True
+2026-04-02,rangers,2026,False,True,,MTL,False
+2026-04-03,knicks,2026,False,True,,CHI,True
+2026-04-04,rangers,2026,False,True,,DET,True
+2026-04-05,rangers,2026,False,True,,WSH,True
+2026-04-06,knicks,2026,False,False,,ATL,True
+2026-04-08,rangers,2026,False,True,,BUF,False
+2026-04-09,knicks,2026,False,True,,BOS,True
+2026-04-10,knicks,2026,False,True,,TOR,True
+2026-04-11,rangers,2026,False,False,,DAL,False
+2026-04-12,knicks,2026,False,True,,CHA,False
+2026-04-13,rangers,2026,False,False,,FLA,False
+2026-04-15,rangers,2026,False,False,,TB,True
+2026-04-18,knicks,2026,True,True,East 1st Round,ATL,True
+2026-04-20,knicks,2026,True,True,East 1st Round,ATL,False
+2026-04-23,knicks,2026,True,False,East 1st Round,ATL,False
+2026-04-25,knicks,2026,True,False,East 1st Round,ATL,True
+2026-04-28,knicks,2026,True,True,East 1st Round,ATL,True
+2026-04-30,knicks,2026,True,False,East 1st Round,ATL,True
+2026-05-04,knicks,2026,True,True,East Semifinals,PHI,True
+2026-05-06,knicks,2026,True,True,East Semifinals,PHI,True
+2026-05-08,knicks,2026,True,False,East Semifinals,PHI,True
+2026-05-10,knicks,2026,True,False,East Semifinals,PHI,True
+2026-05-19,knicks,2026,True,True,East Finals,CLE,True
+2026-05-21,knicks,2026,True,True,East Finals,CLE,True
+2026-05-23,knicks,2026,True,False,East Finals,CLE,True
+2026-05-25,knicks,2026,True,False,East Finals,CLE,True
+2026-06-03,knicks,2026,True,False,NBA Finals,SA,True
+2026-06-05,knicks,2026,True,False,NBA Finals,SA,True
+2026-06-08,knicks,2026,True,True,NBA Finals,SA,False
+2026-06-10,knicks,2026,True,True,NBA Finals,SA,True
+2026-06-13,knicks,2026,True,False,NBA Finals,SA,True

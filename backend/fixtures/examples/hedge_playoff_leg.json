@@ -1,0 +1,174 @@
+{
+  "id": "hdg_restaurant_20261026_playoff_home_playoffs",
+  "business_id": "restaurant",
+  "exposure_id": "exp_playoff_home",
+  "week_of": "2026-10-26",
+  "status": "pending_approval",
+  "ticker": "KXNBAPLAYOFF-27-NYK",
+  "market_title": "Knicks make the 2027 NBA playoffs",
+  "market_url": "https://kalshi.com/markets/kxnbaplayoff",
+  "close_time": "2027-06-01T14:00:00Z",
+  "side": "no",
+  "match_reason": "NO pays when the Knicks miss the playoffs, the state in which the bar loses its playoff home nights; sized with the other season legs to minimise the swing in playoff revenue.",
+  "h": "1",
+  "n_target": 2462,
+  "n_filled": 1251,
+  "n_unfilled": 1211,
+  "partial": true,
+  "resized": false,
+  "fills": [
+    {
+      "price": "0.16",
+      "count": 17
+    },
+    {
+      "price": "0.17",
+      "count": 9
+    },
+    {
+      "price": "0.18",
+      "count": 104
+    },
+    {
+      "price": "0.19",
+      "count": 41
+    },
+    {
+      "price": "0.2",
+      "count": 1050
+    },
+    {
+      "price": "0.21",
+      "count": 30
+    }
+  ],
+  "avg_price": "0.1975",
+  "cost": "247.06",
+  "fee": "13.88",
+  "premium": "260.94",
+  "fair": "0.13",
+  "expected_cost": "98.31",
+  "fee_unverified": false,
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "3211.56",
+      "contract_payout": "0.00",
+      "premium": "-260.94",
+      "net_vs_base": "2950.62"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "1251.00",
+      "premium": "-260.94",
+      "net_vs_base": "990.06"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "3211.56",
+    "hedged_swing": "1960.56",
+    "cost": "260.94"
+  },
+  "decision": {
+    "id": "dec_hdg_restaurant_20261026_playoff_home_playoffs",
+    "status": "pending_approval",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 1
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 2462,
+          "n_filled": 1251,
+          "fill_ratio": "0.50",
+          "partial": true
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.1975",
+          "fair": "0.13",
+          "overpay": "0.0675"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.7349",
+          "beta_s": "3211.56",
+          "beta": "3211.56",
+          "h": "1.00",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "98.31",
+          "swing": "3211.56",
+          "ratio": "0.03"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": false,
+        "metric": {
+          "premium": "260.94",
+          "remaining": "171.49"
+        }
+      }
+    ],
+    "reasons": [
+      "over_budget"
+    ],
+    "summary": "Season playoff hedge: 1,251 NO contracts on KXNBAPLAYOFF-27-NYK at 19.75¢ for $260.94. They pay $1,251 if the Knicks miss the playoffs, a stage worth $3,211.56 of playoff nights to the bar. Waiting for your approval: the $260.94 premium is more than the $171.49 left in this week's budget."
+  },
+  "alternative": {
+    "h": "0.2578",
+    "n_target": 828,
+    "n_filled": 828,
+    "avg_price": "0.1958",
+    "cost": "162.16",
+    "fee": "9.13",
+    "premium": "171.29",
+    "payoff": [
+      {
+        "outcome": "event",
+        "revenue_vs_base": "3211.56",
+        "contract_payout": "0.00",
+        "premium": "-171.29",
+        "net_vs_base": "3040.27"
+      },
+      {
+        "outcome": "no_event",
+        "revenue_vs_base": "0.00",
+        "contract_payout": "828.00",
+        "premium": "-171.29",
+        "net_vs_base": "656.71"
+      }
+    ],
+    "headline": {
+      "unhedged_swing": "3211.56",
+      "hedged_swing": "2383.56",
+      "cost": "171.29"
+    }
+  },
+  "agent": "fallback",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T15:00:00Z",
+  "decided_by": null,
+  "decided_at": null,
+  "leg_label": "Knicks miss the playoffs",
+  "group_total_premium": "3059.50"
+}
