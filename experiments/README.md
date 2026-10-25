@@ -59,6 +59,8 @@ Lessons learned along the way, now applied to the product:
 | Big-TV nights generally → bars | Knicks/Rangers result doesn't generalize | `bar/r7-displacement` |
 | Iowa liquor orders vs football and weather | Train effects vanish on holdout (delivery timing) | `bar/r4-iowa` |
 | SF parking vs weather | Not settleable (no daily SF rain contract); rain doesn't replicate | `bar/r4-sfparking` |
+| Monthly rain → bike share (hedge with monthly KXRAINNYCM) | Daily −20% doesn't add up monthly: ~−1% per inch, a hedge worsened the worst month | `bar/r3-bikemonthly` |
+| Blockbuster openings → restaurants near multiplexes | No lift beyond the week-before placebo; Kalshi has no box-office contract | `bar/r7-boxoffice` |
 
 ## What changed in the product
 
