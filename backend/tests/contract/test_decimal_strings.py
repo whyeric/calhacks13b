@@ -11,7 +11,7 @@ from app.models import DECIMAL_STR
 from .conftest import EXAMPLES, validate_example
 
 # Statistics and non-money parameters that stay JSON numbers (CONTRACTS R1).
-FLOAT_KEYS = {"p_value", "coverage", "reduction_pct", "priced_real_pct", "frac", "target", "strike", "basis_r2_min"}
+FLOAT_KEYS = {"p_value", "coverage", "reduction_pct", "priced_real_pct", "frac", "target", "strike", "basis_r2_min", "rain_size_multiplier"}
 
 
 def _decimal_paths(obj, raw, path="$"):
@@ -61,4 +61,4 @@ def test_walker_sees_money_fields():
     paths = dict(_decimal_paths(hedge, raw))
     assert paths["$.premium"] == "942.80"
     assert paths["$.fills[0].price"] == "0.74"
-    assert paths["$.decision.checks[5].metric.remaining"] == "250.00"
+    assert paths["$.decision.checks[6].metric.remaining"] == "250.00"

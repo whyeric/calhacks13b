@@ -82,6 +82,10 @@ def _decline_clause(code: str, m: dict[str, Any], h: Hedge) -> str:
         return f"the contract's settlement tracks your losses too loosely (fit {m.get('r2')})"
     if code == "too_expensive":
         return f"the hedge would cost {_pct(m['ratio'])} of the swing it removes"
+    if code == "unstable" and m.get("effect_recent_usd") is not None:
+        from app.markets.summary import unstable_clause
+
+        return unstable_clause(m, h.exposure_id.removeprefix("exp_"))
     return code.replace("_", " ")
 
 

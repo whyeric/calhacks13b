@@ -36,6 +36,9 @@ def _rejudge(check: Check, th: Thresholds, remaining: Decimal | None) -> Check:
         passed = r2 >= Decimal(str(th.basis_r2_min))
     elif check.code == "too_expensive" and (r := _dec(m.get("ratio"))) is not None:
         passed = not (r > th.cost_ratio_max)
+    elif check.code == "unstable" and isinstance(m.get("stable"), bool):
+        m["enforced"] = th.decline_unstable
+        passed = m["stable"] or not th.decline_unstable
     elif check.code == "over_budget" and remaining is not None and (p := _dec(m.get("premium"))) is not None:
         m["remaining"] = remaining.quantize(Decimal("0.01"))
         passed = p <= remaining

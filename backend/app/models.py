@@ -107,7 +107,9 @@ Event = Literal["rain", "hot", "home_win"]
 Side = Literal["yes", "no"]
 Agent = Literal["claude", "fallback"]
 Actor = Literal["desk", "owner", "system"]
-CheckCode = Literal["no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive", "over_budget"]
+CheckCode = Literal[
+    "no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive", "unstable", "over_budget"
+]
 CHECK_ORDER: tuple[str, ...] = CheckCode.__args__
 DecisionStatus = Literal["proposed", "declined", "pending_approval"]  # R4
 HedgeStatus = Literal[  # R5
@@ -120,6 +122,33 @@ LogKind = Literal[
 
 
 # --- Exposures and model check (C2) ------------------------------------------
+
+
+class Stability(Contract):
+    """The same §5 model refit on the most recent window only (the holdout split).
+
+    `stable` = the recent effect has the train effect's sign AND its 90% CI excludes 0. The
+    `unstable` decline rule reads it (research hedgesim: taxi rain +$2,212 on train was +$303,
+    CI crossing 0, on the recent window, and hedging it made income less steady).
+    """
+
+    effect_usd: Money
+    ci90: tuple[Money, Money]
+    n_days: int
+    n_events: int
+    start: date
+    end: date
+    same_sign: bool
+    stable: bool
+
+    @model_validator(mode="after")
+    def _consistent(self) -> "Stability":
+        if self.ci90[0] > self.ci90[1]:
+            raise ValueError("ci90 must be [low, high]")
+        excludes_zero = self.ci90[0] > 0 or self.ci90[1] < 0
+        if self.stable != (self.same_sign and excludes_zero):
+            raise ValueError("stable must equal same_sign and a recent CI that excludes 0")
+        return self
 
 
 class Exposure(Contract):
@@ -140,6 +169,7 @@ class Exposure(Contract):
     reasons: list[Literal["below_size", "not_significant", "thin_support"]]
     strike: float | None  # temperature strike in °F, `hot` only
     beta_settlement: Money | None
+    stability: Stability | None = None  # recent-window refit; None when there is no holdout
 
     @model_validator(mode="after")
     def _consistent(self) -> "Exposure":
@@ -564,6 +594,9 @@ class ThresholdSettings(Contract):
     max_slip: Price
     basis_r2_min: float
     max_tool_calls: int
+    # Defaults keep older clients (that PUT only the fields above) valid.
+    decline_unstable: bool = True
+    rain_size_multiplier: float = Field(default=1.0, ge=1.0, le=1.4)
 
 
 class Settings(Contract):

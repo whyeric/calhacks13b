@@ -49,6 +49,22 @@
       }
     },
     {
+      "code": "unstable",
+      "passed": true,
+      "metric": {
+        "effect_last_year_usd": "1240.00",
+        "effect_recent_usd": "1105.00",
+        "recent_ci_low": "412.00",
+        "recent_ci_high": "1798.00",
+        "recent_n_events": 158,
+        "recent_start": "2025-10-01",
+        "recent_end": "2026-08-31",
+        "sign_flipped": false,
+        "stable": true,
+        "enforced": true
+      }
+    },
+    {
       "code": "over_budget",
       "passed": true,
       "metric": {

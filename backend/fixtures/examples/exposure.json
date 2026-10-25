@@ -16,5 +16,18 @@
   "hedgeable": true,
   "reasons": [],
   "strike": null,
-  "beta_settlement": "1265.00"
+  "beta_settlement": "1265.00",
+  "stability": {
+    "effect_usd": "1105.00",
+    "ci90": [
+      "412.00",
+      "1798.00"
+    ],
+    "n_days": 335,
+    "n_events": 158,
+    "start": "2025-10-01",
+    "end": "2026-08-31",
+    "same_sign": true,
+    "stable": true
+  }
 }

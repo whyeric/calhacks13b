@@ -27,7 +27,7 @@ STRIKES = {"hot": 85.0}
 EXAMPLE_KEYS = {
     "id", "business_id", "event", "effect_usd", "ci90", "se", "p_value", "n_events_train",
     "direction", "hedge_side", "settlement_var", "hedgeable", "reasons", "strike",
-    "beta_settlement",
+    "beta_settlement", "stability",
 }
 
 
@@ -206,8 +206,13 @@ def test_train_only_fit():
     wild.loc[wild["split"] == "holdout", "revenue"] *= 100
     only_train = df[df["split"] == "train"]
     a, b, c = (fit_exposures(d, STRIKES) for d in (df, wild, only_train))
-    assert a.exposures == b.exposures == c.exposures
-    assert a.dropped == b.dropped == c.dropped
+
+    def train_part(exps):  # `stability` is the holdout refit by design; the train gates are not
+        return [e.model_copy(update={"stability": None}) for e in exps]
+
+    assert train_part(a.exposures) == train_part(b.exposures) == c.exposures
+    assert train_part(a.dropped) == train_part(b.dropped) == c.dropped
+    assert all(e.stability is None for e in c.exposures + c.dropped)
     assert c.n_holdout == 0 and c.r2_holdout is None
 
 
@@ -313,3 +318,46 @@ def test_duplicate_control_dropped_keeps_full_rank():
     r = fit_exposures(df, strikes={"hot": 85}, business_id="taxi")
     rain = next(e for e in r.exposures + r.dropped if e.event == "rain")
     assert rain.hedgeable
+
+
+# --- Stability: the same model refit on the recent window (holdout split), research hedgesim ---
+
+
+def test_stability_holds_when_the_effect_persists():
+    rain = fit(synth_taxi(SEED))["rain"]
+    s = rain.stability
+    assert s is not None and s.same_sign and s.stable
+    assert s.ci90[0] < Decimal("1200") < s.ci90[1]  # the planted effect, recovered on the recent window
+    assert s.n_days == 180 and s.start.isoformat() == "2024-12-31"  # the synth's holdout rows only
+
+
+def test_stability_flags_an_effect_that_vanished_recently():
+    df = synth_taxi(SEED)
+    hold = df["split"] == "holdout"
+    df.loc[hold, "revenue"] -= 1200.0 * df.loc[hold, "rain"]  # rain no longer moves revenue
+    rain = fit(df)["rain"]
+    assert rain.hedgeable  # train gates are unchanged: train-year significance alone ...
+    assert rain.stability.stable is False  # ... isn't enough
+    lo, hi = rain.stability.ci90
+    assert lo <= 0 <= hi  # recent effect not distinguishable from zero
+
+
+def test_stability_flags_a_sign_flip():
+    df = synth_taxi(SEED)
+    hold = df["split"] == "holdout"
+    df.loc[hold, "revenue"] -= 2400.0 * df.loc[hold, "rain"]  # +1200 on train, -1200 recently
+    s = fit(df)["rain"].stability
+    assert s.same_sign is False and s.stable is False and s.effect_usd < 0
+
+
+def test_stability_is_none_without_holdout_rows():
+    df = synth_taxi(SEED)
+    assert all(e.stability is None for e in fit(df[df["split"] == "train"]).values())
+
+
+def test_stability_round_trips_in_the_contract():
+    rain = fit(synth_taxi(SEED))["rain"]
+    payload = json.loads(rain.model_dump_json())
+    assert isinstance(payload["stability"]["effect_usd"], str)
+    assert all(isinstance(x, str) for x in payload["stability"]["ci90"])
+    assert Exposure.model_validate_json(rain.model_dump_json()) == rain
