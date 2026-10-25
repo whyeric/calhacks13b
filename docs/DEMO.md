@@ -72,3 +72,23 @@ to demo time, when books are live:
    decision 5) before the demo freeze.
 4. To present only real data, start with `DEMO_SAMPLE_WEEK=0 make demo` (or `make clean` first for
    a fresh db). With the default `1`, the sample week shows, labeled, until the first desk run.
+
+## Try it: upload the sample (scripted)
+
+This is a scripted frontend demo of the research protocol, with no backend routes. The report's
+numbers come from really running the protocol offline on the sample file. Full details are in
+[UPLOAD_AND_RESEARCH.md](UPLOAD_AND_RESEARCH.md).
+
+1. Have `hudson_bike_co_daily_revenue.csv` ready. It's in `frontend/public/samples/`, and the
+   presenter's copy is in `~/Downloads/`.
+2. On `make demo`, click **Upload your revenue** and choose the file. The app shows the file's real
+   row count and dates (1,004 days, 2024-01-01 to 2026-09-30).
+3. Click **Research my risks** and let the animation run: the mechanisms first, then the protocol
+   steps, then the report.
+   - Rain is FOUND: −18.4% (−$1,955.68/day) on 2024, −20.4% on 2025–26, placebo p 0.38.
+   - Cold <40 °F is FOUND (−27.0% / −26.4%), and warm >80 °F is FOUND as an upside
+     (+10.9% / +15.5%).
+   - Hot >90 °F, Knicks home games and Knicks wins are not distinguishable from zero.
+4. Click **Send to the desk** on rain. The hedge card shows 1,955 YES @ 33¢, a premium of $675.41
+   (fee $30.26) and an expected cost of ≈ $64.86. It's hardcoded, so it doesn't depend on the Kalshi
+   cache or the desk week.

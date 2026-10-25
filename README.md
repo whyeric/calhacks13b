@@ -9,6 +9,11 @@ reconciled against Kalshi and the bank at settlement. **It never places real ord
 The demo has two businesses around Madison Square Garden. One is a taxi fleet (real NYC trip
 records). The other is a bar across from MSG (real foot traffic, estimated dollars).
 
+The app also includes a **scripted demo of the research protocol**. Upload the sample revenue file
+of a fictional bike shop (synthetic revenue, real NOAA Central Park weather), and the app shows
+what our protocol finds on it: train/holdout replication, Benjamini–Hochberg and a placebo. The
+numbers come from really running the protocol offline on that file. They are not computed live.
+
 ## Quickstart
 
 You need Python 3.12, Node 18.18+ and `make`.
@@ -39,6 +44,23 @@ make clean             # drop the SQLite db, generated ledgers and the frontend 
 `make demo DEMO_WEB=0` serves only the API. `DEMO_SAMPLE_WEEK=0 make demo` starts without the
 labeled sample week. See [docs/DEMO.md](docs/DEMO.md).
 
+## Try it: upload the sample
+
+*This is a scripted demo of the research protocol. The report is hardcoded from a real offline run
+of the protocol on the sample file, and there are no upload or research API routes.*
+
+1. `make demo`, then open <http://localhost:3000>.
+2. Click **Upload your revenue** and choose `hudson_bike_co_daily_revenue.csv` (in
+   `frontend/public/samples/`, and linked from the drawer). The app reads the file's real row count
+   and date range: 1,004 days, 2024-01-01 to 2026-09-30.
+3. Click **Research my risks**. A staged animation shows mechanisms being pre-registered and the
+   protocol's steps, then the report. Rain, cold and warm days are FOUND; hot days and Knicks
+   games aren't.
+4. On the rain row, click **Send to the desk** to see the (scripted) hedge card.
+
+See [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md) for what's scripted, what's real
+and the full results.
+
 **Restaurant data on a fresh clone.** The bar's daily series (`restaurant_daily.parquet`,
 `msg_visits_daily.parquet`) come from Dewey and are gitignored under its license. On a fresh clone,
 the bar's analysis therefore returns `analysis_unavailable`, and the rest of the app still works.
@@ -53,6 +75,8 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | Bar dollars (visits × an assumed $35 average check) | **Estimated**, labeled in the UI |
 | The "sample week" of hedges shown before the first desk run | **Example data**, labeled "sample week" |
 | Hedge settlements and the bank statement (with one planted short deposit) | **Simulated**, from real settled Kalshi results |
+| Hudson Bike Co. sample revenue | **Synthetic** (fictional shop, planted effects) on **real** NOAA Central Park weather |
+| The upload → research → send-to-desk flow | **Scripted**; its report numbers come from a real offline protocol run on the sample |
 | Trades | **None**: nothing is ever sent to Kalshi |
 
 In the pitch and the UI, the bar is only ever called "a bar across from MSG".
@@ -64,6 +88,7 @@ In the pitch and the UI, the bar is only ever called "a bar across from MSG".
 - [docs/PLAN.md](docs/PLAN.md): chunks, gates and conventions
 - [docs/DEMO.md](docs/DEMO.md): sample week vs real desk runs, and re-warming the cache
 - [docs/ACCEPTANCE-demo.md](docs/ACCEPTANCE-demo.md): the C8 demo acceptance tests
+- [docs/UPLOAD_AND_RESEARCH.md](docs/UPLOAD_AND_RESEARCH.md): the scripted upload + research demo, its results and the planned API
 - [docs/RESEARCH.md](docs/RESEARCH.md): what we tested, what replicated, and what didn't
 - [docs/PITCH.md](docs/PITCH.md): the 2-minute demo script, track pitches and the Devpost draft
 - [AGENTS.md](AGENTS.md): guidance for coding agents

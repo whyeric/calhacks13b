@@ -12,7 +12,7 @@ The early rounds produced several convincing results that fell apart a year late
 2. **Train, then an independent holdout.** The effect must be significant (90% CI excludes 0, at least 10 event days) on a training period. It must then **replicate with the same sign** on a later, non-overlapping period refit on its own.
 3. **Multiple comparisons.** Benjamini-Hochberg at 10% across every test in the experiment, with the count reported.
 4. **Placebos.** Shifted dates (the day before, a week earlier), a wrong city, unaffected neighborhoods, and within-month permutation.
-5. **Basis.** The event is something a Kalshi contract settles on. Weather uses the **NOAA GHCN station record Kalshi settles on** (Central Park USW00094728 for NYC), not reanalysis.
+5. **Basis.** The event is something a Kalshi contract settles on. Weather uses the **NOAA GHCN station record** for the station Kalshi's contracts settle on (Central Park USW00094728 for NYC), not reanalysis. Through mid-2026 this was the settlement source itself. Since 2026-08-14 Kalshi's NYC weather contracts settle on The Weather Company's reading at the same station, so NOAA is now a close proxy (see `backend/fixtures/kalshi_series_catalog.json`).
 6. **Hedge backtest.** Out of sample, at real or train-frequency prices plus Kalshi's fee: does the hedge reduce variance or improve the worst days?
 
 Lessons learned along the way, now applied to the product:
@@ -66,7 +66,7 @@ Lessons learned along the way, now applied to the product:
 
 - **Playoff home games.** Added as an exposure, with a season-level hedge on Kalshi advancement futures. Sizing uses the minimum-variance math from `bar/r5-markets/hedge.py`.
 - **"unstable" decline rule.** An exposure must hold up on the most recent window before the desk quotes it.
-- **Settlement data.** Weather settlement and fair prices use NOAA, the source Kalshi settles on.
+- **Settlement data.** Weather settlement and fair prices use NOAA's Central Park record, the station Kalshi's NYC contracts settle on (a close proxy since Kalshi switched to The Weather Company's reading in Aug 2026).
 - **Rain sizing.** Rain hedges are sized at 1.0–1.4× the same-day effect, never haircut for "deferral".
 - **Chat.** It declines to predict games or weather. The research shows outcomes aren't the exposure.
 

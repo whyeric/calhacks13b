@@ -19,7 +19,9 @@ Small businesses already want this: in June 2026, a NYC bar hedged a Knicks prom
 But most "obvious" event risk is noise. Hedge Desk measures the risk, checks that it replicates on
 data it never saw, and **declines** when it doesn't. For a bar near MSG, the risk that holds up is
 **playoff home games**, which Kalshi's playoff-advancement contracts settle on exactly. And when
-the books come back, reconciliation catches the one deposit that's short.
+the books come back, reconciliation catches the one deposit that's short. And here's what the
+same protocol finds on a bike shop's revenue: rain, cold and warm days are real, and Knicks games
+aren't.
 
 ---
 
@@ -28,50 +30,59 @@ the books come back, reconciliation catches the one deposit that's short.
 Each beat follows spec §14, with the narrative above. Use the stopwatch windows (C8-H1 to H5). In
 the first minute say "insurance for a single Saturday", never "hedge ratio" or "basis risk" (C8-H6).
 
-### 0:00–0:15 · The hook: owners already want this
+**Before you start:** have `~/Downloads/hudson_bike_co_daily_revenue.csv` ready (it's also in
+`frontend/public/samples/`). The upload → research flow is a **scripted demo**: the report shows
+results from a real offline run of our protocol on that file. Present it as what the protocol
+*finds*, and never say it's computing live.
 
-> "This June, a bar in New York promised free tabs if the Knicks won Game 1 of the Finals, and
-> bought about $5,000 of Kalshi contracts so the promotion couldn't sink it.¹ Owners want
-> insurance for a single night. The hard part is knowing which nights are actually risky."
+### 0:00–0:10 · The hook: owners already want this
+
+> "This June, a New York bar bought about $5,000 of Kalshi contracts so a free-tab Knicks promotion
+> couldn't sink it.¹ Owners want insurance for a single night. The hard part is knowing which
+> nights are actually risky."
 
 *Screen:* the dashboard, taxi fleet selected ("real" label in the header).
 
-### 0:15–0:45 · Find the risk, measured and not guessed
+### 0:10–0:35 · The moment it says no
 
-> "Hedge Desk reads a business's daily revenue. This is a real taxi zone outside Madison Square
-> Garden, from city trip records. It measures each event in dollars, with a confidence bar."
+*Click **Run desk** on taxi.* The rain exposure is ≈ +$2,080 a day with its 90% bar; game results
+land under **"measured, not hedged: not significant"**. The rain card comes back **declined**, with
+`no_market` and `unstable` on screen.
 
-*Click **Run desk**.* Exposures appear: rain ≈ +$2,080 a day with its 90% bar (the same with or
-without the Dewey files). Knicks/Rangers wins land under **"measured, not hedged: not significant"**.
+> "A real taxi zone outside Madison Square Garden. Rain looked like +$2,080 a day last year.
+> Refit on recent months, it's +$228, and the interval crosses zero, so the desk says no. Insurance
+> against noise is a bet."
 
-> "Rain shows up. Who wins the game doesn't. We tested that across 358 venues and 40 experiments,
-> and game *results* never replicated."
+### 0:35–1:15 · A bike shop's revenue: what the protocol finds (the judge moment)
 
-### 0:45–1:15 · Protect it (and the moment it says no)
+*Click **Upload your revenue*** and choose `hudson_bike_co_daily_revenue.csv`. The app reads the
+file and shows 1,004 days, 2024 to September 2026.
 
-*The rain card:* **declined**, with two reasons on screen: `no_market` (no NYC rain contract is
-listed yet for a day in the desk week) and `unstable`.
+> "Here's what our research protocol finds on a bike shop's revenue. Hudson Bike Co. is a
+> fictional shop, with synthetic sales on real Central Park weather."
 
-> "Here's the moment. Rain looked like +$2,080 a day last year. We refit it on the most recent
-> months and it's +$228, and the interval crosses zero, so the desk says no and shows you both
-> numbers. Most obvious event risk is noise, and a desk that sells you insurance against noise is
-> selling you a bet."
+*Click **Research my risks**.* The animation shows the mechanisms being written, then the
+protocol's steps.
 
-*Judge moment:* switch to the bar (needs the Dewey files), open **Settings** and raise the weekly
-budget. A pending playoff leg flips to proposed in under 10 s, and both evaluations land in the
-decision log. (Without the bar's data, use the labeled sample week: loosen the overpriced
-threshold on the declined sample rain hedge.)
+> "The mechanism is written down before anything is tested: rain keeps riders home. Then every
+> idea gets the same protocol: fit on 2024, check on 2025 and 2026 separately, correct for how
+> many things we tried, and test a fake rain a week later that must find nothing."
 
-> **If the cache was re-warmed and shows a live proposal** (docs/DEMO.md): show its payoff chart
-> instead. Revenue is flat in both outcomes, "Unhedged swing / hedged swing / cost" is on screen,
-> and the owner clicks Approve. Only the owner can.
+*The report.* Rain is **FOUND**: −18.4% (−$1,955.68 a day) on 2024, and −20.4% on the unseen
+2025–26 data, with the placebo quiet (p 0.38). Cold days (−27.0% / −26.4%) and warm days
+(+10.9% / +15.5%, an upside) are FOUND too. Hot days over 90 °F, Knicks home games and Knicks wins
+are not distinguishable from zero.
 
-### 1:15–1:40 · The one that's real, and the receipt
+> "Rain costs this shop about $1,956 a day, and it held on data the model never saw. Knicks
+> games? Nothing, so we won't sell insurance on them."
 
-> "So what *is* real for a bar across from MSG? Playoff home games. Foot traffic within half a
-> kilometre is up 5.7% on playoff nights, and that holds on data the model never saw: +5.7%, both
-> times. Kalshi's series and advancement contracts settle on exactly that: how many home games you
-> get before you're eliminated. That's the hedge, not who wins on Tuesday."
+*Click **Send to the desk** on rain.* The hedge card shows **1,955 YES @ 33¢** on Kalshi's NYC daily rain (`KXRAIN`), a
+**$675.41** premium (including a $30.26 fee) and an expected cost of about **$64.86**. The 1,955
+contracts are at most the measured $1,955.68 ÷ $1 (I1).
+
+> "That's insurance for a rainy day, sized to the measured loss and no more. The owner decides."
+
+### 1:15–1:40 · The receipt
 
 *Switch to the ledger tab, then click **Reconcile**.*
 
@@ -79,35 +90,43 @@ threshold on the declined sample rain hedge.)
 > records: its own books, Kalshi's payouts and the bank. It finds one deposit $0.89 short. That's
 > exactly the Kalshi fee, so it asks the owner instead of guessing."
 
-### 1:40–2:00 · Proof
+### 1:40–2:00 · Proof, and what's real
 
 *Open **Model check**:* a planted $500 effect is recovered, and the 90% CI contains it in 96% of
 50 seeds.
 
-*Switch the business to the bar* (label: "estimated", average check "assumed"):
-
-> "Same desk, different business: here rain cuts the *other* way. Claude finds the markets and
-> explains each decision, but every number on screen comes from a tool, and the log proves it.
-> Hedge Desk: measure, replicate, and say no when the honest answer is no."
+> "We ran this same protocol by hand across 40 experiments. Game *results* never replicated. For a
+> bar across from MSG, what holds is playoff home games: +5.7%, both times, and Kalshi's series
+> contracts settle on exactly that. Hedge Desk: measure, replicate, and say no when the honest
+> answer is no."
 
 **If something breaks:**
 - **API down:** each region degrades with a Retry button (C7-H12).
-- **No restaurant data** on a fresh clone (the Dewey files are gitignored): the bar shows
-  "analysis unavailable". Skip the switch and say "same desk, private data, estimated dollars."
-- **Backtest panel shows "not ready":** `make seed` stores it; re-run `make seed` (or restart the
-  API, which stores it when missing). Otherwise say the model-check line and move on.
+- **The wrong file is picked:** choose `hudson_bike_co_daily_revenue.csv` again. The report is
+  only for that file.
+- **Asked "is it running live?":** no. "It's a scripted demo of the protocol. These are the real
+  results from running it on this file, and the live upload API is next."
+- **Backtest panel shows "not ready":** `make seed` stores it. Otherwise say the model-check line
+  and move on.
 
 ¹ Semafor, ["Hedging a $15,000 New York Knicks bar tab on Kalshi"](https://semafor.com/article/06/02/2026/hedging-a-15000-new-york-knicks-bar-tab-on-kalshi) (2026-06-02); Covers, ["NYC Bar Uses Kalshi Hedge to Promise Free Tabs if Knicks Win Game 1"](https://www.covers.com/industry/nyc-bar-uses-kalshi-hedge-to-promise-free-tabs-if-knicks-win-game-1-june-2-2026). Kalshi itself approached the owner and promoted the trade, so call it a sign of demand, not proof of a market.
 
+**What was cut to fit two minutes:** the bar's Settings budget flip (a pending playoff leg turns
+proposed) and the separate bar switch. The research beat replaces both as the judge moment, and
+the playoff finding survives as one line in the close. If a judge asks, the bar flow still works
+(it needs the Dewey files; see the known gaps).
+
 ### Known gaps to rehearse around (as of this branch)
 
-- `make demo` pins the clock to the cached week (`DEMO_AS_OF=2026-10-24T19:00:00Z`, desk week
-  Mon Oct 26). On the committed cache the real taxi desk gives one **declined** rain hedge
-  (`no_market` + `unstable`); the desk only matches markets inside the desk week, so it no longer
-  picks Sunday's market. A taxi payoff table appears only after a re-warm (docs/DEMO.md).
+- **The upload → research → hedge-card beat is scripted** and hardcoded, so it doesn't depend on
+  the Kalshi cache or the desk week. Never call it live.
+- On the committed cache, the real taxi desk gives one **declined** rain hedge (`no_market` +
+  `unstable`).
 - With the Dewey files, the bar's real run is the playoff season hedge: one leg **proposed**
   within budget (title, $78.51) and two **pending** over budget. Without them the bar shows
   "analysis unavailable" and its labeled sample week.
+- Hudson Bike Co. is **fictional**, with synthetic revenue and planted effects, on real weather.
+  Say "a fictional bike shop" on stage, never "a real bike shop".
 - The backtest is stored by `make seed`. Taxi's real backtest is honest and flat (hedged SD about
   equal to unhedged, reduction −0.1%), so lead with the model check, not the backtest strip.
 
@@ -125,6 +144,12 @@ Use this in the Devpost and say it out loud if asked (C8-H9):
   - the restaurant's foot traffic: Dewey / Advan daily visits, used as aggregates only.
 - **Estimated:** the bar's **dollars**. They are visits × an **assumed $35 average check**, and
   are labeled "estimated" and "assumed" in the UI.
+- **Synthetic, on real weather:** Hudson Bike Co. (`hudson_bike_co_daily_revenue.csv`) is a
+  fictional shop. Its revenue is generated with planted effects, keyed to real NOAA Central Park
+  weather days.
+- **Scripted:** the upload → research → send-to-desk flow, which is a staged animation with a
+  hardcoded report. The report's numbers come from really running our protocol offline on that
+  file.
 - **Simulated:** the hedge settlements and the bank statement. The settlements are simulated from
   *real* settled Kalshi results. The bank statement has one deliberately planted short deposit.
   **No real trades are placed.**
@@ -155,8 +180,11 @@ the bookkeeper who records and reconciles it." Show, on screen:
 **Anthropic: Claude for Public Benefit.**
 - *Community:* small-business owners whose income rides on weather and game days.
 - Claude chooses markets and explains decisions. It **never produces a number**: every figure is
-  validated against tool results before it's logged, and the "why?" chat answers from those
-  same checks.
+  validated against tool results before it's logged, and the "why?" chat answers from those same
+  checks.
+- An owner without an analyst gets the protocol an analyst would use, shown on a bike shop's
+  revenue in the scripted demo: replication, multiple-testing correction and a placebo. Next, the
+  same protocol will run live on an owner's own data, on their own machine.
 - If Claude is slow or down, a deterministic fallback runs, marked `agent: fallback`.
 
 **General:** Overall; Most Technically Complex. Check the Devpost form's limit on sponsor tracks
@@ -183,8 +211,26 @@ Approved hedges are booked to a Beancount ledger and reconciled three ways at se
 books, Kalshi's payouts and the bank. Every proposal, decline, approval and booking goes into an
 append-only decision log, with the numbers that justified it.
 
+**Research on an owner's own revenue.** The protocol we used for our own research runs on any
+business's daily revenue. The demo shows it on Hudson Bike Co., a fictional bike shop with
+synthetic sales on real Central Park weather. The mechanism is written down before any test runs.
+The protocol is the same for every hypothesis:
+- year-month fixed effects;
+- a 2024 train fit and an independent 2025–26 holdout fit;
+- Benjamini–Hochberg across the run;
+- a placebo that shifts the event a week;
+- weather from NOAA's Central Park station, the same station Kalshi's NYC contracts settle on.
+
+On the bike shop, rain is FOUND: −18.4% (−$1,955.68 a day) on 2024 and −20.4% on the unseen data,
+with the placebo quiet. Cold and warm days are FOUND too, and Knicks games and wins aren't. The
+rain risk becomes a `KXRAIN` (NYC) hedge: 1,955 YES at 33¢, a $675.41 premium and an expected cost of
+about $64.86. In the demo this flow is scripted: the report shows the real results of running the
+protocol on that file, not a live computation. A live upload and research API, with Claude
+choosing the hypotheses, is next.
+
 We demo two businesses around Madison Square Garden: a taxi fleet (real NYC trip records) and a
-bar across from MSG (real foot traffic, estimated dollars).
+bar across from MSG (real foot traffic, estimated dollars), plus the scripted bike-shop research demo
+(fictional, labeled).
 
 **How we built it.**
 - *Backend:* Python 3.12 and FastAPI. DuckDB, pandas and statsmodels fit the exposures, with a
@@ -193,18 +239,23 @@ bar across from MSG (real foot traffic, estimated dollars).
 - *Agent:* the Anthropic SDK in a tool-use loop. A validator rejects any summary containing a
   number that didn't come from a tool. A deterministic fallback takes over when Claude isn't
   available.
+- *Research demo:* a scripted frontend flow (a staged animation and a hardcoded report) that shows
+  the protocol's real offline results on the bike-shop file.
 - *Books:* Beancount and SQLite.
 - *Frontend:* Next.js, Tailwind, Recharts and SWR.
 - *Research:* eight rounds of experiments, about 40 studies, with train/holdout replication,
-  Benjamini–Hochberg correction, placebos, and the actual NOAA settlement station.
+  Benjamini–Hochberg correction, placebos, and the actual NOAA settlement station. RESEARCH.md §5 shows
+  the same protocol on the bike shop.
 
 **Challenges.** The honest answer kept being "no". The taxi rain effect is significant on a
 year of data, then shrinks to almost nothing on the next. Game results never moved foot traffic,
 across 358 venues. We had to build a product whose best moment is a decline. We also learned
-that weather reanalysis disagrees with the station Kalshi settles on about one day in eight,
+that weather reanalysis disagrees with the Central Park station record about one day in eight,
 which is enough to misprice a contract.
 
 **Accomplishments.**
+- A research protocol that, on a bike shop's revenue, recovers the three planted weather effects
+  and rejects the game hypotheses.
 - A desk that turns down its own hedge and shows its receipts.
 - Every on-screen figure is traceable to a tool call.
 - Reconciliation that catches a $0.89 short deposit and names the cause.
@@ -217,10 +268,12 @@ event contracts can really help. Our examples are a government shutdown (for a l
 federal offices), heat (for a fixed-rate power bill) and playoff home-game counts.
 
 **What's next.**
+- A live upload and research API: any owner's CSV, with Claude pre-registering the hypotheses and
+  the harness deciding what's real.
+- Research beyond NYC: more settlement stations and teams.
+- Owners connecting their point-of-sale or bank feeds instead of uploading a CSV.
+- Randomization-inference placebos in the harness, as in our hand research.
 - Playoff advancement hedges in the desk itself.
-- An "unstable" decline rule that refits on recent data.
-- Settlement-station weather for features.
-- Owners connecting their real point-of-sale or bank feeds.
 
 **Real vs. estimated:** paste the "Real, estimated, simulated" section above.
 

@@ -42,9 +42,12 @@ script and a `RESULTS.md` with the full tables. To read one, run
 
 From round 6 on, each experiment wrote down its mechanism and predictions before fitting.
 
-**NOAA settlement.** Round 1 used Open-Meteo reanalysis weather. Kalshi's NYC rain and temperature
-contracts settle on the NWS report for Central Park, so from round 2 on we used NOAA GHCN station
-USW00094728. That makes the feature flag *the* settlement flag (basis R² = 1).
+**NOAA settlement.** Round 1 used Open-Meteo reanalysis weather. Through mid-2026 Kalshi's NYC rain and temperature
+contracts settled on the NWS report for Central Park, so from round 2 on we used NOAA GHCN station
+USW00094728, making the feature flag the settlement flag for the period we tested. Since
+2026-08-14 the live contracts (`KXRAIN` NYC markets, `KXHIGHNY`) settle on The Weather Company's
+Central Park reading, so NOAA is now a close proxy rather than the exact settlement source
+(see `backend/fixtures/kalshi_series_catalog.json`).
 `r3-noaa/` measured the gap:
 - Open-Meteo and NOAA agree on only 85–90% of days.
 - Open-Meteo calls 40–47% of days wet; NOAA calls 31–38%.
@@ -155,3 +158,49 @@ not in a hedge.
    1.0–1.4× the same-day beta, with no "deferral" haircut (`r7-deferral/`).
 8. **Backtests priced at historical frequency are an upper bound.** By the morning of the event,
    Kalshi prices the day's forecast (for example, a >95 °F contract near $0.90 on a hot morning).
+
+---
+
+## 5. The protocol on a bike shop's revenue (the "Research my risks" demo)
+
+The app's **Research my risks** flow is a **scripted demo**. It shows what this protocol finds when
+it runs on one business's revenue. We ran the protocol offline on `hudson_bike_co_daily_revenue.csv`
+and hardcoded the results into the frontend. That file is a fictional NYC bike-rental shop with
+synthetic revenue, keyed to the real NOAA Central Park weather days. The guide is
+[UPLOAD_AND_RESEARCH.md](UPLOAD_AND_RESEARCH.md).
+
+**The rules, and the lesson behind each:**
+
+| Rule | Lesson it encodes |
+|---|---|
+| Year-month fixed effects + DOW + holiday, never Fourier or trend | §1 "Seasonality is the other trap": with Fourier, 0 of 12 rain tests were FOUND; with year-month FE, 11 of 12 |
+| Weather flags from NOAA Central Park (USW00094728) | §1 NOAA settlement: reanalysis disagrees with the settlement station on 10–15% of days |
+| Train 2024, holdout 2025–26, fitted independently, no tuning | §1 rule 3 |
+| HC3 errors, not HAC | §1 HAC caveat (too narrow in `r2-aggregate/`, `r7-deferral/` and `r8-dcshutdown/`) |
+| BH at 10% across every hypothesis in the run | §1 rule 2 (`venues/`: 36 raw hits vs 35.8 by chance, 0 after BH) |
+| Placebo: the same flag shifted +7 days must be insignificant | §1 placebos (`timing/`'s day-before placebo was as significant as the effect) |
+| Control `home_game` when testing a game result | §3: games move traffic, results don't |
+| ≥ 10 event days in train | §1 rule 1 |
+
+**Results on the sample.** The file has three planted effects, about −20% on rain days, −28% below
+40 °F and +10% above 80 °F, and no game effect.
+
+| Hypothesis | 2024 (train) | 2025–26 (holdout) | Verdict |
+|---|---|---|---|
+| Rain | −18.4% (−$1,955.68/day, 90% CI −$2,171.00 to −$1,734.86, 124 days) | −20.4% (−$2,485.41/day) | FOUND; placebo p 0.38; `KXRAIN` (NYC) |
+| Cold < 40 °F | −27.0% | −26.4% | FOUND |
+| Warm > 80 °F | +10.9% | +15.5% | FOUND (upside) |
+| Hot > 90 °F, Knicks home game, Knicks win | not distinguishable from zero | | NOT FOUND |
+
+The protocol recovered all three planted effects and rejected the three it should have. Because
+the revenue is synthetic, this is a check that the method works, not a finding about bike shops.
+
+**What the demo shows but doesn't run.** The mechanism pre-registration and protocol steps are a
+staged animation, and the results above are hardcoded. The intended live version is described in
+UPLOAD_AND_RESEARCH.md §4 and isn't implemented:
+- Claude would choose the hypotheses and write each mechanism *before* the test runs;
+- the harness would own the specification, the split, the thresholds and the BH family;
+- every number would be validated under I2.
+
+Compared with the hand research, the demo protocol also leaves out randomization inference and
+spatial placebos, and it covers NYC only.
