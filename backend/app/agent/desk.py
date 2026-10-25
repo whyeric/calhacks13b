@@ -249,6 +249,10 @@ async def _run(business_id, week, run_id, client, now, engine, markets, model, m
         client = default_client()
     use_claude = client is not None and bool(model)
     log.install_guards(engine)
+    try:  # approval timing (C4-A24/A25): nudge/expire before this run looks at open hedges
+        policy.sweep(now, business_id=business_id, engine=engine)
+    except Exception:
+        logger.exception("approval sweep failed for %s", business_id)
 
     ctx = DeskContext(business_id=business_id, week_of=week, run_id=run_id, now=now,
                       markets=markets or get_markets(), thresholds=db.get_business_thresholds(business_id, engine),
@@ -299,4 +303,6 @@ async def run_weekly_desk(business_id: str, *, client: Any = None, now: datetime
                           client=client, now=now, **kw)
 
 
-__all__ = ["DeskRun", "HedgeState", "run_week", "run_weekly_desk"]
+from app.agent.chat import chat  # noqa: E402  (spec §11 second entry point; lives in chat.py)
+
+__all__ = ["DeskRun", "HedgeState", "chat", "run_week", "run_weekly_desk"]

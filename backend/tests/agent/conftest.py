@@ -75,6 +75,26 @@ def mock_claude():
     return MockClaude
 
 
+class FakeNow:
+    """Settable wall clock patched into `clock.now` (nudge/expiry tests)."""
+
+    def __init__(self, t: datetime):
+        self.t = t
+
+    def __call__(self) -> datetime:
+        return self.t
+
+    def set(self, t: datetime) -> None:
+        self.t = t
+
+
+@pytest.fixture
+def fake_clock(monkeypatch):
+    fc = FakeNow(NOW)
+    monkeypatch.setattr(clock, "now", fc)
+    return fc
+
+
 def last_tool_result(kw) -> dict:
     """The JSON output of the most recent tool call in a request's messages."""
     for m in reversed(kw["messages"]):
