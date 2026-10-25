@@ -1,0 +1,17 @@
+{
+  "planted_usd": "500.00",
+  "frac": 0.15,
+  "n_seeds": 50,
+  "example": {
+    "seed": 7,
+    "recovered": "512.40",
+    "ci90": [
+      "371.80",
+      "653.00"
+    ],
+    "contains_truth": true
+  },
+  "coverage": 0.9,
+  "mean_recovered": "497.85",
+  "target": 0.9
+}
