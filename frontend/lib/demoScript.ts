@@ -106,51 +106,6 @@ export const HYPOTHESES = [
   },
   { label: "Knicks win", mechanism: "Celebrations might bring extra riders." },
 ];
-export const TYPE_MS = 16; // per typed character
-export const HYPOTHESIS_PAUSE_MS = 180;
-export type Step = { id: string; text: string; ms: number };
-const kindPhrase = (kind: string) =>
-  kind.toLowerCase().trim().replaceAll(/\s+/g, "-") || "small";
-export const claudeMs = (lead = 400) =>
-  HYPOTHESES.reduce(
-    (total, row) =>
-      total + row.mechanism.length * TYPE_MS + HYPOTHESIS_PAUSE_MS,
-    lead,
-  );
-export function researchSteps(rows: number, kind: string): Step[] {
-  return [
-    { id: "read", text: `Reading ${fmtCount(rows)} days of revenue`, ms: 1100 },
-    {
-      id: "noaa",
-      text: "Matching NOAA Central Park weather (the same station Kalshi's NYC contracts settle on)",
-      ms: 1300,
-    },
-    { id: "games", text: "Matching Knicks and Rangers schedules", ms: 1100 },
-    {
-      id: "claude",
-      text: `Claude is choosing hypotheses for a ${kindPhrase(kind)} business…`,
-      ms: claudeMs(),
-    },
-    { id: "train", text: "Testing each on 2024 (training year)…", ms: 1300 },
-    {
-      id: "unseen",
-      text: "Re-testing on 2025–26: data the model never saw…",
-      ms: 1300,
-    },
-    {
-      id: "placebo",
-      text: "Placebo check: same flags shifted 7 days…",
-      ms: 1100,
-    },
-    { id: "bh", text: "Correcting for 6 hypotheses tested…", ms: 900 },
-    { id: "done", text: "Done: 3 risks hold up, 3 don't.", ms: 0 },
-  ];
-}
-export const SEND_STEPS: Step[] = [
-  { id: "market", text: "Finding a market… KXRAIN-26OCT28-NYC", ms: 1100 },
-  { id: "size", text: "Sizing to your measured exposure…", ms: 1100 },
-  { id: "rules", text: "Checking the decline rules… all passed", ms: 1000 },
-];
 
 // --- Research report ---------------------------------------------------------
 export const SUMMARY =
@@ -171,12 +126,7 @@ export type ResearchRow = {
   label: string;
   mechanism: string;
   train: { text: string; ci: string; days: string; plot: Interval };
-  unseen: {
-    text: string;
-    ci: string | null;
-    days: string | null;
-    plot: Interval | [string] | null;
-  };
+  unseen: { text: string; ci: string; days: string; plot: Interval };
   placebo: string;
   verdict: "FOUND" | "NOT FOUND";
   verdictNote: string | null;
@@ -262,11 +212,11 @@ export const RESEARCH_ROWS: ResearchRow[] = [
     },
     unseen: {
       text: "−2.2% · −$267.65/day",
-      ci: null,
-      days: null,
-      plot: ["-267.65"],
+      ci: "90% CI −$1,000.13 to +$512.89",
+      days: "19 days",
+      plot: ["-267.65", "-1000.13", "512.89"],
     },
-    placebo: "—",
+    placebo: "Not significant (p 0.15)",
     verdict: "NOT FOUND",
     verdictNote: "Not distinguishable from zero",
     kalshi: "KXHIGHNY",
@@ -282,8 +232,13 @@ export const RESEARCH_ROWS: ResearchRow[] = [
       days: "14 days",
       plot: ["322.69", "-673.58", "1418.89"],
     },
-    unseen: { text: "+2.9%", ci: null, days: null, plot: null },
-    placebo: "—",
+    unseen: {
+      text: "+2.9% · +$354.37/day",
+      ci: "90% CI −$124.48 to +$852.25",
+      days: "85 days",
+      plot: ["354.37", "-124.48", "852.25"],
+    },
+    placebo: "Not significant (p 0.66)",
     verdict: "NOT FOUND",
     verdictNote: "Not distinguishable from zero",
     kalshi: "None (games are scheduled)",
@@ -299,8 +254,13 @@ export const RESEARCH_ROWS: ResearchRow[] = [
       days: "10 days",
       plot: ["121.56", "-2362.83", "3354.79"],
     },
-    unseen: { text: "+2.8%", ci: null, days: null, plot: null },
-    placebo: "—",
+    unseen: {
+      text: "+2.8% · +$337.78/day",
+      ci: "90% CI −$568.06 to +$1,314.38",
+      days: "58 days",
+      plot: ["337.78", "-568.06", "1314.38"],
+    },
+    placebo: "Not significant (p 0.79)",
     verdict: "NOT FOUND",
     verdictNote: "Not distinguishable from zero",
     kalshi: "KXNBAGAME",
