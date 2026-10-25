@@ -45,6 +45,7 @@ os.environ["ANTHROPIC_API_KEY"] = ""
 os.environ["ANTHROPIC_MODEL"] = ""
 os.environ["DEMO_OFFLINE"] = "1"
 os.environ.pop("OWNER_TOKEN", None)
+os.environ.pop("CONTROLLER_TOKEN", None)
 
 # --- socket blocker ------------------------------------------------------------
 
