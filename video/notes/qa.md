@@ -402,3 +402,14 @@ The S01–S08 schedule shifted (S8 now 30.85+7.49), so a spot check of S07 and S
 | Loudness | −16.0 LUFS integrated, −2.9 dBTP, LRA 2.9. ✓ |
 
 **Candidate verdict:** 0 P0 · 0 P1 · 2 P2 engine items (the boundary-start hold, and the two glideRing dim pops with polishB). The candidate is ready for `--final`, pending polishB's ring-dim easing and the two cue changes builder mentioned. I'll re-diff the final in about 2 min when it lands.
+
+---
+
+# FINAL: out/offset-product.mp4 (93.52 s, 60 fps, 5611 frames). Verdict: SHIP
+
+- **Transitions:** all 15 boundaries are smooth ramps of 0.3–0.7 s (peak diff ≤ 11 at mid-ramp). **Zero** spikes anywhere in the film, and the earlier dim pops at 39.77 and 76.15 are gone. S4→S5 is invisible.
+- **Stutter:** one 1-frame hold at the start of the S16 dissolve (88.383, diff about 1, so imperceptible). The S6 hold is fixed. P2, not worth a re-render.
+- **A/V:** the mp4 audio equals out/mix.m4a (0 ms lag). All 16 VO clips are at their scheduled start (0 ms).
+- **VO over bed:** at least 15.2 dB in every scene (10th-percentile minimum 15.2). S16 is 20.9 dB. No masking.
+- **Spot stills:** S07 (Rain −$1,955.68/day, unseen −20.4%, FOUND ring), S08 ($500 inside −$4,085.85..$796.42, 96% · 50 trials, Recovered dimmed, taxi labeled), the S10 equation, the S11 DECLINED card, S12 "Approved by you", the S14 fee connector, S15 cards and the S16 lockup. All are correct, legible and labeled.
+- **Remaining P2s:** the S16 1-frame hold, and the S11/S12 optional framing items. Nothing blocks shipping.

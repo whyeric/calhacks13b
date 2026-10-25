@@ -1,0 +1,121 @@
+1
+00:00:00,500 --> 00:00:02,389
+Rain on a Saturday empties the shop.
+
+2
+00:00:03,189 --> 00:00:05,601
+A home game packs the
+street, or it doesn't.
+
+3
+00:00:06,151 --> 00:00:09,387
+Either way, your week swings,
+and you can't plan around it.
+
+4
+00:00:09,937 --> 00:00:13,424
+Offset measures that swing in real
+dollars, from your own revenue.
+
+5
+00:00:13,974 --> 00:00:17,030
+Then it finds a Kalshi contract
+that pays when it hits.
+
+6
+00:00:17,030 --> 00:00:17,863
+And you decide.
+
+7
+00:00:18,413 --> 00:00:21,576
+Here's a bike shop:
+fictional sales, real weather.
+
+8
+00:00:21,576 --> 00:00:23,158
+Upload its daily revenue.
+
+9
+00:00:23,808 --> 00:00:29,946
+Rain costs it about $1,956 a day, and
+that held up on data the model never saw.
+
+10
+00:00:31,146 --> 00:00:32,470
+Knicks games? Nothing there.
+
+11
+00:00:32,470 --> 00:00:37,434
+And a planted test effect lands inside the
+model's interval, so the check is honest.
+
+12
+00:00:38,534 --> 00:00:41,414
+The desk matches Kalshi's
+Central Park rain contract,
+
+13
+00:00:41,414 --> 00:00:43,214
+the same station we measured.
+
+14
+00:00:43,814 --> 00:00:47,907
+It sizes protection to the
+measured loss and never more:
+
+15
+00:00:47,907 --> 00:00:51,590
+1,955 contracts, with the
+full premium shown up front.
+
+16
+00:00:53,990 --> 00:00:56,131
+But not every risk gets a hedge.
+
+17
+00:00:56,131 --> 00:00:59,800
+For a taxi fleet, rain looked big
+last year, then almost vanished.
+
+18
+00:00:59,800 --> 00:01:02,552
+So the desk says no, and shows you why.
+
+19
+00:01:04,852 --> 00:01:07,125
+And nothing happens
+until the owner approves.
+
+20
+00:01:08,525 --> 00:01:11,936
+Every proposal, decline and
+approval gets a receipt in the log.
+
+21
+00:01:12,486 --> 00:01:15,115
+Approved hedges are booked
+to a real ledger, and
+
+22
+00:01:15,115 --> 00:01:19,496
+reconciliation catches a deposit that came
+in short, and names the fee as the cause.
+
+23
+00:01:20,596 --> 00:01:22,854
+The desk never approves its own hedge.
+
+24
+00:01:22,854 --> 00:01:25,758
+Every number comes from
+a tool, not the AI.
+
+25
+00:01:25,758 --> 00:01:28,016
+And anything estimated
+or simulated says so.
+
+26
+00:01:28,766 --> 00:01:31,324
+Offset. Steadier weeks. Your call.
+

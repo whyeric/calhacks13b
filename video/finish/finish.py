@@ -226,28 +226,33 @@ def master(src, dst, lufs, tmp):
 
 
 def teaser(src, dst, sched, root, tmp):
-    """Hook (S1) -> hedge card (S10, first clause) -> DECLINED (S11, last sentence) -> logo (S16), crossfaded.
-    Inner cuts land in VO pauses so no word is clipped; the logo hold is trimmed so the cut runs TEASER_LEN."""
+    """Hook (S1) -> hedge card (S10) -> DECLINED (S11, last sentence) -> logo (S16 with the full tagline), crossfaded,
+    ending in a fade to black. Inner cuts land in VO pauses so no word is clipped; the logo hold absorbs the slack."""
     fps = probe(src)["fps"]
     by = {s["id"]: s for s in sched}
 
-    def pause_near(s, frac):
-        """Middle of the VO pause closest to `frac` of the scene's VO, else that point itself.
-        Pauses come from the scene's own VO clip, since music and sound cues fill the gaps in the mix."""
-        want = s["voStart"] + frac * s["voDur"]
+    def pauses(s):
+        """Middles of the VO pauses inside a scene, from its own VO clip (music and sound cues fill the gaps in the mix)."""
         clip = os.path.join(root, s.get("file") or "")
         sil = silences(clip, noise="-35dB", d=0.1) if os.path.isfile(clip) else []
-        gaps = [s["voStart"] + (a + b) / 2 for a, b in sil if 0.3 < a and b < s["voDur"] - 0.3]
-        return min(gaps, key=lambda g: abs(g - want)) if gaps else want
+        return [s["voStart"] + (a + b) / 2 for a, b in sil if 0.3 < a and b < s["voDur"] - 0.3]
+
+    def pause_near(s, frac):
+        want = s["voStart"] + frac * s["voDur"]
+        return min(pauses(s), key=lambda g: abs(g - want), default=want)
 
     s1, s10, s11, s16 = by["S1"], by["S10"], by["S11"], by["S16"]
-    segs = [(s1["start"], min(s1["start"] + s1["dur"], s1["voStart"] + s1["voDur"] + XFADE)),  # "Rain on a Saturday empties the shop."
-            (s10["start"], pause_near(s10, 0.72) + 0.15),          # "...and never more: 1,955 contracts"
-            (pause_near(s11, 0.68) - 0.1, s11["start"] + s11["dur"]),  # "So the desk says no, and shows you why" + stamp
-            None]
-    used = sum(b - a for a, b in segs[:3]) - 3 * XFADE
-    logo = max(3.0, TEASER_LEN - used)
-    segs[3] = (s16["start"], min(s16["start"] + s16["dur"], s16["start"] + logo))
+    vo_end = lambda s: s["voStart"] + s["voDur"]
+    hook = (s1["start"], min(s1["start"] + s1["dur"], vo_end(s1) + XFADE))  # "Rain on a Saturday empties the shop."
+    decline = (pause_near(s11, 0.68) - 0.1, min(s11["start"] + s11["dur"], vo_end(s11) + 0.6))  # "So the desk says no..." + stamp
+    logo_min, logo_max = vo_end(s16) + 1.0 - s16["start"], s16["dur"]  # always the whole tagline; the end fade if it fits
+    fixed = (hook[1] - hook[0]) + (decline[1] - decline[0]) - 3 * XFADE
+    # Hedge card: run to the latest VO pause that still leaves room for the logo ("...never more: 1,955 contracts").
+    ends = sorted(g + 0.15 for g in pauses(s10)) or [vo_end(s10)]
+    fit = [e for e in ends if fixed + (e - s10["start"]) + logo_min <= TEASER_LEN + 0.05]
+    hedge = (s10["start"], fit[-1] if fit else ends[0])
+    logo = (s16["start"], s16["start"] + min(logo_max, max(logo_min, TEASER_LEN - fixed - (hedge[1] - hedge[0]))))
+    segs = [hook, hedge, decline, logo]
     inputs, fc, off = [], [], 0.0
     for i, (a, b) in enumerate(segs):
         inputs += ["-ss", f"{a:.3f}", "-t", f"{b - a:.3f}", "-i", src]
@@ -259,8 +264,8 @@ def teaser(src, dst, sched, root, tmp):
                   f"[{pa}][a{i}]acrossfade=d={XFADE}:c1=tri:c2=tri[ax{i}]")
         pv, pa = f"vx{i}", f"ax{i}"
     total = off + segs[3][1] - segs[3][0]
-    fc.append(f"[{pa}]afade=t=out:st={total - 0.4:.3f}:d=0.4[aout]")
-    ff(*inputs, "-filter_complex", ";".join(fc), "-map", f"[{pv}]", "-map", "[aout]", "-c:v", "libx264", "-crf", "18",
+    fc.append(f"[{pv}]fade=t=out:st={total - 0.6:.3f}:d=0.6[vout];[{pa}]afade=t=out:st={total - 0.6:.3f}:d=0.6[aout]")
+    ff(*inputs, "-filter_complex", ";".join(fc), "-map", "[vout]", "-map", "[aout]", "-c:v", "libx264", "-crf", "18",
        "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ac", "2", "-movflags", "+faststart", dst)
     return [{"from": round(a, 2), "to": round(b, 2)} for a, b in segs]
 
