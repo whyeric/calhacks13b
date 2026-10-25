@@ -23,6 +23,7 @@ import hedges from "@/fixtures/hedges_mixed.json";
 import logs from "@/fixtures/decisions.json";
 import backtest from "@/fixtures/backtest_taxi.json";
 import settings from "@/fixtures/settings.json";
+import research from "@/fixtures/research_report.json";
 import type { Hedge } from "@/lib/types";
 
 const api = "http://localhost:8000";
@@ -40,6 +41,19 @@ const server = setupServer(
     approvals.push(String(params.id));
     return HttpResponse.json(hedges[0]);
   }),
+  // The upload step researches the file live (POST /research); the drawer reads the
+  // QuickBooks connection when it opens (not connected here).
+  http.post(`${api}/research`, () => HttpResponse.json(research)),
+  http.get(`${api}/integrations/quickbooks/status`, () =>
+    HttpResponse.json({
+      mode: "demo",
+      connected: false,
+      company_name: null,
+      realm_id: null,
+      connected_at: null,
+      synthetic: true,
+    }),
+  ),
   http.get(`${api}/health`, () =>
     HttpResponse.json({ status: "ok", offline: true, anthropic: "fallback" }),
   ),

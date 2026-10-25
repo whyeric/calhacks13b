@@ -125,7 +125,10 @@
         "ticker": "KXHIGHNY-26OCT14-T70",
         "expected": "45.00",
         "kalshi_ledger": "45.00",
-        "bank": "45.00"
+        "bank": "45.00",
+        "venue": "45.00",
+        "venue_origin": "simulated",
+        "bank_origin": "csv_simulated"
       }
     ],
     "mismatches": [
@@ -137,16 +140,51 @@
         "bank": "58.95",
         "difference": "-1.05",
         "source_pair": "kalshi_ledger_vs_bank",
-        "explanation": "Bank deposit is $1.05 short of the Kalshi payout; equals the $1.05 fee recorded for hdg_s02.",
+        "explanation": "Kalshi paid $60.00 and we booked $60.00 for hdg_s02; the bank received $58.95. The bank is the record for cash, so the $1.05 is real and equals the $1.05 entry fee: it looks netted from the withdrawal.",
         "likely_cause": "fee_deducted_from_deposit",
         "action": "ask_owner",
-        "question": "Did you authorize the $1.05 fee to be netted from this withdrawal?"
+        "question": "Did you authorize the $1.05 fee to be netted from this withdrawal?",
+        "venue": "60.00",
+        "venue_fee": "1.05",
+        "ledger_fee": "1.05",
+        "system_of_record": "bank",
+        "record_reason": "The bank is the record for cash received: only a posted deposit is money in the account.",
+        "venue_origin": "simulated",
+        "bank_origin": "csv_simulated"
       }
     ],
     "summary": {
       "n_matched": 1,
       "n_mismatched": 1,
-      "total_difference": "-1.05"
+      "total_difference": "-1.05",
+      "n_in_transit": 1
+    },
+    "in_transit": [
+      {
+        "hedge_id": "hdg_s03",
+        "ticker": "KXHIGHNY-26OCT22-T70",
+        "expected": "45.00",
+        "venue": "45.00",
+        "kalshi_ledger": "45.00",
+        "bank_pending": "0.00",
+        "settled_on": "2026-10-22",
+        "days_outstanding": 1,
+        "window_days": 3,
+        "explanation": "Kalshi paid $45.00 and we booked $45.00 for hdg_s03; the deposit hasn't posted yet, but it is 1 day(s) since settlement, inside the 3-day posting window. A timing difference, not an error: it becomes a missing deposit only if it hasn't posted after the window.",
+        "venue_origin": "simulated",
+        "bank_origin": "csv_simulated"
+      }
+    ],
+    "sources": {
+      "venue_origin": "simulated",
+      "ledger_origin": "beancount_simulated",
+      "bank_origin": "csv_simulated",
+      "live": false,
+      "notes": [
+        "Venue: SIMULATED settlement derived from the real market result (R11).",
+        "Ledger: Beancount books; settlement entries are SIMULATED.",
+        "Bank: SIMULATED bank statement (CSV)."
+      ]
     }
   },
   "simulated": true

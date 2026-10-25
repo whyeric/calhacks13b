@@ -64,6 +64,7 @@ restaurant_backtest = copy.deepcopy(backtest)
 restaurant_backtest["estimated"] = True
 write("backtest_restaurant", restaurant_backtest)
 write("ledger_with_mismatch", read("ledger_response"))
+write("recon_benchmark", read("reconciliation_benchmark"))
 write("chat_reply", read("chat_reply"))
 write("settings", read("settings"))
 # Mock mode serves the seeded sample week for every business, so mock health says so (PR #60 shape).

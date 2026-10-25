@@ -5,12 +5,9 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { MOCK_MODE, apiGet, apiPost, apiPut } from "@/lib/api";
 import type { Analyze, Business, Hedge, Settings } from "@/lib/types";
-import {
-  DEMO_BUDGETS,
-  DEMO_HEDGE,
-  RESEARCH_ROWS,
-  csvSummary,
-} from "@/lib/demoScript";
+import { DEMO_BUDGETS, DEMO_HEDGE, csvSummary } from "@/lib/demoScript";
+import { QBO_NAME } from "@/lib/quickbooks";
+import { verdictNote } from "@/lib/researchView";
 import { fmtUsd } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { BrandMark } from "./BrandMark";
@@ -190,8 +187,15 @@ function BusinessStep({
       </div>
       {choice === "upload" && demo.upload && (
         <p role="status" className="wizard-picked">
-          <strong>{demo.upload.name}</strong> · {csvSummary(demo.upload.csv)}{" "}
-          <span className="badge uploaded">Uploaded · sample</span>
+          <strong>{demo.upload.name}</strong> ·{" "}
+          {"csv" in demo.upload ? (
+            <>
+              {csvSummary(demo.upload.csv)}{" "}
+              <span className="badge uploaded">Uploaded · sample</span>
+            </>
+          ) : (
+            QBO_NAME
+          )}
         </p>
       )}
       {choice === "msg" && (
@@ -207,28 +211,36 @@ function BusinessStep({
 // --- Step 2 -------------------------------------------------------------------
 function UploadRisks({ demo }: { demo: Demo }) {
   const elapsed = useNow(demo.startedAt + RESEARCH_MS) - demo.startedAt;
-  const declined = RESEARCH_ROWS.filter((row) => row.verdict !== "FOUND");
-  if (elapsed < RESEARCH_MS)
+  const result = demo.result;
+  if (result && "error" in result)
+    return (
+      <p role="alert" className="field-error">
+        {result.error}
+      </p>
+    );
+  if (!result || elapsed < RESEARCH_MS)
     return (
       <RunningBar
         label="Running analysis…"
-        elapsed={elapsed}
+        elapsed={elapsed > RESEARCH_MS * 0.95 ? RESEARCH_MS * 0.95 : elapsed}
         total={RESEARCH_MS}
       />
     );
+  const report = result.report;
+  const declined = report.hypotheses.filter((row) => row.verdict !== "FOUND");
   return (
     <div>
       <h2>What moves your revenue</h2>
       <p className="muted">
         Each risk was tested on 2024 and re-tested on unseen 2025–26 data.
       </p>
-      <ResearchTable sendState={null} />
+      <ResearchTable report={report} sendState={null} />
       <h3>Declined, and why</h3>
       <ul className="wizard-declines">
         {declined.map((row) => (
           <li key={row.id}>
             <strong>{row.label}</strong> ·{" "}
-            {row.verdictNote || "Did not hold up on unseen data."}
+            {verdictNote(row) || "Did not hold up on unseen data."}
           </li>
         ))}
       </ul>

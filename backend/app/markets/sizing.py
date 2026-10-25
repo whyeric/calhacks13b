@@ -26,7 +26,8 @@ TAKER_RATE = Decimal("0.07")
 # Taker fee is 0.07·C·P·(1−P) for both. `quadratic_with_maker_fees` (NBA/NHL games) only adds a
 # fee on resting orders, at a quarter of the taker rate (docs.kalshi.com changelog, 2026-08-22).
 # The desk only ever takes, so its taker fee is the plain quadratic one.
-VERIFIED_FEE_TYPES = {"quadratic", "quadratic_with_maker_fees"}
+# Polymarket's taker fee has the same shape with its own rate: rate·C·P·(1−P) (markets/polymarket.py).
+VERIFIED_FEE_TYPES = {"quadratic", "quadratic_with_maker_fees", "polymarket_taker"}
 
 
 def money(x: Decimal) -> Decimal:
@@ -83,18 +84,23 @@ def walk_book(levels: list[Level], n_target: int, max_slip: Decimal = Decimal("0
     )
 
 
-def _raw_fee(contracts: int, price: Decimal, multiplier: Decimal) -> Decimal:
-    return TAKER_RATE * multiplier * contracts * price * (ONE - price)
+def _raw_fee(contracts: int, price: Decimal, multiplier: Decimal, rate: Decimal = TAKER_RATE) -> Decimal:
+    return rate * multiplier * contracts * price * (ONE - price)
 
 
-def taker_fee(contracts: int, price: Decimal, multiplier: Decimal = ONE) -> Decimal:
-    return ceil_to_cent(_raw_fee(contracts, dec(price), dec(multiplier)))
+def taker_fee(contracts: int, price: Decimal, multiplier: Decimal = ONE, rate: Decimal = TAKER_RATE) -> Decimal:
+    return ceil_to_cent(_raw_fee(contracts, dec(price), dec(multiplier), dec(rate)))
 
 
-def order_fee(fills: list[Level], multiplier: Decimal = ONE) -> Decimal:
+def order_fee(fills: list[Level], multiplier: Decimal = ONE, rate: Decimal = TAKER_RATE) -> Decimal:
     """One order across several levels: sum the unrounded per-level fees, round up once (G3).
-    Matches Kalshi's per-order fee accumulator for cent-precision accounts (docs: Fee Rounding)."""
-    return ceil_to_cent(sum((_raw_fee(lv.count, lv.price, dec(multiplier)) for lv in fills), ZERO))
+    Matches Kalshi's per-order fee accumulator for cent-precision accounts (docs: Fee Rounding).
+    Polymarket passes its own `rate` (and rounds to 5 dp; rounding up to the cent overstates by <1¢)."""
+    return ceil_to_cent(sum((_raw_fee(lv.count, lv.price, dec(multiplier), dec(rate)) for lv in fills), ZERO))
+
+
+def _opt(obj: Any, name: str) -> Any:
+    return obj.get(name) if isinstance(obj, dict) else getattr(obj, name, None)
 
 
 def fair_for_side(p_hat: Decimal, side: Side) -> Decimal:
@@ -132,7 +138,8 @@ def size_hedge(
 
     fee_type = field(series_fee, "fee_type")
     multiplier = dec(field(series_fee, "fee_multiplier"))
-    fee = order_fee(fill.fills, multiplier)
+    rate = _opt(series_fee, "fee_rate")
+    fee = order_fee(fill.fills, multiplier, TAKER_RATE if rate is None else dec(rate))
     cost = money(fill.cost)
     premium = cost + fee
     fair = fair_for_side(p_hat, side)
@@ -154,6 +161,8 @@ def size_hedge(
             hedged_swing=abs(payoff[0].net_vs_base - payoff[1].net_vs_base),
             cost=premium,
         ),
+        venue=candidate.venue, market_url=candidate.market_url,
+        fee_rate=None if rate is None else dec(rate),
     )
 
 
@@ -193,7 +202,8 @@ def _build_hedge(
     illiquid = decision.checks[1].metric
     return Hedge(
         **base, ticker=sizing.ticker, market_title=sizing.market_title,
-        market_url=KALSHI_MARKET_URL.format(series=sizing.series_ticker.lower()),
+        market_url=sizing.market_url or KALSHI_MARKET_URL.format(series=sizing.series_ticker.lower()),
+        venue=sizing.venue, fee_rate=None if sizing.fee_rate is None else places4(sizing.fee_rate),
         close_time=sizing.close_time, h=places4(sizing.h), n_target=sizing.n_target,
         n_filled=sizing.n_filled, n_unfilled=sizing.n_unfilled,
         partial=bool(illiquid.get("partial", False)), resized=sizing.resized, fills=sizing.fills,

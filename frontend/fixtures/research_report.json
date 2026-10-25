@@ -1,0 +1,304 @@
+{
+  "name": "Hudson Bike Co.",
+  "n_rows": 1004,
+  "n_days": 1004,
+  "n_closed_days": 0,
+  "n_outside_window": 0,
+  "first": "2024-01-01",
+  "last": "2026-09-30",
+  "train": {
+    "start": "2024-01-01",
+    "end": "2024-12-31"
+  },
+  "holdout": {
+    "start": "2025-01-01",
+    "end": "2026-09-30"
+  },
+  "station": "NOAA GHCN-Daily USW00094728 (Central Park)",
+  "protocol": [
+    "Training year, then unseen data fitted independently",
+    "Day-of-week + month controls",
+    "90% intervals",
+    "Placebo: flags shifted 7 days",
+    "Corrected for 6 tests (BH 10%)",
+    "At least 10 event days"
+  ],
+  "notes": [
+    "Hudson Bike Co. (fictional NYC bike-rental shop) - daily revenue, SYNTHETIC demo data.",
+    "Weather effects use real NOAA Central Park days: about -20% on rain days, -28% below 40F, +10% above 80F."
+  ],
+  "hypotheses": [
+    {
+      "id": "rain",
+      "label": "Rain day",
+      "rule": "Central Park precipitation ≥ 0.01 in",
+      "mechanism": "Customers stay in when it rains.",
+      "train": {
+        "pct": -18.2,
+        "effect_usd": "-1923.43",
+        "ci90": [
+          "-2137.76",
+          "-1703.67"
+        ],
+        "ci_excludes_zero": true,
+        "p_value": 0.0,
+        "n_event_days": 125,
+        "n_days": 366,
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "mean_revenue": "10590.80"
+      },
+      "holdout": {
+        "pct": -20.4,
+        "effect_usd": "-2488.09",
+        "ci90": [
+          "-2660.85",
+          "-2312.19"
+        ],
+        "ci_excludes_zero": true,
+        "p_value": 0.0,
+        "n_event_days": 228,
+        "n_days": 638,
+        "start": "2025-01-01",
+        "end": "2026-09-30",
+        "mean_revenue": "12174.38"
+      },
+      "placebo_p": 0.2852,
+      "bh_q": 0.0,
+      "verdict": "FOUND",
+      "reasons": [],
+      "direction": "negative",
+      "upside": false,
+      "venue": "Kalshi KXRAIN (NYC, Central Park) · Polymarket “Where will it rain” (NYC, NWS Central Park report)",
+      "sendable": true
+    },
+    {
+      "id": "cold",
+      "label": "Cold day <40°F",
+      "rule": "Central Park high below 40°F",
+      "mechanism": "Few people come out in the cold.",
+      "train": {
+        "pct": -26.5,
+        "effect_usd": "-2804.78",
+        "ci90": [
+          "-3165.90",
+          "-2426.09"
+        ],
+        "ci_excludes_zero": true,
+        "p_value": 0.0,
+        "n_event_days": 28,
+        "n_days": 366,
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "mean_revenue": "10590.80"
+      },
+      "holdout": {
+        "pct": -26.4,
+        "effect_usd": "-3210.72",
+        "ci90": [
+          "-3536.86",
+          "-2872.26"
+        ],
+        "ci_excludes_zero": true,
+        "p_value": 0.0,
+        "n_event_days": 89,
+        "n_days": 638,
+        "start": "2025-01-01",
+        "end": "2026-09-30",
+        "mean_revenue": "12174.38"
+      },
+      "placebo_p": 0.1282,
+      "bh_q": 0.0,
+      "verdict": "FOUND",
+      "reasons": [],
+      "direction": "negative",
+      "upside": false,
+      "venue": "KXHIGHNY strikes sit near the forecast; a fixed <40°F strike is rarely listed",
+      "sendable": false
+    },
+    {
+      "id": "warm",
+      "label": "Warm day >80°F",
+      "rule": "Central Park high above 80°F",
+      "mechanism": "Nice weather brings casual customers.",
+      "train": {
+        "pct": 10.9,
+        "effect_usd": "1151.68",
+        "ci90": [
+          "698.13",
+          "1623.44"
+        ],
+        "ci_excludes_zero": true,
+        "p_value": 0.0,
+        "n_event_days": 84,
+        "n_days": 366,
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "mean_revenue": "10590.80"
+      },
+      "holdout": {
+        "pct": 15.5,
+        "effect_usd": "1892.44",
+        "ci90": [
+          "1505.91",
+          "2289.89"
+        ],
+        "ci_excludes_zero": true,
+        "p_value": 0.0,
+        "n_event_days": 160,
+        "n_days": 638,
+        "start": "2025-01-01",
+        "end": "2026-09-30",
+        "mean_revenue": "12174.38"
+      },
+      "placebo_p": 0.8232,
+      "bh_q": 0.0,
+      "verdict": "FOUND",
+      "reasons": [],
+      "direction": "positive",
+      "upside": true,
+      "venue": "KXHIGHNY (Central Park) · Polymarket NYC high settles at LaGuardia, a different station",
+      "sendable": false
+    },
+    {
+      "id": "hot",
+      "label": "Hot day >90°F",
+      "rule": "Central Park high above 90°F",
+      "mechanism": "Extreme heat might keep customers indoors.",
+      "train": {
+        "pct": 0.8,
+        "effect_usd": "80.65",
+        "ci90": [
+          "-500.67",
+          "695.46"
+        ],
+        "ci_excludes_zero": false,
+        "p_value": 0.8237,
+        "n_event_days": 15,
+        "n_days": 366,
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "mean_revenue": "10590.80"
+      },
+      "holdout": {
+        "pct": -2.1,
+        "effect_usd": "-257.69",
+        "ci90": [
+          "-996.62",
+          "530.09"
+        ],
+        "ci_excludes_zero": false,
+        "p_value": 0.5825,
+        "n_event_days": 19,
+        "n_days": 638,
+        "start": "2025-01-01",
+        "end": "2026-09-30",
+        "mean_revenue": "12174.38"
+      },
+      "placebo_p": 0.1359,
+      "bh_q": 0.8237,
+      "verdict": "NOT FOUND",
+      "reasons": [
+        "not_significant"
+      ],
+      "direction": "positive",
+      "upside": false,
+      "venue": "KXHIGHNY (Central Park) · Polymarket NYC high settles at LaGuardia, a different station",
+      "sendable": false
+    },
+    {
+      "id": "knicks_home",
+      "label": "Knicks home game",
+      "rule": "Knicks play at Madison Square Garden",
+      "mechanism": "Game crowds near MSG might change traffic.",
+      "train": {
+        "pct": 5.7,
+        "effect_usd": "422.41",
+        "ci90": [
+          "-285.15",
+          "1199.78"
+        ],
+        "ci_excludes_zero": false,
+        "p_value": 0.3354,
+        "n_event_days": 14,
+        "n_days": 71,
+        "start": "2024-10-22",
+        "end": "2024-12-31",
+        "mean_revenue": "7456.99"
+      },
+      "holdout": {
+        "pct": 3.0,
+        "effect_usd": "359.61",
+        "ci90": [
+          "-121.88",
+          "860.33"
+        ],
+        "ci_excludes_zero": false,
+        "p_value": 0.2215,
+        "n_event_days": 85,
+        "n_days": 638,
+        "start": "2025-01-01",
+        "end": "2026-09-30",
+        "mean_revenue": "12174.38"
+      },
+      "placebo_p": 0.8951,
+      "bh_q": 0.5031,
+      "verdict": "NOT FOUND",
+      "reasons": [
+        "not_significant"
+      ],
+      "direction": "positive",
+      "upside": false,
+      "venue": "None: games are scheduled, so there is nothing uncertain to hedge",
+      "sendable": false
+    },
+    {
+      "id": "knicks_win",
+      "label": "Knicks win",
+      "rule": "Knicks win a home game (home games controlled)",
+      "mechanism": "Celebrations might bring extra customers.",
+      "train": {
+        "pct": 4.1,
+        "effect_usd": "308.44",
+        "ci90": [
+          "-1538.50",
+          "2731.74"
+        ],
+        "ci_excludes_zero": false,
+        "p_value": 0.8061,
+        "n_event_days": 10,
+        "n_days": 71,
+        "start": "2024-10-22",
+        "end": "2024-12-31",
+        "mean_revenue": "7456.99"
+      },
+      "holdout": {
+        "pct": 2.8,
+        "effect_usd": "345.55",
+        "ci90": [
+          "-561.49",
+          "1323.44"
+        ],
+        "ci_excludes_zero": false,
+        "p_value": 0.5404,
+        "n_event_days": 58,
+        "n_days": 638,
+        "start": "2025-01-01",
+        "end": "2026-09-30",
+        "mean_revenue": "12174.38"
+      },
+      "placebo_p": 0.7854,
+      "bh_q": 0.8237,
+      "verdict": "NOT FOUND",
+      "reasons": [
+        "not_significant"
+      ],
+      "direction": "positive",
+      "upside": false,
+      "venue": "Kalshi KXNBAGAME · Polymarket NBA moneyline",
+      "sendable": false
+    }
+  ],
+  "summary": "Rain days and cold days (<40°F) reliably cost you money; warm days (>80°F) help. Hot days (>90°F), Knicks home games and Knicks wins make no difference we can measure. The desk can price protection for rain days on Kalshi and Polymarket.",
+  "plot_max_usd": "3536.86"
+}

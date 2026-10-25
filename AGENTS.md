@@ -24,9 +24,9 @@ backend/app/
   main.py config.py models.py db.py   C6 API & contracts (models.py is the contract hub)
   data/     C1  taxi, dewey, weather, sports, features
   stats/    C2  exposure, modelcheck, backtest
-  markets/  C3  kalshi, match, sizing, rules
-  agent/    C4  tools, desk, prompts, policy, log
-  books/    C5  ledger, reconcile
+  markets/  C3  kalshi, polymarket, match, sizing, rules, quote
+  agent/    C4  tools, desk, prompts, policy, log, memory
+  books/    C5  ledger, reconcile, close, benchmark
 frontend/   C7  Next.js, Tailwind, Recharts, SWR
 fixtures/   example JSON, business configs, kalshi_cache/
 data/       raw Dewey exports (gitignored, never commit)
@@ -39,7 +39,7 @@ Stack: Python 3.12, FastAPI, DuckDB/pandas/statsmodels, httpx, `anthropic` SDK, 
 - **I1** Contracts bought ≤ measured exposure ÷ $1; hedge ratio ≤ 1.0 (`markets/sizing.py`).
 - **I2** Every dollar figure, price, or probability shown comes from a tool result. Claude's text is never the source of a number (`agent/log.py` validates).
 - **I3** Hedges are proposed only if they pass every decline rule. Declined hedges are shown with reasons, never hidden.
-- **I4** The desk never approves its own hedge. Only `actor: "owner"` can approve or reject.
+- **I4** The desk never approves its own hedge. Only `actor: "owner"` can approve or reject. A premium above `Thresholds.materiality_usd` also needs the controller's co-sign (`actor: "controller"`), and only the controller co-signs, sets materiality or closes the books (`agent/policy.py`, `main.py`; CONTRACTS R23).
 - **I5** Every proposal, decline, approval, rejection, booking, and reconciliation is appended to the decision log.
 - **I6** Anything estimated or simulated is visibly labeled.
 
@@ -50,8 +50,8 @@ Stack: Python 3.12, FastAPI, DuckDB/pandas/statsmodels, httpx, `anthropic` SDK, 
 - Shared shapes live in `backend/app/models.py` with one example per object in `fixtures/examples/`. Changing a contract needs review from the consuming chunk's owner.
 - The examples in `backend/fixtures/examples/` (and `fixtures/businesses/`) are **hand-maintained**: there is no generator (the old `scripts/gen_examples.py` drifted from the models and was removed). When you add or change a field, edit the example JSON by hand; `backend/tests/contract/` validates every example against its model and checks it round-trips byte-for-byte, and `frontend/scripts/validate-fixtures.py` does the same for the frontend fixtures.
 - Thresholds live in one `Thresholds` dataclass in `config.py`.
-- Must run offline: with `DEMO_OFFLINE=1`, Kalshi reads come from `fixtures/kalshi_cache/` and raise `CacheMiss` on a miss. Claude failures fall back; chat never 5xxs.
-- Secrets in `.env` only (`ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `KALSHI_BASE_URL`, `DEMO_OFFLINE`, `DATABASE_URL`, `WEEKLY_BUDGET_DEFAULT`, `AVG_CHECK_USD`). Never commit `.env` or raw data.
+- Must run offline: with `DEMO_OFFLINE=1`, Kalshi reads come from `fixtures/kalshi_cache/` and raise `CacheMiss` on a miss; Polymarket reads come from `fixtures/polymarket_cache/`, and a miss there only means "no Polymarket candidates". Claude failures fall back; chat never 5xxs.
+- Secrets in `.env` only (`ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `KALSHI_BASE_URL`, `DEMO_OFFLINE`, `DATABASE_URL`, `WEEKLY_BUDGET_DEFAULT`, `AVG_CHECK_USD`, `OWNER_TOKEN`, `CONTROLLER_TOKEN`). Never commit `.env` or raw data. Tests run with `POLYMARKET_ENABLED=0` unless they mock it.
 
 ## Work and PRs
 

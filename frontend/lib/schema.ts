@@ -16,6 +16,11 @@ export interface components {
       model_check: components["schemas"]["ModelCheck"];
       /** R2 Holdout */
       r2_holdout: number | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
     };
     /** BacktestResult */
     BacktestResult: {
@@ -118,6 +123,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget";
       /** Passed */
       passed: boolean | null;
@@ -125,6 +131,71 @@ export interface components {
       metric: {
         [key: string]: boolean | number | string | null;
       };
+    };
+    /** CommitmentLine */
+    CommitmentLine: {
+      /** Id */
+      id: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "purchase_order" | "bill" | "estimate";
+      /** Counterparty */
+      counterparty: string;
+      /** Description */
+      description: string;
+      /** Amount */
+      amount: string;
+      /** Due Date */
+      due_date: string | null;
+      /** Status */
+      status: string;
+    };
+    /**
+     * Commitments
+     * @description GET /integrations/quickbooks/commitments: what the business is committed to, not what it spent.
+     */
+    Commitments: {
+      /**
+       * As Of
+       * Format: date
+       */
+      as_of: string;
+      /** Synthetic */
+      synthetic: boolean;
+      /** Purchase Orders */
+      purchase_orders: components["schemas"]["CommitmentLine"][];
+      /** Bills */
+      bills: components["schemas"]["CommitmentLine"][];
+      /** Estimates */
+      estimates: components["schemas"]["CommitmentLine"][];
+      /** Inventory */
+      inventory: components["schemas"]["InventoryLine"][];
+      /** Committed Spend */
+      committed_spend: string;
+      /** Expected Revenue */
+      expected_revenue: string;
+      /** Inventory Value */
+      inventory_value: string;
+    };
+    /**
+     * ControllerSignoff
+     * @description The controller's co-sign (or refusal) on a hedge above materiality.
+     */
+    ControllerSignoff: {
+      /**
+       * Decision
+       * @enum {string}
+       */
+      decision: "signed" | "refused";
+      /**
+       * At
+       * Format: date-time
+       */
+      at: string;
+      /** Note */
+      note: string | null;
     };
     /**
      * Decision
@@ -150,6 +221,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget"
       )[];
       /** Summary */
@@ -168,7 +240,7 @@ export interface components {
        * Event
        * @enum {string}
        */
-      event: "rain" | "hot" | "home_win";
+      event: "rain" | "hot" | "home_win" | "playoff_home";
       /** Effect Usd */
       effect_usd: string;
       /** Ci90 */
@@ -193,7 +265,7 @@ export interface components {
        * Settlement Var
        * @enum {string}
        */
-      settlement_var: "rain" | "hot" | "home_win";
+      settlement_var: "rain" | "hot" | "home_win" | "playoff_home";
       /** Hedgeable */
       hedgeable: boolean;
       /** Reasons */
@@ -202,6 +274,23 @@ export interface components {
       strike: number | null;
       /** Beta Settlement */
       beta_settlement: string | null;
+      /** @default null */
+      stability: components["schemas"]["Stability"] | null;
+      /**
+       * Expected Count
+       * @default null
+       */
+      expected_count: number | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
+      /**
+       * Basis Note
+       * @default null
+       */
+      basis_note: string | null;
     };
     /**
      * Headline
@@ -229,6 +318,10 @@ export interface components {
        * @enum {string}
        */
       anthropic: "configured" | "fallback";
+      /** Sample Week */
+      sample_week: boolean;
+      /** Sample Businesses */
+      sample_businesses: string[];
     };
     /**
      * Hedge
@@ -323,6 +416,48 @@ export interface components {
       decided_by: "owner" | null;
       /** Decided At */
       decided_at: string | null;
+      /**
+       * Leg Label
+       * @default null
+       */
+      leg_label: string | null;
+      /**
+       * Group Total Premium
+       * @default null
+       */
+      group_total_premium: string | null;
+      /**
+       * Estimated
+       * @default false
+       */
+      estimated: boolean;
+      /**
+       * Venue
+       * @default kalshi
+       * @enum {string}
+       */
+      venue: "kalshi" | "polymarket";
+      /**
+       * Fee Rate
+       * @default null
+       */
+      fee_rate: string | null;
+      /**
+       * Needs Controller
+       * @default false
+       */
+      needs_controller: boolean;
+      /** @default null */
+      controller: components["schemas"]["ControllerSignoff"] | null;
+      /**
+       * Decision Note
+       * @default null
+       */
+      decision_note: string | null;
+      /** @default null */
+      owner_history: components["schemas"]["OwnerHistory"] | null;
+      /** @default null */
+      venue_order: components["schemas"]["VenueOrder"] | null;
     };
     /**
      * HedgeLite
@@ -346,6 +481,114 @@ export interface components {
       /** Payoff */
       payoff: components["schemas"]["PayoffRow"][];
       headline: components["schemas"]["Headline"];
+    };
+    /** HistoryOutcome */
+    HistoryOutcome: {
+      /** Hedge Id */
+      hedge_id: string;
+      /**
+       * Week Of
+       * Format: date
+       */
+      week_of: string;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status:
+        | "proposed"
+        | "pending_approval"
+        | "approved"
+        | "rejected"
+        | "declined"
+        | "expired_unapproved"
+        | "settled";
+      /** Premium */
+      premium: string | null;
+      /** Payout */
+      payout: string | null;
+      /** Note */
+      note: string | null;
+    };
+    /**
+     * IncreaseStatus
+     * @description GET /integrations/increase/status (integrations/increase.py). Reads no network: `last_sync`
+     *     is the last time reconciliation read the bank in this process.
+     */
+    IncreaseStatus: {
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "demo" | "sandbox" | "live";
+      /**
+       * Environment
+       * @enum {string}
+       */
+      environment: "sandbox" | "production";
+      /** Accounts */
+      accounts: {
+        [key: string]: string;
+      };
+      /**
+       * Bank Origin
+       * @enum {string}
+       */
+      bank_origin: "csv_simulated" | "increase_sandbox" | "increase_live";
+      /** Simulated */
+      simulated: boolean;
+      /** Last Sync */
+      last_sync: string | null;
+      /** Last Rows */
+      last_rows: number | null;
+      /** Last Error */
+      last_error: string | null;
+    };
+    /** InventoryLine */
+    InventoryLine: {
+      /** Id */
+      id: string;
+      /** Name */
+      name: string;
+      /** Sku */
+      sku: string | null;
+      /** Qty On Hand */
+      qty_on_hand: string;
+      /** Unit Cost */
+      unit_cost: string;
+      /** Value */
+      value: string;
+    };
+    /**
+     * KalshiStatus
+     * @description GET /integrations/kalshi/status: whether approvals place demo orders, and why not.
+     */
+    KalshiStatus: {
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "off" | "demo";
+      /** Reason */
+      reason: string | null;
+      /** Trading Enabled */
+      trading_enabled: boolean;
+      /** Offline */
+      offline: boolean;
+      /** Key Id Present */
+      key_id_present: boolean;
+      /** Private Key Present */
+      private_key_present: boolean;
+      /** Base Url */
+      base_url: string;
+      /** Host Allowed */
+      host_allowed: boolean;
+      /** Reachable */
+      reachable: boolean | null;
+      /** Balance */
+      balance: string | null;
+      /** Error */
+      error: string | null;
     };
     /** LedgerEntry */
     LedgerEntry: {
@@ -434,7 +677,17 @@ export interface components {
         | "threshold_changed"
         | "chat"
         | "run_failed"
-        | "refusal";
+        | "refusal"
+        | "cosign"
+        | "cosign_refused"
+        | "period_close"
+        | "order_placed"
+        | "order_filled"
+        | "order_partial"
+        | "order_failed"
+        | "order_skipped"
+        | "qbo_posted"
+        | "qbo_post_failed";
       /**
        * Created At
        * Format: date-time
@@ -444,7 +697,7 @@ export interface components {
        * Actor
        * @enum {string}
        */
-      actor: "desk" | "owner" | "system";
+      actor: "desk" | "owner" | "controller" | "system";
       /** Agent */
       agent: ("claude" | "fallback") | null;
       /** Hedge Id */
@@ -474,6 +727,7 @@ export interface components {
         | "overpriced"
         | "basis_too_loose"
         | "too_expensive"
+        | "unstable"
         | "over_budget"
       )[];
       /** Numbers */
@@ -513,6 +767,31 @@ export interface components {
       /** Contains Truth */
       contains_truth: boolean;
     };
+    /**
+     * OwnerHistory
+     * @description The same exposure's earlier hedges for this business, newest first (at most 5 shown).
+     *
+     *     `pattern` is set when the owner's recent decisions should change how the desk asks:
+     *     "rejected_recently" when the last two decided hedges were both rejected.
+     */
+    OwnerHistory: {
+      /** N Earlier */
+      n_earlier: number;
+      /** N Approved */
+      n_approved: number;
+      /** N Rejected */
+      n_rejected: number;
+      /** N Expired Unapproved */
+      n_expired_unapproved: number;
+      /** Total Premium */
+      total_premium: string;
+      /** Total Payout */
+      total_payout: string;
+      /** Recent */
+      recent: components["schemas"]["HistoryOutcome"][];
+      /** Pattern */
+      pattern: "rejected_recently" | null;
+    };
     /** PayoffRow */
     PayoffRow: {
       /**
@@ -545,6 +824,233 @@ export interface components {
       /** Amount */
       amount: string;
     };
+    /** QboSyncLine */
+    QboSyncLine: {
+      /** Entry Id */
+      entry_id: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "premium" | "payout" | "withdrawal" | "opening_deposit";
+      /**
+       * Date
+       * Format: date
+       */
+      date: string;
+      /** Amount */
+      amount: string;
+      /** Simulated */
+      simulated: boolean;
+      /** Doc Number */
+      doc_number: string;
+      /** Qbo Id */
+      qbo_id: string | null;
+      /** Qbo Amount */
+      qbo_amount: string | null;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "posted" | "missing" | "amount_differs" | "failed" | "not_posted";
+      /** Detail */
+      detail: string;
+    };
+    /** QboSyncReport */
+    QboSyncReport: {
+      /** Business Id */
+      business_id: string;
+      /**
+       * Checked At
+       * Format: date-time
+       */
+      checked_at: string;
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "demo" | "live";
+      /** Realm Id */
+      realm_id: string;
+      /** Company Name */
+      company_name: string | null;
+      /** Synthetic */
+      synthetic: boolean;
+      /**
+       * System Of Record
+       * @constant
+       */
+      system_of_record: "beancount";
+      /** Explanation */
+      explanation: string;
+      /** Lines */
+      lines: components["schemas"]["QboSyncLine"][];
+      /** Counts */
+      counts: {
+        [key: string]: number;
+      };
+    };
+    /**
+     * QuickBooksConnect
+     * @description POST /integrations/quickbooks/connect. Demo connects at once (`authorize_url` null); live
+     *     returns Intuit's consent URL and stays unconnected until the callback.
+     */
+    QuickBooksConnect: {
+      status: components["schemas"]["QuickBooksStatus"];
+      /** Authorize Url */
+      authorize_url: string | null;
+    };
+    /**
+     * QuickBooksResearch
+     * @description POST /integrations/quickbooks/research: the research protocol on revenue pulled from the books.
+     */
+    QuickBooksResearch: {
+      report: components["schemas"]["ResearchReport"];
+      /** Revenue Source */
+      revenue_source: string;
+      /** Days */
+      days: number;
+      /**
+       * First Day
+       * Format: date
+       */
+      first_day: string;
+      /**
+       * Last Day
+       * Format: date
+       */
+      last_day: string;
+      commitments: components["schemas"]["Commitments"];
+      /** Synthetic */
+      synthetic: boolean;
+    };
+    /** QuickBooksStatus */
+    QuickBooksStatus: {
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "demo" | "live";
+      /** Connected */
+      connected: boolean;
+      /** Company Name */
+      company_name: string | null;
+      /** Realm Id */
+      realm_id: string | null;
+      /** Connected At */
+      connected_at: string | null;
+      /** Synthetic */
+      synthetic: boolean;
+    };
+    /** ReconBenchmark */
+    ReconBenchmark: {
+      /** Seed */
+      seed: number;
+      /**
+       * Simulated
+       * @constant
+       */
+      simulated: true;
+      /** N Hedges */
+      n_hedges: number;
+      /** N Bank Rows */
+      n_bank_rows: number;
+      /** N Planted */
+      n_planted: number;
+      /** N Caught */
+      n_caught: number;
+      /** N Cause Correct */
+      n_cause_correct: number;
+      /** N Traps */
+      n_traps: number;
+      /** N False Flags */
+      n_false_flags: number;
+      /** Precision */
+      precision: number;
+      /** Recall */
+      recall: number;
+      /** Cause Accuracy */
+      cause_accuracy: number;
+      /** Cases */
+      cases: components["schemas"]["ReconBenchmarkCase"][];
+      /** False Flags */
+      false_flags: string[];
+    };
+    /**
+     * ReconBenchmarkCase
+     * @description One answer-key row. `planted` rows must be flagged with `expected_cause`; `trap` rows
+     *     look odd but are correct, and must not be flagged (`expected_cause` is null).
+     */
+    ReconBenchmarkCase: {
+      /** Subject */
+      subject: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "planted" | "trap";
+      /** Description */
+      description: string;
+      /** Expected Cause */
+      expected_cause: string | null;
+      /** Found Cause */
+      found_cause: string | null;
+      /** Flagged */
+      flagged: boolean;
+      /** Correct */
+      correct: boolean;
+      /**
+       * Expected Status
+       * @default null
+       */
+      expected_status: ("matched" | "in_transit") | null;
+      /**
+       * Found Status
+       * @default null
+       */
+      found_status: ("matched" | "in_transit" | "mismatched" | "absent") | null;
+    };
+    /**
+     * ReconInTransit
+     * @description A payout the venue paid and we booked whose deposit hasn't posted yet, still inside the
+     *     posting window (or pending at the bank). A timing difference, not an error.
+     */
+    ReconInTransit: {
+      /** Hedge Id */
+      hedge_id: string;
+      /** Ticker */
+      ticker: string;
+      /** Expected */
+      expected: string;
+      /** Venue */
+      venue: string | null;
+      /** Kalshi Ledger */
+      kalshi_ledger: string;
+      /** Bank Pending */
+      bank_pending: string;
+      /**
+       * Settled On
+       * Format: date
+       */
+      settled_on: string;
+      /** Days Outstanding */
+      days_outstanding: number;
+      /** Window Days */
+      window_days: number;
+      /** Explanation */
+      explanation: string;
+      /**
+       * Venue Origin
+       * @default null
+       */
+      venue_origin: ("simulated" | "kalshi_demo" | "kalshi_live") | null;
+      /**
+       * Bank Origin
+       * @default null
+       */
+      bank_origin:
+        ("csv_simulated" | "increase_sandbox" | "increase_live") | null;
+    };
     /** ReconMatch */
     ReconMatch: {
       /** Hedge Id */
@@ -557,6 +1063,22 @@ export interface components {
       kalshi_ledger: string;
       /** Bank */
       bank: string;
+      /**
+       * Venue
+       * @default null
+       */
+      venue: string | null;
+      /**
+       * Venue Origin
+       * @default null
+       */
+      venue_origin: ("simulated" | "kalshi_demo" | "kalshi_live") | null;
+      /**
+       * Bank Origin
+       * @default null
+       */
+      bank_origin:
+        ("csv_simulated" | "increase_sandbox" | "increase_live") | null;
     };
     /** ReconMismatch */
     ReconMismatch: {
@@ -579,7 +1101,10 @@ export interface components {
       source_pair:
         | "expected_vs_kalshi_ledger"
         | "kalshi_ledger_vs_bank"
-        | "expected_vs_bank";
+        | "expected_vs_bank"
+        | "expected_vs_venue"
+        | "venue_vs_kalshi_ledger"
+        | "ledger_fee_vs_venue_fee";
       /** Explanation */
       explanation: string;
       /** Likely Cause */
@@ -591,6 +1116,42 @@ export interface components {
       action: "ask_owner";
       /** Question */
       question: string;
+      /**
+       * Venue
+       * @default null
+       */
+      venue: string | null;
+      /**
+       * Venue Fee
+       * @default null
+       */
+      venue_fee: string | null;
+      /**
+       * Ledger Fee
+       * @default null
+       */
+      ledger_fee: string | null;
+      /**
+       * System Of Record
+       * @default null
+       */
+      system_of_record: ("venue" | "ledger" | "bank") | null;
+      /**
+       * Record Reason
+       * @default null
+       */
+      record_reason: string | null;
+      /**
+       * Venue Origin
+       * @default null
+       */
+      venue_origin: ("simulated" | "kalshi_demo" | "kalshi_live") | null;
+      /**
+       * Bank Origin
+       * @default null
+       */
+      bank_origin:
+        ("csv_simulated" | "increase_sandbox" | "increase_live") | null;
     };
     /**
      * ReconResult
@@ -604,16 +1165,45 @@ export interface components {
        * Format: date
        */
       as_of: string;
-      /**
-       * Simulated
-       * @constant
-       */
-      simulated: true;
+      /** Simulated */
+      simulated: boolean;
       /** Matches */
       matches: components["schemas"]["ReconMatch"][];
       /** Mismatches */
       mismatches: components["schemas"]["ReconMismatch"][];
       summary: components["schemas"]["ReconSummary"];
+      /**
+       * In Transit
+       * @default []
+       */
+      in_transit: components["schemas"]["ReconInTransit"][];
+      /** @default null */
+      sources: components["schemas"]["ReconSources"] | null;
+    };
+    /** ReconSources */
+    ReconSources: {
+      /**
+       * Venue Origin
+       * @enum {string}
+       */
+      venue_origin: "simulated" | "kalshi_demo" | "kalshi_live";
+      /**
+       * Ledger Origin
+       * @enum {string}
+       */
+      ledger_origin: "beancount_simulated" | "beancount";
+      /**
+       * Bank Origin
+       * @enum {string}
+       */
+      bank_origin: "csv_simulated" | "increase_sandbox" | "increase_live";
+      /** Live */
+      live: boolean;
+      /**
+       * Notes
+       * @default []
+       */
+      notes: string[];
     };
     /** ReconSummary */
     ReconSummary: {
@@ -623,6 +1213,136 @@ export interface components {
       n_mismatched: number;
       /** Total Difference */
       total_difference: string;
+      /**
+       * N In Transit
+       * @default 0
+       */
+      n_in_transit: number;
+    };
+    /**
+     * ResearchEstimate
+     * @description One fit of one flag on one period. `pct` is exp(b) − 1 in percent (a stat); the dollars
+     *     are that share of the period's mean daily revenue (`mean_revenue`).
+     */
+    ResearchEstimate: {
+      /** Pct */
+      pct: number;
+      /** Effect Usd */
+      effect_usd: string;
+      /** Ci90 */
+      ci90: [string, string];
+      /** Ci Excludes Zero */
+      ci_excludes_zero: boolean;
+      /** P Value */
+      p_value: number;
+      /** N Event Days */
+      n_event_days: number;
+      /** N Days */
+      n_days: number;
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+      /** Mean Revenue */
+      mean_revenue: string;
+    };
+    /** ResearchHypothesis */
+    ResearchHypothesis: {
+      /** Id */
+      id: string;
+      /** Label */
+      label: string;
+      /** Rule */
+      rule: string;
+      /** Mechanism */
+      mechanism: string;
+      train: components["schemas"]["ResearchEstimate"] | null;
+      holdout: components["schemas"]["ResearchEstimate"] | null;
+      /** Placebo P */
+      placebo_p: number | null;
+      /** Bh Q */
+      bh_q: number;
+      /**
+       * Verdict
+       * @enum {string}
+       */
+      verdict: "FOUND" | "NOT FOUND";
+      /** Reasons */
+      reasons: (
+        | "thin_support"
+        | "not_significant"
+        | "failed_bh"
+        | "placebo_fired"
+        | "did_not_replicate"
+        | "sign_flipped"
+      )[];
+      /** Direction */
+      direction: ("positive" | "negative") | null;
+      /** Upside */
+      upside: boolean;
+      /** Venue */
+      venue: string;
+      /** Sendable */
+      sendable: boolean;
+    };
+    /** ResearchPeriod */
+    ResearchPeriod: {
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+    };
+    /**
+     * ResearchReport
+     * @description POST /research. Every figure comes from `stats.research.run`; `summary` is templated.
+     */
+    ResearchReport: {
+      /** Name */
+      name: string | null;
+      /** N Rows */
+      n_rows: number;
+      /** N Days */
+      n_days: number;
+      /** N Closed Days */
+      n_closed_days: number;
+      /** N Outside Window */
+      n_outside_window: number;
+      /**
+       * First
+       * Format: date
+       */
+      first: string;
+      /**
+       * Last
+       * Format: date
+       */
+      last: string;
+      train: components["schemas"]["ResearchPeriod"];
+      holdout: components["schemas"]["ResearchPeriod"];
+      /** Station */
+      station: string;
+      /** Protocol */
+      protocol: string[];
+      /** Notes */
+      notes: string[];
+      /** Hypotheses */
+      hypotheses: components["schemas"]["ResearchHypothesis"][];
+      /** Summary */
+      summary: string;
+      /** Plot Max Usd */
+      plot_max_usd: string;
     };
     /**
      * RunAccepted
@@ -670,6 +1390,38 @@ export interface components {
       weekly_budget: string;
     };
     /**
+     * Stability
+     * @description The same §5 model refit on the most recent window only (the holdout split).
+     *
+     *     `stable` = the recent effect has the train effect's sign AND its 90% CI excludes 0. The
+     *     `unstable` decline rule reads it (research hedgesim: taxi rain +$2,212 on train was +$303,
+     *     CI crossing 0, on the recent window, and hedging it made income less steady).
+     */
+    Stability: {
+      /** Effect Usd */
+      effect_usd: string;
+      /** Ci90 */
+      ci90: [string, string];
+      /** N Days */
+      n_days: number;
+      /** N Events */
+      n_events: number;
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+      /** Same Sign */
+      same_sign: boolean;
+      /** Stable */
+      stable: boolean;
+    };
+    /**
      * ThresholdSettings
      * @description Mirrors `config.Thresholds` field for field.
      */
@@ -692,6 +1444,21 @@ export interface components {
       basis_r2_min: number;
       /** Max Tool Calls */
       max_tool_calls: number;
+      /**
+       * Decline Unstable
+       * @default true
+       */
+      decline_unstable: boolean;
+      /**
+       * Rain Size Multiplier
+       * @default 1
+       */
+      rain_size_multiplier: number;
+      /**
+       * Materiality Usd
+       * @default 200.00
+       */
+      materiality_usd: string;
     };
     /** ToolCall */
     ToolCall: {
@@ -703,6 +1470,70 @@ export interface components {
       };
       /** Output */
       output: unknown;
+    };
+    /**
+     * VenueOrder
+     * @description The order placed on the venue when the owner approved a hedge (`Hedge.venue_order`).
+     *
+     *     Booking stays at the approved figures; this records what the venue actually did, so
+     *     reconciliation can flag a fill that differs from what was booked. Prices are in the hedge's
+     *     own side (a NO hedge's `avg_price` is the NO price), whatever book side carried the order.
+     *     `mode` "kalshi_demo" is Kalshi's demo exchange: fake money, labeled as such (I6).
+     */
+    VenueOrder: {
+      /**
+       * Mode
+       * @constant
+       */
+      mode: "kalshi_demo";
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "filled" | "partial" | "failed" | "skipped";
+      /** Client Order Id */
+      client_order_id: string;
+      /** Order Id */
+      order_id: string | null;
+      /** Ticker */
+      ticker: string | null;
+      /** Production Ticker */
+      production_ticker: string | null;
+      /** Stand In */
+      stand_in: boolean;
+      /**
+       * Side
+       * @enum {string}
+       */
+      side: "yes" | "no";
+      /** Book Side */
+      book_side: ("bid" | "ask") | null;
+      /**
+       * Time In Force
+       * @enum {string}
+       */
+      time_in_force: "immediate_or_cancel" | "fill_or_kill";
+      /** Requested */
+      requested: number;
+      /** Limit Price */
+      limit_price: string | null;
+      /** Filled */
+      filled: number;
+      /** Avg Price */
+      avg_price: string | null;
+      /** Cost */
+      cost: string | null;
+      /** Fee */
+      fee: string | null;
+      /** Differs From Booked */
+      differs_from_booked: boolean;
+      /** Reason */
+      reason: string | null;
+      /**
+       * At
+       * Format: date-time
+       */
+      at: string;
     };
     /** WeekIncome */
     WeekIncome: {

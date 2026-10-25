@@ -515,6 +515,94 @@ def row_counts(engine: Engine | None = None) -> dict[str, int]:
         }
 
 
+# --- QuickBooks Online (integrations/quickbooks.py, integrations/quickbooks_sync.py) ----------
+# The durable QBO connection (one connected company per app), the record of which desk ledger
+# entries were mirrored into QuickBooks as JournalEntries, and the demo-mode JournalEntry store
+# (SYNTHETIC: what would have been written to QuickBooks, kept here so the flow works offline).
+# Tokens are stored as given by Intuit and never logged; see docs/QUICKBOOKS.md.
+
+QBO_CONNECTION_ID = "default"
+
+
+class QboConnectionRow(SQLModel, table=True):
+    __tablename__ = "qbo_connection"
+
+    id: str = Field(primary_key=True)  # QBO_CONNECTION_ID
+    data: str  # {"environment", "realm_id", "company_name", "access_token", "refresh_token", expiries...}
+
+
+class QboMirrorRow(SQLModel, table=True):
+    __tablename__ = "qbo_mirror"
+
+    realm_id: str = Field(primary_key=True)
+    entry_id: str = Field(primary_key=True)  # our ledger entry id
+    business_id: str = Field(index=True)
+    data: str  # the mirror record: status, JournalEntry id, posted lines, last error
+
+
+class QboDemoObjectRow(SQLModel, table=True):
+    __tablename__ = "qbo_demo_objects"
+
+    entity: str = Field(primary_key=True)  # "Account", "JournalEntry"
+    id: str = Field(primary_key=True)
+    data: str  # the object as QBO would return it
+
+
+def get_qbo_connection(engine: Engine | None = None) -> dict[str, Any] | None:
+    with session(engine) as s:
+        row = s.get(QboConnectionRow, QBO_CONNECTION_ID)
+        return json.loads(row.data) if row else None
+
+
+def put_qbo_connection(data: dict[str, Any], engine: Engine | None = None) -> None:
+    with session(engine) as s:
+        s.merge(QboConnectionRow(id=QBO_CONNECTION_ID, data=json.dumps(data)))
+
+
+def delete_qbo_connection(engine: Engine | None = None) -> None:
+    with session(engine) as s:
+        row = s.get(QboConnectionRow, QBO_CONNECTION_ID)
+        if row is not None:
+            s.delete(row)
+
+
+def get_qbo_mirror(realm_id: str, entry_id: str, engine: Engine | None = None) -> dict[str, Any] | None:
+    with session(engine) as s:
+        row = s.get(QboMirrorRow, (realm_id, entry_id))
+        return json.loads(row.data) if row else None
+
+
+def put_qbo_mirror(realm_id: str, entry_id: str, business_id: str, data: dict[str, Any],
+                   engine: Engine | None = None) -> None:
+    with session(engine) as s:
+        s.merge(QboMirrorRow(realm_id=realm_id, entry_id=entry_id, business_id=business_id, data=json.dumps(data)))
+
+
+def list_qbo_mirrors(realm_id: str, business_id: str, engine: Engine | None = None) -> dict[str, dict[str, Any]]:
+    """entry_id -> mirror record, for one company and business."""
+    with session(engine) as s:
+        q = select(QboMirrorRow).where(QboMirrorRow.realm_id == realm_id, QboMirrorRow.business_id == business_id)
+        return {r.entry_id: json.loads(r.data) for r in s.exec(q).all()}
+
+
+def put_qbo_demo_object(entity: str, obj_id: str, data: dict[str, Any], engine: Engine | None = None) -> None:
+    with session(engine) as s:
+        s.merge(QboDemoObjectRow(entity=entity, id=obj_id, data=json.dumps(data)))
+
+
+def delete_qbo_demo_object(entity: str, obj_id: str, engine: Engine | None = None) -> None:
+    with session(engine) as s:
+        row = s.get(QboDemoObjectRow, (entity, obj_id))
+        if row is not None:
+            s.delete(row)
+
+
+def list_qbo_demo_objects(entity: str, engine: Engine | None = None) -> list[dict[str, Any]]:
+    with session(engine) as s:
+        rows = s.exec(select(QboDemoObjectRow).where(QboDemoObjectRow.entity == entity)).all()
+        return [json.loads(r.data) for r in rows]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m app.db")
     sub = parser.add_subparsers(dest="cmd", required=True)

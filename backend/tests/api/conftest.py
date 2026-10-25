@@ -29,6 +29,7 @@ def app_env(tmp_path, monkeypatch):
     monkeypatch.setenv("MARKETS_BACKEND", "fixture")
     monkeypatch.setenv("LEDGERS_DIR", str(tmp_path / "ledgers"))
     monkeypatch.delenv("OWNER_TOKEN", raising=False)
+    monkeypatch.delenv("CONTROLLER_TOKEN", raising=False)
     config.get_settings.cache_clear()
     db.get_engine.cache_clear()
     monkeypatch.setattr(clock, "now", lambda: NOW)

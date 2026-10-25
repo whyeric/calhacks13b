@@ -1,0 +1,308 @@
+{
+  "as_of": "2026-10-25",
+  "synthetic": true,
+  "purchase_orders": [
+    {
+      "id": "PO-2042",
+      "kind": "purchase_order",
+      "counterparty": "Kettle Rubber Co.",
+      "description": "Winter tires and tubes",
+      "amount": "4570.00",
+      "due_date": "2026-11-05",
+      "status": "Open"
+    },
+    {
+      "id": "PO-2045",
+      "kind": "purchase_order",
+      "counterparty": "Velo Supply Wholesale",
+      "description": "Chains, brake pads, cables",
+      "amount": "1838.50",
+      "due_date": "2026-11-08",
+      "status": "Open"
+    },
+    {
+      "id": "PO-2043",
+      "kind": "purchase_order",
+      "counterparty": "SafeRide Helmets",
+      "description": "Helmet replacement cycle",
+      "amount": "3140.00",
+      "due_date": "2026-11-12",
+      "status": "Open"
+    },
+    {
+      "id": "PO-2046",
+      "kind": "purchase_order",
+      "counterparty": "Harbor Lights Signage",
+      "description": "Winter hours and holiday-ride signage",
+      "amount": "780.00",
+      "due_date": "2026-11-15",
+      "status": "Open"
+    },
+    {
+      "id": "PO-2044",
+      "kind": "purchase_order",
+      "counterparty": "Ironclad Storage Systems",
+      "description": "Winter storage racks for off-season fleet",
+      "amount": "5100.00",
+      "due_date": "2026-11-18",
+      "status": "Open"
+    },
+    {
+      "id": "PO-2041",
+      "kind": "purchase_order",
+      "counterparty": "Velo Supply Wholesale",
+      "description": "Spring fleet: 6 Class 1 commuter e-bikes",
+      "amount": "11100.00",
+      "due_date": "2027-02-15",
+      "status": "Open"
+    }
+  ],
+  "bills": [
+    {
+      "id": "HPR-2611",
+      "kind": "bill",
+      "counterparty": "Hudson Pier Realty",
+      "description": "November rent, Pier 40 storefront",
+      "amount": "18500.00",
+      "due_date": "2026-11-01",
+      "status": "Unpaid"
+    },
+    {
+      "id": "VSW-88213",
+      "kind": "bill",
+      "counterparty": "Velo Supply Wholesale",
+      "description": "Repair parts: derailleurs, spokes",
+      "amount": "1317.40",
+      "due_date": "2026-11-10",
+      "status": "Partially paid"
+    },
+    {
+      "id": "BCI-Q4-26",
+      "kind": "bill",
+      "counterparty": "Bluestone Commercial Insurance",
+      "description": "Q4 general liability and fleet insurance",
+      "amount": "6240.00",
+      "due_date": "2026-11-15",
+      "status": "Unpaid"
+    },
+    {
+      "id": "MPG-1026",
+      "kind": "bill",
+      "counterparty": "Metro Power & Gas",
+      "description": "Electric, e-bike charging room",
+      "amount": "1145.22",
+      "due_date": "2026-11-18",
+      "status": "Unpaid"
+    },
+    {
+      "id": "CDN-1026",
+      "kind": "bill",
+      "counterparty": "CityCycle Dock Network",
+      "description": "Dock station access fee, 3 stations (Nov)",
+      "amount": "2850.00",
+      "due_date": "2026-11-30",
+      "status": "Unpaid"
+    },
+    {
+      "id": "HPR-2612",
+      "kind": "bill",
+      "counterparty": "Hudson Pier Realty",
+      "description": "December rent, Pier 40 storefront",
+      "amount": "18500.00",
+      "due_date": "2026-12-01",
+      "status": "Unpaid"
+    },
+    {
+      "id": "GBM-0412",
+      "kind": "bill",
+      "counterparty": "Gotham Bike Mechanics",
+      "description": "Fall fleet tune-up, 66 bikes",
+      "amount": "1980.00",
+      "due_date": "2026-12-05",
+      "status": "Unpaid"
+    },
+    {
+      "id": "KRC-55190",
+      "kind": "bill",
+      "counterparty": "Kettle Rubber Co.",
+      "description": "Tire restock (net 60)",
+      "amount": "1320.00",
+      "due_date": "2026-12-15",
+      "status": "Unpaid"
+    },
+    {
+      "id": "HPR-2701",
+      "kind": "bill",
+      "counterparty": "Hudson Pier Realty",
+      "description": "January rent, Pier 40 storefront",
+      "amount": "18500.00",
+      "due_date": "2027-01-01",
+      "status": "Unpaid"
+    }
+  ],
+  "estimates": [
+    {
+      "id": "EST-312",
+      "kind": "estimate",
+      "counterparty": "Five Boroughs Run Club",
+      "description": "Marathon weekend spectator rentals",
+      "amount": "4400.00",
+      "due_date": "2026-11-01",
+      "status": "Accepted"
+    },
+    {
+      "id": "EST-311",
+      "kind": "estimate",
+      "counterparty": "Lumen Labs (offsites)",
+      "description": "Team offsite ride, Hudson River Greenway",
+      "amount": "5600.00",
+      "due_date": "2026-11-07",
+      "status": "Pending"
+    },
+    {
+      "id": "EST-314",
+      "kind": "estimate",
+      "counterparty": "Northbank Consulting Group",
+      "description": "Fall team ride and lunch stop",
+      "amount": "3850.00",
+      "due_date": "2026-11-14",
+      "status": "Pending"
+    },
+    {
+      "id": "EST-315",
+      "kind": "estimate",
+      "counterparty": "Greenway School Trips",
+      "description": "8th-grade field trip, helmets included",
+      "amount": "2940.00",
+      "due_date": "2026-11-20",
+      "status": "Accepted"
+    },
+    {
+      "id": "EST-317",
+      "kind": "estimate",
+      "counterparty": "Pier 62 Events LLC",
+      "description": "Holiday lights night ride (private event)",
+      "amount": "14250.00",
+      "due_date": "2026-12-12",
+      "status": "Accepted"
+    },
+    {
+      "id": "EST-318",
+      "kind": "estimate",
+      "counterparty": "Meridian Hotel Concierge",
+      "description": "Holiday-season guest rental block, Dec 19-31",
+      "amount": "9800.00",
+      "due_date": "2026-12-19",
+      "status": "Pending"
+    }
+  ],
+  "inventory": [
+    {
+      "id": "201",
+      "name": "Class 1 commuter e-bike",
+      "sku": "EB-C1-COM",
+      "qty_on_hand": "24",
+      "unit_cost": "1850.00",
+      "value": "44400.00"
+    },
+    {
+      "id": "202",
+      "name": "City cruiser bike",
+      "sku": "BK-CRZ-7",
+      "qty_on_hand": "60",
+      "unit_cost": "420.00",
+      "value": "25200.00"
+    },
+    {
+      "id": "205",
+      "name": "Adult helmet, M/L",
+      "sku": "HL-ADT-ML",
+      "qty_on_hand": "140",
+      "unit_cost": "42.00",
+      "value": "5880.00"
+    },
+    {
+      "id": "204",
+      "name": "Tandem bike",
+      "sku": "BK-TDM",
+      "qty_on_hand": "6",
+      "unit_cost": "980.00",
+      "value": "5880.00"
+    },
+    {
+      "id": "203",
+      "name": "Kids bike 20in",
+      "sku": "BK-KID-20",
+      "qty_on_hand": "18",
+      "unit_cost": "260.00",
+      "value": "4680.00"
+    },
+    {
+      "id": "208",
+      "name": "700c city tire",
+      "sku": "PT-TIRE-700",
+      "qty_on_hand": "85",
+      "unit_cost": "38.00",
+      "value": "3230.00"
+    },
+    {
+      "id": "209",
+      "name": "U-lock with cable",
+      "sku": "AC-LOCK-U",
+      "qty_on_hand": "120",
+      "unit_cost": "24.50",
+      "value": "2940.00"
+    },
+    {
+      "id": "207",
+      "name": "700c inner tube",
+      "sku": "PT-TUBE-700",
+      "qty_on_hand": "300",
+      "unit_cost": "6.25",
+      "value": "1875.00"
+    },
+    {
+      "id": "211",
+      "name": "Chain, 8-speed",
+      "sku": "PT-CHN-8",
+      "qty_on_hand": "75",
+      "unit_cost": "21.40",
+      "value": "1605.00"
+    },
+    {
+      "id": "206",
+      "name": "Kids helmet",
+      "sku": "HL-KID",
+      "qty_on_hand": "45",
+      "unit_cost": "31.00",
+      "value": "1395.00"
+    },
+    {
+      "id": "210",
+      "name": "Brake pads (pair)",
+      "sku": "PT-BRK-PAD",
+      "qty_on_hand": "160",
+      "unit_cost": "7.80",
+      "value": "1248.00"
+    },
+    {
+      "id": "213",
+      "name": "Rain poncho (resale)",
+      "sku": "AC-PONCHO",
+      "qty_on_hand": "400",
+      "unit_cost": "3.10",
+      "value": "1240.00"
+    },
+    {
+      "id": "212",
+      "name": "Phone mount",
+      "sku": "AC-PHN-MNT",
+      "qty_on_hand": "90",
+      "unit_cost": "12.75",
+      "value": "1147.50"
+    }
+  ],
+  "committed_spend": "96881.12",
+  "expected_revenue": "40840.00",
+  "inventory_value": "100720.50"
+}

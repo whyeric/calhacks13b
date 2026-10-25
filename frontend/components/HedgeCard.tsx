@@ -229,6 +229,33 @@ export function ApproveBar({
     </div>
   );
 }
+// The order the owner's approval placed on Kalshi's demo exchange (markets/trading.py).
+// Fake money, so it is always labeled; the ledger keeps the approved figures, and a fill
+// that differs is left for reconciliation to flag.
+export function VenueOrderLine({
+  order,
+}: {
+  order: NonNullable<Hedge["venue_order"]>;
+}) {
+  const filled =
+    order.status === "filled" || order.status === "partial"
+      ? `${order.status === "filled" ? "Filled" : "Partly filled"} ${order.filled} of ${order.requested}${order.avg_price ? ` at ${fmtCents(order.avg_price)}` : ""}`
+      : order.status === "failed"
+        ? "Order failed"
+        : "Not placed";
+  return (
+    <p className="venue-order" data-testid="venue-order">
+      <span className="badge simulated">Kalshi demo · fake money</span> {filled}
+      {order.stand_in && order.ticker && (
+        <> · demo stand-in {order.ticker}, not the production contract</>
+      )}
+      {order.reason && <> · {order.reason}</>}
+      {order.differs_from_booked && (
+        <> · differs from what was booked; reconciliation will flag it</>
+      )}
+    </p>
+  );
+}
 export function HedgeCard({
   hedge,
   onChanged,
@@ -263,6 +290,7 @@ export function HedgeCard({
           {hedge.fee !== null && <> · includes {fmtUsd(hedge.fee)} in fees</>}
         </p>
       )}
+      {hedge.venue_order && <VenueOrderLine order={hedge.venue_order} />}
       {hedge.market_url && (
         <a href={hedge.market_url} target="_blank" rel="noopener noreferrer">
           Open on Kalshi ↗

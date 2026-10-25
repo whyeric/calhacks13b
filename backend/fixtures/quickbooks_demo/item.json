@@ -1,0 +1,365 @@
+{
+  "QueryResponse": {
+    "Item": [
+      {
+        "Id": "1",
+        "Name": "Hourly rental",
+        "Type": "Service",
+        "Active": true,
+        "TrackQtyOnHand": false,
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Rental income"
+        }
+      },
+      {
+        "Id": "2",
+        "Name": "Day pass",
+        "Type": "Service",
+        "Active": true,
+        "TrackQtyOnHand": false,
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Rental income"
+        }
+      },
+      {
+        "Id": "3",
+        "Name": "Group rental package",
+        "Type": "Service",
+        "Active": true,
+        "TrackQtyOnHand": false,
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Rental income"
+        }
+      },
+      {
+        "Id": "4",
+        "Name": "Guided tour",
+        "Type": "Service",
+        "Active": true,
+        "TrackQtyOnHand": false,
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Rental income"
+        }
+      },
+      {
+        "Id": "201",
+        "Name": "Class 1 commuter e-bike",
+        "Sku": "EB-C1-COM",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 24,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 1850.0,
+        "UnitPrice": 2899.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "202",
+        "Name": "City cruiser bike",
+        "Sku": "BK-CRZ-7",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 60,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 420.0,
+        "UnitPrice": 699.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "203",
+        "Name": "Kids bike 20in",
+        "Sku": "BK-KID-20",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 18,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 260.0,
+        "UnitPrice": 399.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "204",
+        "Name": "Tandem bike",
+        "Sku": "BK-TDM",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 6,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 980.0,
+        "UnitPrice": 1499.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "205",
+        "Name": "Adult helmet, M/L",
+        "Sku": "HL-ADT-ML",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 140,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 42.0,
+        "UnitPrice": 69.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "206",
+        "Name": "Kids helmet",
+        "Sku": "HL-KID",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 45,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 31.0,
+        "UnitPrice": 49.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "207",
+        "Name": "700c inner tube",
+        "Sku": "PT-TUBE-700",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 300,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 6.25,
+        "UnitPrice": 12.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "208",
+        "Name": "700c city tire",
+        "Sku": "PT-TIRE-700",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 85,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 38.0,
+        "UnitPrice": 64.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "209",
+        "Name": "U-lock with cable",
+        "Sku": "AC-LOCK-U",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 120,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 24.5,
+        "UnitPrice": 45.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "210",
+        "Name": "Brake pads (pair)",
+        "Sku": "PT-BRK-PAD",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 160,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 7.8,
+        "UnitPrice": 16.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "211",
+        "Name": "Chain, 8-speed",
+        "Sku": "PT-CHN-8",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 75,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 21.4,
+        "UnitPrice": 38.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "212",
+        "Name": "Phone mount",
+        "Sku": "AC-PHN-MNT",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 90,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 12.75,
+        "UnitPrice": 25.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      },
+      {
+        "Id": "213",
+        "Name": "Rain poncho (resale)",
+        "Sku": "AC-PONCHO",
+        "Type": "Inventory",
+        "Active": true,
+        "TrackQtyOnHand": true,
+        "QtyOnHand": 400,
+        "InvStartDate": "2024-01-01",
+        "PurchaseCost": 3.1,
+        "UnitPrice": 10.0,
+        "AssetAccountRef": {
+          "value": "80",
+          "name": "Inventory Asset"
+        },
+        "IncomeAccountRef": {
+          "value": "79",
+          "name": "Sales of product income"
+        },
+        "ExpenseAccountRef": {
+          "value": "81",
+          "name": "Cost of goods sold"
+        }
+      }
+    ],
+    "startPosition": 1,
+    "maxResults": 17
+  },
+  "time": "2026-10-25T09:00:00.000-07:00"
+}

@@ -22,10 +22,18 @@ export type Backtest = components["schemas"]["BacktestResult"];
 export type Ledger = components["schemas"]["LedgerResponse"];
 export type LedgerEntry = components["schemas"]["LedgerEntry"];
 export type Reconciliation = components["schemas"]["ReconResult"];
+// GET /benchmarks/reconciliation: the reconciler scored on planted errors (simulated).
+export type ReconBenchmark = components["schemas"]["ReconBenchmark"];
+export type ReconBenchmarkCase = components["schemas"]["ReconBenchmarkCase"];
 export type ChatReply = components["schemas"]["ChatReply"];
 export type ToolCall = components["schemas"]["ToolCall"];
 export type Settings = components["schemas"]["Settings"];
 export type Thresholds = components["schemas"]["ThresholdSettings"];
+// POST /research (live upload): the protocol's report on an uploaded CSV.
+export type ResearchReport = components["schemas"]["ResearchReport"];
+export type ResearchHypothesis = components["schemas"]["ResearchHypothesis"];
+export type ResearchEstimate = components["schemas"]["ResearchEstimate"];
+export type ResearchPeriod = components["schemas"]["ResearchPeriod"];
 // `sample_week` / `sample_businesses` land on /health in PR #60 (and possibly per hedge);
 // optional here so the UI works before and after, treating missing as false / [].
 export type Health = components["schemas"]["Health"] & {
@@ -51,3 +59,10 @@ export type HedgeLeg = Hedge & {
   /** Total premium across every leg of the set, computed by the API. */
   group_total_premium?: string | null;
 };
+// QuickBooks Online integration (/integrations/quickbooks/*). Money is a Decimal string.
+export type QuickBooksStatus = components["schemas"]["QuickBooksStatus"];
+export type QuickBooksConnect = components["schemas"]["QuickBooksConnect"];
+export type CommitmentLine = components["schemas"]["CommitmentLine"];
+export type InventoryLine = components["schemas"]["InventoryLine"];
+export type Commitments = components["schemas"]["Commitments"];
+export type QuickBooksResearch = components["schemas"]["QuickBooksResearch"];

@@ -22,6 +22,7 @@ from app import db
 from app.books.ledger import (
     BANK,
     CASH,
+    VENUE_CASH,
     PAYOUTS,
     BookingError,
     cents,
@@ -29,6 +30,7 @@ from app.books.ledger import (
     hedge_meta,
     opening_entry_id,
     payout_entry_id,
+    posting_date,
     usd,
     withdrawal_entry_id,
     write_ledger,
@@ -120,13 +122,15 @@ def book_settlement(
         existing = get_entry(hedge.business_id, payout_entry_id(hedge.id), engine)
         if existing is not None:
             return [existing]
+        on, late = posting_date(hedge.business_id, rec.settled_on, engine)
         entry = LedgerEntry(
             id=payout_entry_id(hedge.id),
             business_id=hedge.business_id,
-            date=rec.settled_on,
+            date=on,
             kind="payout",
-            narration=f"[SIMULATED] Payout: {rec.ticker} {rec.side.upper()} x {rec.n_filled}",
-            postings=[Posting(account=CASH, amount=rec.payout), Posting(account=PAYOUTS, amount=-rec.payout)],
+            narration=f"[SIMULATED] Payout: {rec.ticker} {rec.side.upper()} x {rec.n_filled}{late}",
+            postings=[Posting(account=VENUE_CASH[hedge.venue], amount=rec.payout),
+                      Posting(account=PAYOUTS, amount=-rec.payout)],
             meta=hedge_meta(hedge),
             simulated=True,
         )
@@ -161,6 +165,8 @@ def book_settlement(
         engine,
     )
     write_ledger(hedge.business_id, engine=engine, ledger_dir=ledger_dir)
+    if entries:
+        _mirror(hedge.business_id, entries, engine)
     return entries
 
 
@@ -172,26 +178,37 @@ def book_withdrawal(
     *,
     engine: Engine | None = None,
     ledger_dir: Path | None = None,
+    venue: str = "kalshi",
 ) -> LedgerEntry:
-    """Simulated transfer of Kalshi cash to the bank: debit Bank:Checking, credit Kalshi:Cash."""
+    """Simulated transfer of venue cash to the bank: debit Bank:Checking, credit the venue's cash."""
     amount = cents(amount)
     entry_id = withdrawal_entry_id(business_id, on, hedge_ids)
     existing = get_entry(business_id, entry_id, engine)
     if existing is not None:
         return existing
+    booked_on, late = posting_date(business_id, on, engine)
     entry = LedgerEntry(
         id=entry_id,
         business_id=business_id,
-        date=on,
+        date=booked_on,
         kind="withdrawal",
-        narration=f"[SIMULATED] Withdrawal to bank: {', '.join(hedge_ids)}",
-        postings=[Posting(account=BANK, amount=amount), Posting(account=CASH, amount=-amount)],
+        narration=f"[SIMULATED] Withdrawal to bank: {', '.join(hedge_ids)}{late}",
+        postings=[Posting(account=BANK, amount=amount), Posting(account=VENUE_CASH[venue], amount=-amount)],
         meta=None,
         simulated=True,
     )
     db.put_ledger_entry(entry, engine)
     write_ledger(business_id, engine=engine, ledger_dir=ledger_dir)
+    _mirror(business_id, [entry], engine)
     return entry
+
+
+def _mirror(business_id: str, entries: list[LedgerEntry], engine: Engine | None) -> None:
+    """Mirror new entries into QuickBooks when it's connected (integrations/quickbooks_sync.py).
+    Never raises: Beancount stays the record whatever QuickBooks does."""
+    from app.integrations import quickbooks_sync
+
+    quickbooks_sync.mirror_entries(business_id, entries, engine)
 
 
 # --- Simulated bank statement ----------------------------------------------------------

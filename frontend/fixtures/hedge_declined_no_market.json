@@ -48,5 +48,11 @@
   "ledger_entry_ids": [],
   "created_at": "2026-10-24T15:00:00Z",
   "decided_by": null,
-  "decided_at": null
+  "decided_at": null,
+  "venue": "kalshi",
+  "fee_rate": null,
+  "needs_controller": false,
+  "controller": null,
+  "decision_note": null,
+  "owner_history": null
 }

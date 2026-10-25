@@ -1,0 +1,13 @@
+{
+  "mode": "demo",
+  "reason": null,
+  "trading_enabled": true,
+  "offline": false,
+  "key_id_present": true,
+  "private_key_present": true,
+  "base_url": "https://demo-api.kalshi.co/trade-api/v2",
+  "host_allowed": true,
+  "reachable": true,
+  "balance": "1000.00",
+  "error": null
+}

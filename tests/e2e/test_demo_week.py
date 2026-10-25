@@ -102,6 +102,11 @@ def test_a7_pending_not_self_approved(client):
     assert not booked()
     assert next(x for x in _hedges(client, b) if x["id"] == h["id"])["status"] == "pending_approval"
 
+    if h["needs_controller"]:  # above materiality: the owner alone can't book it either
+        r = client.post(f"/hedges/{h['id']}/approve", json={"actor": "owner"})
+        assert r.status_code == 409 and r.json()["error"]["code"] == "needs_controller"
+        assert not booked()
+        assert client.post(f"/hedges/{h['id']}/cosign", json={"actor": "controller"}).status_code == 200
     r = client.post(f"/hedges/{h['id']}/approve", json={"actor": "owner"})
     assert r.status_code == 200, r.text
     approved = r.json()

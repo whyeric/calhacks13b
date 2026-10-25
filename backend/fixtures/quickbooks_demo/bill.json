@@ -1,0 +1,429 @@
+{
+  "QueryResponse": {
+    "Bill": [
+      {
+        "Id": "8001",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-01T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-01T12:05:00-07:00"
+        },
+        "DocNumber": "HPR-2610",
+        "TxnDate": "2026-10-01",
+        "DueDate": "2026-10-01",
+        "PrivateNote": "October rent, Pier 40 storefront",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "106",
+          "name": "Hudson Pier Realty"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "October rent, Pier 40 storefront",
+            "Amount": 18500.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 18500.0,
+        "Balance": 0.0
+      },
+      {
+        "Id": "8002",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-20T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-20T12:05:00-07:00"
+        },
+        "DocNumber": "HPR-2611",
+        "TxnDate": "2026-10-20",
+        "DueDate": "2026-11-01",
+        "PrivateNote": "November rent, Pier 40 storefront",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "106",
+          "name": "Hudson Pier Realty"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "November rent, Pier 40 storefront",
+            "Amount": 18500.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 18500.0,
+        "Balance": 18500.0
+      },
+      {
+        "Id": "8003",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-20T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-20T12:05:00-07:00"
+        },
+        "DocNumber": "HPR-2612",
+        "TxnDate": "2026-10-20",
+        "DueDate": "2026-12-01",
+        "PrivateNote": "December rent, Pier 40 storefront",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "106",
+          "name": "Hudson Pier Realty"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "December rent, Pier 40 storefront",
+            "Amount": 18500.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 18500.0,
+        "Balance": 18500.0
+      },
+      {
+        "Id": "8004",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-20T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-20T12:05:00-07:00"
+        },
+        "DocNumber": "HPR-2701",
+        "TxnDate": "2026-10-20",
+        "DueDate": "2027-01-01",
+        "PrivateNote": "January rent, Pier 40 storefront",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "106",
+          "name": "Hudson Pier Realty"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "January rent, Pier 40 storefront",
+            "Amount": 18500.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 18500.0,
+        "Balance": 18500.0
+      },
+      {
+        "Id": "8005",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-15T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-15T12:05:00-07:00"
+        },
+        "DocNumber": "BCI-Q4-26",
+        "TxnDate": "2026-10-15",
+        "DueDate": "2026-11-15",
+        "PrivateNote": "Q4 general liability and fleet insurance",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "107",
+          "name": "Bluestone Commercial Insurance"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Q4 general liability and fleet insurance",
+            "Amount": 6240.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 6240.0,
+        "Balance": 6240.0
+      },
+      {
+        "Id": "8006",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-24T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-24T12:05:00-07:00"
+        },
+        "DocNumber": "CDN-1026",
+        "TxnDate": "2026-10-24",
+        "DueDate": "2026-11-30",
+        "PrivateNote": "Dock station access fee, 3 stations (Nov)",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "108",
+          "name": "CityCycle Dock Network"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Dock station access fee, 3 stations (Nov)",
+            "Amount": 2850.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 2850.0,
+        "Balance": 2850.0
+      },
+      {
+        "Id": "8007",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-08T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-08T12:05:00-07:00"
+        },
+        "DocNumber": "VSW-88213",
+        "TxnDate": "2026-10-08",
+        "DueDate": "2026-11-10",
+        "PrivateNote": "Repair parts: derailleurs, spokes",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "101",
+          "name": "Velo Supply Wholesale"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Repair parts: derailleurs, spokes",
+            "Amount": 2317.4,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 2317.4,
+        "Balance": 1317.4
+      },
+      {
+        "Id": "8008",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-22T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-22T12:05:00-07:00"
+        },
+        "DocNumber": "MPG-1026",
+        "TxnDate": "2026-10-22",
+        "DueDate": "2026-11-18",
+        "PrivateNote": "Electric, e-bike charging room",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "109",
+          "name": "Metro Power & Gas"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Electric, e-bike charging room",
+            "Amount": 1145.22,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 1145.22,
+        "Balance": 1145.22
+      },
+      {
+        "Id": "8009",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-24T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-24T12:05:00-07:00"
+        },
+        "DocNumber": "GBM-0412",
+        "TxnDate": "2026-10-24",
+        "DueDate": "2026-12-05",
+        "PrivateNote": "Fall fleet tune-up, 66 bikes",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "110",
+          "name": "Gotham Bike Mechanics"
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Fall fleet tune-up, 66 bikes",
+            "Amount": 1980.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 1980.0,
+        "Balance": 1980.0
+      },
+      {
+        "Id": "8010",
+        "SyncToken": "0",
+        "MetaData": {
+          "CreateTime": "2026-10-18T12:05:00-07:00",
+          "LastUpdatedTime": "2026-10-18T12:05:00-07:00"
+        },
+        "DocNumber": "KRC-55190",
+        "TxnDate": "2026-10-18",
+        "DueDate": "2026-12-15",
+        "PrivateNote": "Tire restock (net 60)",
+        "CurrencyRef": {
+          "value": "USD",
+          "name": "United States Dollar"
+        },
+        "VendorRef": {
+          "value": "102",
+          "name": "Kettle Rubber Co."
+        },
+        "APAccountRef": {
+          "value": "33",
+          "name": "Accounts Payable (A/P)"
+        },
+        "Line": [
+          {
+            "Id": "1",
+            "LineNum": 1,
+            "Description": "Tire restock (net 60)",
+            "Amount": 1320.0,
+            "DetailType": "AccountBasedExpenseLineDetail",
+            "AccountBasedExpenseLineDetail": {
+              "AccountRef": {
+                "value": "60",
+                "name": "Operating expenses"
+              },
+              "BillableStatus": "NotBillable"
+            }
+          }
+        ],
+        "TotalAmt": 1320.0,
+        "Balance": 1320.0
+      }
+    ],
+    "startPosition": 1,
+    "maxResults": 10
+  },
+  "time": "2026-10-25T09:00:00.000-07:00"
+}

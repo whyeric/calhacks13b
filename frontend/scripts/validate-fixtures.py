@@ -4,8 +4,11 @@ import sys
 from pathlib import Path
 root = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(root / "frontend/.python-tools"), str(root / "backend")]
+import app.models as models
 from app.models import (Business, AnalyzeResponse, Hedge, LogEntry, Budget, BacktestResult, LedgerResponse,
-    ChatReply, Settings, Health)
+    ChatReply, Settings, Health, ReconBenchmark, ResearchReport)
+# QuickBooks fixtures validate once the backend models land; until then they are skipped (and said so).
+QBO_MODELS = {"quickbooks_status": "QuickBooksStatus", "quickbooks_research": "QuickBooksResearch"}
 fixtures = root / "frontend/fixtures"
 count = 0
 for path in fixtures.glob("*.json"):
@@ -15,10 +18,20 @@ for path in fixtures.glob("*.json"):
             Budget.model_validate(snapshot)
             count += 1
         continue
+    qbo = next((m for prefix, m in QBO_MODELS.items() if name.startswith(prefix)), None)
+    if qbo is not None:
+        if not hasattr(models, qbo):
+            print(f"skipped {path.name}: app.models has no {qbo} yet")
+            continue
+        getattr(models, qbo).model_validate(json.loads(path.read_text(encoding="utf-8")))
+        count += 1
+        continue
     model = (Business if name.startswith("businesses") else AnalyzeResponse if name.startswith("analyze_")
         else Hedge if name.startswith("hedge") else LogEntry if name == "decisions"
         else BacktestResult if name.startswith("backtest_") else LedgerResponse if name.startswith("ledger_")
-        else ChatReply if name == "chat_reply" else Settings if name == "settings" else Health if name == "health" else None)
+        else ChatReply if name == "chat_reply" else Settings if name == "settings" else Health if name == "health"
+        else ReconBenchmark if name == "recon_benchmark"
+        else ResearchReport if name.startswith("research_") else None)
     if model is None:
         continue
     data = json.loads(path.read_text(encoding="utf-8"))

@@ -55,3 +55,31 @@ export const apiPost = <T>(path: string, body?: unknown) =>
   send<T>("POST", path, body);
 export const apiPut = <T>(path: string, body: unknown) =>
   send<T>("PUT", path, body);
+
+// POST /research: the raw CSV is the body (text/csv); the backend runs the protocol live and
+// stores nothing.
+export async function postResearch<T>(csv: string, name: string): Promise<T> {
+  const path = `/research?name=${encodeURIComponent(name)}`;
+  if (MOCK_MODE)
+    return (await import("./mock")).mockRequest<T>("POST", path, csv);
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "text/csv" },
+    body: csv,
+  });
+  return responseBody<T>(res);
+}
+
+// QuickBooks Online (/integrations/quickbooks/*). Demo mode connects a synthetic company at
+// once; live mode returns an Intuit authorize_url and the backend's OAuth callback redirects
+// back to /?qbo=connected (or ?qbo=error).
+const QBO = "/integrations/quickbooks";
+export const getQuickBooksStatus = <T>() => apiGet<T>(`${QBO}/status`);
+export const connectQuickBooks = <T>() => apiPost<T>(`${QBO}/connect`);
+export const disconnectQuickBooks = <T>() => apiPost<T>(`${QBO}/disconnect`);
+export const getQuickBooksCommitments = <T>() =>
+  apiGet<T>(`${QBO}/commitments`);
+export const postQuickBooksResearch = <T>(name?: string) =>
+  apiPost<T>(
+    `${QBO}/research${name ? `?name=${encodeURIComponent(name)}` : ""}`,
+  );
