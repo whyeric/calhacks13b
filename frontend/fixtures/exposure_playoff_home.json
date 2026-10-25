@@ -1,0 +1,20 @@
+{
+  "id": "exp_playoff_home",
+  "business_id": "restaurant",
+  "event": "playoff_home",
+  "effect_usd": "604.00",
+  "ci90": ["438.00", "772.00"],
+  "se": "102.00",
+  "p_value": 0.0001,
+  "n_events_train": 15,
+  "direction": "positive",
+  "hedge_side": "no",
+  "settlement_var": "playoff_home",
+  "hedgeable": true,
+  "reasons": [],
+  "strike": null,
+  "beta_settlement": null,
+  "expected_count": "6.6",
+  "estimated": true,
+  "basis_note": "Foot traffic within 0.5 km of MSG rises 5.8% on playoff home nights (Dewey visits, replicated on a 2025-26 holdout). Dollars assume a $35 average check and 300 covers a night."
+}

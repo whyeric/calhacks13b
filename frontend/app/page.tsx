@@ -207,7 +207,15 @@ export default function Home() {
             error={hedges.error}
             retry={() => hedges.mutate()}
           >
-            <HedgeList hedges={hedges.data ?? []} onChanged={refresh} />
+            <HedgeList
+              hedges={hedges.data ?? []}
+              onChanged={refresh}
+              exposures={
+                analyze.data
+                  ? [...analyze.data.exposures, ...analyze.data.dropped]
+                  : []
+              }
+            />
           </StateBoundary>
         </section>
         <section className="panel log-panel" aria-label="Decision log">
