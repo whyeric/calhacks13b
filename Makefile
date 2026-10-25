@@ -29,7 +29,7 @@ seed:
 
 # Optional: needs raw data/ and network; rebuilds fixtures/*.parquet.
 seed-data:
-	cd backend && $(PY) -m app.data.build
+	cd backend && $(PY) -m app.data.dewey build
 
 dev:
 	@trap 'kill 0' EXIT; \
