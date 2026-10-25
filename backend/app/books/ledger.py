@@ -175,6 +175,7 @@ def book_approval(
     engine: Engine | None = None,
     ledger_dir: Path | None = None,
     on: date | None = None,
+    simulated: bool = False,
 ) -> list[LedgerEntry]:
     """Book an owner-approved hedge: premium + fee debited, Kalshi cash credited.
 
@@ -186,7 +187,7 @@ def book_approval(
     nothing is written. Returns the hedge's entries (one premium entry); use their ids for
     `hedge.ledger_entry_ids` (they equal `[premium_entry_id(hedge.id)]`).
     Persists via `db.put_ledger_entry`, appends a `booking` log event (I5), and rewrites
-    `ledgers/<business>.beancount`.
+    `ledgers/<business>.beancount`. `simulated=True` labels a demo stand-in hedge (I6).
     """
     ticker, cost, fee, premium = _check_bookable(hedge)
     existing = get_entry(hedge.business_id, premium_entry_id(hedge.id), engine)
@@ -200,14 +201,14 @@ def book_approval(
         business_id=hedge.business_id,
         date=booked_on,
         kind="premium",
-        narration=f"Premium: {ticker} {hedge.side.upper()} x {hedge.n_filled}",
+        narration=("[SIMULATED] " if simulated else "") + f"Premium: {ticker} {hedge.side.upper()} x {hedge.n_filled}",
         postings=[
             Posting(account=PREMIUMS, amount=cost),
             Posting(account=FEES, amount=fee),
             Posting(account=CASH, amount=-premium),
         ],
         meta=hedge_meta(hedge),
-        simulated=False,
+        simulated=simulated,
     )
     db.put_ledger_entry(entry, engine)
     db.append_log(
@@ -243,6 +244,7 @@ def approve_hedge(
     at: datetime | None = None,
     engine: Engine | None = None,
     ledger_dir: Path | None = None,
+    simulated: bool = False,
 ) -> tuple[Hedge, list[LedgerEntry]]:
     """Owner approval of a proposed/pending hedge: returns the approved Hedge (with
     `ledger_entry_ids` filled in, saved via `db.put_hedge`) and its ledger entries.
@@ -254,7 +256,7 @@ def approve_hedge(
     if actor != "owner":
         raise BookingError("only the owner can approve a hedge (I4)")
     if hedge.status in ("approved", "settled"):
-        return hedge, book_approval(hedge, engine=engine, ledger_dir=ledger_dir)
+        return hedge, book_approval(hedge, engine=engine, ledger_dir=ledger_dir, simulated=simulated)
     if hedge.status not in ("proposed", "pending_approval"):
         raise BookingError(f"{hedge.id} is {hedge.status}; it cannot be approved")
     data: dict[str, Any] = hedge.model_dump()
@@ -265,7 +267,7 @@ def approve_hedge(
         ledger_entry_ids=[premium_entry_id(hedge.id)],
     )
     approved = Hedge.model_validate(data)
-    entries = book_approval(approved, engine=engine, ledger_dir=ledger_dir)
+    entries = book_approval(approved, engine=engine, ledger_dir=ledger_dir, simulated=simulated)
     db.put_hedge(approved, engine)
     return approved, entries
 
@@ -297,7 +299,7 @@ def _entry_text(e: LedgerEntry) -> list[str]:
             lines.append(f"  {key}: {_q(getattr(e.meta, key))}")
     if e.simulated:
         lines.append(f"  simulated: {_q('true')}")
-    width = max(len(p.account) for p in e.postings) + 2
+    width = 28
     for p in e.postings:
         lines.append(f"  {p.account.ljust(width)}{str(cents(p.amount)).rjust(10)} USD")
     return lines

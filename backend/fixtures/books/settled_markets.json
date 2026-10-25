@@ -1,0 +1,7 @@
+[
+  {"ticker": "KXHIGHNY-26OCT20-T72", "event_ticker": "KXHIGHNY-26OCT20", "title": "Will the maximum temperature be >72° on Oct 20, 2026?", "status": "finalized", "result": "no", "close_time": "2026-10-21T05:00:00Z", "settlement_ts": "2026-10-21T11:08:41.790318Z"},
+  {"ticker": "KXHIGHNY-26OCT21-T66", "event_ticker": "KXHIGHNY-26OCT21", "title": "Will the maximum temperature be >66° on Oct 21, 2026?", "status": "finalized", "result": "no", "close_time": "2026-10-22T05:00:00Z", "settlement_ts": "2026-10-22T11:18:25.048158Z"},
+  {"ticker": "KXHIGHNY-26OCT22-T70", "event_ticker": "KXHIGHNY-26OCT22", "title": "Will the maximum temperature be >70° on Oct 22, 2026?", "status": "finalized", "result": "no", "close_time": "2026-10-23T05:00:00Z", "settlement_ts": "2026-10-23T11:09:18.491741Z"},
+  {"ticker": "KXNBAGAME-26OCT12MINNYK-NYK", "event_ticker": "KXNBAGAME-26OCT12MINNYK", "title": "New York wins", "status": "finalized", "result": "no", "close_time": "2026-10-13T02:09:21Z", "settlement_ts": "2026-10-13T02:11:09.626628Z"},
+  {"ticker": "KXNBAGAME-26OCT15TORNYK-NYK", "event_ticker": "KXNBAGAME-26OCT15TORNYK", "title": "New York wins", "status": "finalized", "result": "yes", "close_time": "2026-10-16T02:15:20Z", "settlement_ts": "2026-10-16T02:17:06.825926Z"}
+]
