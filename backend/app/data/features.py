@@ -2,18 +2,22 @@
 
 Built from tracked fixtures only: taxi or restaurant revenue, MSG weather, Knicks/Rangers schedule
 CSVs, and (when the Dewey build has produced it) MSG visit spikes. Gap G4: `msg_event = home_game OR
-spike`; without `msg_visits_daily.parquet` it is `home_game` alone. The restaurant table needs
+spike`; without `msg_visits_daily.parquet` it is `home_game` alone. Spikes are used for the restaurant
+only (it is the Dewey business): the taxi table is `home_game` alone either way, so its numbers don't
+depend on a gitignored file (rain was $2,080 on a fresh clone and $2,245 with it). The restaurant table needs
 `restaurant_daily.parquet` from the Dewey build and raises `FileNotFoundError` without it.
 
-The settlement flag for `fair` (CONTRACTS R17) comes from the station series, not the business's own
-weather: `add_settlement(df, ...)` adds `settle_rain` (and `settle_hot` = station tmax > strike, given one), then
-`event_frequency(df, "settle_rain")` is p̂ on `train` only.
+The settlement flag for `fair` (CONTRACTS R17) comes from the settlement record, not the business's own
+weather: `add_settlement(df, ...)` adds `settle_rain` (and `settle_hot` = station tmax > strike, given one)
+from NOAA GHCN Central Park (Open-Meteo fallback), then `event_frequency(df, "settle_rain")` is p̂ on `train` only.
 """
 
 from __future__ import annotations
 
+import logging
 from datetime import date
 from pathlib import Path
+from typing import Literal
 
 import pandas as pd
 
@@ -27,6 +31,8 @@ COLUMNS = [
 BUSINESSES = ("taxi", "restaurant")
 RESTAURANT_FIXTURE = "restaurant_daily.parquet"
 MSG_VISITS_FIXTURE = "msg_visits_daily.parquet"
+SPIKE_BUSINESSES = ("restaurant",)  # Dewey MSG-visit spikes feed msg_event only here (deterministic taxi)
+logger = logging.getLogger(__name__)
 
 
 def _revenue(business_id: str, fixtures_dir: Path) -> pd.DataFrame:
@@ -77,7 +83,7 @@ def build(
 
     df["revenue"] = df["revenue"].astype("float64")
     df = df.join(calendar(df["date"]))
-    spikes = _spikes(fixtures_dir)
+    spikes = _spikes(fixtures_dir) if business_id in SPIKE_BUSINESSES else None
     spike = df["date"].map(spikes).fillna(False).astype(bool) if spikes is not None else False
     df["msg_event"] = df["home_game"] | spike
     df["estimated"] = business_id == "restaurant"
@@ -131,16 +137,47 @@ def add_settlement(
     rain_threshold: float | None = None,
     strike: float | None = None,
     fixtures_dir: Path = config.FIXTURES_DIR,
+    source: Literal["auto", "noaa", "open-meteo"] = "auto",
 ) -> pd.DataFrame:
-    """Adds the contract's settlement flags from the station series: `settle_rain`, and `settle_hot` given a strike."""
+    """Adds the contract's settlement flags: `settle_rain`, and `settle_hot` (tmax strictly > strike) given one.
+
+    For the Central Park station (the default point) the flags come from NOAA GHCN USW00094728, the
+    record KXRAIN / KXHIGHNY settle on (`weather.load_ghcn`). Days GHCN doesn't cover, or every day
+    when it's unavailable, fall back to the Open-Meteo station series with a logged warning. Any
+    other point uses Open-Meteo. `df.attrs["settlement_source"]` is "noaa", "mixed" or "open-meteo".
+    """
     start, stop = df["date"].min(), df["date"].max()
-    w = weather.load_weather(lat, lon, start, stop, cache_dir=fixtures_dir)
-    f = weather.flags(w, rain_threshold).set_index("date")
+    rain, tmax = pd.Series(index=df.index, dtype=object), pd.Series(index=df.index, dtype="float64")
+    n_noaa = 0
+    use_noaa = source == "noaa" or (source == "auto" and (lat, lon) == config.SETTLEMENT_STATION_LATLON)
+    if use_noaa:
+        try:
+            g = weather.ghcn_flags(weather.load_ghcn(start, stop, cache_dir=fixtures_dir), rain_threshold)
+            g = g.set_index("date")
+            rain = df["date"].map(g["rain"])
+            tmax = df["date"].map(g["tmax"]).astype("float64")
+            n_noaa = int(rain.notna().sum())
+        except Exception as e:  # cache miss offline, NCEI down, bad CSV: never fail settlement on it
+            logger.warning("NOAA GHCN settlement record unavailable (%s); using Open-Meteo", e)
+    missing = rain.isna()
+    if missing.any():
+        if use_noaa:
+            logger.warning(
+                "NOAA GHCN covers %d of %d days in %s..%s; the other %d settle on Open-Meteo, which over-calls rain",
+                n_noaa, len(df), start, stop, int(missing.sum()),
+            )
+        w = weather.load_weather(lat, lon, start, stop, cache_dir=fixtures_dir)
+        f = weather.flags(w, rain_threshold).set_index("date")
+        rain[missing] = df.loc[missing, "date"].map(f["rain"])
+        tmax[missing] = df.loc[missing, "date"].map(f["tmax"])
     out = df.copy()
-    out["settle_rain"] = out["date"].map(f["rain"]).astype(bool)
+    out["settle_rain"] = rain.astype(bool)
     if strike is not None:
         # KXHIGHNY pays only when the high is strictly above the strike (same rule as app/stats).
-        out["settle_hot"] = out["date"].map(f["tmax"]) > strike
+        out["settle_hot"] = tmax > strike
+    out.attrs["settlement_source"] = (
+        "noaa" if n_noaa == len(df) else "mixed" if n_noaa else "open-meteo"
+    )
     return out
 
 

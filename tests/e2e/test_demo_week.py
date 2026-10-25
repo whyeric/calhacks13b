@@ -14,7 +14,7 @@ from decimal import Decimal
 import pytest
 
 from chain import DECIDABLE
-from conftest import DEMO_WEEK, run_desk
+from conftest import DEMO_WEEK, HAS_RESTAURANT_DATA, run_desk
 
 BUSINESSES = ("taxi", "restaurant")
 
@@ -27,16 +27,17 @@ def _all(client):
     return [h for b in BUSINESSES for h in _hedges(client, b)]
 
 
-def _remaining(client, b) -> Decimal:
-    return Decimal(next(x for x in client.get("/businesses").json() if x["id"] == b)["budget"]["remaining"])
+def _within_budget(h) -> bool:
+    """The desk's own over_budget check passed: the premium fit the budget left when it was decided
+    (later pending legs count against `remaining`, D4, so that number alone can't tell)."""
+    ob = next(c for c in h["decision"]["checks"] if c["code"] == "over_budget")
+    return ob["passed"] is True and Decimal(ob["metric"]["premium"]) <= Decimal(ob["metric"]["remaining"])
 
 
 def _assert_mix(client, hedges):
     declined = [h for h in hedges if h["status"] == "declined"]
     pending = [h for h in hedges if h["status"] == "pending_approval"]
-    # remaining already nets out open hedges' premiums (D4), so add this hedge's own back
-    eligible = [h for h in hedges if h["status"] == "proposed"
-                and Decimal(h["premium"]) <= _remaining(client, h["business_id"]) + Decimal(h["premium"])]
+    eligible = [h for h in hedges if h["status"] == "proposed" and _within_budget(h)]
     return declined, pending, eligible
 
 
@@ -56,17 +57,24 @@ def test_a6_demo_week_as_shipped(client):
 
 
 def test_a6_real_pipeline_outcome_mix(client):
+    """Real desk runs on the committed cache. Taxi rain is declined (no_market + unstable). With the
+    Dewey data the restaurant's playoff season hedge adds a within-budget leg (proposed) and legs
+    that wait for the owner (pending_approval, over_budget), so the real week has the full mix."""
     for b in BUSINESSES:
         run = run_desk(client, b)
         assert run["status"] in ("done", "failed")
     real = [h for h in _all(client) if not h["id"].startswith("hdg_0")]  # sample ids are hdg_01..04
     declined, pending, eligible = _assert_mix(client, real)
     assert declined and all(h["decision"]["reasons"] for h in declined), real
-    if not (pending and eligible):
-        pytest.xfail("real desk runs on the committed cache give "
-                     f"{[(h['id'], h['status'], h['decision']['reasons']) for h in real]}: "
-                     "no pending and/or no approved-eligible hedge. Needs a re-warm with a two-sided "
-                     "book (docs/DEMO.md) or demo-week budget/thresholds in fixtures/businesses/*.json")
+    if not HAS_RESTAURANT_DATA:
+        pytest.skip("fresh clone: the restaurant (playoff legs) needs the gitignored Dewey series; "
+                    f"taxi alone gives {[(h['id'], h['status'], h['decision']['reasons']) for h in real]}")
+    assert pending and eligible, [(h["id"], h["status"], h["decision"]["reasons"]) for h in real]
+    assert all(h["exposure_id"] == "exp_playoff_home" for h in pending + eligible)
+    assert all(h["estimated"] for h in pending + eligible)  # I6: restaurant dollars are estimated
+    h = eligible[0]
+    r = client.post(f"/hedges/{h['id']}/approve", json={"actor": "owner"})
+    assert r.status_code == 200 and r.json()["status"] == "approved" and r.json()["ledger_entry_ids"], r.text
 
 
 # --- C8-A7 ------------------------------------------------------------------------
@@ -143,15 +151,19 @@ def test_a9_declined_flips_with_threshold(client):
         "the original decline is still in the log"
 
 
-@pytest.mark.xfail(reason="bug (backend/app/hedge_rules.py): loosening fill_decline re-proposes a hedge "
-                          "that filled 0 contracts; a 0-contract, $0 proposal should stay declined",
-                   strict=False)
-def test_a9_zero_fill_never_becomes_a_proposal(client):
+def test_a9_zero_fill_never_becomes_a_proposal(client, monkeypatch):
+    """Loosening fill_decline (and the unstable rule) never turns a 0-contract hedge into a $0
+    proposal. The zero fill is the cached Sunday rain book (KXRAIN-26OCT25-NYC, no `no` depth),
+    reached by lifting the desk-week filter for this test only."""
+    from app.markets import match
+
+    monkeypatch.setattr(match, "in_week", lambda market, week_of: True)
     run_desk(client, "taxi")
     zero = [h for h in _hedges(client, "taxi") if h["status"] == "declined" and h["n_filled"] == 0
             and "illiquid" in h["decision"]["reasons"]]
-    if not zero:
-        pytest.skip("no zero-fill decline in this cache")
-    _put(client, "taxi", fill_decline="0.0")
+    assert zero, [(h["id"], h["status"], h["n_filled"], h["decision"]["reasons"]) for h in _hedges(client, "taxi")]
+    _put(client, "taxi", fill_decline="0.0", decline_unstable=False, overpay_max="0.99",
+         cost_ratio_max="9.99", basis_r2_min=0.0)
     after = next(x for x in _hedges(client, "taxi") if x["id"] == zero[0]["id"])
     assert after["status"] == "declined", (after["status"], after["n_filled"], after["premium"])
+    assert after["decision"]["reasons"] == ["illiquid"]

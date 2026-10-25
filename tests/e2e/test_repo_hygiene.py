@@ -95,7 +95,9 @@ def test_a13_secrets_not_tracked():
 
 
 def test_a13_no_keys_outside_docs():
-    pattern = "sk-" + "ant-|ANTHROPIC_API_KEY" + "=.+"  # split so this file doesn't match itself
+    # A key prefix, or the variable assigned a real-looking value (not "" or an empty example line).
+    # Split so this file doesn't match itself.
+    pattern = "sk-" + "ant-|ANTHROPIC_API_KEY" + "=[\"']?[A-Za-z0-9_-]{8,}"
     r = subprocess.run(["git", "grep", "-nE", pattern, "--", ".", ":(exclude)docs", ":(exclude)*.md",
                         ":(exclude).env.example"], cwd=REPO_ROOT, capture_output=True, text=True)
     assert r.returncode == 1, f"possible secrets in tracked files:\n{r.stdout}"

@@ -9,7 +9,9 @@ Order of a turn:
 1. Off-list tickers (C3-H8): a market ticker in the message that isn't on this business's list
    gets a clear `off_list` error reply; nothing is created.
 2. Guards (policy enforced in code, G15): approve / book / "just buy it", buy more, change
-   settings, edit the log, prompt injection, "will this make money?", "how real is this?".
+   settings, edit the log, prompt injection, "will this make money?", "how real is this?", and
+   prediction questions ("who will win?", "will it rain tomorrow?"), which get "the desk doesn't
+   predict games or weather" and never a probability.
    Each gets a deterministic reply built from read-only tool results. Claude is never asked,
    so no wording of the request can get it to act.
 3. Everything else ("why did you decline X?"): Claude with `CHAT_TOOL_SCHEMAS` only (read_log,
@@ -127,6 +129,15 @@ _INTENTS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("profit", re.compile(
         r"make (?:me )?money|profit|earn|come out ahead|guarantee|win money|pay off|worth it|good bet"
         r"|will (?:it|this|i) win|\breturns?\b|upside", re.I)),
+    # Forecast questions ("What will the Knicks do this week?", "will it rain tomorrow?"). The desk
+    # measures exposure and prices protection; it never predicts, so no probability is offered.
+    ("prediction", re.compile(
+        r"\bwho(?:'s| is| will|'ll)? (?:going to |gonna )?win\b|\bwho wins\b"
+        r"|\bwhat will (?!you\b|i\b|we\b|the desk\b|the hedge\b|my\b)(?:the )?[\w ]{1,30}? do\b|\bwhat(?:'s| is) (?:the )?(?:forecast|weather)\b"
+        r"|\b(?:will|is it going to|is it gonna|going to|gonna) (?:it )?(?:rain|snow|storm|be (?:hot|cold|warm|sunny|nice))\b"
+        r"|\bwill (?:the )?(?:knicks|rangers|nyk|nyr|they|we)\b.{0,30}\b(?:win|lose|beat|make|cover|score)"
+        r"|\b(?:predict\w*|forecast\w*)\b|\b(?:odds|chances?|likel(?:y|ihood)|probability) (?:of|that|it|the)\b"
+        r"|\bhow likely\b", re.I)),
     ("honesty", re.compile(
         r"how real|is (?:this|it|that) real|real data|estimated|simulated|made up|fake|actual (?:money|data|trades?)"
         r"|real (?:money|trades?|orders?|dollars)|where do (?:the|these) (?:numbers|figures) come", re.I)),
@@ -339,6 +350,8 @@ def _passed_clause(code: str, m: dict[str, Any]) -> str | None:
         return f"the contract tracks your losses closely, with a fit of {m['r2']}"
     if code == "too_expensive" and m.get("ratio") is not None:
         return f"it costs {_pct(m['ratio'])} of the swing it removes"
+    if code == "unstable" and m.get("effect_recent_usd") is not None:
+        return f"the effect held up in the most recent months ({prompts.usd(m['effect_recent_usd'])} a day)"
     return None
 
 
@@ -364,7 +377,8 @@ def explain(h: Hedge, budget: dict[str, Any] | None = None) -> str:
             good = [g for g in good if g]
             if good:
                 text += f" The other checks passed: {_join(good)}. One failed check is enough to decline."
-            text += " Passing on a hedge that's priced wrong is the desk doing its job."
+            text += (" Passing on a risk that hasn't held up is the desk doing its job." if d.reasons == ["unstable"]
+                     else " Passing on a hedge that's priced wrong is the desk doing its job.")
     else:
         good = [g for g in (_passed_clause(c, metrics.get(c, {})) for c in passed) if g]
         what = f"{h.n_filled} {h.side.upper()} contracts for {prompts.usd(h.premium)}" if h.premium is not None else ""
@@ -473,6 +487,11 @@ def guard_reply(tools: ChatTools, guard: str, message: str) -> str:
         else:
             text += " What you pay is the premium, and what you get is a smaller swing in your week's revenue."
         text += " It doesn't predict the weather or the game, and it isn't meant to beat the market."
+    elif guard == "prediction":
+        text = ("I can't tell you that: the desk doesn't predict games or weather. It measures your exposure, "
+                "how your revenue moves on rain, hot or game days, and prices protection against it. Ask me why "
+                "about any hedge and I'll show the checks behind it.")
+        allowed = {}
     elif guard == "honesty":
         biz = tools.execute("get_business")
         allowed = log.allowed_numbers(allowed, biz)

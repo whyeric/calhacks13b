@@ -223,3 +223,27 @@ def test_api_chat_uses_agent_and_is_not_logged():
         r = c.post("/businesses/restaurant/chat", json={"message": "Why did you decline the rain hedge?"})
         assert r.status_code == 200 and r.json()["reply"].startswith("I declined")
         assert len(db.list_log("restaurant")) == before
+
+
+# --- Prediction questions: the desk measures exposure and prices protection, it doesn't forecast ---
+
+
+@pytest.mark.parametrize("message", [
+    "What will the Knicks do this week?", "Who will win the Rangers game tonight?", "Will it rain tomorrow?",
+    "Is it going to rain on Saturday?", "What are the odds of rain this weekend?", "Will the Knicks win on Friday?",
+])
+def test_prediction_questions_get_no_forecast(message):
+    client = MockClaude([[text("There's a 40% chance of rain.")]])
+    out = ask("taxi", message, client)
+    assert client.calls == [] and out["guard"] == "prediction" and out["agent"] == "fallback"
+    assert "doesn't predict games or weather" in out["reply"]
+    assert "measures your exposure" in out["reply"] and "prices protection" in out["reply"]
+    assert figures(out["reply"]) == []  # no invented probability, no number at all
+    assert "declined" not in out["reply"].lower()  # not an unrelated hedge explanation
+
+
+@pytest.mark.parametrize("message", [
+    "Why did you decline the rain hedge?", "What will the desk do this week?", "Will this make money?",
+])
+def test_non_prediction_questions_keep_their_route(message):
+    assert chat_mod.classify(message) != "prediction"

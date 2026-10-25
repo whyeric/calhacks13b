@@ -75,3 +75,24 @@ def test_not_hedged_reasons():
     assert not_hedged_summary(small) == (
         "Not hedged: the measured effect (−$90/day) is smaller than the $150/day worth hedging. "
         "Also, only 6 hot days in the training year, fewer than the 10 needed to measure it.")
+
+
+def test_unstable_sentence_is_plain_and_backed_by_the_metric():
+    from app.agent import log
+    from app.markets.rules import check_unstable
+    from app.markets.summary import unstable_clause
+
+    taxi_rain = {"id": "exp_rain", "business_id": "taxi", "effect_usd": "2211.68", "hedge_side": "no",
+                 "settlement_var": "rain", "stability": {
+                     "effect_usd": "303.37", "ci90": ("-1823.08", "2429.82"), "n_days": 335, "n_events": 158,
+                     "start": "2025-10-01", "end": "2026-08-31", "same_sign": True, "stable": False}}
+    m = check_unstable(taxi_rain, TH).metric
+    text = "Declined: " + unstable_clause(m, "rain") + "."
+    assert text == ("Declined: rain added $2,212 a day last year but only $303, not distinguishable from zero, "
+                    "in the most recent months, so the risk isn't reliable enough to insure.")
+    assert log.validate_summary(text, m) == []
+
+    flipped = dict(m, effect_last_year_usd="3967.49", effect_recent_usd="-965.26", sign_flipped=True)
+    assert unstable_clause(flipped, "hot") == (
+        "hot weather added $3,967 a day last year but went the other way (−$965 a day) in the most recent "
+        "months, so the risk isn't reliable enough to insure")

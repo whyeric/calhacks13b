@@ -105,6 +105,13 @@
         }
       },
       {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
+        }
+      },
+      {
         "code": "over_budget",
         "passed": true,
         "metric": {
@@ -123,5 +130,6 @@
   "decided_by": null,
   "decided_at": null,
   "leg_label": null,
-  "group_total_premium": null
+  "group_total_premium": null,
+  "estimated": false
 }

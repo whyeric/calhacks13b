@@ -41,24 +41,26 @@ the first minute say "insurance for a single Saturday", never "hedge ratio" or "
 > "Hedge Desk reads a business's daily revenue. This is a real taxi zone outside Madison Square
 > Garden, from city trip records. It measures each event in dollars, with a confidence bar."
 
-*Click **Run desk**.* Exposures appear: rain ≈ +$2,080 a day with its 90% bar. (That's on a fresh
-clone. With the Dewey files built, the MSG-event control changes it to ≈ +$2,245, so read the card.) Knicks/Rangers wins
-land under **"measured, not hedged: not significant"**.
+*Click **Run desk**.* Exposures appear: rain ≈ +$2,080 a day with its 90% bar (the same with or
+without the Dewey files). Knicks/Rangers wins land under **"measured, not hedged: not significant"**.
 
 > "Rain shows up. Who wins the game doesn't. We tested that across 358 venues and 40 experiments,
 > and game *results* never replicated."
 
 ### 0:45–1:15 · Protect it (and the moment it says no)
 
-*The rain card:* the real Kalshi market, `KXRAIN` NYC. The desk sized it but **declined** it.
+*The rain card:* **declined**, with two reasons on screen: `no_market` (no NYC rain contract is
+listed yet for a day in the desk week) and `unstable`.
 
-> "Here's the moment. The desk wanted about twelve hundred contracts. The book had zero on the side
-> we need, so it said no, and it shows you the numbers: filled 0 of [N]. We also refit this rain effect on
-> later data, and it shrank to almost nothing. Most obvious event risk is noise, and a desk that
-> sells you insurance against noise is selling you a bet."
+> "Here's the moment. Rain looked like +$2,080 a day last year. We refit it on the most recent
+> months and it's +$228, and the interval crosses zero, so the desk says no and shows you both
+> numbers. Most obvious event risk is noise, and a desk that sells you insurance against noise is
+> selling you a bet."
 
-*Judge moment:* open **Settings** and drag a threshold. The decision flips in under 10 s, and both
-evaluations land in the decision log.
+*Judge moment:* switch to the bar (needs the Dewey files), open **Settings** and raise the weekly
+budget. A pending playoff leg flips to proposed in under 10 s, and both evaluations land in the
+decision log. (Without the bar's data, use the labeled sample week: loosen the overpriced
+threshold on the declined sample rain hedge.)
 
 > **If the cache was re-warmed and shows a live proposal** (docs/DEMO.md): show its payoff chart
 > instead. Revenue is flat in both outcomes, "Unhedged swing / hedged swing / cost" is on screen,
@@ -92,24 +94,22 @@ evaluations land in the decision log.
 - **API down:** each region degrades with a Retry button (C7-H12).
 - **No restaurant data** on a fresh clone (the Dewey files are gitignored): the bar shows
   "analysis unavailable". Skip the switch and say "same desk, private data, estimated dollars."
-- **Backtest panel shows "not ready":** say the model-check line and move on (see Known gaps).
+- **Backtest panel shows "not ready":** `make seed` stores it; re-run `make seed` (or restart the
+  API, which stores it when missing). Otherwise say the model-check line and move on.
 
 ¹ Semafor, ["Hedging a $15,000 New York Knicks bar tab on Kalshi"](https://semafor.com/article/06/02/2026/hedging-a-15000-new-york-knicks-bar-tab-on-kalshi) (2026-06-02); Covers, ["NYC Bar Uses Kalshi Hedge to Promise Free Tabs if Knicks Win Game 1"](https://www.covers.com/industry/nyc-bar-uses-kalshi-hedge-to-promise-free-tabs-if-knicks-win-game-1-june-2-2026). Kalshi itself approached the owner and promoted the trade, so call it a sign of demand, not proof of a market.
 
 ### Known gaps to rehearse around (as of this branch)
 
-- The committed cache gives the real desk one hedge, a **declined** taxi rain hedge (illiquid,
-  0 contracts filled). Proposed and pending cards appear only in the labeled **sample week**, until
-  a re-warm captures a two-sided book (docs/DEMO.md). The target N is 1,192 on a fresh clone and
-  1,307 with the Dewey files built.
-- The matched rain market is for **Sun Oct 25**, the day before the desk week (Mon Oct 26)
-  starts. Don't call it "this week's" market until the matching is fixed or the cache is
-  re-warmed.
-- `GET /businesses/{id}/backtest` returns `backtest_not_ready`, because nothing stores the
-  backtest yet. That blocks beat 5's "backtest headline" and the "worst week before/after" opener
-  until it's wired in.
-- The desk doesn't model playoff exposures yet. The playoff finding is research
-  ([RESEARCH.md](RESEARCH.md) §2), so present it as research, not as a live card.
+- `make demo` pins the clock to the cached week (`DEMO_AS_OF=2026-10-24T19:00:00Z`, desk week
+  Mon Oct 26). On the committed cache the real taxi desk gives one **declined** rain hedge
+  (`no_market` + `unstable`); the desk only matches markets inside the desk week, so it no longer
+  picks Sunday's market. A taxi payoff table appears only after a re-warm (docs/DEMO.md).
+- With the Dewey files, the bar's real run is the playoff season hedge: one leg **proposed**
+  within budget (title, $78.51) and two **pending** over budget. Without them the bar shows
+  "analysis unavailable" and its labeled sample week.
+- The backtest is stored by `make seed`. Taxi's real backtest is honest and flat (hedged SD about
+  equal to unhedged, reduction −0.1%), so lead with the model check, not the backtest strip.
 
 ---
 

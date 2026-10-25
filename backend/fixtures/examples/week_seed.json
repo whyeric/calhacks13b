@@ -104,6 +104,13 @@
           }
         },
         {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
           "code": "over_budget",
           "passed": true,
           "metric": {
@@ -122,7 +129,8 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": true
   },
   {
     "id": "hdg_01",
@@ -231,6 +239,13 @@
           }
         },
         {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
           "code": "over_budget",
           "passed": true,
           "metric": {
@@ -249,7 +264,8 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": false
   },
   {
     "id": "hdg_02",
@@ -358,6 +374,13 @@
           }
         },
         {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
           "code": "over_budget",
           "passed": false,
           "metric": {
@@ -407,7 +430,8 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": false
   },
   {
     "id": "hdg_03",
@@ -512,6 +536,13 @@
           }
         },
         {
+          "code": "unstable",
+          "passed": null,
+          "metric": {
+            "skipped": "no_recent_window"
+          }
+        },
+        {
           "code": "over_budget",
           "passed": false,
           "metric": {
@@ -533,6 +564,7 @@
     "decided_by": null,
     "decided_at": null,
     "leg_label": null,
-    "group_total_premium": null
+    "group_total_premium": null,
+    "estimated": true
   }
 ]

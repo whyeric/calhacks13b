@@ -27,15 +27,18 @@ def check_chain(client, business_id: str) -> dict:
     # one hedge (proposed, pending or declined) per hedgeable exposure, none hidden (I3)
     assert {h["exposure_id"] for h in hedges} == set(exposures)
 
+    estimated = next(b for b in client.get("/businesses").json() if b["id"] == business_id)["estimated"]
+    assert analysis["estimated"] is estimated  # I6 reaches /analyze
     for h in hedges:
         e = exposures[h["exposure_id"]]
         assert h["agent"] == "fallback"
         assert h["side"] == e["hedge_side"]
+        assert h["estimated"] is (estimated or e.get("estimated", False)), h["id"]  # I6 reaches hedges
         dec = h["decision"]
         assert dec["status"] == h["status"] and dec["checks"], h["id"]
         if h["status"] == "declined":
             assert dec["reasons"], f"{h['id']} declined without reasons"
-        if dec["reasons"] != ["no_market"]:
+        if "no_market" not in dec["reasons"]:
             assert h["ticker"] and h["market_title"], f"{h['id']} has no market"
             # I1: N <= ceil(h * |beta| / $1), from the basis check's own numbers
             basis = next(c for c in dec["checks"] if c["code"] == "basis_too_loose")["metric"]

@@ -27,7 +27,7 @@ from decimal import ROUND_CEILING, ROUND_DOWN, ROUND_HALF_UP, Decimal
 
 from sqlalchemy.engine import Engine
 
-from app import db
+from app import clock, db
 from app.agent import log
 from app.models import Budget, Headline, Hedge, HedgeLite, PayoffRow
 
@@ -54,7 +54,7 @@ def can_act(actor: object, action: str) -> bool:
 
 def week_start(d: date | datetime | None = None) -> date:
     if d is None:
-        d = datetime.now(timezone.utc)
+        d = clock.now()
     if isinstance(d, datetime):
         d = d.date()
     return d - timedelta(days=d.weekday())
@@ -150,7 +150,7 @@ def _decide(
     require_owner(actor, action, business_id=hedge.business_id, hedge_id=hedge_id, engine=engine)
     if hedge.status not in DECIDABLE:
         raise PolicyError("conflict", f"hedge {hedge_id} is {hedge.status}; cannot {action}")
-    now = now or datetime.now(timezone.utc)
+    now = now or clock.now()
     updated = hedge.model_copy(update={
         "status": new_status, "decided_by": OWNER, "decided_at": now, "ledger_entry_ids": ledger_entry_ids,
     })

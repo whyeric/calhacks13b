@@ -106,6 +106,13 @@
         }
       },
       {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
+        }
+      },
+      {
         "code": "over_budget",
         "passed": true,
         "metric": {

@@ -23,19 +23,25 @@ def _dec(v: Any) -> Decimal | None:
         return None
 
 
-def _rejudge(check: Check, th: Thresholds, remaining: Decimal | None) -> Check:
+def _rejudge(check: Check, th: Thresholds, remaining: Decimal | None, n_filled: int | None = None) -> Check:
     if check.passed is None:
         return check
     m = dict(check.metric)
     passed = check.passed
     if check.code == "illiquid" and (r := _dec(m.get("fill_ratio"))) is not None:
-        passed = r >= th.fill_decline
+        # A hedge that filled 0 contracts always declines (illiquid), whatever the thresholds:
+        # loosening fill_decline must never turn it into a $0 proposal.
+        filled = m.get("n_filled", n_filled)
+        passed = r >= th.fill_decline and filled != 0
     elif check.code == "overpriced" and (o := _dec(m.get("overpay"))) is not None:
         passed = not (o > th.overpay_max)
     elif check.code == "basis_too_loose" and "skipped" not in m and (r2 := _dec(m.get("r2"))) is not None:
         passed = r2 >= Decimal(str(th.basis_r2_min))
     elif check.code == "too_expensive" and (r := _dec(m.get("ratio"))) is not None:
         passed = not (r > th.cost_ratio_max)
+    elif check.code == "unstable" and isinstance(m.get("stable"), bool):
+        m["enforced"] = th.decline_unstable
+        passed = m["stable"] or not th.decline_unstable
     elif check.code == "over_budget" and remaining is not None and (p := _dec(m.get("premium"))) is not None:
         m["remaining"] = remaining.quantize(Decimal("0.01"))
         passed = p <= remaining
@@ -57,7 +63,7 @@ def apply_rules(hedge: Hedge, th: Thresholds, remaining: Decimal | None = None) 
     """
     if hedge.status not in UNDECIDED:
         return hedge
-    checks = [_rejudge(c, th, remaining) for c in hedge.decision.checks]
+    checks = [_rejudge(c, th, remaining, hedge.n_filled) for c in hedge.decision.checks]
     decision = decision_from_checks(hedge.decision, checks)
     update: dict[str, Any] = {"decision": decision.model_dump(), "status": decision.status}
     if decision.status != "pending_approval":

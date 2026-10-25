@@ -88,6 +88,16 @@ async def lifespan(_app: FastAPI):
         dropped = db.remove_sample_hedges()
         if dropped:
             log.info("DEMO_SAMPLE_WEEK off: removed sample hedges %s", [h.id for h in dropped])
+    if get_settings().backtest_on_startup:  # missing rows only; offline (fixtures + kalshi_history)
+        import asyncio
+
+        from app import backtest_job
+
+        try:
+            outcome = await asyncio.to_thread(backtest_job.ensure)
+            log.info("backtest at startup: %s", outcome)
+        except Exception:  # contained: the API starts without a backtest (409 backtest_not_ready)
+            log.exception("backtest at startup failed")
     yield
 
 
@@ -138,6 +148,14 @@ def _hedge(hedge_id: str) -> Hedge:
     h = db.get_hedge(hedge_id)
     if h is None:
         raise ApiError(404, "hedge_not_found", f"No hedge with id {hedge_id!r}.", {"hedge_id": hedge_id})
+    return h
+
+
+def _labeled(h: Hedge, b: Business | None = None) -> Hedge:
+    """I6: a hedge for a business with estimated dollars says so (older rows predate the field)."""
+    b = b or db.get_business(h.business_id)
+    if b is not None and b.estimated and not h.estimated:
+        return h.model_copy(update={"estimated": True})
     return h
 
 
@@ -217,12 +235,13 @@ def businesses() -> list[Business]:
 
 @app.post("/businesses/{business_id}/analyze", response_model=AnalyzeResponse, responses=ERRORS)
 def analyze(business_id: str, body: AnalyzeRequest | None = Body(None)) -> AnalyzeResponse:
-    _business(business_id)
+    biz = _business(business_id)
     strike = body.strike if body else None
     try:
-        return analysis.analyze(business_id, strike)
+        res = analysis.analyze(business_id, strike)
     except analysis.AnalysisUnavailable as e:
         raise ApiError(409, "analysis_unavailable", f"No feature data for {business_id} yet.", {"reason": str(e)})
+    return res if res.estimated or not biz.estimated else res.model_copy(update={"estimated": True})  # I6
 
 
 @app.get("/businesses/{business_id}/backtest", response_model=BacktestResult, responses=ERRORS)
@@ -296,8 +315,8 @@ def run_status(run_id: str) -> RunStatus:
 
 @app.get("/businesses/{business_id}/hedges", response_model=list[Hedge], responses=ERRORS)
 def hedges(business_id: str, week_of: str | None = Query(None, description="Monday ISO date; other days snap")) -> list[Hedge]:
-    _business(business_id)
-    return _expire_stale(db.list_hedges(business_id, _week(week_of)))
+    biz = _business(business_id)
+    return [_labeled(h, biz) for h in _expire_stale(db.list_hedges(business_id, _week(week_of)))]
 
 
 @app.get("/businesses/{business_id}/decisions", response_model=list[LogEntry], responses=ERRORS)
@@ -334,6 +353,7 @@ def approve(
         log.exception("booking %s failed", hedge_id)
         raise ApiError(500, "ledger_write_failed", "The ledger could not be written; the hedge is unchanged.",
                        {"type": type(e).__name__})
+    approved = _labeled(approved)
     _log({"business_id": h.business_id, "kind": "approval", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "approved", "numbers": _hedge_numbers(approved),
           "summary": f"Owner approved {h.id}: {h.n_filled} {h.side.upper()} contracts for ${h.premium}."})
@@ -356,7 +376,7 @@ def reject(
     _log({"business_id": h.business_id, "kind": "rejection", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "rejected", "numbers": _hedge_numbers(h),
           "summary": f"Owner rejected {h.id}.{reason}"})
-    return rejected
+    return _labeled(rejected)
 
 
 # --- Books -------------------------------------------------------------------

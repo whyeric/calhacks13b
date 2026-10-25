@@ -23,7 +23,7 @@ from typing import Any
 
 from sqlalchemy.engine import Engine
 
-from app import analysis, db
+from app import analysis, clock, db
 from app.agent import log, policy, prompts
 from app.config import Thresholds
 from app.markets.port import MarketsPort, get_markets, no_market_hedge
@@ -230,7 +230,7 @@ class DeskContext:
             hid = self.hedge_id(exposure_id)
             b = self.budget_excluding(hid)
             hedge = no_market_hedge(e, hedge_id=hid, week_of=self.week_of, now=self.now, agent=self.agent,
-                                    remaining=b.remaining)
+                                    remaining=b.remaining, thresholds=self.thresholds)
             st = self._store(e, hedge, b)
             out["hedge_id"] = hid
             out["decision"] = st.hedge.decision.model_dump(mode="json", exclude={"summary"})
@@ -271,9 +271,12 @@ class DeskContext:
         alt = None
         if hedge.decision.status == "pending_approval":
             alt = policy.within_budget_alternative(hedge, budget.remaining)
+        biz = db.get_business(self.business_id, self.engine)
         hedge = Hedge.model_validate({
             **hedge.model_dump(), "agent": self.agent, "alternative": alt.model_dump() if alt else None,
             "decision": {**hedge.decision.model_dump(), "summary": None},
+            # I6: estimated dollars (the business) or a pooled estimate (the exposure) stay labeled
+            "estimated": bool(hedge.estimated or e.estimated or (biz is not None and biz.estimated)),
         })
         db.put_hedge(hedge, self.engine)
         st = self.states.get(hedge.id) or HedgeState(exposure=e)
@@ -323,7 +326,7 @@ class DeskContext:
         kind = "decline" if h.decision.status == "declined" else "proposal"
         entry = LogEntry(
             log_id=log.new_log_id(), business_id=self.business_id, kind=kind,
-            created_at=datetime.now(timezone.utc), actor="desk", agent=agent, hedge_id=h.id,
+            created_at=clock.now(), actor="desk", agent=agent, hedge_id=h.id,
             decision_id=h.decision.id, run_id=self.run_id, status=h.status, checks=h.decision.checks,
             reasons=h.decision.reasons, numbers=numbers, summary=summary,
         )

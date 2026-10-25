@@ -52,16 +52,16 @@ async def test_taxi_and_bar_rain_offline_and_deterministic():
     assert (taxi.side, taxi.n_filled, taxi.status, taxi.decision.reasons) == ("no", 0, "declined", ["illiquid"])
     # Bar buys YES at 1¢, resized to h = 700/900 by the basis rule.
     assert (bar.side, bar.n_target, bar.resized, bar.status) == ("yes", 700, True, "proposed")
-    assert bar.fills[0].price == D("0.01") and bar.fair == D("0.3973")
+    assert bar.fills[0].price == D("0.01") and bar.fair == D("0.3123")  # NOAA GHCN p̂ (Open-Meteo was 0.3973)
     overpriced = bar.decision.checks[2].model_dump(mode="json")["metric"]
     assert overpriced["overpay"] == "0.00"
-    assert overpriced["note"] == "Market price reflects the current forecast; historical rate is 40%."
+    assert overpriced["note"] == "Market price reflects the current forecast; historical rate is 31%."
     assert bar.expected_cost == bar.fee  # never cheaper than its fee
 
     for hd in (taxi, bar):
         dumped = json.loads(hd.model_dump_json())
         assert Hedge.model_validate(dumped) == hd
-        assert isinstance(dumped["premium"], (str, type(None))) and len(hd.decision.checks) == 6
+        assert isinstance(dumped["premium"], (str, type(None))) and len(hd.decision.checks) == 7
 
     again = await desk(bar_exp)
     assert again.model_dump_json() == bar.model_dump_json()  # byte-identical replay
@@ -91,3 +91,21 @@ async def test_dropped_taxi_exposures_are_refused_never_proposed():
     assert not_hedged_summary(home_win) == (
         "Not hedged: the measured effect (+$517/day) isn't distinguishable from zero "
         "(90% CI −$2,631 to +$3,665).")
+
+
+async def test_week_filter_only_keeps_markets_in_the_desk_week():
+    """e2e bug: a Saturday run for the week of Mon Oct 26 matched KXRAIN-26OCT25-NYC (Sunday).
+    With `week_of`, only markets about a day in [Mon, Sun] of the desk week survive."""
+    from app.markets.match import event_date
+
+    week = date(2026, 10, 26)
+    rain = load("markets_test/exposure_taxi_rain.json")
+    games = {"settlement_var": "home_win", "hedge_side": "no"}
+    async with KalshiClient(offline=True) as k:
+        assert [c.ticker for c in await build_candidates(k, rain, T0)] == ["KXRAIN-26OCT25-NYC"]
+        assert await build_candidates(k, rain, T0, week_of=week) == []  # the cache has no Oct 26+ rain day
+        in_week = await build_candidates(k, games, T0, week_of=week)
+        unfiltered = await build_candidates(k, games, T0)
+    days = {event_date({"event_ticker": c.ticker.rsplit("-", 1)[0]}) for c in in_week}
+    assert in_week and all(week <= d <= date(2026, 11, 1) for d in days)
+    assert {c.ticker for c in in_week} < {c.ticker for c in unfiltered}  # the Oct 25 game is dropped

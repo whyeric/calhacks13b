@@ -3,62 +3,63 @@
     "log_id": "log_0001",
     "business_id": "taxi",
     "kind": "approval",
-    "created_at": "2026-10-12T15:02:00Z",
+    "created_at": "2026-10-19T15:00:00Z",
     "actor": "owner",
     "agent": null,
-    "hedge_id": "hdg_s02",
-    "decision_id": "dec_s02",
+    "hedge_id": "hdg_s01",
+    "decision_id": "dec_s01",
     "run_id": null,
     "status": "approved",
     "checks": [],
     "reasons": [],
     "numbers": {
       "n_filled": 60,
-      "premium": "29.85",
-      "fee": "1.05"
+      "premium": "42.89",
+      "fee": "0.89"
     },
-    "summary": "Owner approved hdg_s02: 60 NO contracts for $29.85."
+    "summary": "Owner approved hdg_s01: 60 NO contracts for $42.89."
   },
   {
     "log_id": "log_0002",
     "business_id": "taxi",
     "kind": "booking",
-    "created_at": "2026-10-12T15:02:01Z",
+    "created_at": "2026-10-19T15:00:01Z",
     "actor": "system",
     "agent": null,
-    "hedge_id": "hdg_s02",
-    "decision_id": "dec_s02",
+    "hedge_id": "hdg_s01",
+    "decision_id": "dec_s01",
     "run_id": null,
     "status": "approved",
     "checks": [],
     "reasons": [],
     "numbers": {
-      "premium": "28.80",
-      "fee": "1.05",
-      "total": "29.85"
+      "n_filled": 60,
+      "cost": "42.00",
+      "fee": "0.89",
+      "premium": "42.89"
     },
-    "summary": "Booked $28.80 premium and $1.05 fee to Expenses:Hedging; Assets:Kalshi:Cash credited $29.85."
+    "summary": "Booked hdg_s01: 60 NO contracts on KXHIGHNY-26OCT20-T72, $42.00 cost + $0.89 fee = $42.89 premium."
   },
   {
     "log_id": "log_0003",
     "business_id": "taxi",
     "kind": "reconciliation",
-    "created_at": "2026-10-23T13:00:00Z",
+    "created_at": "2026-10-23T23:00:00Z",
     "actor": "system",
     "agent": null,
-    "hedge_id": null,
+    "hedge_id": "hdg_s01",
     "decision_id": null,
     "run_id": null,
     "status": null,
     "checks": [],
     "reasons": [],
     "numbers": {
-      "n_matched": 1,
+      "n_matched": 2,
       "n_mismatched": 1,
-      "difference": "-1.05",
-      "fee": "1.05"
+      "total_difference": "-0.89",
+      "simulated": true
     },
-    "summary": "Reconciled 1 hedge cleanly; flagged 1 bank deposit $1.05 short, equal to the hdg_s02 fee. Asking the owner."
+    "summary": "[SIMULATED] Reconciled taxi: 2 matched, 1 mismatched. Bank deposit is $0.89 short of the Kalshi payout; equals the $0.89 fee recorded for hdg_s01."
   },
   {
     "log_id": "log_0004",
@@ -116,6 +117,13 @@
           "expected_cost": "9.47",
           "swing": "210.00",
           "ratio": "0.0451"
+        }
+      },
+      {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
         }
       },
       {
@@ -207,6 +215,13 @@
           "expected_cost": "37.60",
           "swing": "1240.00",
           "ratio": "0.0303"
+        }
+      },
+      {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
         }
       },
       {
@@ -302,6 +317,13 @@
         }
       },
       {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
+        }
+      },
+      {
         "code": "over_budget",
         "passed": false,
         "metric": {
@@ -388,6 +410,13 @@
           "expected_cost": "18.15",
           "swing": "420.00",
           "ratio": "0.0432"
+        }
+      },
+      {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
         }
       },
       {

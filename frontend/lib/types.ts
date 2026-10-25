@@ -24,3 +24,21 @@ export type Health = components["schemas"]["Health"] & {
   sample_businesses?: string[];
 };
 export type SampleFlag = { sample_week?: boolean };
+// Research-driven additions (playoff_home exposure, multi-leg season hedges).
+// All optional so the dashboard renders before and after the backend ships them.
+export type ExposureExtras = {
+  /** Expected number of occurrences (e.g. playoff home games); API string, shown verbatim. */
+  expected_count?: string | number | null;
+  /** True when the dollars rest on assumptions (visits × average check). */
+  estimated?: boolean;
+  /** Plain-language note on what the dollars are based on. */
+  basis_note?: string | null;
+};
+export type ExposureRow = Exposure & ExposureExtras;
+// One leg of a multi-contract hedge; legs of one set share an exposure_id.
+export type HedgeLeg = Hedge & {
+  /** Plain-language name of this leg, e.g. "Knicks miss the playoffs". */
+  leg_label?: string | null;
+  /** Total premium across every leg of the set, computed by the API. */
+  group_total_premium?: string | null;
+};

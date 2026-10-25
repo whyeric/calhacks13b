@@ -213,6 +213,7 @@ def test_a1_fresh_clone_serves_frontend(tmp_path):
             time.sleep(0.5)
         assert ready is not None, "frontend never served /"
         print(f"\nC8-A1 (web): first page 200 after {ready:.1f}s (includes next build)")
+        time.sleep(2)  # make's own readiness loop polls every 0.5 s; let it print "Hedge Desk ready"
     finally:
         out = _stop(proc)
     assert "Hedge Desk ready" in out, out[-3000:]

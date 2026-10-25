@@ -12,6 +12,9 @@ import ledgerFixture from "@/fixtures/ledger_with_mismatch.json";
 import chatFixture from "@/fixtures/chat_reply.json";
 import settingsFixture from "@/fixtures/settings.json";
 import healthFixture from "@/fixtures/health.json";
+import playoffFixture from "@/fixtures/hedges_playoff.json";
+import unstableFixture from "@/fixtures/hedge_declined_unstable.json";
+import playoffExposure from "@/fixtures/exposure_playoff_home.json";
 import { ApiError } from "./api";
 import type {
   Business,
@@ -23,9 +26,19 @@ import type {
 } from "./types";
 
 const clone = <T>(data: unknown): T => structuredClone(data) as T;
+// The bar across from MSG shows the research-driven rows: the hot hedge, an
+// "unstable" decline and the multi-leg playoff season protection.
+function hedgesFor(businessId: string): Hedge[] {
+  if (businessId !== "restaurant") return clone<Hedge[]>(mixed);
+  return [
+    clone<Hedge[]>(mixed)[0],
+    clone<Hedge>(unstableFixture),
+    ...clone<Hedge[]>(playoffFixture),
+  ];
+}
 function initialHedges() {
   return businessesFixture.flatMap((business) =>
-    clone<Hedge[]>(mixed).map((row) => ({
+    hedgesFor(business.id).map((row) => ({
       ...row,
       id: `${row.id}_${business.id}`,
       business_id: business.id,
@@ -144,7 +157,14 @@ export async function mockRequest<T>(
           });
   else if (route.endsWith("/analyze")) {
     const data =
-      id === "restaurant" || scenario === "negative" ? restaurant : taxi;
+      scenario === "negative"
+        ? restaurant
+        : id === "restaurant"
+          ? {
+              ...restaurant,
+              exposures: [...restaurant.exposures, playoffExposure],
+            }
+          : taxi;
     result =
       scenario === "empty" ? { ...data, exposures: [], dropped: [] } : data;
   } else if (route.endsWith("/hedges")) {

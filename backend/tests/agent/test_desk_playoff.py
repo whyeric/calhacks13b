@@ -56,7 +56,10 @@ def test_one_hedge_per_leg_with_the_same_exposure_id():
 def test_rules_run_and_budget_pauses_the_expensive_legs():
     legs = {h.ticker: h for h in run("run_po2").hedges}
     for h in legs.values():
-        assert [c.passed for c in h.decision.checks].count(None) == 0  # all six checks ran
+        # Every check ran; `unstable` is skipped because a pooled playoff estimate has no recent window.
+        skipped = [c.code for c in h.decision.checks if c.passed is None]
+        assert skipped == ["unstable"]
+        assert next(c for c in h.decision.checks if c.code == "unstable").metric == {"skipped": "no_recent_window"}
         assert h.status in ("proposed", "pending_approval", "declined")
     # The $250 weekly budget covers the cheap title leg; the others wait for the owner (D4).
     assert legs["KXNBA-27-NYK"].status == "proposed"

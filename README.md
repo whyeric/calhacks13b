@@ -15,8 +15,8 @@ You need Python 3.12, Node 18.18+ and `make`.
 
 ```bash
 make install     # backend venv (backend/.venv) + frontend npm ci
-make seed        # SQLite schema, both businesses, sample week, demo books; fixtures only, no network
-make demo        # offline (DEMO_OFFLINE=1): API on :8000, production frontend on :3000
+make seed        # SQLite schema, both businesses, sample week, demo books, backtest; fixtures only, no network
+make demo        # offline (DEMO_OFFLINE=1, clock pinned by DEMO_AS_OF): API on :8000, frontend on :3000
 ```
 
 Open <http://localhost:3000> once `make demo` prints `Hedge Desk ready`. The demo runs with **no

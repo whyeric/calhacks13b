@@ -4,13 +4,13 @@ Nothing outside this module may hard-code a model id, URL or threshold.
 """
 
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import model_validator
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parents[1]
@@ -116,6 +116,14 @@ class Settings(BaseSettings):
     # data: /health reports `sample_week`, and a real desk run replaces that business/week's sample
     # hedges. False seeds businesses only, and startup drops any sample hedges already stored.
     demo_sample_week: bool = True
+    # Pinned "as of" time for the demo (ISO, e.g. 2026-10-24T19:00:00Z). When set, `app.clock.now()`
+    # starts at this instant when the process starts and advances with the wall clock from there,
+    # so the desk week, approval expiry and offline market matching follow the cached demo week
+    # instead of today's date. Unset = the real clock.
+    demo_as_of: datetime | None = None
+    # Store the walk-forward backtest at API startup for any business that has data but no stored
+    # backtest (`make seed` does the same), so GET /businesses/{id}/backtest is never empty offline.
+    backtest_on_startup: bool = True
     database_url: str = "sqlite:///./hedge_desk.db"
     weekly_budget_default: Decimal = Decimal("250")
     # C4: assumed avg check per visit (food + drinks, pre-tip) for a bar across from MSG.
@@ -133,6 +141,16 @@ class Settings(BaseSettings):
     dewey_restaurants_dir: str | None = None
     dewey_msg_dir: str | None = None
     dewey_place_id: str | None = None  # chosen restaurant's raw ID_STORE; .env only, never commit
+
+    @field_validator("demo_as_of", mode="before")
+    @classmethod
+    def _blank_as_of_is_unset(cls, v):
+        return None if isinstance(v, str) and not v.strip() else v
+
+    @field_validator("demo_as_of")
+    @classmethod
+    def _as_of_is_aware(cls, v: datetime | None) -> datetime | None:
+        return v.replace(tzinfo=timezone.utc) if v is not None and v.tzinfo is None else v  # naive = UTC
 
     @model_validator(mode="after")
     def _model_required_with_key(self) -> "Settings":
@@ -162,6 +180,17 @@ class Thresholds:
     max_slip: Decimal = Decimal("0.05")  # book walk: max price above best ask
     basis_r2_min: float = 0.5  # rule 4
     max_tool_calls: int = 12  # agent loop cap per turn
+    # Rule `unstable`: decline an exposure whose recent-window refit (the holdout split) has the
+    # other sign or a 90% CI that includes 0 (research hedgesim: taxi rain +$2,212 on train was
+    # +$303 [-1,823, 2,430] recently, and hedging it raised holdout income SD). False records the
+    # check but never declines on it.
+    decline_unstable: bool = True
+    # Rain hedge size relative to the same-day effect. Research r7-deferral: a rain episode's loss
+    # spreads over day-1..day+1 at about 1.4x the same-day effect with no rebound, so 1.0 is the
+    # conservative default and up to 1.4 is supported; never below 1.0 (a "deferral haircut"
+    # was the worst hedged option). Recorded only: sizing still caps contracts at the measured
+    # same-day exposure (I1), so values above 1.0 need the multi-day loss measured first.
+    rain_size_multiplier: float = 1.0
 
 
 @lru_cache

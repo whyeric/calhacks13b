@@ -48,6 +48,7 @@ Stack: Python 3.12, FastAPI, DuckDB/pandas/statsmodels, httpx, `anthropic` SDK, 
 - **Money, price, probability are `Decimal`**, serialized as strings (`"1240.00"`). Stats like `p_value`, `r2_*`, `coverage` stay numbers. The frontend formats; it never calculates.
 - Error body for every non-2xx: `{"error": {"code", "message", "detail"}}`.
 - Shared shapes live in `backend/app/models.py` with one example per object in `fixtures/examples/`. Changing a contract needs review from the consuming chunk's owner.
+- The examples in `backend/fixtures/examples/` (and `fixtures/businesses/`) are **hand-maintained**: there is no generator (the old `scripts/gen_examples.py` drifted from the models and was removed). When you add or change a field, edit the example JSON by hand; `backend/tests/contract/` validates every example against its model and checks it round-trips byte-for-byte, and `frontend/scripts/validate-fixtures.py` does the same for the frontend fixtures.
 - Thresholds live in one `Thresholds` dataclass in `config.py`.
 - Must run offline: with `DEMO_OFFLINE=1`, Kalshi reads come from `fixtures/kalshi_cache/` and raise `CacheMiss` on a miss. Claude failures fall back; chat never 5xxs.
 - Secrets in `.env` only (`ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `KALSHI_BASE_URL`, `DEMO_OFFLINE`, `DATABASE_URL`, `WEEKLY_BUDGET_DEFAULT`, `AVG_CHECK_USD`). Never commit `.env` or raw data.

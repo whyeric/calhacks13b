@@ -1,0 +1,53 @@
+{
+  "id": "hdg_unstable",
+  "business_id": "restaurant",
+  "exposure_id": "exp_rain",
+  "week_of": "2026-10-26",
+  "status": "declined",
+  "ticker": null,
+  "market_title": "Will it rain in NYC on Oct 27, 2026?",
+  "market_url": "https://kalshi.com/markets/kxrainnyc",
+  "close_time": "2026-10-28T04:59:00Z",
+  "side": "yes",
+  "match_reason": "Central Park rain is the settlement flag for this exposure.",
+  "h": null,
+  "n_target": 0,
+  "n_filled": 0,
+  "n_unfilled": 0,
+  "partial": false,
+  "resized": false,
+  "fills": [],
+  "avg_price": null,
+  "cost": null,
+  "fee": null,
+  "premium": null,
+  "fair": null,
+  "expected_cost": null,
+  "fee_unverified": false,
+  "payoff": null,
+  "headline": null,
+  "decision": {
+    "id": "dec_unstable",
+    "status": "declined",
+    "checks": [
+      { "code": "no_market", "passed": true, "metric": { "n_candidates": 1 } },
+      {
+        "code": "unstable",
+        "passed": false,
+        "metric": {
+          "effect_last_year_usd": "-1240.00",
+          "effect_recent_usd": "128.00",
+          "sign_flipped": true
+        }
+      }
+    ],
+    "reasons": ["unstable"],
+    "summary": "Declined: last year rain cost about $1,240 a day, but refit on recent months the effect is +$128 and its range crosses zero. We won't sell protection against an effect that didn't hold up."
+  },
+  "alternative": null,
+  "agent": "fallback",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T15:00:00Z",
+  "decided_by": null,
+  "decided_at": null
+}

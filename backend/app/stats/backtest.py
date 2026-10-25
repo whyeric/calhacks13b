@@ -286,9 +286,11 @@ def _month_starts(first: date, last: date) -> list[date]:
 
 
 def _exposure_list(exposures: ExposureResult | list[Exposure] | Any) -> tuple[list[Exposure], list[Exposure]]:
-    if isinstance(exposures, ExposureResult):
-        return list(exposures.exposures), list(exposures.dropped)
-    items = list(exposures)
+    """Hedgeable and dropped exposures, without `stability`: that is a refit on the holdout,
+    i.e. on the very days being simulated, so carrying it would be look-ahead."""
+    items = (list(exposures.exposures) + list(exposures.dropped)
+             if isinstance(exposures, ExposureResult) else list(exposures))
+    items = [e.model_copy(update={"stability": None}) if getattr(e, "stability", None) else e for e in items]
     return [e for e in items if e.hedgeable], [e for e in items if not e.hedgeable]
 
 
@@ -362,7 +364,7 @@ def simulate(
             window["split"] = "train"
             window.attrs["business_id"] = business_id
             res = fit_exposures(window, dict(cfg.strikes or {}), business_id=business_id, thresholds=th)
-            exps, dropped = list(res.exposures), list(res.dropped)
+            exps, dropped = _exposure_list(res)
         basis, p_hat = {}, {}
         for ev in flags:
             w_idx = window.index

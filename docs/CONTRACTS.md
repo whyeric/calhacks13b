@@ -26,6 +26,7 @@ The chunk `ACCEPTANCE.md` files were written in parallel and disagree in places.
 | R18 | I2 allowed-number set covers only `checks[].metric` (C4) | C3, C4, C5 | Allowed = numbers from `checks[].metric` ∪ Hedge sizing fields ∪ `Budget` ∪ `ReconResult` in the same turn. Same validator runs on chat replies. |
 | R19 | Owner of `config.py` thresholds | C1, C3, C6 | C6 owns the file; one `Thresholds` dataclass, consumed by C3 rules, C2 backtest, C6 settings route. |
 | R20 | Playoff home-game exposure: one exposure hedged with several season contracts | C2, C3, C4, C7 | `Exposure.event = "playoff_home"`, `effect_usd` = $ per playoff home game, plus optional `expected_count` (number), `estimated: true`, `basis_note`. Each futures leg is its own `Hedge` with the same `exposure_id` (`exp_playoff_home`), optional `leg_label` and `group_total_premium` (sum of leg premiums, same on every leg); single-contract hedges leave both null. Every leg runs the six rules; the leg's swing is its protected amount (I1 per leg). |
+| R21 | I6 label on analysis and hedges, not just `Business` / `BacktestResult` | C2, C3, C4, C6, C7 | `AnalyzeResponse.estimated` and `Hedge.estimated` (optional, default `false`) are `true` when the business's dollars are estimated (`Business.estimated`, the restaurant); a hedge on a pooled-estimate exposure (`Exposure.estimated`) is also `true`. The desk stamps it when storing; the API also sets it from the business on every hedge it returns. |
 
 ## Needs a human decision
 

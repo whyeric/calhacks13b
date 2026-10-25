@@ -1,7 +1,14 @@
 "use client";
 import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import type { Check, Hedge, Headline, PayoffRow } from "@/lib/types";
+import type {
+  Check,
+  ExposureRow,
+  Hedge,
+  Headline,
+  PayoffRow,
+} from "@/lib/types";
+import { PlayoffCard, groupHedges } from "./PlayoffCard";
 import { fmtUsd, fmtPct, fmtCents } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { apiPost } from "@/lib/api";
@@ -52,6 +59,35 @@ export function CheckMetrics({ checks }: { checks: Check[] }) {
     </ul>
   );
 }
+const LAST_YEAR = ["effect_last_year_usd", "effect_train_usd"];
+const RECENT = ["effect_recent_usd", "effect_holdout_usd"];
+const pick = (metric: Check["metric"], keys: string[]) => {
+  const value = keys.map((key) => metric[key]).find((v) => v !== undefined);
+  return typeof value === "string" && /^-?\d+(\.\d+)?$/.test(value)
+    ? value
+    : null;
+};
+// "unstable": the effect was refit on recent months and didn't hold up.
+export function UnstableNote({ checks }: { checks: Check[] }) {
+  // "unstable" is newer than the generated schema enum.
+  const check = checks.find((row) => (row.code as string) === "unstable");
+  if (!check) return null;
+  const lastYear = pick(check.metric, LAST_YEAR);
+  const recent = pick(check.metric, RECENT);
+  if (!lastYear && !recent) return null;
+  return (
+    <dl className="unstable-compare" aria-label="Effect last year vs recent">
+      <div>
+        <dt>Last year</dt>
+        <dd>{lastYear ? fmtUsd(lastYear) : "Not available"}</dd>
+      </div>
+      <div>
+        <dt>Recent months</dt>
+        <dd>{recent ? fmtUsd(recent) : "Not available"}</dd>
+      </div>
+    </dl>
+  );
+}
 export function DeclineReasons({ hedge }: { hedge: Hedge }) {
   return (
     <div className="decline-reasons">
@@ -60,6 +96,7 @@ export function DeclineReasons({ hedge }: { hedge: Hedge }) {
           <li key={reason}>{label(reason)}</li>
         ))}
       </ul>
+      <UnstableNote checks={hedge.decision.checks} />
       <CheckMetrics
         checks={hedge.decision.checks.filter((check) => check.passed === false)}
       />
@@ -238,20 +275,32 @@ export function HedgeCard({
 export function HedgeList({
   hedges,
   onChanged,
+  exposures = [],
 }: {
   hedges: Hedge[];
   onChanged: () => Promise<unknown>;
+  exposures?: ExposureRow[];
 }) {
+  const items = groupHedges(hedges);
   return (
     <>
       <div className="section-heading">
         <h2>This week’s protection</h2>
-        <span className="badge">{hedges.length} decisions</span>
+        <span className="badge">{items.length} decisions</span>
       </div>
-      {hedges.length ? (
-        hedges.map((hedge) => (
-          <HedgeCard key={hedge.id} hedge={hedge} onChanged={onChanged} />
-        ))
+      {items.length ? (
+        items.map((item) =>
+          Array.isArray(item) ? (
+            <PlayoffCard
+              key={item[0].id}
+              legs={item}
+              exposure={exposures.find((row) => row.id === item[0].exposure_id)}
+              onChanged={onChanged}
+            />
+          ) : (
+            <HedgeCard key={item.id} hedge={item} onChanged={onChanged} />
+          ),
+        )
       ) : (
         <p className="state">No hedges this week. Run the desk.</p>
       )}

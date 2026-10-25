@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Business } from "@/lib/types";
 import { fmtUsd } from "@/lib/format";
 export function EstimatedBadge({
@@ -43,6 +44,9 @@ export function Header({
           <p>Steadier weeks. Your call.</p>
         </div>
       </div>
+      <Link href="/research" className="research-link">
+        Why this works
+      </Link>
       <div className="business-picker">
         <label htmlFor="business">Your business</label>
         <select

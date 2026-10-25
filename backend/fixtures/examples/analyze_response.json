@@ -19,6 +19,19 @@
       "reasons": [],
       "strike": null,
       "beta_settlement": "1265.00",
+      "stability": {
+        "effect_usd": "1105.00",
+        "ci90": [
+          "412.00",
+          "1798.00"
+        ],
+        "n_days": 335,
+        "n_events": 158,
+        "start": "2025-10-01",
+        "end": "2026-08-31",
+        "same_sign": true,
+        "stable": true
+      },
       "expected_count": null,
       "estimated": false,
       "basis_note": null
@@ -42,6 +55,7 @@
       "reasons": [],
       "strike": 65.0,
       "beta_settlement": "-180.00",
+      "stability": null,
       "expected_count": null,
       "estimated": false,
       "basis_note": null
@@ -70,6 +84,7 @@
       ],
       "strike": null,
       "beta_settlement": null,
+      "stability": null,
       "expected_count": null,
       "estimated": false,
       "basis_note": null
@@ -92,5 +107,6 @@
     "mean_recovered": "497.85",
     "target": 0.9
   },
-  "r2_holdout": 0.58
+  "r2_holdout": 0.58,
+  "estimated": false
 }

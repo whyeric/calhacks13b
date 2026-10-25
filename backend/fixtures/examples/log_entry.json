@@ -58,6 +58,13 @@
         }
       },
       {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
+        }
+      },
+      {
         "code": "over_budget",
         "passed": true,
         "metric": {
@@ -164,6 +171,13 @@
           "expected_cost": "18.15",
           "swing": "420.00",
           "ratio": "0.0432"
+        }
+      },
+      {
+        "code": "unstable",
+        "passed": null,
+        "metric": {
+          "skipped": "no_recent_window"
         }
       },
       {
