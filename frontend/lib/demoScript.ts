@@ -1,13 +1,20 @@
-// SCRIPTED DEMO. Everything here is hardcoded for the "Upload your revenue" →
-// "Research my risks" → "Send to the desk" walkthrough. Nothing is fetched from
-// the API and nothing is computed in the browser: every $ figure is a literal
-// string (I2; the no-money-math lint rule applies).
+// Upload demo: constants and fallbacks. The research report itself is live:
+// the upload drawer POSTs the CSV to /research (docs/RESEARCH_CONTRACT.md) and
+// renders the response. What stays here:
+//  - RESEARCH_ROWS / SUMMARY / PROTOCOL_CHIPS: the fallback shown, labeled
+//    "Precomputed on the sample file" (I6), when /research is unreachable or
+//    fails with anything but a 422;
+//  - DEMO_HEDGE, DEMO_BUDGETS and the decision-log rows: "Send to the desk" is
+//    still scripted.
+// Nothing is computed in the browser: every $ figure is a literal string (I2;
+// the no-money-math lint rule applies).
 //
-// Where the numbers came from: the real research protocol run on the synthetic
-// Hudson Bike Co. sample (public/samples/hudson_bike_co_daily_revenue.csv)
-// against NOAA Central Park weather; see experiments/ for the method. Train =
-// 2024, unseen = 2025–26, DOW + year-month controls, 90% CIs, placebo = flags
-// shifted 7 days, BH correction across the 6 hypotheses.
+// Where the precomputed numbers came from: the real research protocol run on
+// the synthetic Hudson Bike Co. sample
+// (public/samples/hudson_bike_co_daily_revenue.csv) against NOAA Central Park
+// weather; see experiments/ for the method. Train = 2024, unseen = 2025–26,
+// DOW + year-month controls, 90% CIs, placebo = flags shifted 7 days, BH
+// correction across the 6 hypotheses.
 import type { Budget, Business, LogEntry, PayoffRow } from "./types";
 
 export const DEMO_ID = "up_hudson_bike_co_demo";
@@ -88,7 +95,7 @@ export const fmtCount = (count: number) => count.toLocaleString("en-US");
 export const csvSummary = (csv: ParsedCsv) =>
   `${fmtCount(csv.rows)} days · ${csv.first} → ${csv.last}`;
 
-// --- Research animation ------------------------------------------------------
+// --- Hypotheses (fixed before fitting) ---------------------------------------
 export const HYPOTHESES = [
   { label: "Rain day", mechanism: "Riders skip rentals when it rains." },
   { label: "Cold day below 40°F", mechanism: "Few people ride in the cold." },
@@ -267,6 +274,39 @@ export const RESEARCH_ROWS: ResearchRow[] = [
     sendable: false,
   },
 ];
+// POST /research → 200 (backend ResearchResponse).
+export type ResearchResponse = {
+  summary: string;
+  protocol_chips: string[];
+  n_days: number;
+  first: string;
+  last: string;
+  rows: ResearchRow[];
+  source: "live";
+};
+// What the report renders: the live response, or the labeled fallback.
+export type Research = {
+  source: "live" | "precomputed";
+  summary: string;
+  chips: string[];
+  rows: ResearchRow[];
+};
+export const PRECOMPUTED_LABEL = "Precomputed on the sample file";
+export const PRECOMPUTED_RESEARCH: Research = {
+  source: "precomputed",
+  summary: SUMMARY,
+  chips: PROTOCOL_CHIPS,
+  rows: RESEARCH_ROWS,
+};
+export const liveResearch = (res: ResearchResponse): Research => ({
+  source: "live",
+  summary: res.summary,
+  chips: res.protocol_chips,
+  rows: res.rows,
+});
+// "Send to the desk" is offered only on a FOUND, sendable row.
+export const canSend = (row: ResearchRow) =>
+  row.verdict === "FOUND" && row.sendable;
 // Shared $/day axis for every forest-plot row.
 export const FOREST_DOMAIN: [number, number] = [-3600, 3600];
 

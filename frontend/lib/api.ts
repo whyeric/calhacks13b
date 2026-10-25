@@ -55,3 +55,10 @@ export const apiPost = <T>(path: string, body?: unknown) =>
   send<T>("POST", path, body);
 export const apiPut = <T>(path: string, body: unknown) =>
   send<T>("PUT", path, body);
+// multipart/form-data POST (the browser sets the boundary header itself).
+export async function apiUpload<T>(path: string, form: FormData): Promise<T> {
+  if (MOCK_MODE)
+    return (await import("./mock")).mockRequest<T>("POST", path, form);
+  const res = await fetch(`${API_URL}${path}`, { method: "POST", body: form });
+  return responseBody<T>(res);
+}

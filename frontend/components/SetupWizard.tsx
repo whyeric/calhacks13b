@@ -1,6 +1,7 @@
 "use client";
 // First-run setup: business → risks → settings → hedges → dashboard. Reuses
-// the dashboard's pieces and #74's scripted upload; no new API calls.
+// the dashboard's pieces and #74's upload (POST /research; the hedge step is
+// still scripted).
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { MOCK_MODE, apiGet, apiPost, apiPut } from "@/lib/api";
@@ -8,7 +9,7 @@ import type { Analyze, Business, Hedge, Settings } from "@/lib/types";
 import {
   DEMO_BUDGETS,
   DEMO_HEDGE,
-  RESEARCH_ROWS,
+  canSend,
   csvSummary,
 } from "@/lib/demoScript";
 import { fmtUsd } from "@/lib/format";
@@ -23,7 +24,7 @@ import {
   DEMO_ID,
   DemoHedgeCard,
   DemoUploadDrawer,
-  RESEARCH_MS,
+  PrecomputedNote,
   ResearchTable,
   RunningBar,
   SEND_MS,
@@ -41,7 +42,7 @@ const STEPS = [
 ];
 type Choice = "msg" | "upload" | null;
 
-// Ticks every 50 ms until `until` (a Date.now() time), for the progress bars.
+// Ticks every 50 ms until `until` (a Date.now() time), for the pricing bar.
 function useNow(until: number) {
   const [now, setNow] = useState(() => Date.now());
   const on = now < until;
@@ -206,23 +207,15 @@ function BusinessStep({
 
 // --- Step 2 -------------------------------------------------------------------
 function UploadRisks({ demo }: { demo: Demo }) {
-  const elapsed = useNow(demo.startedAt + RESEARCH_MS) - demo.startedAt;
-  const declined = RESEARCH_ROWS.filter((row) => row.verdict !== "FOUND");
-  if (elapsed < RESEARCH_MS)
-    return (
-      <RunningBar
-        label="Running analysis…"
-        elapsed={elapsed}
-        total={RESEARCH_MS}
-      />
-    );
+  if (!demo.upload) return null;
+  const { research } = demo.upload;
+  const declined = research.rows.filter((row) => row.verdict !== "FOUND");
   return (
     <div>
       <h2>What moves your revenue</h2>
-      <p className="muted">
-        Each risk was tested on 2024 and re-tested on unseen 2025–26 data.
-      </p>
-      <ResearchTable sendState={null} />
+      <PrecomputedNote research={research} />
+      <p className="muted">{research.summary}</p>
+      <ResearchTable rows={research.rows} sendState={null} />
       <h3>Declined, and why</h3>
       <ul className="wizard-declines">
         {declined.map((row) => (
@@ -378,11 +371,17 @@ function UploadHedges({ demo }: { demo: Demo }) {
   const sendStart = hedge?.status === "sending" ? hedge.startedAt : 0;
   const elapsed = useNow(sendStart + SEND_MS) - sendStart;
   if (!upload) return null;
+  const sendable = upload.research.rows.some(canSend);
   return (
     <div>
       <h2>This week’s protection</h2>
       <p className="wizard-note">{NO_AUTO}</p>
-      {!hedge ? (
+      {!hedge && !sendable ? (
+        <p>
+          No risk held up that the desk can protect with a matching market, so
+          there is nothing to propose this week.
+        </p>
+      ) : !hedge ? (
         <div>
           <p>
             One risk held up: <strong>{DEMO_HEDGE.title}</strong>. Send it to

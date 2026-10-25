@@ -1458,3 +1458,6 @@ svg.forest-axis text {
   justify-content: space-between;
   padding: 18px 0 32px;
 }
+.precomputed-note {
+  margin: 0 0 10px;
+}

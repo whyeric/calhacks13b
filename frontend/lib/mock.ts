@@ -15,6 +15,9 @@ import healthFixture from "@/fixtures/health.json";
 import playoffFixture from "@/fixtures/hedges_playoff.json";
 import unstableFixture from "@/fixtures/hedge_declined_unstable.json";
 import playoffExposure from "@/fixtures/exposure_playoff_home.json";
+// Copy of backend/fixtures/examples/research_response.json (the source of
+// truth); scripts/validate-fixtures.py checks the two are identical.
+import researchFixture from "@/fixtures/research_response.json";
 import { ApiError } from "./api";
 import type {
   Business,
@@ -132,11 +135,19 @@ export async function mockRequest<T>(
     setTimeout(resolve, scenario === "slow" ? 2500 : 150),
   );
   const route = path.split("?")[0];
+  // ?scenario=bad_csv: /research rejects the file (the contract's 422).
+  if (route === "/research" && scenario === "bad_csv")
+    throw new ApiError(
+      "We need at least 540 days with revenue to research your risks; this file has 120.",
+      422,
+      "too_short",
+    );
   if (scenario === "error" && route !== "/businesses" && route !== "/health")
     throw new Error("The desk could not load this region. Please retry.");
   const id = route.split("/")[2];
   let result: unknown;
   if (route === "/health") result = healthFixture;
+  else if (method === "POST" && route === "/research") result = researchFixture;
   else if (route === "/businesses")
     result =
       scenario === "negative"
