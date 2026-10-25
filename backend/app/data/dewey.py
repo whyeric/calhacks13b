@@ -13,7 +13,7 @@ VISIT_COUNTS. `VISITS_BY_DAY` is a JSON array string of 7 daily counts.
 Folder resolution, first hit wins:
 1. `DEWEY_RESTAURANTS_DIR` / `DEWEY_MSG_DIR` (env or `.env`), absolute or relative to `data/`;
 2. the names `manhattan_restaurants_bars_2024_2026` / `msg_arena_2024_2026` under `data/`;
-3. auto-detect among `data/*/`: the folder whose parquet has one distinct ID_STORE is MSG,
+3. auto-detect among `data/*/` folders whose parquet has ID_STORE (so `data/tlc/` is skipped): the folder whose parquet has one distinct ID_STORE is MSG,
    the other is restaurants. (On the original export the folders are the unlabeled UUIDs
    `01a16ff2-...` = restaurants and `01a16ff5-...` = MSG.)
 
@@ -96,6 +96,14 @@ def _distinct_stores(folder: Path) -> int:
     return duckdb.sql(f"select count(distinct ID_STORE) from '{_parquet_glob(folder)}'").fetchall()[0][0]
 
 
+def _is_dewey(folder: Path) -> bool:
+    """True if the folder's parquet carries Dewey's ID_STORE (skips e.g. raw TLC in data/tlc/)."""
+    import duckdb
+
+    cols = duckdb.sql(f"describe select * from '{_parquet_glob(folder)}'").fetchall()
+    return any(c[0] == "ID_STORE" for c in cols)
+
+
 def resolve_dirs(data_dir: Path = RAW_DATA_DIR) -> tuple[Path, Path]:
     """Return (restaurants_dir, msg_dir); see module docstring for the order."""
     s = get_settings()
@@ -110,7 +118,7 @@ def resolve_dirs(data_dir: Path = RAW_DATA_DIR) -> tuple[Path, Path]:
     msg = from_setting(s.dewey_msg_dir) or _if_dir(data_dir / MSG_NAME)
     if rest is None or msg is None:
         candidates = [d for d in sorted(data_dir.iterdir()) if d.is_dir() and any(d.glob("*.parquet"))]
-        candidates = [d for d in candidates if d not in (rest, msg)]
+        candidates = [d for d in candidates if d not in (rest, msg) and _is_dewey(d)]
         for d in candidates:
             if _distinct_stores(d) == 1:
                 msg = msg or d
