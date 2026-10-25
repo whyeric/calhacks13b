@@ -76,7 +76,7 @@ are not distinguishable from zero.
 > "Rain costs this shop about $1,956 a day, and it held on data the model never saw. Knicks
 > games? Nothing, so we won't sell insurance on them."
 
-*Click **Send to the desk** on rain.* The hedge card shows **1,955 YES @ 33¢** on `KXRAINNYC`, a
+*Click **Send to the desk** on rain.* The hedge card shows **1,955 YES @ 33¢** on Kalshi's NYC daily rain (`KXRAIN`), a
 **$675.41** premium (including a $30.26 fee) and an expected cost of about **$64.86**. The 1,955
 contracts are at most the measured $1,955.68 ÷ $1 (I1).
 
@@ -219,11 +219,11 @@ The protocol is the same for every hypothesis:
 - a 2024 train fit and an independent 2025–26 holdout fit;
 - Benjamini–Hochberg across the run;
 - a placebo that shifts the event a week;
-- weather from the NOAA station Kalshi settles on.
+- weather from NOAA's Central Park station, the same station Kalshi's NYC contracts settle on.
 
 On the bike shop, rain is FOUND: −18.4% (−$1,955.68 a day) on 2024 and −20.4% on the unseen data,
 with the placebo quiet. Cold and warm days are FOUND too, and Knicks games and wins aren't. The
-rain risk becomes a `KXRAINNYC` hedge: 1,955 YES at 33¢, a $675.41 premium and an expected cost of
+rain risk becomes a `KXRAIN` (NYC) hedge: 1,955 YES at 33¢, a $675.41 premium and an expected cost of
 about $64.86. In the demo this flow is scripted: the report shows the real results of running the
 protocol on that file, not a live computation. A live upload and research API, with Claude
 choosing the hypotheses, is next.
@@ -250,7 +250,7 @@ bar across from MSG (real foot traffic, estimated dollars), plus the scripted bi
 **Challenges.** The honest answer kept being "no". The taxi rain effect is significant on a
 year of data, then shrinks to almost nothing on the next. Game results never moved foot traffic,
 across 358 venues. We had to build a product whose best moment is a decline. We also learned
-that weather reanalysis disagrees with the station Kalshi settles on about one day in eight,
+that weather reanalysis disagrees with the Central Park station record about one day in eight,
 which is enough to misprice a contract.
 
 **Accomplishments.**

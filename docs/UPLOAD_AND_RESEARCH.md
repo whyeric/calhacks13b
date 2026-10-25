@@ -16,7 +16,7 @@ business: **Hudson Bike Co.**, a fictional NYC bike-rental shop.
 
 | Part | Status |
 |---|---|
-| **The sample file** `hudson_bike_co_daily_revenue.csv` | **Synthetic revenue on real weather.** Hudson Bike Co. is fictional. Its daily revenue is generated, but the weather days it reacts to are the **real NOAA Central Park record** (USW00094728, the station Kalshi's NYC weather contracts settle on). The file header says so. |
+| **The sample file** `hudson_bike_co_daily_revenue.csv` | **Synthetic revenue on real weather.** Hudson Bike Co. is fictional. Its daily revenue is generated, but the weather days it reacts to are the **real NOAA Central Park record** (USW00094728, the same Central Park station Kalshi's NYC weather contracts settle on; since 2026-08-14 Kalshi uses The Weather Company's reading there, so NOAA is a close proxy). The file header says so. |
 | The effects planted in the file | About **−20% on rain days, −28% below 40 °F, and +10% above 80 °F** (from the file header). No game effect is planted. |
 | The upload step | **Partly real.** The browser reads the file and shows its real row count and date range. Nothing is stored or sent anywhere. |
 | "Claude pre-registers mechanisms" and the protocol steps | **A staged animation.** It shows the steps the protocol runs, in order. Claude is not called during the demo. |
@@ -91,7 +91,7 @@ recovery check is looking for.
 
 ### "Send to the desk": rain
 
-The rain row is FOUND and settles on `KXRAINNYC`, so it can be sent to the desk. The scripted
+The rain row is FOUND and maps to Kalshi's NYC daily rain series `KXRAIN` (markets `KXRAIN-<date>-NYC`; the older `KXRAINNYC` series was retired after 2026-07-15), so it can be sent to the desk. The scripted
 hedge is:
 
 | | |
@@ -146,6 +146,9 @@ uploads any CSV and research runs live.
 ---
 
 ## 5. Limitations
+
+- **Settlement source.** Live NYC weather contracts settle on The Weather Company's Central Park reading (since 2026-08-14); the research used NOAA's record for the same station, a close proxy. `KXRAIN` counts a trace of rain as 0.
+- **Temperature strikes.** `KXHIGHNY` lists 6 strikes around each day's forecast, so a fixed strike such as >85°F is listed only about 1 day in 5; a fixed-strike heat or cold hedge often can't be bought exactly.
 
 - **Scripted, not live.** The report is Hudson Bike Co.'s. The demo doesn't analyse any other
   file.

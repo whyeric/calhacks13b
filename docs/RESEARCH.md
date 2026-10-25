@@ -42,9 +42,12 @@ script and a `RESULTS.md` with the full tables. To read one, run
 
 From round 6 on, each experiment wrote down its mechanism and predictions before fitting.
 
-**NOAA settlement.** Round 1 used Open-Meteo reanalysis weather. Kalshi's NYC rain and temperature
-contracts settle on the NWS report for Central Park, so from round 2 on we used NOAA GHCN station
-USW00094728. That makes the feature flag *the* settlement flag (basis R² = 1).
+**NOAA settlement.** Round 1 used Open-Meteo reanalysis weather. Through mid-2026 Kalshi's NYC rain and temperature
+contracts settled on the NWS report for Central Park, so from round 2 on we used NOAA GHCN station
+USW00094728, making the feature flag the settlement flag for the period we tested. Since
+2026-08-14 the live contracts (`KXRAIN` NYC markets, `KXHIGHNY`) settle on The Weather Company's
+Central Park reading, so NOAA is now a close proxy rather than the exact settlement source
+(see `backend/fixtures/kalshi_series_catalog.json`).
 `r3-noaa/` measured the gap:
 - Open-Meteo and NOAA agree on only 85–90% of days.
 - Open-Meteo calls 40–47% of days wet; NOAA calls 31–38%.
@@ -184,7 +187,7 @@ synthetic revenue, keyed to the real NOAA Central Park weather days. The guide i
 
 | Hypothesis | 2024 (train) | 2025–26 (holdout) | Verdict |
 |---|---|---|---|
-| Rain | −18.4% (−$1,955.68/day, 90% CI −$2,171.00 to −$1,734.86, 124 days) | −20.4% (−$2,485.41/day) | FOUND; placebo p 0.38; `KXRAINNYC` |
+| Rain | −18.4% (−$1,955.68/day, 90% CI −$2,171.00 to −$1,734.86, 124 days) | −20.4% (−$2,485.41/day) | FOUND; placebo p 0.38; `KXRAIN` (NYC) |
 | Cold < 40 °F | −27.0% | −26.4% | FOUND |
 | Warm > 80 °F | +10.9% | +15.5% | FOUND (upside) |
 | Hot > 90 °F, Knicks home game, Knicks win | not distinguishable from zero | | NOT FOUND |
