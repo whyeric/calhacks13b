@@ -13,6 +13,7 @@ import benchmarkFixture from "@/fixtures/recon_benchmark.json";
 import chatFixture from "@/fixtures/chat_reply.json";
 import settingsFixture from "@/fixtures/settings.json";
 import healthFixture from "@/fixtures/health.json";
+import researchFixture from "@/fixtures/research_report.json";
 import playoffFixture from "@/fixtures/hedges_playoff.json";
 import unstableFixture from "@/fixtures/hedge_declined_unstable.json";
 import playoffExposure from "@/fixtures/exposure_playoff_home.json";
@@ -218,6 +219,8 @@ export async function mockRequest<T>(
     });
     result = recon;
   } else if (method === "POST" && route.endsWith("/chat")) result = chatFixture;
+  // Fixture mode answers every upload with the Hudson Bike Co. report (a real backend run).
+  else if (method === "POST" && route === "/research") result = researchFixture;
   else if (route.endsWith("/settings")) {
     if (method === "PUT") {
       const next = clone<Settings>(body);

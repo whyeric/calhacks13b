@@ -511,3 +511,26 @@ def reconciliation_benchmark() -> ReconBenchmark:
     from app.books import benchmark
 
     return benchmark.cached()
+
+
+# --- Research (live upload) --------------------------------------------------
+# POST /research: the research protocol (stats/research.py) run live on an uploaded daily-revenue
+# CSV. Stateless: the file is read in memory and nothing is stored. The body is the raw CSV
+# (Content-Type text/csv), so no multipart dependency is needed offline.
+
+from app.models import ResearchReport  # noqa: E402
+
+
+@app.post("/research", response_model=ResearchReport, responses={422: {"model": ErrorBody}})
+async def research(request: Request, name: str | None = Query(None, max_length=60)) -> ResearchReport:
+    import asyncio
+
+    from app.stats import research as protocol
+
+    raw = await request.body()
+    if not raw.strip():
+        raise ApiError(422, "bad_csv", "The upload is empty; send the CSV as the request body.")
+    try:
+        return await asyncio.to_thread(protocol.run, raw, name.strip() if name else None)
+    except protocol.ResearchInputError as e:
+        raise ApiError(422, e.code, e.message, e.detail)

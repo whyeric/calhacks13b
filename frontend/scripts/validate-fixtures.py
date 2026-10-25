@@ -5,7 +5,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(root / "frontend/.python-tools"), str(root / "backend")]
 from app.models import (Business, AnalyzeResponse, Hedge, LogEntry, Budget, BacktestResult, LedgerResponse,
-    ChatReply, Settings, Health, ReconBenchmark)
+    ChatReply, Settings, Health, ReconBenchmark, ResearchReport)
 fixtures = root / "frontend/fixtures"
 count = 0
 for path in fixtures.glob("*.json"):
@@ -19,7 +19,8 @@ for path in fixtures.glob("*.json"):
         else Hedge if name.startswith("hedge") else LogEntry if name == "decisions"
         else BacktestResult if name.startswith("backtest_") else LedgerResponse if name.startswith("ledger_")
         else ChatReply if name == "chat_reply" else Settings if name == "settings" else Health if name == "health"
-        else ReconBenchmark if name == "recon_benchmark" else None)
+        else ReconBenchmark if name == "recon_benchmark"
+        else ResearchReport if name.startswith("research_") else None)
     if model is None:
         continue
     data = json.loads(path.read_text(encoding="utf-8"))

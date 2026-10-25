@@ -1,6 +1,7 @@
 "use client";
-// Scripted "Upload your revenue" demo: client-only, works in live and mock
-// mode. All figures come from lib/demoScript.ts (hardcoded strings).
+// "Upload your revenue": the report is LIVE (POST /research runs the protocol on the uploaded
+// CSV; nothing is stored). The hedge card after "Send to the desk" is still scripted
+// (lib/demoScript.ts, labeled). Client-only business; works in live and mock mode.
 import {
   useCallback,
   useEffect,
@@ -9,7 +10,12 @@ import {
   type FormEvent,
 } from "react";
 import Link from "next/link";
-import type { Business, LogEntry } from "@/lib/types";
+import type {
+  Business,
+  LogEntry,
+  ResearchHypothesis,
+  ResearchReport,
+} from "@/lib/types";
 import {
   DEMO_BUDGETS,
   DEMO_DEFAULTS,
@@ -17,53 +23,97 @@ import {
   DEMO_ID,
   DEMO_KINDS,
   DEMO_SAMPLE,
-  FOREST_DOMAIN,
   PRIVACY_NOTE,
-  PROTOCOL_CHIPS,
-  RESEARCH_ROWS,
-  SUMMARY,
   csvSummary,
   demoBusiness,
   demoLog,
   parseRevenueCsv,
   type DemoHedgeStatus,
   type ParsedCsv,
-  type ResearchRow,
 } from "@/lib/demoScript";
-import { columnSpan, position, progressPercent } from "@/lib/chartScale";
+import {
+  columnSpan,
+  forestAxis,
+  position,
+  progressPercent,
+  tickLabel,
+} from "@/lib/chartScale";
 import { fmtUsd } from "@/lib/format";
+import { postResearch } from "@/lib/api";
+import {
+  ciText,
+  daysText,
+  estimateText,
+  periodLabel,
+  placeboText,
+  plotOf,
+  verdictNote,
+} from "@/lib/researchView";
 import { Drawer } from "./ChatDrawer";
 import { DecisionLog } from "./DecisionLog";
 
-export type DemoUpload = { name: string; kind: string; csv: ParsedCsv };
+export type DemoUpload = {
+  name: string;
+  kind: string;
+  csv: ParsedCsv;
+  text: string;
+};
 type HedgeState = { status: "sending" | DemoHedgeStatus; startedAt: number };
-// How long the analysis and the hedge pricing take on screen.
-export const RESEARCH_MS = 7000;
+type ResearchState = { report: ResearchReport } | { error: string };
+export type ResearchFn = (csv: string, name: string) => Promise<ResearchReport>;
+const liveResearch: ResearchFn = (csv, name) =>
+  postResearch<ResearchReport>(csv, name);
+// Minimum time the analysis bar stays on screen (the real run is usually faster), and
+// how long the (scripted) hedge pricing takes.
+export const RESEARCH_MS = 2500;
 export const SEND_MS = 2600;
 
 // --- State (lives in the page so switching businesses keeps the demo) -------
-export function useDemo() {
+export function useDemo(research: ResearchFn = liveResearch) {
   const [upload, setUpload] = useState<DemoUpload | null>(null);
   const [startedAt, setStartedAt] = useState(0);
+  const [result, setResult] = useState<ResearchState | null>(null);
   const [hedge, setHedge] = useState<HedgeState | null>(null);
   const [log, setLog] = useState<LogEntry[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const runId = useRef(0);
   useEffect(
     () => () => {
       if (timer.current) clearTimeout(timer.current);
     },
     [],
   );
-  const start = useCallback((next: DemoUpload) => {
-    if (timer.current) clearTimeout(timer.current);
-    setUpload(next);
-    setStartedAt(Date.now());
-    setHedge(null);
-    setLog([]);
-  }, []);
+  const start = useCallback(
+    (next: DemoUpload) => {
+      if (timer.current) clearTimeout(timer.current);
+      const id = ++runId.current;
+      setUpload(next);
+      setStartedAt(Date.now());
+      setResult(null);
+      setHedge(null);
+      setLog([]);
+      research(next.text, next.name).then(
+        (report) => {
+          if (runId.current === id) setResult({ report });
+        },
+        (err: unknown) => {
+          if (runId.current === id)
+            setResult({
+              error:
+                err instanceof Error
+                  ? err.message
+                  : "The analysis failed. Please retry.",
+            });
+        },
+      );
+    },
+    [research],
+  );
   const remove = useCallback(() => {
     if (timer.current) clearTimeout(timer.current);
+    runId.current++;
     setUpload(null);
+    setResult(null);
     setHedge(null);
     setLog([]);
   }, []);
@@ -105,6 +155,7 @@ export function useDemo() {
   return {
     upload,
     startedAt,
+    result,
     hedge,
     log,
     business,
@@ -140,11 +191,13 @@ export function DemoUploadDrawer({
   const [kind, setKind] = useState(DEMO_DEFAULTS.kind);
   const [fileName, setFileName] = useState("");
   const [csv, setCsv] = useState<ParsedCsv | null>(null);
+  const [text, setText] = useState("");
   const [error, setError] = useState("");
-  function load(label: string, text: string) {
-    const parsed = parseRevenueCsv(text);
+  function load(label: string, body: string) {
+    const parsed = parseRevenueCsv(body);
     setFileName(label);
     setCsv(parsed);
+    setText(body);
     setError(
       parsed
         ? ""
@@ -173,7 +226,7 @@ export function DemoUploadDrawer({
   function submit(e: FormEvent) {
     e.preventDefault();
     if (!ready || !csv) return;
-    onStart({ name: trimmed, kind, csv });
+    onStart({ name: trimmed, kind, csv, text });
   }
   return (
     <Drawer title="Upload your revenue" open={open} onClose={onClose}>
@@ -289,11 +342,20 @@ function RunningBar({
   );
 }
 
-// --- Report --------------------------------------------------------------------
-// Forest plot: $/day effect with 90% interval, 2024 (grey) over 2025–26 (green).
+// --- Report (live) ---------------------------------------------------------------
+// Forest plot: $/day effect with 90% interval, training year (grey) over unseen (green).
 const FW = 240; // SVG width units
-const fx = (value: string) => (position(value, FOREST_DOMAIN) / 100) * FW;
-function Forest({ row }: { row: ResearchRow }) {
+type Axis = ReturnType<typeof forestAxis>;
+function Forest({
+  row,
+  axis,
+  labels,
+}: {
+  row: ResearchHypothesis;
+  axis: Axis;
+  labels: [string, string];
+}) {
+  const fx = (value: string) => (position(value, axis.domain) / 100) * FW;
   const line = (plot: [string, string, string], y: number, cls: string) => (
     <g className={cls}>
       <line x1={fx(plot[1])} x2={fx(plot[2])} y1={y} y2={y} className="whisker" />
@@ -302,33 +364,35 @@ function Forest({ row }: { row: ResearchRow }) {
       <circle cx={fx(plot[0])} cy={y} r={4.5} className="dot" />
     </g>
   );
+  const describe = (e: ResearchHypothesis["train"]) =>
+    e ? estimateText(e) : "not estimable";
   return (
     <svg
       className="forest"
       viewBox={`0 0 ${FW} 34`}
       role="img"
-      aria-label={`${row.label}: 2024 ${row.train.text}; 2025–26 ${row.unseen.text}`}
+      aria-label={`${row.label}: ${labels[0]} ${describe(row.train)}; ${labels[1]} ${describe(row.holdout)}`}
     >
       <line x1={fx("0")} x2={fx("0")} y1={0} y2={34} className="zero" />
-      {line(row.train.plot, 10, "train")}
-      {line(row.unseen.plot, 24, "unseen")}
+      {row.train && line(plotOf(row.train), 10, "train")}
+      {row.holdout && line(plotOf(row.holdout), 24, "unseen")}
     </svg>
   );
 }
-function ForestAxis() {
-  const ticks = ["-3000", "-1500", "0", "1500", "3000"];
-  const label = (v: string) => (v === "0" ? "$0" : fmtUsd(v).replace(",000", "k").replace("$1,500", "$1.5k"));
+function ForestAxis({ axis }: { axis: Axis }) {
+  const fx = (value: string) => (position(value, axis.domain) / 100) * FW;
   return (
     <svg className="forest forest-axis" viewBox={`0 0 ${FW} 16`} aria-hidden="true">
-      {ticks.map((v) => (
+      {axis.ticks.map((v) => (
         <text key={v} x={fx(v)} y={11} textAnchor="middle">
-          {label(v)}
+          {tickLabel(v)}
         </text>
       ))}
     </svg>
   );
 }
-function Verdict({ row }: { row: ResearchRow }) {
+function Verdict({ row }: { row: ResearchHypothesis }) {
+  const note = verdictNote(row);
   return (
     <span className="verdict">
       <span
@@ -336,69 +400,82 @@ function Verdict({ row }: { row: ResearchRow }) {
       >
         {row.verdict}
       </span>
-      {row.verdictNote && (
+      {note && (
         <span className="verdict-note">
-          {row.verdict === "FOUND" ? `· ${row.verdictNote}` : row.verdictNote}
+          {row.verdict === "FOUND" ? `· ${note}` : note}
         </span>
       )}
     </span>
   );
 }
+function EstimateCell({ e }: { e: ResearchHypothesis["train"] }) {
+  if (!e)
+    return (
+      <td>
+        <strong>Not estimable</strong>
+        <small>too few event days</small>
+      </td>
+    );
+  return (
+    <td>
+      <strong>{estimateText(e)}</strong>
+      <small>{ciText(e)}</small>
+      <small>{daysText(e)}</small>
+    </td>
+  );
+}
 export function ResearchTable({
+  report,
   onSend,
   sendState,
 }: {
+  report: ResearchReport;
   onSend?: () => void;
   sendState: HedgeState["status"] | null;
 }) {
+  const train = periodLabel(report.train);
+  const unseen = periodLabel(report.holdout);
+  const axis = forestAxis(report.plot_max_usd);
   return (
     <div className="research-scroll">
       <table className="demo-research-table">
         <caption className="sr-only">
-          Each pre-registered risk, tested on 2024 and re-tested on unseen
-          2025–26 data
+          Each pre-registered risk, tested on {train} and re-tested on unseen{" "}
+          {unseen} data
         </caption>
         <thead>
           <tr>
             <th scope="col">Risk</th>
-            <th scope="col">Training year (2024)</th>
-            <th scope="col">Unseen (2025–26)</th>
+            <th scope="col">Training year ({train})</th>
+            <th scope="col">Unseen ({unseen})</th>
             <th scope="col">
               <span className="sr-only">Effect per day, with 90% CI</span>
               <span className="legend-keys" aria-hidden="true">
                 <span className="key train" />
-                2024
+                {train}
                 <span className="key unseen" />
-                2025–26
+                {unseen}
               </span>
-              <ForestAxis />
+              <ForestAxis axis={axis} />
             </th>
             <th scope="col">Placebo</th>
             <th scope="col">Verdict</th>
-            <th scope="col">Kalshi</th>
+            <th scope="col">Contract</th>
           </tr>
         </thead>
         <tbody>
-          {RESEARCH_ROWS.map((row) => (
+          {report.hypotheses.map((row) => (
             <tr key={row.id} data-testid={`research-row-${row.id}`}>
               <th scope="row">
                 {row.label}
                 <small>{row.mechanism}</small>
               </th>
-              <td>
-                <strong>{row.train.text}</strong>
-                <small>{row.train.ci}</small>
-                <small>{row.train.days}</small>
-              </td>
-              <td>
-                <strong>{row.unseen.text}</strong>
-                <small>{row.unseen.ci}</small>
-                <small>{row.unseen.days}</small>
-              </td>
+              <EstimateCell e={row.train} />
+              <EstimateCell e={row.holdout} />
               <td className="forest-cell">
-                <Forest row={row} />
+                <Forest row={row} axis={axis} labels={[train, unseen]} />
               </td>
-              <td>{row.placebo}</td>
+              <td>{placeboText(row)}</td>
               <td>
                 <Verdict row={row} />
                 {row.sendable && onSend && (
@@ -415,7 +492,7 @@ export function ResearchTable({
                   </button>
                 )}
               </td>
-              <td className="kalshi-cell">{row.kalshi}</td>
+              <td className="kalshi-cell">{row.venue}</td>
             </tr>
           ))}
         </tbody>
@@ -492,7 +569,9 @@ function DemoPayoff() {
   );
 }
 
-// --- Hedge card -------------------------------------------------------------
+// --- Hedge card (still SCRIPTED: lib/demoScript.ts DEMO_HEDGE, labeled on the card) ---
+// TODO(main): live quote — price the FOUND rain row through the desk (Kalshi + Polymarket)
+// instead of DEMO_HEDGE, sized from the report's rain effect.
 const STATUS_TEXT: Record<DemoHedgeStatus, string> = {
   proposed: "Proposed · only you can approve",
   approved: "Approved by you",
@@ -513,6 +592,9 @@ export function DemoHedgeCard({
         <span className="eyebrow">Rain protection · {businessName}</span>
         <span className={`chip ${status}`}>{STATUS_TEXT[status]}</span>
       </div>
+      <p className="badge sample" data-testid="demo-hedge-scripted">
+        Example hedge (scripted): not priced from your report yet
+      </p>
       <h3>{DEMO_HEDGE.title}</h3>
       <p className="muted">{DEMO_HEDGE.ticker}</p>
       <p className="headline">{DEMO_HEDGE.line}</p>
@@ -550,12 +632,17 @@ export function DemoDesk({
   demo: Demo;
   onRemoved: () => void;
 }) {
-  const { upload, startedAt, hedge } = demo;
+  const { upload, startedAt, hedge, result } = demo;
   const total = RESEARCH_MS;
   // Clock: ticks every 50 ms only while something is animating.
   const [now, setNow] = useState(() => Date.now());
   const elapsed = now - startedAt;
-  const ticking = !!upload && (elapsed < total || hedge?.status === "sending");
+  const report = result && "report" in result ? result.report : null;
+  const failed = result && "error" in result ? result.error : null;
+  const waiting = !result;
+  const ticking =
+    !!upload &&
+    (elapsed < total || waiting || hedge?.status === "sending");
   useEffect(() => {
     if (!ticking) return;
     setNow(Date.now());
@@ -563,7 +650,9 @@ export function DemoDesk({
     return () => clearInterval(id);
   }, [ticking]);
   if (!upload) return null;
-  const researchDone = elapsed >= total;
+  const researchDone = !!report && elapsed >= total;
+  // While the API is still working, the bar holds just short of the end.
+  const shown = !report && elapsed > total * 0.95 ? total * 0.95 : elapsed;
   const sendElapsed = hedge ? now - hedge.startedAt : 0;
   return (
     <>
@@ -590,28 +679,47 @@ export function DemoDesk({
             </button>
           </div>
         </div>
-        {!researchDone && (
-          <RunningBar label="Running analysis…" elapsed={elapsed} total={total} />
+        {failed && (
+          <p role="alert" className="field-error">
+            {failed}
+          </p>
         )}
-        {researchDone && (
+        {!failed && !researchDone && (
+          <RunningBar label="Running analysis…" elapsed={shown} total={total} />
+        )}
+        {report && researchDone && (
           <div className="demo-report">
-            <p className="demo-summary">{SUMMARY}</p>
+            {report.notes.length > 0 && (
+              <p className="badge sample" data-testid="research-file-notes">
+                From your file: {report.notes.join(" ")}
+              </p>
+            )}
+            <p className="demo-summary">{report.summary}</p>
             <ul className="protocol-chips" aria-label="Protocol">
-              {PROTOCOL_CHIPS.map((chip) => (
+              {report.protocol.map((chip) => (
                 <li key={chip} className="badge">
                   {chip}
                 </li>
               ))}
             </ul>
             <ResearchTable
+              report={report}
               onSend={demo.send}
               sendState={hedge?.status ?? null}
             />
             <p className="muted demo-footnote">
-              Effects are $ per day at the training-year average. FOUND means
-              the 2024 effect is clear of zero after correcting for 6 tests,
-              holds the same sign on unseen 2025–26 data, and the 7-day placebo
-              shows nothing. <Link href="/research">How this works</Link>
+              Computed live on your file against {report.station}:{" "}
+              {report.n_days.toLocaleString("en-US")} days used
+              {report.n_closed_days > 0 &&
+                `, ${report.n_closed_days.toLocaleString("en-US")} zero-revenue days left out`}
+              {report.n_outside_window > 0 &&
+                `, ${report.n_outside_window.toLocaleString("en-US")} days outside the weather record`}
+              . Effects are $ per day at each period’s average. FOUND means the{" "}
+              {periodLabel(report.train)} effect is clear of zero after
+              correcting for {report.hypotheses.length} tests, holds the same
+              sign on unseen {periodLabel(report.holdout)} data, and the 7-day
+              placebo shows nothing.{" "}
+              <Link href="/research">How this works</Link>
             </p>
           </div>
         )}

@@ -727,6 +727,131 @@ export interface components {
       total_difference: string;
     };
     /**
+     * ResearchEstimate
+     * @description One fit of one flag on one period. `pct` is exp(b) − 1 in percent (a stat); the dollars
+     *     are that share of the period's mean daily revenue (`mean_revenue`).
+     */
+    ResearchEstimate: {
+      /** Pct */
+      pct: number;
+      /** Effect Usd */
+      effect_usd: string;
+      /** Ci90 */
+      ci90: [string, string];
+      /** Ci Excludes Zero */
+      ci_excludes_zero: boolean;
+      /** P Value */
+      p_value: number;
+      /** N Event Days */
+      n_event_days: number;
+      /** N Days */
+      n_days: number;
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+      /** Mean Revenue */
+      mean_revenue: string;
+    };
+    /** ResearchHypothesis */
+    ResearchHypothesis: {
+      /** Id */
+      id: string;
+      /** Label */
+      label: string;
+      /** Rule */
+      rule: string;
+      /** Mechanism */
+      mechanism: string;
+      train: components["schemas"]["ResearchEstimate"] | null;
+      holdout: components["schemas"]["ResearchEstimate"] | null;
+      /** Placebo P */
+      placebo_p: number | null;
+      /** Bh Q */
+      bh_q: number;
+      /**
+       * Verdict
+       * @enum {string}
+       */
+      verdict: "FOUND" | "NOT FOUND";
+      /** Reasons */
+      reasons: (
+        | "thin_support"
+        | "not_significant"
+        | "failed_bh"
+        | "placebo_fired"
+        | "did_not_replicate"
+        | "sign_flipped"
+      )[];
+      /** Direction */
+      direction: ("positive" | "negative") | null;
+      /** Upside */
+      upside: boolean;
+      /** Venue */
+      venue: string;
+      /** Sendable */
+      sendable: boolean;
+    };
+    /** ResearchPeriod */
+    ResearchPeriod: {
+      /**
+       * Start
+       * Format: date
+       */
+      start: string;
+      /**
+       * End
+       * Format: date
+       */
+      end: string;
+    };
+    /**
+     * ResearchReport
+     * @description POST /research. Every figure comes from `stats.research.run`; `summary` is templated.
+     */
+    ResearchReport: {
+      /** Name */
+      name: string | null;
+      /** N Rows */
+      n_rows: number;
+      /** N Days */
+      n_days: number;
+      /** N Closed Days */
+      n_closed_days: number;
+      /** N Outside Window */
+      n_outside_window: number;
+      /**
+       * First
+       * Format: date
+       */
+      first: string;
+      /**
+       * Last
+       * Format: date
+       */
+      last: string;
+      train: components["schemas"]["ResearchPeriod"];
+      holdout: components["schemas"]["ResearchPeriod"];
+      /** Station */
+      station: string;
+      /** Protocol */
+      protocol: string[];
+      /** Notes */
+      notes: string[];
+      /** Hypotheses */
+      hypotheses: components["schemas"]["ResearchHypothesis"][];
+      /** Summary */
+      summary: string;
+      /** Plot Max Usd */
+      plot_max_usd: string;
+    };
+    /**
      * RunAccepted
      * @description 202 body of POST /businesses/{id}/desk/run.
      */
