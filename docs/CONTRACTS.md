@@ -25,6 +25,7 @@ The chunk `ACCEPTANCE.md` files were written in parallel and disagree in places.
 | R17 | `fair` source: business flag vs settlement flag | C1 ↔ C3 | p̂ of the **settlement** flag on `train` (`features.event_frequency(df, settlement_col)`). |
 | R18 | I2 allowed-number set covers only `checks[].metric` (C4) | C3, C4, C5 | Allowed = numbers from `checks[].metric` ∪ Hedge sizing fields ∪ `Budget` ∪ `ReconResult` in the same turn. Same validator runs on chat replies. |
 | R19 | Owner of `config.py` thresholds | C1, C3, C6 | C6 owns the file; one `Thresholds` dataclass, consumed by C3 rules, C2 backtest, C6 settings route. |
+| R20 | Playoff home-game exposure: one exposure hedged with several season contracts | C2, C3, C4, C7 | `Exposure.event = "playoff_home"`, `effect_usd` = $ per playoff home game, plus optional `expected_count` (number), `estimated: true`, `basis_note`. Each futures leg is its own `Hedge` with the same `exposure_id` (`exp_playoff_home`), optional `leg_label` and `group_total_premium` (sum of leg premiums, same on every leg); single-contract hedges leave both null. Every leg runs the six rules; the leg's swing is its protected amount (I1 per leg). |
 
 ## Needs a human decision
 

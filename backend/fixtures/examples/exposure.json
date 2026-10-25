@@ -29,5 +29,8 @@
     "end": "2026-08-31",
     "same_sign": true,
     "stable": true
-  }
+  },
+  "expected_count": null,
+  "estimated": false,
+  "basis_note": null
 }

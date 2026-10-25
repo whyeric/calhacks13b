@@ -1,0 +1,23 @@
+{
+  "source": "Dewey daily visits, balanced restaurant/bar stores within 0.5 km of MSG, summed per day",
+  "method": "log(visits) ~ playoff home + regular home + DOW + year-month FE + holiday + rain, HAC(7)",
+  "window": [
+    "2024-01-01",
+    "2026-09-27"
+  ],
+  "n_stores": 277,
+  "n_days": 1001,
+  "n_playoff_home_games": 33,
+  "n_regular_home_games": 213,
+  "beta_log": 0.05704,
+  "se_log": 0.00871,
+  "p_value": 5.78e-11,
+  "uplift_pct": 5.87,
+  "ci90_pct": [
+    4.36,
+    7.4
+  ],
+  "regular_uplift_pct": 2.44,
+  "playoff_minus_regular_pct_pts": 3.29,
+  "replication": "positive with the 90% CI above 0 in every team-season Dewey covers (Knicks 2024-2026, Rangers 2024); train and holdout both +5.7% (r5-nycplayoffs)"
+}

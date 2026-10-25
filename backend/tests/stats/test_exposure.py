@@ -28,6 +28,7 @@ EXAMPLE_KEYS = {
     "id", "business_id", "event", "effect_usd", "ci90", "se", "p_value", "n_events_train",
     "direction", "hedge_side", "settlement_var", "hedgeable", "reasons", "strike",
     "beta_settlement", "stability",
+    "expected_count", "estimated", "basis_note",  # optional; set on class-rated exposures (playoff_home)
 }
 
 

@@ -1,0 +1,24 @@
+{
+  "id": "exp_playoff_home",
+  "business_id": "restaurant",
+  "event": "playoff_home",
+  "effect_usd": "502.94",
+  "ci90": [
+    "373.89",
+    "633.84"
+  ],
+  "se": "79.01",
+  "p_value": 5.78e-11,
+  "n_events_train": 33,
+  "direction": "positive",
+  "hedge_side": "no",
+  "settlement_var": "playoff_home",
+  "hedgeable": true,
+  "reasons": [],
+  "strike": null,
+  "beta_settlement": null,
+  "stability": null,
+  "expected_count": 5.56,
+  "estimated": true,
+  "basis_note": "Estimated (class rating): playoff home nights lift foot traffic at the 277 Dewey restaurants and bars within 0.5 km of MSG by +5.9% (90% CI +4.4% to +7.4%, 33 playoff home games, 2024 to 2026), applied to this bar's $8,568 average night without an MSG game. The bar's own series alone gives -2.9% (90% CI -15.2% to +11.2%) over 18 playoff home nights: too noisy to size a hedge on. Expected playoff home games this season: 5.6, from Kalshi season futures (make playoffs, East, title) through a series model."
+}

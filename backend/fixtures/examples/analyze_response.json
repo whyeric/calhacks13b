@@ -31,7 +31,10 @@
         "end": "2026-08-31",
         "same_sign": true,
         "stable": true
-      }
+      },
+      "expected_count": null,
+      "estimated": false,
+      "basis_note": null
     },
     {
       "id": "exp_hot",
@@ -52,7 +55,10 @@
       "reasons": [],
       "strike": 65.0,
       "beta_settlement": "-180.00",
-      "stability": null
+      "stability": null,
+      "expected_count": null,
+      "estimated": false,
+      "basis_note": null
     }
   ],
   "dropped": [
@@ -78,7 +84,10 @@
       ],
       "strike": null,
       "beta_settlement": null,
-      "stability": null
+      "stability": null,
+      "expected_count": null,
+      "estimated": false,
+      "basis_note": null
     }
   ],
   "model_check": {

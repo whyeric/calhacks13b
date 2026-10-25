@@ -58,6 +58,56 @@ def no_market_hedge(
     )
 
 
+async def _cached_season_quotes(offline: bool):
+    from app.markets import season
+    from app.markets.kalshi import KalshiClient
+
+    async with KalshiClient(offline=offline) as k:
+        return await season.fetch_quotes(k)
+
+
+async def _season_hedge_for(
+    markets: "MarketsPort", exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent,
+    remaining: Decimal, thresholds: Thresholds, ticker: str | None,
+) -> Hedge:
+    """One leg of the season playoff hedge (the desk sizes all legs itself; this serves chat/tools)."""
+    from app.markets import season
+    from app.markets.kalshi import CacheMiss, KalshiError
+
+    try:
+        sp = season.plan(exposure, await markets.season_quotes())
+    except (CacheMiss, KalshiError, ValueError):
+        sp = None
+    legs = [lp for lp in (sp.legs if sp else []) if ticker in (None, lp.quote.leg.ticker)]
+    if not legs:
+        return no_market_hedge(exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent, remaining=remaining)
+    return season.leg_hedge(exposure, sp, legs[0], hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
+                            remaining=remaining, thresholds=thresholds)
+
+
+async def _season_candidates(markets: "MarketsPort", exposure: Exposure) -> list[dict]:
+    from app.markets import season
+    from app.markets.kalshi import CacheMiss, KalshiError
+
+    try:
+        quotes = await markets.season_quotes()
+    except (CacheMiss, KalshiError):
+        return []
+    rows = []
+    for q in quotes:
+        c = season.candidate(q)
+        rows.append({
+            "ticker": c.ticker, "series": c.series_ticker, "title": c.title, "close_ts": c.close_time.isoformat(),
+            "yes_ask": str(c.yes_ask) if c.yes_ask is not None else None,
+            "no_ask": str(c.no_ask) if c.no_ask is not None else None,
+            "yes_bid": str(c.yes_bid) if c.yes_bid is not None else None,
+            "no_bid": str(c.no_bid) if c.no_bid is not None else None,
+            "depth_yes": c.depth_within_5c.yes, "depth_no": c.depth_within_5c.no,
+            "rules_primary": c.rules_primary, "floor_strike": None,
+        })
+    return rows
+
+
 class FixtureMarkets:
     """Example hedges as the market answer. Clearly a stub: the sizing comes from the
     example file, not from this exposure's effect."""
@@ -78,8 +128,14 @@ class FixtureMarkets:
                     return h
         return None
 
+    async def season_quotes(self):
+        """Season futures replayed from fixtures/kalshi_cache (always offline)."""
+        return await _cached_season_quotes(offline=True)
+
     async def candidates(self, exposure: Exposure, now: datetime) -> list[dict]:
         """The example hedge's market as the only candidate (tool-facing row, agent #45)."""
+        if exposure.event == "playoff_home":
+            return await _season_candidates(self, exposure)
         ex = self._example(exposure)
         if ex is None or ex.ticker is None:
             return []
@@ -98,6 +154,9 @@ class FixtureMarkets:
         self, exposure: Exposure, *, hedge_id: str, week_of: date, now: datetime, agent: Agent,
         remaining: Decimal, thresholds: Thresholds, ticker: str | None = None,
     ) -> Hedge:
+        if exposure.event == "playoff_home":
+            return await _season_hedge_for(self, exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
+                                           remaining=remaining, thresholds=thresholds, ticker=ticker)
         ex = self._example(exposure)
         if ex is None:
             return no_market_hedge(exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
@@ -132,8 +191,14 @@ class KalshiMarkets:
         p_hat = Decimal(repr(features.event_frequency(df, col))).quantize(Decimal("0.0001"))
         return basis, p_hat
 
+    async def season_quotes(self):
+        """Live season futures (cached on read; DEMO_OFFLINE=1 replays the cache)."""
+        return await _cached_season_quotes(offline=get_settings().demo_offline)
+
     async def candidates(self, exposure: Exposure, now: datetime) -> list[dict]:
         """Tool-facing candidate rows for Claude's pick (agent #45)."""
+        if exposure.event == "playoff_home":
+            return await _season_candidates(self, exposure)
         from app.markets.kalshi import KalshiClient
         from app.markets.match import build_candidates
 
@@ -159,6 +224,9 @@ class KalshiMarkets:
         from app.markets.rules import evaluate, resolve_h
         from app.markets.sizing import size_hedge, to_hedge
 
+        if exposure.event == "playoff_home":
+            return await _season_hedge_for(self, exposure, hedge_id=hedge_id, week_of=week_of, now=now, agent=agent,
+                                           remaining=remaining, thresholds=thresholds, ticker=ticker)
         basis, p_hat = self._basis_and_phat(exposure)
         sizing = None
         try:

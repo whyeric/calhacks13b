@@ -20,5 +20,8 @@
   ],
   "strike": null,
   "beta_settlement": null,
-  "stability": null
+  "stability": null,
+  "expected_count": null,
+  "estimated": false,
+  "basis_note": null
 }
