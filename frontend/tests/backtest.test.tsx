@@ -36,7 +36,7 @@ describe("C7-A27 backtest panel", () => {
     const rain = screen.getByText("Rain").closest("li")!;
     expect(within(rain).queryByText(/Ineffective/)).not.toBeInTheDocument();
   });
-  it("labels frequency-priced share when priced_real_pct < 100", () => {
+  it("labels frequency-priced share when priced_real_pct < 1", () => {
     render(<BacktestPanel data={taxi} />);
     expect(
       screen.getByText(
@@ -47,7 +47,7 @@ describe("C7-A27 backtest panel", () => {
   it("drops the frequency label when fully real-priced", () => {
     render(
       <BacktestPanel
-        data={{ ...taxi, priced_real_pct: 100, pricing_tier: "real" }}
+        data={{ ...taxi, priced_real_pct: 1, pricing_tier: "real" }}
       />,
     );
     expect(screen.queryByText(/frequency-priced/)).not.toBeInTheDocument();

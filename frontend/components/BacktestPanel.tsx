@@ -25,12 +25,15 @@ export function BacktestHeadline({ data }: { data: Backtest }) {
     </p>
   );
 }
+// priced_real_pct is a fraction of hedged days (0..1), per the backtest contract.
+const share = (fraction: number) =>
+  fraction.toLocaleString("en-US", { style: "percent", maximumFractionDigits: 1 });
 export function PricingLabel({ data }: { data: Backtest }) {
-  if (data.priced_real_pct >= 100)
+  if (data.priced_real_pct >= 1)
     return <span className="badge real">Priced from real Kalshi prices</span>;
   return (
     <span className="badge estimated">
-      {pct(data.priced_real_pct)} priced from real Kalshi prices · the rest
+      {share(data.priced_real_pct)} priced from real Kalshi prices · the rest
       frequency-priced
     </span>
   );

@@ -13,7 +13,7 @@
   "total_premium": "1684.55",
   "n_hedges": 31,
   "n_declined": 9,
-  "priced_real_pct": 64.5,
+  "priced_real_pct": 0.645,
   "per_exposure": {
     "exp_rain": {
       "reduction_pct": 38.2,
