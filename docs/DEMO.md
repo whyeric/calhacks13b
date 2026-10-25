@@ -73,31 +73,22 @@ to demo time, when books are live:
 4. To present only real data, start with `DEMO_SAMPLE_WEEK=0 make demo` (or `make clean` first for
    a fresh db). With the default `1`, the sample week shows, labeled, until the first desk run.
 
-## Try it with your own revenue
+## Try it: upload the sample (scripted)
 
-Uploads and research run on `make demo` with no network. Without `ANTHROPIC_API_KEY`, research
-uses the deterministic fallback plan (`agent: "fallback"`). The full guide is
+This is a scripted frontend demo of the research protocol, with no backend routes. The report's
+numbers come from really running the protocol offline on the sample file. Full details are in
 [UPLOAD_AND_RESEARCH.md](UPLOAD_AND_RESEARCH.md).
 
-1. **Upload.** Click **Upload your revenue**, enter a name and a type, and choose a `date,revenue`
-   CSV (≥ 540 days inside the cached weather/schedule window). For the demo, use the drawer's
-   synthetic `sample_revenue_nyc_bike_shop.csv` with type `shop`. On 201 the app switches to the new
-   business, with an **Uploaded** badge in the switcher.
-2. **Research.** Click **Research my risks**. The UI POSTs `/businesses/{id}/research`, polls
-   `/runs/{run_id}` (`kind: "research"`) and then shows the report: the summary, then one row per
-   hypothesis with the mechanism, train vs holdout effect and CI, the placebo, the verdict badge,
-   reasons in plain language and the Kalshi series.
-3. **Send to the desk.** On the FOUND, hedgeable rain row, click **Send to the desk** (POST
-   `.../research/{hypothesis_id}/promote`). The exposure appears in `/analyze` with
-   `source: "research"`. Click **Run desk** and the desk prices a `KXRAIN` hedge for it, or declines
-   it with reasons, under the same six rules.
-4. **Clean up.** Use the switcher's delete action (`DELETE /businesses/{id}`, 204). Built-ins
-   return 403 `not_uploaded`.
-
-What the bike-shop sample gives on the committed cache (*fill in after integration*):
-
-- research verdicts: *n_tested / n_found, and rain's train → holdout effect and CI*;
-- the desk outcome for the promoted rain exposure in the week of Oct 26: *proposed / pending /
-  declined, plus reasons*. The week of Oct 26 has no NYC rain market for a day inside the desk week
-  (see the taxi result above), so a `no_market` decline is possible unless the cache is re-warmed.
-  Check this before rehearsing.
+1. Have `hudson_bike_co_daily_revenue.csv` ready. It's in `frontend/public/samples/`, and the
+   presenter's copy is in `~/Downloads/`.
+2. On `make demo`, click **Upload your revenue** and choose the file. The app shows the file's real
+   row count and dates (1,004 days, 2024-01-01 to 2026-09-30).
+3. Click **Research my risks** and let the animation run: the mechanisms first, then the protocol
+   steps, then the report.
+   - Rain is FOUND: −18.4% (−$1,955.68/day) on 2024, −20.4% on 2025–26, placebo p 0.38.
+   - Cold <40 °F is FOUND (−27.0% / −26.4%), and warm >80 °F is FOUND as an upside
+     (+10.9% / +15.5%).
+   - Hot >90 °F, Knicks home games and Knicks wins are not distinguishable from zero.
+4. Click **Send to the desk** on rain. The hedge card shows 1,955 YES @ 33¢, a premium of $675.41
+   (fee $30.26) and an expected cost of ≈ $64.86. It's hardcoded, so it doesn't depend on the Kalshi
+   cache or the desk week.
