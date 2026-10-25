@@ -10,10 +10,10 @@ API_PORT   ?= 8000
 WEB_PORT   ?= 3000
 API_URL    ?= http://localhost:$(API_PORT)
 
-.PHONY: help install seed seed-data dev demo warm test e2e clean
+.PHONY: help install seed seed-data dev api demo warm test e2e clean
 
 help:
-	@echo "targets: install seed seed-data dev demo warm test e2e clean"
+	@echo "targets: install seed seed-data dev api demo warm test e2e clean"
 
 $(PY):
 	$(PYTHON_BIN) -m venv $(VENV)
@@ -36,6 +36,10 @@ dev:
 	(cd backend && $(PY) -m uvicorn app.main:app --reload --port $(API_PORT)) & \
 	(cd frontend && NEXT_PUBLIC_API_URL=$(API_URL) npm run dev -- --port $(WEB_PORT)) & \
 	wait
+
+# Backend only (the API seeds an empty db on first start).
+api:
+	cd backend && $(PY) -m uvicorn app.main:app --reload --port $(API_PORT)
 
 demo: export DEMO_OFFLINE := 1
 demo: seed

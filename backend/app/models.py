@@ -581,7 +581,7 @@ class AnalyzeResponse(Contract):
     exposures: list[Exposure]
     dropped: list[Exposure]
     model_check: ModelCheck
-    r2_holdout: float
+    r2_holdout: float | None  # null when the feature table has no holdout rows
 
     @model_validator(mode="after")
     def _split(self) -> "AnalyzeResponse":
