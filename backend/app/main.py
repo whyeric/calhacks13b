@@ -675,6 +675,11 @@ def reconciliation_benchmark() -> ReconBenchmark:
     return benchmark.cached()
 
 
+from app.integrations.increase_routes import router as increase_router  # noqa: E402
+
+app.include_router(increase_router)  # GET /integrations/increase/status (docs/INCREASE.md)
+
+
 # --- Research (live upload) --------------------------------------------------
 # POST /research: the research protocol (stats/research.py) run live on an uploaded daily-revenue
 # CSV. Stateless: the file is read in memory and nothing is stored. The body is the raw CSV

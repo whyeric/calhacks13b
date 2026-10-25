@@ -155,6 +155,11 @@ class Settings(BaseSettings):
     qbo_redirect_uri: str = "http://localhost:8000/integrations/quickbooks/callback"
     qbo_environment: Literal["sandbox", "production"] = "sandbox"
     frontend_url: str = "http://localhost:3000"  # where the OAuth callback sends the browser back
+    # Increase bank (integrations/increase.py, docs/INCREASE.md): the bank leg of reconciliation.
+    # Used iff the key and account id are set and DEMO_OFFLINE is off; otherwise the simulated CSV.
+    increase_api_key: str | None = None
+    increase_account_id: str | None = None
+    increase_environment: Literal["sandbox", "production"] = "sandbox"
 
     @field_validator("demo_as_of", mode="before")
     @classmethod

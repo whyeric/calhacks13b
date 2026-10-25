@@ -20,11 +20,13 @@ D = Decimal
 def test_benchmark_catches_every_planted_error_with_no_false_flags():
     b = benchmark.run()
     assert b.simulated is True
-    assert b.n_hedges == 20 and b.n_planted == 13 and b.n_traps == 5
+    assert b.n_hedges == 26 and b.n_planted == 17 and b.n_traps == 7
     misses = [(c.subject, c.expected_cause, c.found_cause) for c in b.cases if not c.correct]
     assert misses == [] and b.false_flags == []
     assert (b.recall, b.precision, b.cause_accuracy) == (1.0, 1.0, 1.0)
-    assert b.n_caught == b.n_cause_correct == 13 and b.n_false_flags == 0
+    assert b.n_caught == b.n_cause_correct == 17 and b.n_false_flags == 0
+    transit = {c.subject: c.found_status for c in b.cases if c.expected_status == "in_transit"}
+    assert transit == {"hdg_b21": "in_transit", "hdg_b26": "in_transit"}
 
 
 def test_benchmark_covers_every_cause():
@@ -32,6 +34,7 @@ def test_benchmark_covers_every_cause():
     assert causes == {
         "fee_deducted_from_deposit", "duplicate_deposit", "transposed_digits", "reversed_sign",
         "missing_deposit", "ledger_payout_differs", "deposit_amount_differs", "unexplained_bank_row",
+        "venue_paid_differs_from_booked", "fee_differs_from_venue",
     }
 
 
@@ -50,6 +53,31 @@ def test_benchmark_can_fail(monkeypatch):
     trap = next(c for c in b.cases if c.subject == "hdg_b14")
     assert not trap.correct and trap.found_cause == "missing_deposit"
     assert b.precision < 1.0
+
+
+def test_benchmark_fails_without_a_posting_window(monkeypatch):
+    """With no posting window, the deposit settled on the statement date is called missing:
+    the in-transit trap catches a reconciler that can't tell timing from error."""
+    monkeypatch.setattr(recon_mod, "DEPOSIT_WINDOW_DAYS", -1)
+    b = benchmark.run()
+    trap = next(c for c in b.cases if c.subject == "hdg_b21")
+    assert not trap.correct and trap.found_cause == "missing_deposit"
+    assert "hdg_b21" in b.false_flags
+
+
+def test_benchmark_fails_if_venue_record_ignored(monkeypatch):
+    """A venue leg that only echoes the market result can't see what the venue really paid or
+    charged, so the three-way plants are missed. The score is not tuned to pass."""
+    from app.books import sources
+
+    class Blind(sources.SimulatedVenueSource):
+        def __init__(self, engine=None, overrides=None):
+            super().__init__(engine, None)  # drop the venue's disagreements
+
+    monkeypatch.setattr(benchmark, "SimulatedVenueSource", Blind)
+    b = benchmark.run()
+    wrong = {c.subject for c in b.cases if c.kind == "planted" and not c.correct}
+    assert {"hdg_b23", "hdg_b24"} <= wrong
 
 
 # --- One unit test per cause ------------------------------------------------------------
