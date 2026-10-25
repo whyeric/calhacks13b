@@ -115,7 +115,7 @@ HedgeStatus = Literal[  # R5
 ]
 LogKind = Literal[
     "proposal", "decline", "approval", "rejection", "booking", "settlement", "expired",
-    "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed",
+    "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed", "refusal",
 ]
 
 
