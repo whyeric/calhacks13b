@@ -1,4 +1,7 @@
 /data/
+# Dewey-derived daily series: rebuilt locally by `make seed-data`, not tracked (D2 pending)
+backend/fixtures/restaurant_daily.parquet
+backend/fixtures/msg_visits_daily.parquet
 .DS_Store
 .env
 

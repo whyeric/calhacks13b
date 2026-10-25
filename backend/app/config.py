@@ -18,11 +18,23 @@ REPO_ROOT = BACKEND_DIR.parent
 # Stats gap G2: backtest price fallback is trailing p-hat plus this markup ("frequency" tier).
 FALLBACK_MARKUP = Decimal("0.02")
 
-# --- Data layer (C1) -----------------------------------------------------------
-# Repo-root data/ holds raw, gitignored exports; backend/app/data/ is code. Keep them distinct.
+# Data paths: repo-root data/ holds raw Dewey exports (gitignored); backend/fixtures/ holds
+# the tracked daily aggregates. Distinct from the backend/app/data/ code package.
 RAW_DATA_DIR = REPO_ROOT / "data"
+FIXTURES_DIR = BACKEND_DIR / "fixtures"
+
+# Dewey filters (spec §4.2, G8): ZIPs around MSG, full/limited service + bars, 2024 onward.
+MSG_ZIPS = ("10001", "10119", "10121")
+RESTAURANT_NAICS = ("722511", "722513", "722410")
+DEWEY_START = date(2024, 1, 1)
+
+# MSG event-night spike rule (G4/G5): visits > rolling median + SPIKE_MAD_K x MAD over the
+# previous SPIKE_WINDOW_DAYS days (today excluded, so no look-ahead). MAD is unscaled.
+SPIKE_WINDOW_DAYS = 28
+SPIKE_MAD_K = 2.0
+
+# --- Taxi, weather, sports, features (C1, #20); paths and Dewey constants are above ---
 RAW_TLC_DIR = RAW_DATA_DIR / "tlc"  # yellow_tripdata_YYYY-MM.parquet, taxi_zone_lookup.csv
-FIXTURES_DIR = BACKEND_DIR / "fixtures"  # tracked aggregates and caches (same dir as app.db seeds)
 
 # Confirm-check C2: TLC zone 186 = "Manhattan, Penn Station/Madison Sq West, Yellow Zone".
 # Source: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
@@ -52,8 +64,6 @@ MSG_LATLON = (40.7505, -73.9934)
 SETTLEMENT_STATION_LATLON = (40.7789, -73.9692)
 WEATHER_TZ = "America/New_York"
 
-# Dewey filters (gap G8: 10121 is MSG's own ZIP).
-MSG_ZIPS = ("10001", "10119", "10121")
 
 # Gap G11: US federal holidays (observed dates) plus Christmas Eve and New Year's Eve, covering the
 # window. 2026-07-04 falls on a Saturday, so both the observed Friday and the day itself are listed.
@@ -97,10 +107,17 @@ class Settings(BaseSettings):
     demo_offline: bool = False  # True blocks all outbound HTTP
     database_url: str = "sqlite:///./hedge_desk.db"
     weekly_budget_default: Decimal = Decimal("250")
+    # C4: assumed avg check per visit (food + drinks, pre-tip) for a bar across from MSG.
+    # Placeholder estimate, not yet backed by a menu: TODO(C4) add the menu-source link here.
+    # Always labeled "assumed" downstream (I6).
     avg_check_usd: Decimal = Decimal("35")
     avg_check_label: str = "assumed"
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
     owner_token: str | None = None  # G1: off unless set
+    # D3: raw Dewey folders; unset -> named folders, then auto-detect (see app/data/dewey.py).
+    dewey_restaurants_dir: str | None = None
+    dewey_msg_dir: str | None = None
+    dewey_place_id: str | None = None  # chosen restaurant's raw ID_STORE; .env only, never commit
 
     @model_validator(mode="after")
     def _model_required_with_key(self) -> "Settings":
