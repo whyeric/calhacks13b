@@ -53,8 +53,8 @@ of the protocol on the sample file, and there are no upload or research API rout
 2. Click **Upload your revenue** and choose `hudson_bike_co_daily_revenue.csv` (in
    `frontend/public/samples/`, and linked from the drawer). The app reads the file's real row count
    and date range: 1,004 days, 2024-01-01 to 2026-09-30.
-3. Click **Upload and research**. A "Running analysis…" bar runs for a few seconds, then the
-   report appears with each risk's pre-registered mechanism. Rain, cold and warm days are FOUND; hot days and Knicks
+3. Click **Upload and research**. The backend runs the protocol live on the file (`POST /research`,
+   about a second, with a spinner), then the report appears with each risk's pre-registered mechanism. Rain, cold and warm days are FOUND; hot days and Knicks
    games aren't.
 4. On the rain row, click **Send to the desk** to see the (scripted) hedge card.
 

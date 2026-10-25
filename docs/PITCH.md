@@ -61,15 +61,15 @@ file and shows 1,004 days, 2024 to September 2026.
 > "Here's what our research protocol finds on a bike shop's revenue. Hudson Bike Co. is a
 > fictional shop, with synthetic sales on real Central Park weather."
 
-*Click **Upload and research**.* A "Running analysis…" bar runs for a few seconds; talk over it, then the
+*Click **Upload and research**.* The research runs live on the file in about a second, then the
 report appears with each risk's mechanism written above its numbers.
 
 > "The mechanism is written down before anything is tested: rain keeps riders home. Then every
 > idea gets the same protocol: fit on 2024, check on 2025 and 2026 separately, correct for how
 > many things we tried, and test a fake rain a week later that must find nothing."
 
-*The report.* Rain is **FOUND**: −18.4% (−$1,955.68 a day) on 2024, and −20.4% on the unseen
-2025–26 data, with the placebo quiet (p 0.38). Cold days (−27.0% / −26.4%) and warm days
+*The report.* Rain is **FOUND**: −18.3% (−$1,933.03 a day) on 2024, and −20.4% on the unseen
+2025–26 data, with the placebo quiet (p 0.34). Cold days (−26.6% / −26.4%) and warm days
 (+10.9% / +15.5%, an upside) are FOUND too. Hot days over 90 °F, Knicks home games and Knicks wins
 are not distinguishable from zero.
 
@@ -221,7 +221,7 @@ The protocol is the same for every hypothesis:
 - a placebo that shifts the event a week;
 - weather from NOAA's Central Park station, the same station Kalshi's NYC contracts settle on.
 
-On the bike shop, rain is FOUND: −18.4% (−$1,955.68 a day) on 2024 and −20.4% on the unseen data,
+On the bike shop, rain is FOUND: −18.3% (−$1,933.03 a day) on 2024 and −20.4% on the unseen data,
 with the placebo quiet. Cold and warm days are FOUND too, and Knicks games and wins aren't. The
 rain risk becomes a `KXRAIN` (NYC) hedge: 1,955 YES at 33¢, a $675.41 premium and an expected cost of
 about $64.86. In the demo this flow is scripted: the report shows the real results of running the
