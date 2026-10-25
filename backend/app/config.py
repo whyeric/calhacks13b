@@ -188,6 +188,16 @@ class Settings(BaseSettings):
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
+    # --- QuickBooks write-back and sandbox seeding (integrations/quickbooks_sync.py, qbo_seed.py) ---
+    # Mirror the desk's ledger entries into the connected QuickBooks company as JournalEntries
+    # (demo mode: into the SYNTHETIC demo store). Beancount stays the system of record; a QBO
+    # failure never blocks a booking. False turns the mirror off without disconnecting.
+    qbo_mirror_enabled: bool = True
+    # The QBO bank account that Assets:Bank:Checking maps to (found by name, created if missing).
+    qbo_bank_account_name: str = "Checking"
+    # Seeder pacing: Intuit allows 40 batch requests a minute per company, so one every 1.6 s.
+    qbo_seed_batch_interval_s: float = 1.6
+
 
 @dataclass(frozen=True)
 class Thresholds:

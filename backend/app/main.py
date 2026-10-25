@@ -397,6 +397,7 @@ def approve(
     _log({"business_id": h.business_id, "kind": "approval", "actor": "owner", "hedge_id": h.id,
           "decision_id": h.decision.id, "status": "approved", "numbers": _hedge_numbers(approved),
           "summary": f"Owner approved {h.id}: {h.n_filled} {h.side.upper()} contracts for ${h.premium}."})
+    qbo_sync.mirror_entries(h.business_id, _entries)  # QuickBooks mirror; never raises, never blocks
     from app.markets import trading  # Kalshi demo order on the owner's approval only (I4); never raises
 
     return trading.on_owner_approval(approved, _log)
@@ -731,11 +732,15 @@ async def research_quote(
 # --- QuickBooks Online integration ---------------------------------------------
 # "Integrations, not uploads" (integrations/quickbooks.py, docs/QUICKBOOKS.md): revenue and
 # forward-looking commitments read from the books. Demo mode reads the SYNTHETIC Hudson Bike Co.
-# company; live mode runs Intuit's OAuth2 flow. The connection lives in process memory only.
+# company; live mode runs Intuit's OAuth2 flow. The connection is stored in the app DB.
 
 from fastapi.responses import RedirectResponse  # noqa: E402
 
+from app.integrations import quickbooks_sync as qbo_sync  # noqa: E402
+from app.integrations.quickbooks_sync_routes import router as quickbooks_sync_router  # noqa: E402
 from app.models import Commitments, QuickBooksConnect, QuickBooksResearch, QuickBooksStatus  # noqa: E402
+
+app.include_router(quickbooks_sync_router)  # GET /integrations/quickbooks/sync (write-back drift check)
 
 QBO_ERRORS = {409: {"model": ErrorBody}, 502: {"model": ErrorBody}}
 

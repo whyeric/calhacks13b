@@ -1,0 +1,12 @@
+{
+  "entry_id": "le_hdg_01_premium",
+  "kind": "premium",
+  "date": "2026-10-24",
+  "amount": "66.47",
+  "simulated": false,
+  "doc_number": "le_hdg_01_premium",
+  "qbo_id": "123",
+  "qbo_amount": "66.47",
+  "status": "posted",
+  "detail": "Matches the ledger, line for line."
+}
