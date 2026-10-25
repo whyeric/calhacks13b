@@ -1,0 +1,2753 @@
+{
+ "generated_at": "2026-10-25T05:13:36+00:00",
+ "api_base": "https://api.elections.kalshi.com/trade-api/v2",
+ "generator": "backend/scripts/fetch_series_catalog.py",
+ "notes": [
+  "Volumes are contracts ($1 notional). Typical volume = median over the most recent settled events seen.",
+  "median_lead_hours = market open_time to local midnight starting the covered date (positive = before).",
+  "/historical/markets holds markets settled before the archive cutoff (2026-08-25); /markets holds the rest.",
+  "Settled history is capped at MAX_PAGES pages per endpoint, so first_close can be later than the true first listing for very large series (KXRAIN, KXNBAGAME)."
+ ],
+ "events": [
+  {
+   "id": "rain",
+   "aliases": [
+    "rain_001"
+   ],
+   "family": "weather",
+   "label": "Rain day, 0.01 in or more at Central Park",
+   "event_definition": "Central Park daily precipitation >= 0.01 in",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLINYC = NYC Central Park",
+   "strike_semantics": "strict > 0 in; trace (T) and missing count as 0, so YES iff >= 0.01 in",
+   "cadence": "daily",
+   "buy_ahead": "One day only. Each date's market lists at ~05:10 ET the day before (about 19 h before midnight). There is no way to buy a given day's rain weeks out; KXRAINNYCM (monthly total, NWS CLI) lists about 4-5 days before the month.",
+   "basis_note": "Exact for the >= 0.01 in flag, but the series and source changed: KXRAINNYC (2021-09 to 2026-07-15) settled on NWS CLI Central Park and counted Trace as YES; KXRAIN-*-NYC (from 2026-07-15) settles on The Weather Company's CLINYC value and counts Trace as 0. Use KXRAIN.",
+   "kalshi_series": [
+    "KXRAIN"
+   ],
+   "primary_title": "Where will it rain daily",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXRAIN",
+     "role": "primary",
+     "filter": "-NYC",
+     "strike": "> 0 in",
+     "exists": true,
+     "title": "Where will it rain daily",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/RAINGLOBALPERIOD.pdf",
+     "rules_primary": "If the total precipitation at CLINYC in New York City in Oct 25, 2026 is strictly greater than 0 inches, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market as reported by the Weather Company.\n\nReading weather data\nData for CLINYC can be found at https://weather.com/kalshi.\n“Trace” amounts (T) and missing daily precipitation values are counted as 0 inches. ",
+     "latest_market": "KXRAIN-26OCT25-NYC",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 1,
+     "open_markets_sample": [
+      "KXRAIN-26OCT25-NYC"
+     ],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 96,
+     "n_settled_events_seen": 96,
+     "first_open": "2026-07-14",
+     "open_markets_listed_since": "2026-10-24",
+     "first_close": "2026-07-16",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 18666.9,
+     "median_volume_per_market": 18666.9,
+     "median_lead_hours": 18.8,
+     "median_lead_hours_recent": 18.8,
+     "lead_hours_range": [
+      0.5,
+      18.8
+     ],
+     "open_volume_total": 477.6,
+     "open_interest_total": 477.6,
+     "rule_source_history": [
+      {
+       "source": "The Weather Company",
+       "first": "2026-07-15",
+       "last": "2026-10-25",
+       "n_markets": 97
+      }
+     ]
+    },
+    {
+     "series": "KXRAINNYC",
+     "role": "legacy",
+     "filter": "",
+     "strike": "> 0 in (T0)",
+     "exists": true,
+     "title": "NYC rain",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "NWS Climatological Report",
+       "url": "https://forecast.weather.gov/product.php?site=OKX&product=CLI&issuedby=NYC"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/RAINNYC.pdf",
+     "rules_primary": "If the number of inches of precipitation recorded at Central Park, New York on July 15, 2026 is strictly greater than 0, then the market resolves to Yes.",
+     "rules_secondary": "The Payout Criterion only encompasses Expiration Values that are strictly greater than  inches. If the Expiration Value is T (when the target is 0) for Trace or R for Record (where the record set is strictly greater than ), then the market resolves to Yes.\n\nThis market will close and expire the sooner of the first 10:00 AM ET following the release of data for July 15, 2026 or July 22, 2026.\n\nIf the Climatological Report is still inconclusive on July 22, 2026, Kalshi will reference the columns titled \"Weather\" and \"1 Hour Precip (in)\" in the NWS time series (https://www.weather.gov/wrh/timeseri",
+     "latest_market": "KXRAINNYC-26JUL15-T0",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 895,
+     "n_settled_events_seen": 869,
+     "first_open": "2021-09-08",
+     "open_markets_listed_since": null,
+     "first_close": "2021-09-09",
+     "last_close": "2026-07-16",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 6202.4,
+     "median_volume_per_market": 6202.4,
+     "median_lead_hours": 14.0,
+     "median_lead_hours_recent": 14.0,
+     "lead_hours_range": [
+      2.5,
+      14.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-09-24",
+       "last": "2026-07-15",
+       "n_markets": 604
+      }
+     ]
+    },
+    {
+     "series": "KXRAINNYCM",
+     "role": "alternative",
+     "filter": "",
+     "strike": "monthly total > X in",
+     "exists": true,
+     "title": "Monthly rain in New York",
+     "api_frequency": "monthly",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "NWS Climatological Report NY",
+       "url": "https://forecast.weather.gov/product.php?site=OKX&product=CLI&issuedby=NYC"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/RAINNYCM.pdf",
+     "rules_primary": "If the total precipitation at Central Park, New York City in Oct 2026 is strictly greater than 7 inches, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXRAINNYCM-26OCT-7",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 5,
+     "open_markets_sample": [
+      "KXRAINNYCM-26OCT-3",
+      "KXRAINNYCM-26OCT-4",
+      "KXRAINNYCM-26OCT-5",
+      "KXRAINNYCM-26OCT-6",
+      "KXRAINNYCM-26OCT-7"
+     ],
+     "open_median_spread_usd": 0.02,
+     "n_settled_markets_seen": 211,
+     "n_settled_events_seen": 33,
+     "first_open": "2024-02-08",
+     "open_markets_listed_since": "2026-09-27",
+     "first_close": "2024-03-01",
+     "last_close": "2026-11-01",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 72831.8,
+     "median_volume_per_market": 5485.4,
+     "median_lead_hours": 110.0,
+     "median_lead_hours_recent": 110.0,
+     "lead_hours_range": [
+      -176.0,
+      206.0
+     ],
+     "open_volume_total": 15960.4,
+     "open_interest_total": 6440.7,
+     "rule_source_history": []
+    }
+   ]
+  },
+  {
+   "id": "rain_5mm",
+   "aliases": [],
+   "family": "weather",
+   "label": "Heavy rain day, 5 mm (0.20 in) or more",
+   "event_definition": "Central Park daily precipitation >= 0.197 in",
+   "null_reason": "no_contract: no daily NYC rain contract lists a strike above 0 in. KXRAIN-*-NYC is a single > 0 market per day; the only NYC amount ladder is monthly (KXRAINNYCM).",
+   "settlement_station": "none daily; KXRAINNYCM settles on NWS CLI Central Park monthly total",
+   "strike_semantics": "n/a (no daily strike)",
+   "cadence": "daily event; nearest contract monthly",
+   "buy_ahead": "n/a",
+   "basis_note": "Untestable as a hedge. A monthly-total contract only loosely tracks heavy-rain days.",
+   "kalshi_series": null,
+   "primary_title": null,
+   "open_now": false,
+   "instruments": [
+    {
+     "series": "KXRAINNYCM",
+     "role": "alternative",
+     "filter": "",
+     "strike": "monthly total > X in, X=1..10",
+     "exists": true,
+     "title": "Monthly rain in New York",
+     "api_frequency": "monthly",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "NWS Climatological Report NY",
+       "url": "https://forecast.weather.gov/product.php?site=OKX&product=CLI&issuedby=NYC"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/RAINNYCM.pdf",
+     "rules_primary": "If the total precipitation at Central Park, New York City in Oct 2026 is strictly greater than 7 inches, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXRAINNYCM-26OCT-7",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 5,
+     "open_markets_sample": [
+      "KXRAINNYCM-26OCT-3",
+      "KXRAINNYCM-26OCT-4",
+      "KXRAINNYCM-26OCT-5",
+      "KXRAINNYCM-26OCT-6",
+      "KXRAINNYCM-26OCT-7"
+     ],
+     "open_median_spread_usd": 0.02,
+     "n_settled_markets_seen": 211,
+     "n_settled_events_seen": 33,
+     "first_open": "2024-02-08",
+     "open_markets_listed_since": "2026-09-27",
+     "first_close": "2024-03-01",
+     "last_close": "2026-11-01",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 72831.8,
+     "median_volume_per_market": 5485.4,
+     "median_lead_hours": 110.0,
+     "median_lead_hours_recent": 110.0,
+     "lead_hours_range": [
+      -176.0,
+      206.0
+     ],
+     "open_volume_total": 15960.4,
+     "open_interest_total": 6440.7,
+     "rule_source_history": []
+    }
+   ]
+  },
+  {
+   "id": "hot_80",
+   "aliases": [],
+   "family": "weather",
+   "label": "Hot day, high above 80°F",
+   "event_definition": "Central Park daily max > 80 °F",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLINYC = NYC Central Park",
+   "strike_semantics": "strict: YES iff the daily max at CLINYC is > K °F (integer readings, so > K means >= K+1). Lower tail is strict < K. Brackets 'B{x}.5' are inclusive two-degree ranges",
+   "cadence": "daily",
+   "buy_ahead": "One day only. Each date lists at 10:00 ET the day before with 6 strikes centred on the forecast, so an exact > 80 strike exists only when 80 falls on that day's ladder.",
+   "basis_note": "Same station as the flag (Central Park). Settled on NWS CLI until 2026-08-13 and on The Weather Company from 2026-08-14. The exact strike is listed on only a minority of event days (see strike_availability); otherwise the nearest edge is 1-2 °F off.",
+   "kalshi_series": [
+    "KXHIGHNY"
+   ],
+   "primary_title": "Highest temperature in NYC",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHNY",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 80",
+     "threshold": 80,
+     "direction": "above",
+     "exists": true,
+     "title": "Highest temperature in NYC",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at New York City (CLINYC) for Oct 25, 2026, is greater than 71° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHNY-26OCT25-T71",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 6,
+     "open_markets_sample": [
+      "KXHIGHNY-26OCT25-B64.5",
+      "KXHIGHNY-26OCT25-B66.5",
+      "KXHIGHNY-26OCT25-B68.5",
+      "KXHIGHNY-26OCT25-B70.5",
+      "KXHIGHNY-26OCT25-T64",
+      "KXHIGHNY-26OCT25-T71"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 9796,
+     "n_settled_events_seen": 1901,
+     "first_open": "2021-08-05",
+     "open_markets_listed_since": "2026-10-24",
+     "first_close": "2021-08-07",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 160931.8,
+     "median_volume_per_market": 23306.2,
+     "median_lead_hours": 14.0,
+     "median_lead_hours_recent": 14.0,
+     "lead_hours_range": [
+      -3.5,
+      14.0
+     ],
+     "open_volume_total": 12917.9,
+     "open_interest_total": 11151.8,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-09-02",
+       "last": "2026-08-13",
+       "n_markets": 9231
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 432
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 80",
+      "days_checked": 1901,
+      "window": [
+       "2021-08-06",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 165,
+      "share_exact_strike_listed": 0.087,
+      "event_days": 423,
+      "event_days_with_exact_strike": 81,
+      "event_days_with_strike_within_1F": 174
+     }
+    }
+   ]
+  },
+  {
+   "id": "hot_85",
+   "aliases": [],
+   "family": "weather",
+   "label": "Hot day, high above 85°F",
+   "event_definition": "Central Park daily max > 85 °F",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLINYC = NYC Central Park",
+   "strike_semantics": "strict: YES iff the daily max at CLINYC is > K °F (integer readings, so > K means >= K+1). Lower tail is strict < K. Brackets 'B{x}.5' are inclusive two-degree ranges",
+   "cadence": "daily",
+   "buy_ahead": "One day only. Each date lists at 10:00 ET the day before with 6 strikes centred on the forecast, so an exact > 85 strike exists only when 85 falls on that day's ladder.",
+   "basis_note": "Same station as the flag (Central Park). Settled on NWS CLI until 2026-08-13 and on The Weather Company from 2026-08-14. The exact strike is listed on only a minority of event days (see strike_availability); otherwise the nearest edge is 1-2 °F off.",
+   "kalshi_series": [
+    "KXHIGHNY"
+   ],
+   "primary_title": "Highest temperature in NYC",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHNY",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 85",
+     "threshold": 85,
+     "direction": "above",
+     "exists": true,
+     "title": "Highest temperature in NYC",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at New York City (CLINYC) for Oct 25, 2026, is greater than 71° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHNY-26OCT25-T71",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 6,
+     "open_markets_sample": [
+      "KXHIGHNY-26OCT25-B64.5",
+      "KXHIGHNY-26OCT25-B66.5",
+      "KXHIGHNY-26OCT25-B68.5",
+      "KXHIGHNY-26OCT25-B70.5",
+      "KXHIGHNY-26OCT25-T64",
+      "KXHIGHNY-26OCT25-T71"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 9796,
+     "n_settled_events_seen": 1901,
+     "first_open": "2021-08-05",
+     "open_markets_listed_since": "2026-10-24",
+     "first_close": "2021-08-07",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 160931.8,
+     "median_volume_per_market": 23306.2,
+     "median_lead_hours": 14.0,
+     "median_lead_hours_recent": 14.0,
+     "lead_hours_range": [
+      -3.5,
+      14.0
+     ],
+     "open_volume_total": 12917.9,
+     "open_interest_total": 11151.8,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-09-02",
+       "last": "2026-08-13",
+       "n_markets": 9231
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 432
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 85",
+      "days_checked": 1901,
+      "window": [
+       "2021-08-06",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 146,
+      "share_exact_strike_listed": 0.077,
+      "event_days": 198,
+      "event_days_with_exact_strike": 48,
+      "event_days_with_strike_within_1F": 98
+     }
+    }
+   ]
+  },
+  {
+   "id": "hot_90",
+   "aliases": [],
+   "family": "weather",
+   "label": "Hot day, high above 90°F",
+   "event_definition": "Central Park daily max > 90 °F",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLINYC = NYC Central Park",
+   "strike_semantics": "strict: YES iff the daily max at CLINYC is > K °F (integer readings, so > K means >= K+1). Lower tail is strict < K. Brackets 'B{x}.5' are inclusive two-degree ranges",
+   "cadence": "daily",
+   "buy_ahead": "One day only. Each date lists at 10:00 ET the day before with 6 strikes centred on the forecast, so an exact > 90 strike exists only when 90 falls on that day's ladder.",
+   "basis_note": "Same station as the flag (Central Park). Settled on NWS CLI until 2026-08-13 and on The Weather Company from 2026-08-14. The exact strike is listed on only a minority of event days (see strike_availability); otherwise the nearest edge is 1-2 °F off.",
+   "kalshi_series": [
+    "KXHIGHNY"
+   ],
+   "primary_title": "Highest temperature in NYC",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHNY",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 90",
+     "threshold": 90,
+     "direction": "above",
+     "exists": true,
+     "title": "Highest temperature in NYC",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at New York City (CLINYC) for Oct 25, 2026, is greater than 71° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHNY-26OCT25-T71",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 6,
+     "open_markets_sample": [
+      "KXHIGHNY-26OCT25-B64.5",
+      "KXHIGHNY-26OCT25-B66.5",
+      "KXHIGHNY-26OCT25-B68.5",
+      "KXHIGHNY-26OCT25-B70.5",
+      "KXHIGHNY-26OCT25-T64",
+      "KXHIGHNY-26OCT25-T71"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 9796,
+     "n_settled_events_seen": 1901,
+     "first_open": "2021-08-05",
+     "open_markets_listed_since": "2026-10-24",
+     "first_close": "2021-08-07",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 160931.8,
+     "median_volume_per_market": 23306.2,
+     "median_lead_hours": 14.0,
+     "median_lead_hours_recent": 14.0,
+     "lead_hours_range": [
+      -3.5,
+      14.0
+     ],
+     "open_volume_total": 12917.9,
+     "open_interest_total": 11151.8,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-09-02",
+       "last": "2026-08-13",
+       "n_markets": 9231
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 432
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 90",
+      "days_checked": 1901,
+      "window": [
+       "2021-08-06",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 70,
+      "share_exact_strike_listed": 0.037,
+      "event_days": 62,
+      "event_days_with_exact_strike": 12,
+      "event_days_with_strike_within_1F": 33
+     }
+    }
+   ]
+  },
+  {
+   "id": "cold_40",
+   "aliases": [],
+   "family": "weather",
+   "label": "Cold day, high below 40°F",
+   "event_definition": "Central Park daily max < 40 °F",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLINYC = NYC Central Park",
+   "strike_semantics": "strict: YES iff the daily max at CLINYC is > K °F (integer readings, so > K means >= K+1). Lower tail is strict < K. Brackets 'B{x}.5' are inclusive two-degree ranges; 'tmax < 40' is the lower-tail 'T40' market or the NO side of '> 39'",
+   "cadence": "daily",
+   "buy_ahead": "One day only, 10:00 ET the day before. The lower strikes follow the forecast, so a < 40 strike is listed only on cold-forecast days.",
+   "basis_note": "Same series as hot. Exact on days the 39/40 boundary is on the ladder.",
+   "kalshi_series": [
+    "KXHIGHNY"
+   ],
+   "primary_title": "Highest temperature in NYC",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHNY",
+     "role": "primary",
+     "filter": "",
+     "strike": "< 40",
+     "threshold": 40,
+     "direction": "below",
+     "exists": true,
+     "title": "Highest temperature in NYC",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at New York City (CLINYC) for Oct 25, 2026, is greater than 71° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHNY-26OCT25-T71",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 6,
+     "open_markets_sample": [
+      "KXHIGHNY-26OCT25-B64.5",
+      "KXHIGHNY-26OCT25-B66.5",
+      "KXHIGHNY-26OCT25-B68.5",
+      "KXHIGHNY-26OCT25-B70.5",
+      "KXHIGHNY-26OCT25-T64",
+      "KXHIGHNY-26OCT25-T71"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 9796,
+     "n_settled_events_seen": 1901,
+     "first_open": "2021-08-05",
+     "open_markets_listed_since": "2026-10-24",
+     "first_close": "2021-08-07",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 160931.8,
+     "median_volume_per_market": 23306.2,
+     "median_lead_hours": 14.0,
+     "median_lead_hours_recent": 14.0,
+     "lead_hours_range": [
+      -3.5,
+      14.0
+     ],
+     "open_volume_total": 12917.9,
+     "open_interest_total": 11151.8,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-09-02",
+       "last": "2026-08-13",
+       "n_markets": 9231
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 432
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax < 40",
+      "days_checked": 1901,
+      "window": [
+       "2021-08-06",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 82,
+      "share_exact_strike_listed": 0.043,
+      "event_days": 156,
+      "event_days_with_exact_strike": 20,
+      "event_days_with_strike_within_1F": 58
+     }
+    }
+   ]
+  },
+  {
+   "id": "snow",
+   "aliases": [
+    "snow_01"
+   ],
+   "family": "weather",
+   "label": "Snow day, 0.1 in or more",
+   "event_definition": "Central Park daily snowfall >= 0.1 in",
+   "settlement_station": "KXSNOWSTORM: NWS Daily Climate Report CLI NYC (Central Park); KXNYCSNOWM: NWS CLI for Dec 2025-Mar 2026, The Weather Company 'NYC' from Dec 2026",
+   "strike_semantics": "strict > X inches over the storm window (KXSNOWSTORM) or calendar month (KXNYCSNOWM)",
+   "cadence": "event-driven (KXSNOWSTORM, listed once a storm is forecast); monthly (KXNYCSNOWM)",
+   "buy_ahead": "Not as a standing hedge. KXSNOWSTORM lists only once a storm is forecast, about a day before the window. KXNYCSNOWM lists days to ~2 months before the month (Dec 2026 opened 2026-10-02) but settles on a monthly total. No daily snow contract has listed since KXSNOWNY in Feb 2022.",
+   "basis_note": "Weak for a per-day flag: the storm contract covers a multi-day window and the lowest strike is ~2 in, not 0.1 in.",
+   "kalshi_series": [
+    "KXSNOWSTORM"
+   ],
+   "primary_title": "Snowstorms",
+   "open_now": false,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXSNOWSTORM",
+     "role": "primary",
+     "filter": "NYC",
+     "strike": "storm-window total > X in",
+     "exists": true,
+     "title": "Snowstorms",
+     "api_frequency": "one_off",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "the National Weather Service",
+       "url": "https://www.weather.gov"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SNOWOVERTIME.pdf",
+     "rules_primary": "If the total snowfall from New York City in Feb 21, 2026 - Feb 24, 2026 is strictly greater than 22.0 inches, then the market resolves to Yes.",
+     "rules_secondary": "Data for CLINYC can be found by clicking the following URL: https://forecast.weather.gov/product.php?site=OKX&product=CLI&issuedby=NYC, navigating to the \"Observed Weather\" tab, and choosing the location \"Central Park NY\" with Daily Climate Report selected. Please use the latest version of the data for the desired date, keeping in mind that different cities update their reports at different frequencies.\n\nNot all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market as reporte",
+     "latest_market": "KXSNOWSTORM-26FEBNYC2-22.0",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 33,
+     "n_settled_events_seen": 3,
+     "first_open": "2026-01-23",
+     "open_markets_listed_since": null,
+     "first_close": "2026-01-27",
+     "last_close": "2026-02-25",
+     "recent_settled_events": 3,
+     "median_volume_per_event": 4031941.0,
+     "median_volume_per_market": 74825.0,
+     "median_lead_hours": 26.0,
+     "median_lead_hours_recent": 26.0,
+     "lead_hours_range": [
+      2.0,
+      33.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2026-01-24",
+       "last": "2026-02-21",
+       "n_markets": 33
+      }
+     ]
+    },
+    {
+     "series": "KXNYCSNOWM",
+     "role": "alternative",
+     "filter": "",
+     "strike": "monthly total > X in",
+     "exists": true,
+     "title": "NYC Snowfall monthly",
+     "api_frequency": "monthly",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SNOWOVERTIME.pdf",
+     "rules_primary": "If the total snowfall in New York City in December 2026 is strictly greater than 8 inches, then the market resolves to Yes.",
+     "rules_secondary": "Snowfall data is available through The Weather Company’s dashboard at https://weather.com/kalshi. Select “Snowfall,” choose the city and station specified in this market’s rules, and use “Custom” to select the specified calendar period. Snowfall is reported in inches for each station’s local calendar day.\n\nNot all weather data is the same. Forecasts and other weather websites may report different figures. Preliminary readings may change, and displayed totals may be incomplete when daily reports are missing. Resolution uses initial non-preliminary official values reported by The Weather Company",
+     "latest_market": "KXNYCSNOWM-26DEC-8",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 6,
+     "open_markets_sample": [
+      "KXNYCSNOWM-26DEC-10",
+      "KXNYCSNOWM-26DEC-12",
+      "KXNYCSNOWM-26DEC-2",
+      "KXNYCSNOWM-26DEC-4",
+      "KXNYCSNOWM-26DEC-6",
+      "KXNYCSNOWM-26DEC-8"
+     ],
+     "open_median_spread_usd": 0.16,
+     "n_settled_markets_seen": 28,
+     "n_settled_events_seen": 4,
+     "first_open": "2025-11-20",
+     "open_markets_listed_since": "2026-10-02",
+     "first_close": "2025-12-15",
+     "last_close": "2027-01-01",
+     "recent_settled_events": 4,
+     "median_volume_per_event": 1749578.5,
+     "median_volume_per_market": 188376.0,
+     "median_lead_hours": 81.4,
+     "median_lead_hours_recent": 81.4,
+     "lead_hours_range": [
+      4.3,
+      1429.0
+     ],
+     "open_volume_total": 2592.2,
+     "open_interest_total": 2308.3,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2025-12-01",
+       "last": "2026-03-01",
+       "n_markets": 28
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-12-01",
+       "last": "2026-12-01",
+       "n_markets": 6
+      }
+     ]
+    },
+    {
+     "series": "KXSNOWNYM",
+     "role": "legacy",
+     "filter": "",
+     "strike": "monthly total > X in",
+     "exists": true,
+     "title": "Total snow in NYC",
+     "api_frequency": "monthly",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "NOAA",
+       "url": "https://www.ncdc.noaa.gov/cdo-web/datasets/LCD/stations/WBAN:94728/detail"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/LSNOWNY.pdf",
+     "rules_primary": "If the total snowfall in Central Park New York City between Feb 1, 2025 and Feb 28, 2025 is strictly greater than 16.0 inches according to the National Oceanic and Atmospheric Administration, then the market resolves to Yes.",
+     "rules_secondary": "There is no variable expiration for this market. It will close and expire three days after the end of the month.",
+     "latest_market": "KXSNOWNYM-25FEB-T16.0",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 91,
+     "n_settled_events_seen": 17,
+     "first_open": "2021-11-08",
+     "open_markets_listed_since": null,
+     "first_close": "2021-12-03",
+     "last_close": "2025-03-03",
+     "recent_settled_events": 17,
+     "median_volume_per_event": 14332.0,
+     "median_volume_per_market": 6864.0,
+     "median_lead_hours": -10.0,
+     "median_lead_hours_recent": -10.0,
+     "lead_hours_range": [
+      -401.5,
+      302.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-12-01",
+       "last": "2022-01-01",
+       "n_markets": 4
+      },
+      {
+       "source": "NOAA",
+       "first": "2022-12-01",
+       "last": "2025-02-01",
+       "n_markets": 84
+      }
+     ]
+    },
+    {
+     "series": "KXSNOWNY",
+     "role": "legacy",
+     "filter": "",
+     "strike": "daily > 0 in",
+     "exists": true,
+     "title": "Snow in NYC",
+     "api_frequency": "custom",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "National Weather Service ",
+       "url": "https://forecast.weather.gov/product.php?site=OKX&product=CLI&issuedby=NYC"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SNOWNY.pdf",
+     "rules_primary": "If total snowfall in Central Park, New York City is greater than 0 inches on February 19, 2022 according to the NWS's Daily Climate Report, then the market resolves to Yes.",
+     "rules_secondary": "The market will always close at 11:59 PM ET on February 19, 2022.",
+     "latest_market": "SNOWNY-22FEB19-T0",
+     "strike_types": [],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 17,
+     "n_settled_events_seen": 8,
+     "first_open": "2021-12-08",
+     "open_markets_listed_since": null,
+     "first_close": "2021-12-26",
+     "last_close": "2022-02-20",
+     "recent_settled_events": 8,
+     "median_volume_per_event": 15103.5,
+     "median_volume_per_market": 6375.0,
+     "median_lead_hours": 26.0,
+     "median_lead_hours_recent": 26.0,
+     "lead_hours_range": [
+      14.0,
+      398.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2021-12-25",
+       "last": "2022-02-19",
+       "n_markets": 17
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_game",
+   "aliases": [],
+   "family": "sports",
+   "label": "Home game night at MSG (Knicks or Rangers)",
+   "event_definition": "Knicks or Rangers regular-season or playoff home game that day",
+   "null_reason": "no_contract: the regular-season schedule is fixed in advance, so there is nothing to settle. Informational only.",
+   "settlement_station": "n/a",
+   "strike_semantics": "n/a",
+   "cadence": "season (schedule published in summer)",
+   "buy_ahead": "n/a",
+   "basis_note": "Known risk, not hedgeable; plan it in the budget.",
+   "kalshi_series": null,
+   "primary_title": null,
+   "open_now": false,
+   "instruments": []
+  },
+  {
+   "id": "home_win",
+   "aliases": [],
+   "family": "sports",
+   "label": "Home team wins at MSG",
+   "event_definition": "Knicks or Rangers win a home game",
+   "settlement_station": "Governing league (NBA.com / NHL.com) and ESPN final score",
+   "strike_semantics": "binary: YES iff the named team wins the game 'originally scheduled for' that date (NHL includes OT/shootout)",
+   "cadence": "per game",
+   "buy_ahead": "Days, not weeks. In the 2026-27 season games list ~5 days (NBA) / ~3 days (NHL) before the game date; earlier seasons were ~1.5-2 days. Trades to the final.",
+   "basis_note": "Exact: the contract is the outcome. Event code puts the home team second ({AWAY}{HOME}).",
+   "kalshi_series": [
+    "KXNBAGAME",
+    "KXNHLGAME"
+   ],
+   "primary_title": "NBA Game",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXNBAGAME",
+     "role": "primary",
+     "filter": "NYK",
+     "strike": "team wins (YES on -NYK)",
+     "team": "NYK",
+     "home_only": true,
+     "exists": true,
+     "title": "NBA Game",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "the Governing League",
+       "url": "https://www.nba.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/BASKETBALLGAMEWIN.pdf",
+     "rules_primary": "If New York wins the New York vs Chicago Pro Basketball game originally scheduled for Oct 28, 2026, then the market resolves to Yes.",
+     "rules_secondary": "If the game is postponed but begins within 48 hours of its originally scheduled start time, the market will remain open and resolve based on the official final result. If the game is cancelled or not started within 48 hours of its originally scheduled start, all markets will resolve to a fair price.\n\nKalshi is not affiliated, associated, authorized, endorsed by, or in any way officially connected with the Governing League. All trademarks, logos, and brand names are the property of their respective owners.",
+     "latest_market": "KXNBAGAME-26OCT28NYKCHI-NYK",
+     "strike_types": [
+      "structured"
+     ],
+     "open_now": true,
+     "n_open_markets": 6,
+     "open_markets_sample": [
+      "KXNBAGAME-26OCT25ORLNYK-NYK",
+      "KXNBAGAME-26OCT25ORLNYK-ORL",
+      "KXNBAGAME-26OCT27DETNYK-DET",
+      "KXNBAGAME-26OCT27DETNYK-NYK",
+      "KXNBAGAME-26OCT28NYKCHI-CHI",
+      "KXNBAGAME-26OCT28NYKCHI-NYK"
+     ],
+     "open_median_spread_usd": 0.03,
+     "n_settled_markets_seen": 256,
+     "n_settled_events_seen": 128,
+     "first_open": "2025-04-18",
+     "open_markets_listed_since": "2026-10-18",
+     "first_close": "2025-04-20",
+     "last_close": "2026-10-31",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 24768062.2,
+     "median_volume_per_market": 11805806.8,
+     "median_lead_hours": 36.9,
+     "median_lead_hours_recent": 120.6,
+     "lead_hours_range": [
+      -11.1,
+      1452.5
+     ],
+     "open_volume_total": 26934.9,
+     "open_interest_total": 22722.1,
+     "rule_source_history": [],
+     "home_games_seen": 66,
+     "median_volume_home_team_market": 1742014.5
+    },
+    {
+     "series": "KXNHLGAME",
+     "role": "primary",
+     "filter": "NYR",
+     "strike": "team wins (YES on -NYR)",
+     "team": "NYR",
+     "home_only": true,
+     "exists": true,
+     "title": "NHL Game",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "NHL",
+       "url": "https://www.nhl.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/HOCKEYWINNINGINPERIOD.pdf",
+     "rules_primary": "If New York R wins the Los Angeles vs New York R NHL game originally scheduled for Oct 26, 2026, then the market resolves to Yes.",
+     "rules_secondary": "If the game is postponed but begins within 48 hours of its originally scheduled start time, the market will remain open and resolve based on the official final result. If the game is cancelled or not started within 48 hours of its originally scheduled start, all markets will resolve to a fair price.",
+     "latest_market": "KXNHLGAME-26OCT26LANYR-NYR",
+     "strike_types": [
+      "structured"
+     ],
+     "open_now": true,
+     "n_open_markets": 2,
+     "open_markets_sample": [
+      "KXNHLGAME-26OCT26LANYR-LA",
+      "KXNHLGAME-26OCT26LANYR-NYR"
+     ],
+     "open_median_spread_usd": 0.03,
+     "n_settled_markets_seen": 204,
+     "n_settled_events_seen": 102,
+     "first_open": "2025-09-29",
+     "open_markets_listed_since": "2026-10-20",
+     "first_close": "2025-09-30",
+     "last_close": "2026-10-28",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 686201.0,
+     "median_volume_per_market": 351593.0,
+     "median_lead_hours": 48.9,
+     "median_lead_hours_recent": 74.9,
+     "lead_hours_range": [
+      -4.7,
+      149.9
+     ],
+     "open_volume_total": 575.9,
+     "open_interest_total": 477.4,
+     "rule_source_history": [],
+     "home_games_seen": 51,
+     "median_volume_home_team_market": 324797.5
+    }
+   ]
+  },
+  {
+   "id": "playoff_home",
+   "aliases": [],
+   "family": "sports",
+   "label": "Playoff home game at MSG",
+   "event_definition": "Knicks or Rangers host a playoff game that day",
+   "settlement_station": "Governing league (NBA.com / NHL.com), ESPN, Fox Sports",
+   "strike_semantics": "binary qualify / series winner; series-length ladder 'above g-0.5 games' (>= g)",
+   "cadence": "season (KX*PLAYOFF) and per playoff series (KX*SERIES, KX*SERIESGAMES)",
+   "buy_ahead": "Yes, well ahead. KXNBAPLAYOFF lists right after the prior Finals (2026-27 opened 2026-06-15), KXNHLPLAYOFF in August (2026-08-18). Series markets list only 1-5 days before game 1 (median 1.5 NBA, 2 NHL; see series_lead_days).",
+   "basis_note": "Playoff home games are a deterministic function of making the playoffs, advancing and series length. Winner contracts hedge later rounds; the length ladder hedges this round's home games 5-7 (thin in the NHL).",
+   "kalshi_series": [
+    "KXNBAPLAYOFF",
+    "KXNHLPLAYOFF",
+    "KXNBASERIES",
+    "KXNHLSERIES"
+   ],
+   "primary_title": "Pro Basketball Playoff Qualifier",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXNBAPLAYOFF",
+     "role": "primary",
+     "filter": "NYK",
+     "strike": "team makes playoffs",
+     "exists": true,
+     "title": "Pro Basketball Playoff Qualifier",
+     "api_frequency": "annual",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "the Governing League",
+       "url": "https://www.nba.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/NEWACHIEVEMENT.pdf",
+     "rules_primary": "If New York qualifies for the Pro Basketball Playoffs in the 2026-27 season, then the market resolves to Yes.",
+     "rules_secondary": "Note: Qualifying for the Pro Basketball play-in tournament does not count as playoff qualification.\n\nKalshi is not affiliated, associated, authorized, endorsed by, or in any way officially connected with the Governing League. All trademarks, logos, and brand names are the property of their respective owners.",
+     "latest_market": "KXNBAPLAYOFF-27-NYK",
+     "strike_types": [
+      "structured"
+     ],
+     "open_now": true,
+     "n_open_markets": 1,
+     "open_markets_sample": [
+      "KXNBAPLAYOFF-27-NYK"
+     ],
+     "open_median_spread_usd": 0.06,
+     "n_settled_markets_seen": 2,
+     "n_settled_events_seen": 2,
+     "first_open": "2025-03-28",
+     "open_markets_listed_since": "2026-06-15",
+     "first_close": "2025-03-31",
+     "last_close": "2027-06-01",
+     "recent_settled_events": 2,
+     "median_volume_per_event": 422.0,
+     "median_volume_per_market": 422.0,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 4697.6,
+     "open_interest_total": 3267.1,
+     "rule_source_history": []
+    },
+    {
+     "series": "KXNHLPLAYOFF",
+     "role": "primary",
+     "filter": "NYR",
+     "strike": "team makes playoffs",
+     "exists": true,
+     "title": "Playoff Qualifier",
+     "api_frequency": "annual",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "NHL",
+       "url": "https://www.nhl.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com/"
+      },
+      {
+       "name": "Fox Sports",
+       "url": "https://www.foxsports.com/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/NHLPLAYOFF.pdf",
+     "rules_primary": "If the New York Rangers qualify for the playoffs in the 2026-27 NHL season, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXNHLPLAYOFF-27-NYR",
+     "strike_types": [
+      "custom",
+      "structured"
+     ],
+     "open_now": true,
+     "n_open_markets": 1,
+     "open_markets_sample": [
+      "KXNHLPLAYOFF-27-NYR"
+     ],
+     "open_median_spread_usd": 0.04,
+     "n_settled_markets_seen": 2,
+     "n_settled_events_seen": 2,
+     "first_open": "2025-03-28",
+     "open_markets_listed_since": "2026-08-18",
+     "first_close": "2025-04-13",
+     "last_close": "2027-04-25",
+     "recent_settled_events": 2,
+     "median_volume_per_event": 12862.0,
+     "median_volume_per_market": 12862.0,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 18201.6,
+     "open_interest_total": 14795.2,
+     "rule_source_history": []
+    },
+    {
+     "series": "KXNBASERIES",
+     "role": "primary",
+     "filter": "NYK",
+     "strike": "team wins the series",
+     "exists": true,
+     "title": "NBA Series Winner",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "the Governing League",
+       "url": "https://www.nba.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/NBASERIES.pdf",
+     "rules_primary": "If Philadelphia wins the Philadelphia vs New York 2nd Round series in the 2026 Pro Basketball Playoffs, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXNBASERIES-26PHINYKR2-PHI",
+     "strike_types": [
+      "structured"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 8,
+     "n_settled_events_seen": 4,
+     "first_open": "2025-04-18",
+     "open_markets_listed_since": null,
+     "first_close": "2025-05-02",
+     "last_close": "2026-05-10",
+     "recent_settled_events": 4,
+     "median_volume_per_event": 4833515.4,
+     "median_volume_per_market": 2503508.5,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [],
+     "series_lead_days": {
+      "n_series": 24,
+      "n_with_game1": 24,
+      "median": 1.5,
+      "range": [
+       1,
+       5
+      ],
+      "team": "NYK",
+      "team_series": [
+       {
+        "event": "KXNBASERIES-25DETNYK",
+        "market_open": "2025-04-18",
+        "game1": "2025-04-19",
+        "lead_days": 1
+       },
+       {
+        "event": "KXNBASERIES-25NYKBOS",
+        "market_open": "2025-05-02",
+        "game1": "2025-05-05",
+        "lead_days": 3
+       },
+       {
+        "event": "KXNBASERIES-26ATLNYKR1",
+        "market_open": "2026-04-13",
+        "game1": "2026-04-18",
+        "lead_days": 5
+       },
+       {
+        "event": "KXNBASERIES-26PHINYKR2",
+        "market_open": "2026-05-03",
+        "game1": "2026-05-04",
+        "lead_days": 1
+       }
+      ]
+     }
+    },
+    {
+     "series": "KXNHLSERIES",
+     "role": "primary",
+     "filter": "NYR",
+     "strike": "team wins the series",
+     "exists": true,
+     "title": "NHL Series Winner",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      },
+      {
+       "name": "NHL",
+       "url": "https://www.nhl.com"
+      },
+      {
+       "name": "Fox Sports",
+       "url": "https://www.foxsports.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/ACHIEVEMENTS.pdf",
+     "rules_primary": null,
+     "rules_secondary": null,
+     "latest_market": null,
+     "strike_types": [],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 0,
+     "n_settled_events_seen": 0,
+     "first_open": null,
+     "open_markets_listed_since": null,
+     "first_close": null,
+     "last_close": null,
+     "recent_settled_events": 0,
+     "median_volume_per_event": null,
+     "median_volume_per_market": null,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [],
+     "filter_matched_nothing": true,
+     "series_wide": {
+      "series": "KXNHLSERIES",
+      "exists": true,
+      "title": "NHL Series Winner",
+      "api_frequency": "custom",
+      "category": "Sports",
+      "settlement_sources": [
+       {
+        "name": "ESPN",
+        "url": "https://www.espn.com"
+       },
+       {
+        "name": "NHL",
+        "url": "https://www.nhl.com"
+       },
+       {
+        "name": "Fox Sports",
+        "url": "https://www.foxsports.com"
+       }
+      ],
+      "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/ACHIEVEMENTS.pdf",
+      "rules_primary": "If the Montreal Canadiens win the Montreal Canadiens vs Buffalo Sabres 2nd Round series in the 2026 NHL playoffs, then the market resolves to Yes.",
+      "latest_market": "KXNHLSERIES-26MTLBUFR2-MTL",
+      "strike_types": [
+       "structured"
+      ],
+      "open_now": false,
+      "n_open_markets": 0,
+      "open_median_spread_usd": null,
+      "n_settled_markets_seen": 48,
+      "n_settled_events_seen": 24,
+      "first_open": "2025-04-18",
+      "open_markets_listed_since": null,
+      "first_close": "2025-04-30",
+      "last_close": "2026-05-19",
+      "recent_settled_events": 24,
+      "median_volume_per_event": 778262.5,
+      "median_volume_per_market": 331763.8,
+      "median_lead_hours": null,
+      "median_lead_hours_recent": null,
+      "lead_hours_range": null,
+      "open_volume_total": 0,
+      "open_interest_total": 0,
+      "rule_source_history": []
+     },
+     "series_lead_days": {
+      "n_series": 24,
+      "n_with_game1": 24,
+      "median": 2.0,
+      "range": [
+       1,
+       4
+      ],
+      "team": "NYR",
+      "team_series": []
+     }
+    },
+    {
+     "series": "KXNBASERIESGAMES",
+     "role": "alternative",
+     "filter": "NYK",
+     "strike": "> g-0.5 games played",
+     "exists": true,
+     "title": "NBA Series Total Games",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "the Governing League",
+       "url": "https://www.nba.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SERIESTOTALGAMES.pdf",
+     "rules_primary": "If above 6.5 games are played in the New York vs San Antonio Pro Basketball Finals series in the 2026 Pro Basketball Playoffs, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXNBASERIESGAMES-26NYKSASFIN-7",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 12,
+     "n_settled_events_seen": 4,
+     "first_open": "2026-04-14",
+     "open_markets_listed_since": null,
+     "first_close": "2026-04-21",
+     "last_close": "2026-06-14",
+     "recent_settled_events": 4,
+     "median_volume_per_event": 37667.4,
+     "median_volume_per_market": 11929.2,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": []
+    },
+    {
+     "series": "KXNHLSERIESGAMES",
+     "role": "alternative",
+     "filter": "NYR",
+     "strike": "> g-0.5 games played",
+     "exists": true,
+     "title": "NHL Series Total Games",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "NHL",
+       "url": "https://www.nhl.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SERIESTOTALGAMES.pdf",
+     "rules_primary": null,
+     "rules_secondary": null,
+     "latest_market": null,
+     "strike_types": [],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 0,
+     "n_settled_events_seen": 0,
+     "first_open": null,
+     "open_markets_listed_since": null,
+     "first_close": null,
+     "last_close": null,
+     "recent_settled_events": 0,
+     "median_volume_per_event": null,
+     "median_volume_per_market": null,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [],
+     "filter_matched_nothing": true,
+     "series_wide": {
+      "series": "KXNHLSERIESGAMES",
+      "exists": true,
+      "title": "NHL Series Total Games",
+      "api_frequency": "custom",
+      "category": "Sports",
+      "settlement_sources": [
+       {
+        "name": "NHL",
+        "url": "https://www.nhl.com"
+       },
+       {
+        "name": "ESPN",
+        "url": "https://www.espn.com"
+       }
+      ],
+      "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SERIESTOTALGAMES.pdf",
+      "rules_primary": "If above 6.5 games are played in the Vegas Golden Knights vs Carolina Hurricanes Stanley Cup series in the 2026 NHL Playoffs, then the market resolves to Yes.",
+      "latest_market": "KXNHLSERIESGAMES-26VGKCARFIN-7",
+      "strike_types": [
+       "greater"
+      ],
+      "open_now": false,
+      "n_open_markets": 0,
+      "open_median_spread_usd": null,
+      "n_settled_markets_seen": 45,
+      "n_settled_events_seen": 15,
+      "first_open": "2026-04-14",
+      "open_markets_listed_since": null,
+      "first_close": "2026-04-21",
+      "last_close": "2026-06-15",
+      "recent_settled_events": 15,
+      "median_volume_per_event": 2580.6,
+      "median_volume_per_market": 643.1,
+      "median_lead_hours": null,
+      "median_lead_hours_recent": null,
+      "lead_hours_range": null,
+      "open_volume_total": 0,
+      "open_interest_total": 0,
+      "rule_source_history": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "away_playoff",
+   "aliases": [],
+   "family": "sports",
+   "label": "Away playoff night (watch-party night)",
+   "event_definition": "Knicks or Rangers play a playoff game away",
+   "settlement_station": "Governing league, ESPN",
+   "strike_semantics": "series winner (binary); series-length ladder 'above g-0.5 games'",
+   "cadence": "per playoff series",
+   "buy_ahead": "1-5 days before game 1 of each series, once the matchup is set (median 1.5 NBA, 2 NHL).",
+   "basis_note": "Indirect. The away-game count in a series is fixed by its length and home court, so the length ladder is the closer fit; the winner contract only covers later rounds.",
+   "kalshi_series": [
+    "KXNBASERIES",
+    "KXNHLSERIES"
+   ],
+   "primary_title": "NBA Series Winner",
+   "open_now": false,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXNBASERIES",
+     "role": "primary",
+     "filter": "NYK",
+     "strike": "team wins the series",
+     "exists": true,
+     "title": "NBA Series Winner",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "the Governing League",
+       "url": "https://www.nba.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/NBASERIES.pdf",
+     "rules_primary": "If Philadelphia wins the Philadelphia vs New York 2nd Round series in the 2026 Pro Basketball Playoffs, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXNBASERIES-26PHINYKR2-PHI",
+     "strike_types": [
+      "structured"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 8,
+     "n_settled_events_seen": 4,
+     "first_open": "2025-04-18",
+     "open_markets_listed_since": null,
+     "first_close": "2025-05-02",
+     "last_close": "2026-05-10",
+     "recent_settled_events": 4,
+     "median_volume_per_event": 4833515.4,
+     "median_volume_per_market": 2503508.5,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [],
+     "series_lead_days": {
+      "n_series": 24,
+      "n_with_game1": 24,
+      "median": 1.5,
+      "range": [
+       1,
+       5
+      ],
+      "team": "NYK",
+      "team_series": [
+       {
+        "event": "KXNBASERIES-25DETNYK",
+        "market_open": "2025-04-18",
+        "game1": "2025-04-19",
+        "lead_days": 1
+       },
+       {
+        "event": "KXNBASERIES-25NYKBOS",
+        "market_open": "2025-05-02",
+        "game1": "2025-05-05",
+        "lead_days": 3
+       },
+       {
+        "event": "KXNBASERIES-26ATLNYKR1",
+        "market_open": "2026-04-13",
+        "game1": "2026-04-18",
+        "lead_days": 5
+       },
+       {
+        "event": "KXNBASERIES-26PHINYKR2",
+        "market_open": "2026-05-03",
+        "game1": "2026-05-04",
+        "lead_days": 1
+       }
+      ]
+     }
+    },
+    {
+     "series": "KXNHLSERIES",
+     "role": "primary",
+     "filter": "NYR",
+     "strike": "team wins the series",
+     "exists": true,
+     "title": "NHL Series Winner",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      },
+      {
+       "name": "NHL",
+       "url": "https://www.nhl.com"
+      },
+      {
+       "name": "Fox Sports",
+       "url": "https://www.foxsports.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/ACHIEVEMENTS.pdf",
+     "rules_primary": null,
+     "rules_secondary": null,
+     "latest_market": null,
+     "strike_types": [],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 0,
+     "n_settled_events_seen": 0,
+     "first_open": null,
+     "open_markets_listed_since": null,
+     "first_close": null,
+     "last_close": null,
+     "recent_settled_events": 0,
+     "median_volume_per_event": null,
+     "median_volume_per_market": null,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [],
+     "filter_matched_nothing": true,
+     "series_wide": {
+      "series": "KXNHLSERIES",
+      "exists": true,
+      "title": "NHL Series Winner",
+      "api_frequency": "custom",
+      "category": "Sports",
+      "settlement_sources": [
+       {
+        "name": "ESPN",
+        "url": "https://www.espn.com"
+       },
+       {
+        "name": "NHL",
+        "url": "https://www.nhl.com"
+       },
+       {
+        "name": "Fox Sports",
+        "url": "https://www.foxsports.com"
+       }
+      ],
+      "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/ACHIEVEMENTS.pdf",
+      "rules_primary": "If the Montreal Canadiens win the Montreal Canadiens vs Buffalo Sabres 2nd Round series in the 2026 NHL playoffs, then the market resolves to Yes.",
+      "latest_market": "KXNHLSERIES-26MTLBUFR2-MTL",
+      "strike_types": [
+       "structured"
+      ],
+      "open_now": false,
+      "n_open_markets": 0,
+      "open_median_spread_usd": null,
+      "n_settled_markets_seen": 48,
+      "n_settled_events_seen": 24,
+      "first_open": "2025-04-18",
+      "open_markets_listed_since": null,
+      "first_close": "2025-04-30",
+      "last_close": "2026-05-19",
+      "recent_settled_events": 24,
+      "median_volume_per_event": 778262.5,
+      "median_volume_per_market": 331763.8,
+      "median_lead_hours": null,
+      "median_lead_hours_recent": null,
+      "lead_hours_range": null,
+      "open_volume_total": 0,
+      "open_interest_total": 0,
+      "rule_source_history": []
+     },
+     "series_lead_days": {
+      "n_series": 24,
+      "n_with_game1": 24,
+      "median": 2.0,
+      "range": [
+       1,
+       4
+      ],
+      "team": "NYR",
+      "team_series": []
+     }
+    },
+    {
+     "series": "KXNBASERIESGAMES",
+     "role": "alternative",
+     "filter": "NYK",
+     "strike": "> g-0.5 games played",
+     "exists": true,
+     "title": "NBA Series Total Games",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "the Governing League",
+       "url": "https://www.nba.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SERIESTOTALGAMES.pdf",
+     "rules_primary": "If above 6.5 games are played in the New York vs San Antonio Pro Basketball Finals series in the 2026 Pro Basketball Playoffs, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXNBASERIESGAMES-26NYKSASFIN-7",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 12,
+     "n_settled_events_seen": 4,
+     "first_open": "2026-04-14",
+     "open_markets_listed_since": null,
+     "first_close": "2026-04-21",
+     "last_close": "2026-06-14",
+     "recent_settled_events": 4,
+     "median_volume_per_event": 37667.4,
+     "median_volume_per_market": 11929.2,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": []
+    },
+    {
+     "series": "KXNHLSERIESGAMES",
+     "role": "alternative",
+     "filter": "NYR",
+     "strike": "> g-0.5 games played",
+     "exists": true,
+     "title": "NHL Series Total Games",
+     "api_frequency": "custom",
+     "category": "Sports",
+     "settlement_sources": [
+      {
+       "name": "NHL",
+       "url": "https://www.nhl.com"
+      },
+      {
+       "name": "ESPN",
+       "url": "https://www.espn.com"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SERIESTOTALGAMES.pdf",
+     "rules_primary": null,
+     "rules_secondary": null,
+     "latest_market": null,
+     "strike_types": [],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 0,
+     "n_settled_events_seen": 0,
+     "first_open": null,
+     "open_markets_listed_since": null,
+     "first_close": null,
+     "last_close": null,
+     "recent_settled_events": 0,
+     "median_volume_per_event": null,
+     "median_volume_per_market": null,
+     "median_lead_hours": null,
+     "median_lead_hours_recent": null,
+     "lead_hours_range": null,
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [],
+     "filter_matched_nothing": true,
+     "series_wide": {
+      "series": "KXNHLSERIESGAMES",
+      "exists": true,
+      "title": "NHL Series Total Games",
+      "api_frequency": "custom",
+      "category": "Sports",
+      "settlement_sources": [
+       {
+        "name": "NHL",
+        "url": "https://www.nhl.com"
+       },
+       {
+        "name": "ESPN",
+        "url": "https://www.espn.com"
+       }
+      ],
+      "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SERIESTOTALGAMES.pdf",
+      "rules_primary": "If above 6.5 games are played in the Vegas Golden Knights vs Carolina Hurricanes Stanley Cup series in the 2026 NHL Playoffs, then the market resolves to Yes.",
+      "latest_market": "KXNHLSERIESGAMES-26VGKCARFIN-7",
+      "strike_types": [
+       "greater"
+      ],
+      "open_now": false,
+      "n_open_markets": 0,
+      "open_median_spread_usd": null,
+      "n_settled_markets_seen": 45,
+      "n_settled_events_seen": 15,
+      "first_open": "2026-04-14",
+      "open_markets_listed_since": null,
+      "first_close": "2026-04-21",
+      "last_close": "2026-06-15",
+      "recent_settled_events": 15,
+      "median_volume_per_event": 2580.6,
+      "median_volume_per_market": 643.1,
+      "median_lead_hours": null,
+      "median_lead_hours_recent": null,
+      "lead_hours_range": null,
+      "open_volume_total": 0,
+      "open_interest_total": 0,
+      "rule_source_history": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "weekend_rain",
+   "aliases": [],
+   "family": "calendar",
+   "label": "Rain on a weekend day",
+   "event_definition": "Saturday or Sunday with Central Park precipitation >= 0.01 in",
+   "null_reason": "no_contract: there is no weekend-rain contract. The interaction can only be approximated by buying KXRAIN-<date>-NYC on Saturdays and Sundays, each one day ahead.",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLINYC = NYC Central Park (via the daily KXRAIN market)",
+   "strike_semantics": "strict > 0 in on each weekend date",
+   "cadence": "daily (weekend dates only)",
+   "buy_ahead": "Friday morning for Saturday, Saturday morning for Sunday.",
+   "basis_note": "The weekday-only part of the effect is not tradeable separately.",
+   "kalshi_series": null,
+   "primary_title": null,
+   "open_now": false,
+   "instruments": [
+    {
+     "series": "KXRAIN",
+     "role": "alternative",
+     "filter": "-NYC",
+     "strike": "> 0 in, bought only for Sat/Sun",
+     "exists": true,
+     "title": "Where will it rain daily",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/RAINGLOBALPERIOD.pdf",
+     "rules_primary": "If the total precipitation at CLINYC in New York City in Oct 25, 2026 is strictly greater than 0 inches, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market as reported by the Weather Company.\n\nReading weather data\nData for CLINYC can be found at https://weather.com/kalshi.\n“Trace” amounts (T) and missing daily precipitation values are counted as 0 inches. ",
+     "latest_market": "KXRAIN-26OCT25-NYC",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 1,
+     "open_markets_sample": [
+      "KXRAIN-26OCT25-NYC"
+     ],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 96,
+     "n_settled_events_seen": 96,
+     "first_open": "2026-07-14",
+     "open_markets_listed_since": "2026-10-24",
+     "first_close": "2026-07-16",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 18666.9,
+     "median_volume_per_market": 18666.9,
+     "median_lead_hours": 18.8,
+     "median_lead_hours_recent": 18.8,
+     "lead_hours_range": [
+      0.5,
+      18.8
+     ],
+     "open_volume_total": 477.6,
+     "open_interest_total": 477.6,
+     "rule_source_history": [
+      {
+       "source": "The Weather Company",
+       "first": "2026-07-15",
+       "last": "2026-10-25",
+       "n_markets": 97
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dc_shutdown",
+   "aliases": [],
+   "family": "calendar",
+   "label": "Federal government shutdown (downtown DC)",
+   "event_definition": "Federal government at least partially shut down on a date / for N days",
+   "settlement_station": "OMB and OPM operating status (opm.gov current status)",
+   "strike_semantics": "binary: 'at least partially shut down due to a lapse of appropriations at 10:00 AM ET'; length ladder is >= N days",
+   "cadence": "event-driven (one market per funding deadline)",
+   "buy_ahead": "Yes, weeks to months ahead: each deadline market lists 1 week to ~4 months before the deadline (KXGOVTSHUTDOWN-26DEC12 opened 2026-09-22).",
+   "basis_note": "The event is the settlement (r8-dcshutdown). Caveat: a partial (e.g. DHS-only) lapse settles YES with little downtown effect.",
+   "kalshi_series": [
+    "KXGOVTSHUTDOWN"
+   ],
+   "primary_title": "Will the government shut down?",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXGOVTSHUTDOWN",
+     "role": "primary",
+     "filter": "",
+     "strike": "shut down at 10:00 ET on date",
+     "exists": true,
+     "title": "Will the government shut down?",
+     "api_frequency": "one_off",
+     "category": "Politics",
+     "settlement_sources": [
+      {
+       "name": "Office of Management and Budget",
+       "url": "https://www.whitehouse.gov/omb/"
+      },
+      {
+       "name": "United States Office of Personnel Management",
+       "url": "https://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/current-status/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GOVTSHUTDOWN.pdf",
+     "rules_primary": "If the United States federal government is at least partially shut down due to a lapse of appropriations at 10:00 AM ET on Dec 12, 2026, then the market resolves to Yes.",
+     "rules_secondary": "A shutdown is defined as the government's orderly suspension of agency work that is not legally excepted, typically accompanied by furloughing the employees who perform that work, when funding is unavailable.\n\nExamples that would resolve the market to Yes:\n\nOMB releases a formal directive that orders heads of the affected agencies to \"execute plans for an orderly shutdown,\" which is in effect as of 10:00 AM ET on Dec 12, 2026\nOPM posts a current operating status that indicates that \"due to a partial lapse in appropriations, Federal Government operations vary by agency\"\n\nExamples that would NOT",
+     "latest_market": "KXGOVTSHUTDOWN-26DEC12",
+     "strike_types": [],
+     "open_now": true,
+     "n_open_markets": 1,
+     "open_markets_sample": [
+      "KXGOVTSHUTDOWN-26DEC12"
+     ],
+     "open_median_spread_usd": 0.03,
+     "n_settled_markets_seen": 2,
+     "n_settled_events_seen": 2,
+     "first_open": "2026-02-06",
+     "open_markets_listed_since": "2026-09-22",
+     "first_close": "2026-02-14",
+     "last_close": "2026-12-12",
+     "recent_settled_events": 2,
+     "median_volume_per_event": 15451291.6,
+     "median_volume_per_market": 15451291.6,
+     "median_lead_hours": 1926.5,
+     "median_lead_hours_recent": 1926.5,
+     "lead_hours_range": [
+      182.0,
+      2719.5
+     ],
+     "open_volume_total": 24913.9,
+     "open_interest_total": 19744.0,
+     "rule_source_history": [
+      {
+       "source": "OPM/OMB",
+       "first": "2026-02-14",
+       "last": "2026-12-12",
+       "n_markets": 3
+      }
+     ]
+    },
+    {
+     "series": "KXGOVTSHUTLENGTH",
+     "role": "alternative",
+     "filter": "",
+     "strike": "lasts >= N days",
+     "exists": true,
+     "title": "How long will the next government shutdown last?",
+     "api_frequency": "one_off",
+     "category": "Politics",
+     "settlement_sources": [
+      {
+       "name": "Office of Management and Budget",
+       "url": "https://www.whitehouse.gov/omb/"
+      },
+      {
+       "name": "United States Office of Personnel Management",
+       "url": "https://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/current-status/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GOVTSHUTLENGTH.pdf",
+     "rules_primary": "If the duration of the first US federal government shutdown between Feb 7, 2026 and Dec 31, 2026 due to a lapse of appropriations is at least 95 days, then the market resolves to Yes.",
+     "rules_secondary": "A shutdown is defined as the government's orderly suspension of agency work that is not legally excepted, typically accompanied by furloughing the employees who perform that work, when funding is unavailable.\n\nShutdown status is recorded at 10:00 AM ET each day. Partial shutdowns are included. A shutdown lasting \"at least X days\" requires the shutdown to be in effect at 10:00 AM ET on X+1 consecutive days. For example, if a shutdown is first in effect at 10:00 AM ET on October 1, 2026, and remains in effect at 10:00 AM ET on October 2, 2026, the shutdown has lasted at least 1 day.\n\nExamples th",
+     "latest_market": "KXGOVTSHUTLENGTH-26FEB07-G95",
+     "strike_types": [
+      "greater_or_equal"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 32,
+     "n_settled_events_seen": 1,
+     "first_open": "2026-02-06",
+     "open_markets_listed_since": null,
+     "first_close": "2026-02-15",
+     "last_close": "2026-05-01",
+     "recent_settled_events": 1,
+     "median_volume_per_event": 22710015.1,
+     "median_volume_per_market": 448094.2,
+     "median_lead_hours": 14.0,
+     "median_lead_hours_recent": 14.0,
+     "lead_hours_range": [
+      14.0,
+      14.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "OPM/OMB",
+       "first": "2026-02-07",
+       "last": "2026-02-07",
+       "n_markets": 32
+      }
+     ]
+    },
+    {
+     "series": "KXGOVSHUT",
+     "role": "legacy",
+     "filter": "",
+     "strike": "OPM shutdown notice by date",
+     "exists": true,
+     "title": "Government shutdown",
+     "api_frequency": "custom",
+     "category": "Politics",
+     "settlement_sources": [
+      {
+       "name": "U.S. Office of Personnel Management",
+       "url": "https://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/current-status/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SHUTDOWN.pdf",
+     "rules_primary": "If the website of the U.S. Office of Personnel Management contains a notice that the government at least partially shut down on January 31, 2026 at 11:00 AM ET due to a lapse in appropriations, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXGOVSHUT-26JAN31",
+     "strike_types": [],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 20,
+     "n_settled_events_seen": 20,
+     "first_open": "2021-09-28",
+     "open_markets_listed_since": null,
+     "first_close": "2021-10-01",
+     "last_close": "2026-01-31",
+     "recent_settled_events": 20,
+     "median_volume_per_event": 46404.5,
+     "median_volume_per_market": 46404.5,
+     "median_lead_hours": 1105.9,
+     "median_lead_hours_recent": 1105.9,
+     "lead_hours_range": [
+      -8410.0,
+      6277.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "OPM/OMB",
+       "first": "2021-02-19",
+       "last": "2026-01-31",
+       "n_markets": 20
+      }
+     ]
+    },
+    {
+     "series": "KXGOVSHUTLENGTH",
+     "role": "legacy",
+     "filter": "",
+     "strike": "days of shutdown",
+     "exists": true,
+     "title": "Number of days of government shutdown?",
+     "api_frequency": "custom",
+     "category": "Politics",
+     "settlement_sources": [
+      {
+       "name": "U.S. Office of Personnel Management",
+       "url": "https://www.opm.gov/policy-data-oversight/snow-dismissal-procedures/current-status/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/SHUTLENGTH.pdf",
+     "rules_primary": "If the U.S. federal government is at least partially shut down for above 4 days between Jan 25, 2026 and Feb 28, 2026, then the market resolves to Yes.",
+     "rules_secondary": "A shutdown is determined by notices on the U.S. Office of Personnel Management website indicating the federal government is at least partially shut down due to a lapse in appropriations. Days are counted based on notices checked at 10:00 AM ET each day. If there are multiple government shutdowns during the relevant period, this market only applies to the first shutdown, as the market will resolve after the end of the first shutdown. Notices of emergency furloughs or impacted government operations count toward the shutdown days. Office closures due to holidays or inclement weather do not count.",
+     "latest_market": "KXGOVSHUTLENGTH-26FEB28-4D",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 87,
+     "n_settled_events_seen": 5,
+     "first_open": "2023-01-24",
+     "open_markets_listed_since": null,
+     "first_close": "2024-01-01",
+     "last_close": "2026-02-04",
+     "recent_settled_events": 5,
+     "median_volume_per_event": 361675.0,
+     "median_volume_per_market": 356932.0,
+     "median_lead_hours": 4620.0,
+     "median_lead_hours_recent": 4620.0,
+     "lead_hours_range": [
+      820.0,
+      8174.0
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "OPM/OMB",
+       "first": "2026-01-01",
+       "last": "2026-02-28",
+       "n_markets": 69
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tx_heat_austin",
+   "aliases": [],
+   "family": "weather",
+   "label": "Texas heat, Austin high above 95°F",
+   "event_definition": "Austin daily max > 95 °F (also > 100 °F)",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLIAUS (Austin-Bergstrom)",
+   "strike_semantics": "strict: YES iff the daily max is > K °F; 6 strikes per day centred on the forecast",
+   "cadence": "daily",
+   "buy_ahead": "One day only: lists at 09:00 CT the day before.",
+   "basis_note": "NWS CLI until 2026-08-13, The Weather Company from 2026-08-14; GHCN TMAX at the same station reproduced 100% of settled markets 2026-08-17..10-20 (r4-ercot). The day-ahead price reflects the forecast, so it hedges forecast error only.",
+   "kalshi_series": [
+    "KXHIGHAUS"
+   ],
+   "primary_title": "Highest temperature in Austin",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHAUS",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 95",
+     "threshold": 95,
+     "direction": "above",
+     "exists": true,
+     "title": "Highest temperature in Austin",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at Austin (CLIAUS) for Oct 25, 2026, is greater than 88° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHAUS-26OCT25-T88",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 12,
+     "open_markets_sample": [
+      "KXHIGHAUS-26OCT24-B85.5",
+      "KXHIGHAUS-26OCT24-B87.5",
+      "KXHIGHAUS-26OCT24-B89.5",
+      "KXHIGHAUS-26OCT24-B91.5",
+      "KXHIGHAUS-26OCT24-T85",
+      "KXHIGHAUS-26OCT24-T92"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 7545,
+     "n_settled_events_seen": 1258,
+     "first_open": "2023-05-10",
+     "open_markets_listed_since": "2026-10-23",
+     "first_close": "2023-05-12",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 53074.4,
+     "median_volume_per_market": 7911.0,
+     "median_lead_hours": 15.0,
+     "median_lead_hours_recent": 15.0,
+     "lead_hours_range": [
+      -2.5,
+      15.0
+     ],
+     "open_volume_total": 47872.9,
+     "open_interest_total": 36497.7,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2023-05-11",
+       "last": "2026-08-13",
+       "n_markets": 7119
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 438
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 95",
+      "days_checked": 1258,
+      "window": [
+       "2023-05-11",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 231,
+      "share_exact_strike_listed": 0.184,
+      "event_days": 336,
+      "event_days_with_exact_strike": 130,
+      "event_days_with_strike_within_1F": 252
+     }
+    }
+   ]
+  },
+  {
+   "id": "tx_heat_houston",
+   "aliases": [],
+   "family": "weather",
+   "label": "Texas heat, Houston high above 95°F",
+   "event_definition": "Houston daily max > 95 °F (also > 100 °F)",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLIHOU (Houston Hobby)",
+   "strike_semantics": "strict: YES iff the daily max is > K °F; 6 strikes per day centred on the forecast",
+   "cadence": "daily",
+   "buy_ahead": "One day only: lists at 09:00 CT the day before.",
+   "basis_note": "NWS CLI until 2026-08-13, The Weather Company from 2026-08-14; GHCN TMAX at the same station reproduced 100% of settled markets 2026-08-17..10-20 (r4-ercot). The day-ahead price reflects the forecast, so it hedges forecast error only.",
+   "kalshi_series": [
+    "KXHIGHTHOU"
+   ],
+   "primary_title": "Daily High Temperature Houston",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHTHOU",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 95",
+     "threshold": 95,
+     "direction": "above",
+     "exists": true,
+     "title": "Daily High Temperature Houston",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at Houston (CLIHOU) for Oct 25, 2026, is greater than 86° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHTHOU-26OCT25-T86",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 12,
+     "open_markets_sample": [
+      "KXHIGHTHOU-26OCT24-B83.5",
+      "KXHIGHTHOU-26OCT24-B85.5",
+      "KXHIGHTHOU-26OCT24-B87.5",
+      "KXHIGHTHOU-26OCT24-B89.5",
+      "KXHIGHTHOU-26OCT24-T83",
+      "KXHIGHTHOU-26OCT24-T90"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 1530,
+     "n_settled_events_seen": 255,
+     "first_open": "2026-02-10",
+     "open_markets_listed_since": "2026-10-23",
+     "first_close": "2026-02-12",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 29822.1,
+     "median_volume_per_market": 4196.4,
+     "median_lead_hours": 15.0,
+     "median_lead_hours_recent": 15.0,
+     "lead_hours_range": [
+      8.9,
+      15.0
+     ],
+     "open_volume_total": 20711.7,
+     "open_interest_total": 14332.4,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2026-02-11",
+       "last": "2026-08-13",
+       "n_markets": 1104
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 438
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 95",
+      "days_checked": 255,
+      "window": [
+       "2026-02-11",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 53,
+      "share_exact_strike_listed": 0.208,
+      "event_days": 38,
+      "event_days_with_exact_strike": 10,
+      "event_days_with_strike_within_1F": 30
+     }
+    }
+   ]
+  },
+  {
+   "id": "tx_heat_dallas",
+   "aliases": [],
+   "family": "weather",
+   "label": "Texas heat, Dallas high above 95°F",
+   "event_definition": "Dallas daily max > 95 °F (also > 100 °F)",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLIDFW (DFW Airport)",
+   "strike_semantics": "strict: YES iff the daily max is > K °F; 6 strikes per day centred on the forecast",
+   "cadence": "daily",
+   "buy_ahead": "One day only: lists at 09:00 CT the day before.",
+   "basis_note": "NWS CLI until 2026-08-13, The Weather Company from 2026-08-14; GHCN TMAX at the same station reproduced 100% of settled markets 2026-08-17..10-20 (r4-ercot). The day-ahead price reflects the forecast, so it hedges forecast error only.",
+   "kalshi_series": [
+    "KXHIGHTDAL"
+   ],
+   "primary_title": "Dallas Maximum Temperature",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHTDAL",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 95",
+     "threshold": 95,
+     "direction": "above",
+     "exists": true,
+     "title": "Dallas Maximum Temperature",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at Dallas (CLIDFW) for Oct 25, 2026, is greater than 86° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHTDAL-26OCT25-T86",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 12,
+     "open_markets_sample": [
+      "KXHIGHTDAL-26OCT24-B82.5",
+      "KXHIGHTDAL-26OCT24-B84.5",
+      "KXHIGHTDAL-26OCT24-B86.5",
+      "KXHIGHTDAL-26OCT24-B88.5",
+      "KXHIGHTDAL-26OCT24-T82",
+      "KXHIGHTDAL-26OCT24-T89"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 1530,
+     "n_settled_events_seen": 255,
+     "first_open": "2026-02-10",
+     "open_markets_listed_since": "2026-10-23",
+     "first_close": "2026-02-12",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 40224.5,
+     "median_volume_per_market": 5005.3,
+     "median_lead_hours": 15.0,
+     "median_lead_hours_recent": 15.0,
+     "lead_hours_range": [
+      8.9,
+      15.0
+     ],
+     "open_volume_total": 27904.8,
+     "open_interest_total": 23083.3,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2026-02-11",
+       "last": "2026-08-13",
+       "n_markets": 1104
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 438
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 95",
+      "days_checked": 255,
+      "window": [
+       "2026-02-11",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 36,
+      "share_exact_strike_listed": 0.141,
+      "event_days": 84,
+      "event_days_with_exact_strike": 13,
+      "event_days_with_strike_within_1F": 35
+     }
+    }
+   ]
+  },
+  {
+   "id": "tx_heat_san_antonio",
+   "aliases": [],
+   "family": "weather",
+   "label": "Texas heat, San Antonio high above 95°F",
+   "event_definition": "San Antonio daily max > 95 °F (also > 100 °F)",
+   "settlement_station": "The Weather Company (weather.com/kalshi), station CLISAT (San Antonio Intl)",
+   "strike_semantics": "strict: YES iff the daily max is > K °F; 6 strikes per day centred on the forecast",
+   "cadence": "daily",
+   "buy_ahead": "One day only: lists at 09:00 CT the day before.",
+   "basis_note": "NWS CLI until 2026-08-13, The Weather Company from 2026-08-14; GHCN TMAX at the same station reproduced 100% of settled markets 2026-08-17..10-20 (r4-ercot). The day-ahead price reflects the forecast, so it hedges forecast error only.",
+   "kalshi_series": [
+    "KXHIGHTSATX"
+   ],
+   "primary_title": "San Antonio Daily Maximum Temperature",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXHIGHTSATX",
+     "role": "primary",
+     "filter": "",
+     "strike": "> 95",
+     "threshold": 95,
+     "direction": "above",
+     "exists": true,
+     "title": "San Antonio Daily Maximum Temperature",
+     "api_frequency": "daily",
+     "category": "Climate and Weather",
+     "settlement_sources": [
+      {
+       "name": "The Weather Company",
+       "url": "https://weather.com/kalshi"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+     "rules_primary": "If the maximum temperature recorded at San Antonio (CLISAT) for Oct 25, 2026, is greater than 88° fahrenheit according to The Weather Company, then the market resolves to Yes.",
+     "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expi",
+     "latest_market": "KXHIGHTSATX-26OCT25-T88",
+     "strike_types": [
+      "between",
+      "greater",
+      "less"
+     ],
+     "open_now": true,
+     "n_open_markets": 12,
+     "open_markets_sample": [
+      "KXHIGHTSATX-26OCT24-B84.5",
+      "KXHIGHTSATX-26OCT24-B86.5",
+      "KXHIGHTSATX-26OCT24-B88.5",
+      "KXHIGHTSATX-26OCT24-B90.5",
+      "KXHIGHTSATX-26OCT24-T84",
+      "KXHIGHTSATX-26OCT24-T91"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 1530,
+     "n_settled_events_seen": 255,
+     "first_open": "2026-02-10",
+     "open_markets_listed_since": "2026-10-23",
+     "first_close": "2026-02-12",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 13326.8,
+     "median_volume_per_market": 2007.1,
+     "median_lead_hours": 15.0,
+     "median_lead_hours_recent": 15.0,
+     "lead_hours_range": [
+      8.9,
+      15.0
+     ],
+     "open_volume_total": 18458.3,
+     "open_interest_total": 14501.4,
+     "rule_source_history": [
+      {
+       "source": "NWS Climatological Report (CLI)",
+       "first": "2026-02-11",
+       "last": "2026-08-13",
+       "n_markets": 1104
+      },
+      {
+       "source": "The Weather Company",
+       "first": "2026-08-14",
+       "last": "2026-10-25",
+       "n_markets": 438
+      }
+     ],
+     "strike_availability": {
+      "condition": "tmax > 95",
+      "days_checked": 255,
+      "window": [
+       "2026-02-11",
+       "2026-10-23"
+      ],
+      "days_exact_strike_listed": 54,
+      "share_exact_strike_listed": 0.212,
+      "event_days": 69,
+      "event_days_with_exact_strike": 17,
+      "event_days_with_strike_within_1F": 46
+     }
+    }
+   ]
+  },
+  {
+   "id": "gas_price",
+   "aliases": [],
+   "family": "calendar",
+   "label": "US gas price (AAA national average)",
+   "event_definition": "AAA US average regular gas price above $X on a date",
+   "settlement_station": "AAA national average regular (gasprices.aaa.com)",
+   "strike_semantics": "strict: 'strictly greater than $X'; ladders $0.01-0.10 apart",
+   "cadence": "monthly (KXAAAGASM), weekly (KXAAAGASW), daily (KXAAAGASD)",
+   "buy_ahead": "Yes: monthly lists ~1 month ahead, weekly ~1 week ahead.",
+   "basis_note": "National price; local price basis R^2 ~0.6-0.9 monthly (r6-gas). Hedges a fuel bill, not demand (sign unstable).",
+   "kalshi_series": [
+    "KXAAAGASM"
+   ],
+   "primary_title": "US gas price",
+   "open_now": true,
+   "null_reason": null,
+   "instruments": [
+    {
+     "series": "KXAAAGASM",
+     "role": "primary",
+     "filter": "",
+     "strike": "> $X at month end",
+     "exists": true,
+     "title": "US gas price",
+     "api_frequency": "monthly",
+     "category": "Economics",
+     "settlement_sources": [
+      {
+       "name": "AAA",
+       "url": "https://gasprices.aaa.com/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/AAAGAS.pdf",
+     "rules_primary": "If average regular gas prices for United States are strictly greater than $5.00 on Oct 31, 2026 according to AAA, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXAAAGASM-26OCT31-5.00",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 26,
+     "open_markets_sample": [
+      "KXAAAGASM-26OCT31-2.50",
+      "KXAAAGASM-26OCT31-2.60",
+      "KXAAAGASM-26OCT31-2.70",
+      "KXAAAGASM-26OCT31-2.80",
+      "KXAAAGASM-26OCT31-2.90",
+      "KXAAAGASM-26OCT31-3.00"
+     ],
+     "open_median_spread_usd": 0.01,
+     "n_settled_markets_seen": 461,
+     "n_settled_events_seen": 34,
+     "first_open": "2023-12-01",
+     "open_markets_listed_since": "2026-09-30",
+     "first_close": "2023-12-31",
+     "last_close": "2026-10-31",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 1251861.0,
+     "median_volume_per_market": 25582.0,
+     "median_lead_hours": 733.0,
+     "median_lead_hours_recent": 734.0,
+     "lead_hours_range": [
+      158.0,
+      1478.0
+     ],
+     "open_volume_total": 921099.3,
+     "open_interest_total": 281539.8,
+     "rule_source_history": [
+      {
+       "source": "AAA",
+       "first": "2023-12-31",
+       "last": "2026-10-31",
+       "n_markets": 487
+      }
+     ]
+    },
+    {
+     "series": "KXAAAGASW",
+     "role": "alternative",
+     "filter": "",
+     "strike": "> $X on Monday",
+     "exists": true,
+     "title": "US gas price up",
+     "api_frequency": "weekly",
+     "category": "Economics",
+     "settlement_sources": [
+      {
+       "name": "AAA",
+       "url": "https://gasprices.aaa.com/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/AAAGAS.pdf",
+     "rules_primary": "If average regular gas prices for United States are strictly greater than $4.5000 on Oct 26, 2026 according to AAA, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXAAAGASW-26OCT26-4.5000",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": true,
+     "n_open_markets": 21,
+     "open_markets_sample": [
+      "KXAAAGASW-26OCT26-4.1000",
+      "KXAAAGASW-26OCT26-4.1200",
+      "KXAAAGASW-26OCT26-4.1400",
+      "KXAAAGASW-26OCT26-4.1600",
+      "KXAAAGASW-26OCT26-4.1800",
+      "KXAAAGASW-26OCT26-4.2000"
+     ],
+     "open_median_spread_usd": 0.015,
+     "n_settled_markets_seen": 1056,
+     "n_settled_events_seen": 141,
+     "first_open": "2023-10-03",
+     "open_markets_listed_since": "2026-10-19",
+     "first_close": "2023-10-09",
+     "last_close": "2026-10-26",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 896805.1,
+     "median_volume_per_market": 18792.4,
+     "median_lead_hours": 158.0,
+     "median_lead_hours_recent": 158.2,
+     "lead_hours_range": [
+      82.2,
+      657.8
+     ],
+     "open_volume_total": 2075143.9,
+     "open_interest_total": 475542.5,
+     "rule_source_history": [
+      {
+       "source": "AAA",
+       "first": "2023-10-09",
+       "last": "2026-10-26",
+       "n_markets": 1077
+      }
+     ]
+    },
+    {
+     "series": "KXAAAGASD",
+     "role": "alternative",
+     "filter": "",
+     "strike": "> $X daily",
+     "exists": true,
+     "title": "US gas price up",
+     "api_frequency": "daily",
+     "category": "Economics",
+     "settlement_sources": [
+      {
+       "name": "AAA",
+       "url": "https://gasprices.aaa.com/"
+      }
+     ],
+     "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/AAAGAS.pdf",
+     "rules_primary": "If average regular gas prices for United States are strictly greater than $4.3350 on Oct 24, 2026 according to AAA, then the market resolves to Yes.",
+     "rules_secondary": null,
+     "latest_market": "KXAAAGASD-26OCT24-4.3350",
+     "strike_types": [
+      "greater"
+     ],
+     "open_now": false,
+     "n_open_markets": 0,
+     "open_markets_sample": [],
+     "open_median_spread_usd": null,
+     "n_settled_markets_seen": 3826,
+     "n_settled_events_seen": 238,
+     "first_open": "2023-09-15",
+     "open_markets_listed_since": null,
+     "first_close": "2023-09-18",
+     "last_close": "2026-10-24",
+     "recent_settled_events": 30,
+     "median_volume_per_event": 335826.7,
+     "median_volume_per_market": 7646.1,
+     "median_lead_hours": 16.0,
+     "median_lead_hours_recent": 16.0,
+     "lead_hours_range": [
+      11.5,
+      60.8
+     ],
+     "open_volume_total": 0,
+     "open_interest_total": 0,
+     "rule_source_history": [
+      {
+       "source": "AAA",
+       "first": "2023-09-18",
+       "last": "2026-10-24",
+       "n_markets": 3826
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
