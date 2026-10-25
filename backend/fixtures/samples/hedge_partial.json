@@ -1,0 +1,126 @@
+{
+  "id": "hdg_sample_partial",
+  "business_id": "restaurant",
+  "exposure_id": "exp_rain",
+  "week_of": "2026-10-26",
+  "status": "proposed",
+  "ticker": "KXRAIN-26OCT25-NYC",
+  "market_title": "Will it rain in New York City on Oct 25, 2026?",
+  "market_url": "https://kalshi.com/markets/kxrain",
+  "close_time": "2026-10-26T05:00:00Z",
+  "side": "yes",
+  "match_reason": "Deepest eligible book closing this week.",
+  "h": "1",
+  "n_target": 100,
+  "n_filled": 70,
+  "n_unfilled": 30,
+  "partial": true,
+  "resized": false,
+  "fills": [
+    {
+      "price": "0.2",
+      "count": 40
+    },
+    {
+      "price": "0.22",
+      "count": 30
+    }
+  ],
+  "avg_price": "0.2086",
+  "cost": "14.60",
+  "fee": "0.81",
+  "premium": "15.41",
+  "fair": "0.3973",
+  "expected_cost": "0.81",
+  "fee_unverified": false,
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "-100.00",
+      "contract_payout": "70.00",
+      "premium": "-15.41",
+      "net_vs_base": "-45.41"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "0.00",
+      "premium": "-15.41",
+      "net_vs_base": "-15.41"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "100.00",
+    "hedged_swing": "30.00",
+    "cost": "15.41"
+  },
+  "decision": {
+    "id": "dec_sample_partial",
+    "status": "proposed",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 1
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 100,
+          "n_filled": 70,
+          "fill_ratio": "0.70",
+          "partial": true
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.2086",
+          "fair": "0.3973",
+          "overpay": "0.00",
+          "note": "Market price reflects the current forecast; historical rate is 40%."
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.81",
+          "beta_s": "-900.00",
+          "beta": "-100.00",
+          "h": "1.00",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "0.81",
+          "swing": "100.00",
+          "ratio": "0.01"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": true,
+        "metric": {
+          "premium": "15.41",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [],
+    "summary": null
+  },
+  "alternative": null,
+  "agent": "fallback",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T23:00:00Z",
+  "decided_by": null,
+  "decided_at": null
+}

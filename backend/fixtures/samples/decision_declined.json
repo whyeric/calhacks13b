@@ -1,0 +1,66 @@
+{
+  "id": "dec_sample_declined",
+  "status": "declined",
+  "checks": [
+    {
+      "code": "no_market",
+      "passed": true,
+      "metric": {
+        "n_candidates": 1
+      }
+    },
+    {
+      "code": "illiquid",
+      "passed": true,
+      "metric": {
+        "n_target": 900,
+        "n_filled": 900,
+        "fill_ratio": "1.00",
+        "partial": false
+      }
+    },
+    {
+      "code": "overpriced",
+      "passed": false,
+      "metric": {
+        "avg_price": "0.80",
+        "fair": "0.3973",
+        "overpay": "0.4027",
+        "note": "Market price reflects the current forecast; historical rate is 40%."
+      }
+    },
+    {
+      "code": "basis_too_loose",
+      "passed": true,
+      "metric": {
+        "r2": "0.81",
+        "beta_s": "-900.00",
+        "beta": "-900.00",
+        "h": "1.00",
+        "resized": false
+      }
+    },
+    {
+      "code": "too_expensive",
+      "passed": false,
+      "metric": {
+        "expected_cost": "372.51",
+        "swing": "900.00",
+        "ratio": "0.41"
+      }
+    },
+    {
+      "code": "over_budget",
+      "passed": true,
+      "metric": {
+        "premium": "730.08",
+        "remaining": "1000.00"
+      }
+    }
+  ],
+  "reasons": [
+    "overpriced",
+    "too_expensive"
+  ],
+  "summary": "Declined: YES on NYC rain for Oct 25 costs 80\u00a2 a contract, 40.27\u00a2 more than its historical fair price of 39.73\u00a2. Also, the hedge is expected to cost $372.51 to remove a $900.00 swing, 41% of what it protects."
+}

@@ -19,6 +19,12 @@ REPO_ROOT = BACKEND_DIR.parent
 # Stats gap G2: backtest price fallback is trailing p-hat plus this markup ("frequency" tier).
 FALLBACK_MARKUP = Decimal("0.02")
 
+# --- Markets (C3) ----------------------------------------------------------------
+# Rule 3 receipt: when the fill price and the historical rate differ by more than this, the
+# overpriced check notes that the market is pricing the current forecast.
+FORECAST_NOTE_GAP = Decimal("0.10")
+KALSHI_MARKET_URL = "https://kalshi.com/markets/{series}"  # "Open on Kalshi" link, series lowercased
+
 # Data paths: repo-root data/ holds raw Dewey exports (gitignored); backend/fixtures/ holds
 # the tracked daily aggregates. Distinct from the backend/app/data/ code package.
 RAW_DATA_DIR = REPO_ROOT / "data"

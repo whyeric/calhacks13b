@@ -1,0 +1,124 @@
+{
+  "id": "hdg_sample_pending",
+  "business_id": "restaurant",
+  "exposure_id": "exp_home_win",
+  "week_of": "2026-10-26",
+  "status": "pending_approval",
+  "ticker": "KXNHLGAME-26OCT26LANYR-NYR",
+  "market_title": "New York R wins",
+  "market_url": "https://kalshi.com/markets/kxnhlgame",
+  "close_time": "2026-10-28T23:00:00Z",
+  "side": "yes",
+  "match_reason": "Deepest eligible book closing this week.",
+  "h": "1",
+  "n_target": 500,
+  "n_filled": 500,
+  "n_unfilled": 0,
+  "partial": false,
+  "resized": false,
+  "fills": [
+    {
+      "price": "0.57",
+      "count": 10
+    },
+    {
+      "price": "0.58",
+      "count": 490
+    }
+  ],
+  "avg_price": "0.5798",
+  "cost": "289.90",
+  "fee": "8.53",
+  "premium": "298.43",
+  "fair": "0.5444",
+  "expected_cost": "26.23",
+  "fee_unverified": false,
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "-500.00",
+      "contract_payout": "500.00",
+      "premium": "-298.43",
+      "net_vs_base": "-298.43"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "0.00",
+      "premium": "-298.43",
+      "net_vs_base": "-298.43"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "500.00",
+    "hedged_swing": "0.00",
+    "cost": "298.43"
+  },
+  "decision": {
+    "id": "dec_sample_pending",
+    "status": "pending_approval",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 3
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 500,
+          "n_filled": 500,
+          "fill_ratio": "1.00",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": true,
+        "metric": {
+          "avg_price": "0.5798",
+          "fair": "0.5444",
+          "overpay": "0.0354"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "skipped": "no_basis_needed",
+          "h": "1"
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": true,
+        "metric": {
+          "expected_cost": "26.23",
+          "swing": "500.00",
+          "ratio": "0.05"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": false,
+        "metric": {
+          "premium": "298.43",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [
+      "over_budget"
+    ],
+    "summary": "Waiting for your approval: the $298.43 premium is more than the $250.00 left in this week's budget."
+  },
+  "alternative": null,
+  "agent": "fallback",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T23:00:00Z",
+  "decided_by": null,
+  "decided_at": null
+}

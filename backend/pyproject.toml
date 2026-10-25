@@ -29,3 +29,4 @@ include = ["app*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--disable-socket --allow-unix-socket --allow-hosts=127.0.0.1,localhost"
+asyncio_mode = "auto"
