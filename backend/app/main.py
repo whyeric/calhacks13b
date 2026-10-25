@@ -43,6 +43,7 @@ from app.models import (
     Hedge,
     LedgerResponse,
     LogEntry,
+    ReconBenchmark,
     ReconResult,
     RejectRequest,
     RunAccepted,
@@ -498,3 +499,15 @@ def put_settings_route(business_id: str, body: Settings) -> Settings:
                   "reasons": new.decision.reasons,
                   "summary": f"Settings changed: {h.id} went from {h.status} to {new.status}."})
     return db.get_business_settings(business_id)
+
+
+# --- Reconciliation benchmark ------------------------------------------------
+
+
+@app.get("/benchmarks/reconciliation", response_model=ReconBenchmark)
+def reconciliation_benchmark() -> ReconBenchmark:
+    """The real reconciler scored on a SIMULATED world with planted errors and an answer key
+    (`books.benchmark`). Deterministic, offline, never touches the app's books; memoized."""
+    from app.books import benchmark
+
+    return benchmark.cached()

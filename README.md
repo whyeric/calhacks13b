@@ -75,6 +75,7 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | Bar dollars (visits × an assumed $35 average check) | **Estimated**, labeled in the UI |
 | The "sample week" of hedges shown before the first desk run | **Example data**, labeled "sample week" |
 | Hedge settlements and the bank statement (with one planted short deposit) | **Simulated**, from real settled Kalshi results |
+| Reconciliation benchmark (`GET /benchmarks/reconciliation`, Books tab): 20 hedges, 13 planted errors of 8 kinds, 5 traps | **Simulated** world with an answer key; the real reconciler scores **13 of 13 caught, 13 with the right cause, 0 false flags** (`python -m app.books.benchmark`) |
 | Hudson Bike Co. sample revenue | **Synthetic** (fictional shop, planted effects) on **real** NOAA Central Park weather |
 | The upload → research → send-to-desk flow | **Scripted**; its report numbers come from a real offline protocol run on the sample |
 | Trades | **None**: nothing is ever sent to Kalshi |

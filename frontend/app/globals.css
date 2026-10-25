@@ -577,6 +577,19 @@ tr.mismatch td {
 .owner-question {
   font-weight: 600;
 }
+.benchmark {
+  margin-top: 24px;
+}
+.benchmark h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.benchmark details {
+  margin-top: 8px;
+}
+.benchmark summary {
+  cursor: pointer;
+}
 .drawer {
   position: fixed;
   top: 0;

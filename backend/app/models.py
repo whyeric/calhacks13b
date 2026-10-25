@@ -717,6 +717,65 @@ class ErrorBody(Contract):
     error: ErrorDetail
 
 
+# --- Reconciliation benchmark --------------------------------------------------
+# GET /benchmarks/reconciliation: the real reconciler run on a SIMULATED world with planted
+# errors and an answer key (app/books/benchmark.py). Scores are stats, so plain numbers.
+
+
+class ReconBenchmarkCase(Contract):
+    """One answer-key row. `planted` rows must be flagged with `expected_cause`; `trap` rows
+    look odd but are correct, and must not be flagged (`expected_cause` is null)."""
+
+    subject: str  # hedge id, or the bank row's reference for an unexplained row
+    kind: Literal["planted", "trap"]
+    description: str
+    expected_cause: str | None
+    found_cause: str | None  # the reconciler's likely_cause; null when not flagged
+    flagged: bool
+    correct: bool
+
+    @model_validator(mode="after")
+    def _consistent(self) -> "ReconBenchmarkCase":
+        if (self.kind == "trap") != (self.expected_cause is None):
+            raise ValueError("traps have no expected_cause; planted rows need one")
+        if self.flagged != (self.found_cause is not None):
+            raise ValueError("found_cause is set iff the row was flagged")
+        want = self.found_cause == self.expected_cause if self.kind == "planted" else not self.flagged
+        if self.correct != want:
+            raise ValueError("correct must reflect the expected outcome")
+        return self
+
+
+class ReconBenchmark(Contract):
+    seed: int
+    simulated: Literal[True]
+    n_hedges: int
+    n_bank_rows: int
+    n_planted: int
+    n_caught: int  # planted rows flagged (any cause)
+    n_cause_correct: int  # planted rows flagged with the expected cause
+    n_traps: int
+    n_false_flags: int  # flags on traps or on rows outside the answer key
+    precision: float
+    recall: float
+    cause_accuracy: float
+    cases: list[ReconBenchmarkCase]
+    false_flags: list[str]  # subjects flagged that the answer key says are fine
+
+    @model_validator(mode="after")
+    def _counts(self) -> "ReconBenchmark":
+        planted = [c for c in self.cases if c.kind == "planted"]
+        if self.n_planted != len(planted) or self.n_traps != len(self.cases) - len(planted):
+            raise ValueError("n_planted / n_traps must count the cases")
+        if self.n_caught != sum(c.flagged for c in planted):
+            raise ValueError("n_caught must count flagged planted cases")
+        if self.n_cause_correct != sum(c.correct for c in planted):
+            raise ValueError("n_cause_correct must count correct planted cases")
+        if self.n_false_flags != len(self.false_flags):
+            raise ValueError("n_false_flags must count false_flags")
+        return self
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -725,5 +784,6 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         LogEntry, BacktestResult, LedgerEntry, ReconResult, LedgerResponse, Settings,
         AnalyzeRequest, AnalyzeResponse, DeskRunRequest, RunAccepted, RunStatus,
         ApproveRequest, RejectRequest, ChatRequest, ChatReply, Health, ErrorBody,
+        ReconBenchmark,
     )
 }

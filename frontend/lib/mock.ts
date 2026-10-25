@@ -9,6 +9,7 @@ import snapshots from "@/fixtures/budget_snapshots.json";
 import backtestTaxi from "@/fixtures/backtest_taxi.json";
 import backtestRestaurant from "@/fixtures/backtest_restaurant.json";
 import ledgerFixture from "@/fixtures/ledger_with_mismatch.json";
+import benchmarkFixture from "@/fixtures/recon_benchmark.json";
 import chatFixture from "@/fixtures/chat_reply.json";
 import settingsFixture from "@/fixtures/settings.json";
 import healthFixture from "@/fixtures/health.json";
@@ -137,6 +138,7 @@ export async function mockRequest<T>(
   const id = route.split("/")[2];
   let result: unknown;
   if (route === "/health") result = healthFixture;
+  else if (route === "/benchmarks/reconciliation") result = benchmarkFixture;
   else if (route === "/businesses")
     result =
       scenario === "negative"
