@@ -1,4 +1,5 @@
-import type { Exposure, ModelCheckData } from "@/lib/types";
+import type { Exposure, ExposureRow, ModelCheckData } from "@/lib/types";
+import { EstimatedBadge } from "./Header";
 import { fmtUsd, fmtPct } from "@/lib/format";
 import { label } from "@/lib/labels";
 import { chartDomain, position } from "@/lib/chartScale";
@@ -39,7 +40,7 @@ export function ExposureBar({
     </svg>
   );
 }
-export function ExposureList({ exposures }: { exposures: Exposure[] }) {
+export function ExposureList({ exposures }: { exposures: ExposureRow[] }) {
   const domain = chartDomain(
     exposures.flatMap((row) => [...row.ci90, row.effect_usd]),
   );
@@ -53,14 +54,29 @@ export function ExposureList({ exposures }: { exposures: Exposure[] }) {
             <span className="value">{fmtUsd(row.effect_usd)}</span>
           </div>
           <p>
-            {row.direction === "positive"
-              ? "Revenue rises on event days"
-              : "Revenue falls on event days"}
+            {(row.event as string) === "playoff_home"
+              ? "Revenue per extra playoff home game"
+              : row.direction === "positive"
+                ? "Revenue rises on event days"
+                : "Revenue falls on event days"}
+            {row.expected_count !== undefined &&
+              row.expected_count !== null && (
+                <> · about {String(row.expected_count)} expected this season</>
+              )}
+            {row.estimated && (
+              <>
+                {" "}
+                <EstimatedBadge kind="estimated" />
+              </>
+            )}
           </p>
           <ExposureBar exposure={row} domain={domain} />
           <small>
             90% interval {fmtUsd(row.ci90[0])} to {fmtUsd(row.ci90[1])}
           </small>
+          {row.basis_note && (
+            <small className="basis-note">{row.basis_note}</small>
+          )}
         </li>
       ))}
     </ul>
