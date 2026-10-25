@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 import type { Business } from "@/lib/types";
 import { fmtUsd } from "@/lib/format";
 export function EstimatedBadge({
@@ -38,11 +39,9 @@ export function Header({
   return (
     <header>
       <div className="brand">
-        <span className="brand-icon" aria-hidden="true">
-          H
-        </span>
+        <BrandMark />
         <div>
-          <h1>Hedge Desk</h1>
+          <h1>Offset</h1>
           <p>Steadier weeks. Your call.</p>
         </div>
       </div>
