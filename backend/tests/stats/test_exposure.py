@@ -300,3 +300,16 @@ def test_thresholds_come_from_config():
     strict = Thresholds(min_size_usd=Decimal("10000"), min_support=1000)
     rain = fit(df, thresholds=strict)["rain"]
     assert rain.reasons == ["below_size", "thin_support"]
+
+
+def test_duplicate_control_dropped_keeps_full_rank():
+    # Real taxi features without Dewey spikes have msg_event == home_game on every day.
+    df = synth_taxi(2)
+    df["msg_event"] = df["home_game"]
+    tr = df[df["split"] == "train"]
+    X = build_design(tr, event_flags(tr, {"hot": 85}))
+    assert ("msg_event" in X.columns) != ("home_game" in X.columns)
+    assert np.linalg.matrix_rank(X.values) == X.shape[1]
+    r = fit_exposures(df, strikes={"hot": 85}, business_id="taxi")
+    rain = next(e for e in r.exposures + r.dropped if e.event == "rain")
+    assert rain.hedgeable

@@ -95,7 +95,15 @@ def build_design(
     if columns is not None:
         return X[list(columns)]
     keep = [c for c in X.columns if c == "const" or X[c].nunique() > 1]
-    return X[keep]
+    # A control identical to an earlier column (e.g. msg_event == home_game when there
+    # are no Dewey spikes) makes the design rank-deficient; drop the later copy. Flags
+    # are never dropped this way.
+    seen: list[str] = []
+    for c in keep:
+        if c in CONTROLS and any(X[c].equals(X[s]) for s in seen):
+            continue
+        seen.append(c)
+    return X[seen]
 
 
 def fit_ols(y: pd.Series, X: pd.DataFrame):
