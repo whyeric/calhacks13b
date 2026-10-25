@@ -25,7 +25,7 @@ install: $(PY)
 
 # Fixtures only, no network; idempotent.
 seed:
-	cd backend && $(PY) -m app.db seed
+	cd backend && $(PY) -m app.db seed && $(PY) -m app.books.seed
 
 # Optional: needs raw data/ and network. Dewey first, so the feature build sees the restaurant series.
 seed-data:

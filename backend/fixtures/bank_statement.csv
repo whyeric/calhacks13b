@@ -1,0 +1,4 @@
+date,description,amount,currency,reference,simulated
+2026-10-12,SIMULATED transfer to Kalshi (opening deposit),-500.00,USD,opening_deposit,true
+2026-10-21,SIMULATED Kalshi withdrawal KXHIGHNY-26OCT20-T72,59.11,USD,hdg_s01,true
+2026-10-23,SIMULATED Kalshi withdrawal KXHIGHNY-26OCT22-T70,45.00,USD,hdg_s03,true
