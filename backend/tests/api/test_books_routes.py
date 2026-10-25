@@ -47,5 +47,5 @@ def test_reconciliation_benchmark_route(client):
     assert r.status_code == 200
     body = r.json()
     assert body["simulated"] is True
-    assert body["n_caught"] == body["n_planted"] == 13 and body["false_flags"] == []
+    assert body["n_caught"] == body["n_planted"] == 17 and body["false_flags"] == []
     assert db.list_ledger_entries("bench") == []  # the benchmark never touches the app's books

@@ -1192,6 +1192,17 @@
               }
             ],
             "default": null
+          },
+          "venue_order": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VenueOrder"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
           }
         },
         "required": [
@@ -1360,6 +1371,95 @@
         "title": "HistoryOutcome",
         "type": "object"
       },
+      "IncreaseStatus": {
+        "additionalProperties": false,
+        "description": "GET /integrations/increase/status (integrations/increase.py). Reads no network: `last_sync`\nis the last time reconciliation read the bank in this process.",
+        "properties": {
+          "mode": {
+            "enum": [
+              "demo",
+              "sandbox",
+              "live"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "environment": {
+            "enum": [
+              "sandbox",
+              "production"
+            ],
+            "title": "Environment",
+            "type": "string"
+          },
+          "accounts": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Accounts",
+            "type": "object"
+          },
+          "bank_origin": {
+            "enum": [
+              "csv_simulated",
+              "increase_sandbox",
+              "increase_live"
+            ],
+            "title": "Bank Origin",
+            "type": "string"
+          },
+          "simulated": {
+            "title": "Simulated",
+            "type": "boolean"
+          },
+          "last_sync": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Sync"
+          },
+          "last_rows": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Rows"
+          },
+          "last_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error"
+          }
+        },
+        "required": [
+          "mode",
+          "environment",
+          "accounts",
+          "bank_origin",
+          "simulated",
+          "last_sync",
+          "last_rows",
+          "last_error"
+        ],
+        "title": "IncreaseStatus",
+        "type": "object"
+      },
       "InventoryLine": {
         "additionalProperties": false,
         "properties": {
@@ -1404,6 +1504,103 @@
           "value"
         ],
         "title": "InventoryLine",
+        "type": "object"
+      },
+      "KalshiStatus": {
+        "additionalProperties": false,
+        "description": "GET /integrations/kalshi/status: whether approvals place demo orders, and why not.",
+        "properties": {
+          "mode": {
+            "enum": [
+              "off",
+              "demo"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "trading_enabled": {
+            "title": "Trading Enabled",
+            "type": "boolean"
+          },
+          "offline": {
+            "title": "Offline",
+            "type": "boolean"
+          },
+          "key_id_present": {
+            "title": "Key Id Present",
+            "type": "boolean"
+          },
+          "private_key_present": {
+            "title": "Private Key Present",
+            "type": "boolean"
+          },
+          "base_url": {
+            "title": "Base Url",
+            "type": "string"
+          },
+          "host_allowed": {
+            "title": "Host Allowed",
+            "type": "boolean"
+          },
+          "reachable": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reachable"
+          },
+          "balance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Balance"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "required": [
+          "mode",
+          "reason",
+          "trading_enabled",
+          "offline",
+          "key_id_present",
+          "private_key_present",
+          "base_url",
+          "host_allowed",
+          "reachable",
+          "balance",
+          "error"
+        ],
+        "title": "KalshiStatus",
         "type": "object"
       },
       "LedgerEntry": {
@@ -1585,7 +1782,14 @@
               "refusal",
               "cosign",
               "cosign_refused",
-              "period_close"
+              "period_close",
+              "order_placed",
+              "order_filled",
+              "order_partial",
+              "order_failed",
+              "order_skipped",
+              "qbo_posted",
+              "qbo_post_failed"
             ],
             "title": "Kind",
             "type": "string"
@@ -1965,6 +2169,180 @@
         "title": "Posting",
         "type": "object"
       },
+      "QboSyncLine": {
+        "additionalProperties": false,
+        "properties": {
+          "entry_id": {
+            "title": "Entry Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "premium",
+              "payout",
+              "withdrawal",
+              "opening_deposit"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "amount": {
+            "title": "Amount",
+            "type": "string"
+          },
+          "simulated": {
+            "title": "Simulated",
+            "type": "boolean"
+          },
+          "doc_number": {
+            "title": "Doc Number",
+            "type": "string"
+          },
+          "qbo_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Qbo Id"
+          },
+          "qbo_amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Qbo Amount"
+          },
+          "status": {
+            "enum": [
+              "posted",
+              "missing",
+              "amount_differs",
+              "failed",
+              "not_posted"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entry_id",
+          "kind",
+          "date",
+          "amount",
+          "simulated",
+          "doc_number",
+          "qbo_id",
+          "qbo_amount",
+          "status",
+          "detail"
+        ],
+        "title": "QboSyncLine",
+        "type": "object"
+      },
+      "QboSyncReport": {
+        "additionalProperties": false,
+        "properties": {
+          "business_id": {
+            "title": "Business Id",
+            "type": "string"
+          },
+          "checked_at": {
+            "format": "date-time",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "demo",
+              "live"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "realm_id": {
+            "title": "Realm Id",
+            "type": "string"
+          },
+          "company_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Name"
+          },
+          "synthetic": {
+            "title": "Synthetic",
+            "type": "boolean"
+          },
+          "system_of_record": {
+            "const": "beancount",
+            "title": "System Of Record",
+            "type": "string"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/QboSyncLine"
+            },
+            "title": "Lines",
+            "type": "array"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "posted",
+                "missing",
+                "amount_differs",
+                "failed",
+                "not_posted"
+              ]
+            },
+            "title": "Counts",
+            "type": "object"
+          }
+        },
+        "required": [
+          "business_id",
+          "checked_at",
+          "mode",
+          "realm_id",
+          "company_name",
+          "synthetic",
+          "system_of_record",
+          "explanation",
+          "lines",
+          "counts"
+        ],
+        "title": "QboSyncReport",
+        "type": "object"
+      },
       "QuickBooksConnect": {
         "additionalProperties": false,
         "description": "POST /integrations/quickbooks/connect. Demo connects at once (`authorize_url` null); live\nreturns Intuit's consent URL and stays unconnected until the callback.",
@@ -2236,6 +2614,40 @@
           "correct": {
             "title": "Correct",
             "type": "boolean"
+          },
+          "expected_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "matched",
+                  "in_transit"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Expected Status"
+          },
+          "found_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "matched",
+                  "in_transit",
+                  "mismatched",
+                  "absent"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Found Status"
           }
         },
         "required": [
@@ -2248,6 +2660,108 @@
           "correct"
         ],
         "title": "ReconBenchmarkCase",
+        "type": "object"
+      },
+      "ReconInTransit": {
+        "additionalProperties": false,
+        "description": "A payout the venue paid and we booked whose deposit hasn't posted yet, still inside the\nposting window (or pending at the bank). A timing difference, not an error.",
+        "properties": {
+          "hedge_id": {
+            "title": "Hedge Id",
+            "type": "string"
+          },
+          "ticker": {
+            "title": "Ticker",
+            "type": "string"
+          },
+          "expected": {
+            "title": "Expected",
+            "type": "string"
+          },
+          "venue": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Venue"
+          },
+          "kalshi_ledger": {
+            "title": "Kalshi Ledger",
+            "type": "string"
+          },
+          "bank_pending": {
+            "title": "Bank Pending",
+            "type": "string"
+          },
+          "settled_on": {
+            "format": "date",
+            "title": "Settled On",
+            "type": "string"
+          },
+          "days_outstanding": {
+            "title": "Days Outstanding",
+            "type": "integer"
+          },
+          "window_days": {
+            "title": "Window Days",
+            "type": "integer"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "venue_origin": {
+            "anyOf": [
+              {
+                "enum": [
+                  "simulated",
+                  "kalshi_demo",
+                  "kalshi_live"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue Origin"
+          },
+          "bank_origin": {
+            "anyOf": [
+              {
+                "enum": [
+                  "csv_simulated",
+                  "increase_sandbox",
+                  "increase_live"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bank Origin"
+          }
+        },
+        "required": [
+          "hedge_id",
+          "ticker",
+          "expected",
+          "venue",
+          "kalshi_ledger",
+          "bank_pending",
+          "settled_on",
+          "days_outstanding",
+          "window_days",
+          "explanation"
+        ],
+        "title": "ReconInTransit",
         "type": "object"
       },
       "ReconMatch": {
@@ -2272,6 +2786,52 @@
           "bank": {
             "title": "Bank",
             "type": "string"
+          },
+          "venue": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue"
+          },
+          "venue_origin": {
+            "anyOf": [
+              {
+                "enum": [
+                  "simulated",
+                  "kalshi_demo",
+                  "kalshi_live"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue Origin"
+          },
+          "bank_origin": {
+            "anyOf": [
+              {
+                "enum": [
+                  "csv_simulated",
+                  "increase_sandbox",
+                  "increase_live"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bank Origin"
           }
         },
         "required": [
@@ -2315,7 +2875,10 @@
             "enum": [
               "expected_vs_kalshi_ledger",
               "kalshi_ledger_vs_bank",
-              "expected_vs_bank"
+              "expected_vs_bank",
+              "expected_vs_venue",
+              "venue_vs_kalshi_ledger",
+              "ledger_fee_vs_venue_fee"
             ],
             "title": "Source Pair",
             "type": "string"
@@ -2336,6 +2899,105 @@
           "question": {
             "title": "Question",
             "type": "string"
+          },
+          "venue": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue"
+          },
+          "venue_fee": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue Fee"
+          },
+          "ledger_fee": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Ledger Fee"
+          },
+          "system_of_record": {
+            "anyOf": [
+              {
+                "enum": [
+                  "venue",
+                  "ledger",
+                  "bank"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "System Of Record"
+          },
+          "record_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Record Reason"
+          },
+          "venue_origin": {
+            "anyOf": [
+              {
+                "enum": [
+                  "simulated",
+                  "kalshi_demo",
+                  "kalshi_live"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Venue Origin"
+          },
+          "bank_origin": {
+            "anyOf": [
+              {
+                "enum": [
+                  "csv_simulated",
+                  "increase_sandbox",
+                  "increase_live"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bank Origin"
           }
         },
         "required": [
@@ -2368,7 +3030,6 @@
             "type": "string"
           },
           "simulated": {
-            "const": true,
             "title": "Simulated",
             "type": "boolean"
           },
@@ -2388,6 +3049,25 @@
           },
           "summary": {
             "$ref": "#/components/schemas/ReconSummary"
+          },
+          "in_transit": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/ReconInTransit"
+            },
+            "title": "In Transit",
+            "type": "array"
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReconSources"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
           }
         },
         "required": [
@@ -2399,6 +3079,57 @@
           "summary"
         ],
         "title": "ReconResult",
+        "type": "object"
+      },
+      "ReconSources": {
+        "additionalProperties": false,
+        "properties": {
+          "venue_origin": {
+            "enum": [
+              "simulated",
+              "kalshi_demo",
+              "kalshi_live"
+            ],
+            "title": "Venue Origin",
+            "type": "string"
+          },
+          "ledger_origin": {
+            "enum": [
+              "beancount_simulated",
+              "beancount"
+            ],
+            "title": "Ledger Origin",
+            "type": "string"
+          },
+          "bank_origin": {
+            "enum": [
+              "csv_simulated",
+              "increase_sandbox",
+              "increase_live"
+            ],
+            "title": "Bank Origin",
+            "type": "string"
+          },
+          "live": {
+            "title": "Live",
+            "type": "boolean"
+          },
+          "notes": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "venue_origin",
+          "ledger_origin",
+          "bank_origin",
+          "live"
+        ],
+        "title": "ReconSources",
         "type": "object"
       },
       "ReconSummary": {
@@ -2415,6 +3146,11 @@
           "total_difference": {
             "title": "Total Difference",
             "type": "string"
+          },
+          "n_in_transit": {
+            "default": 0,
+            "title": "N In Transit",
+            "type": "integer"
           }
         },
         "required": [
@@ -3024,6 +3760,194 @@
           "output"
         ],
         "title": "ToolCall",
+        "type": "object"
+      },
+      "VenueOrder": {
+        "additionalProperties": false,
+        "description": "The order placed on the venue when the owner approved a hedge (`Hedge.venue_order`).\n\nBooking stays at the approved figures; this records what the venue actually did, so\nreconciliation can flag a fill that differs from what was booked. Prices are in the hedge's\nown side (a NO hedge's `avg_price` is the NO price), whatever book side carried the order.\n`mode` \"kalshi_demo\" is Kalshi's demo exchange: fake money, labeled as such (I6).",
+        "properties": {
+          "mode": {
+            "const": "kalshi_demo",
+            "title": "Mode",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "filled",
+              "partial",
+              "failed",
+              "skipped"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "client_order_id": {
+            "title": "Client Order Id",
+            "type": "string"
+          },
+          "order_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Id"
+          },
+          "ticker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ticker"
+          },
+          "production_ticker": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Production Ticker"
+          },
+          "stand_in": {
+            "title": "Stand In",
+            "type": "boolean"
+          },
+          "side": {
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "title": "Side",
+            "type": "string"
+          },
+          "book_side": {
+            "anyOf": [
+              {
+                "enum": [
+                  "bid",
+                  "ask"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Book Side"
+          },
+          "time_in_force": {
+            "enum": [
+              "immediate_or_cancel",
+              "fill_or_kill"
+            ],
+            "title": "Time In Force",
+            "type": "string"
+          },
+          "requested": {
+            "title": "Requested",
+            "type": "integer"
+          },
+          "limit_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit Price"
+          },
+          "filled": {
+            "title": "Filled",
+            "type": "integer"
+          },
+          "avg_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avg Price"
+          },
+          "cost": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost"
+          },
+          "fee": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fee"
+          },
+          "differs_from_booked": {
+            "title": "Differs From Booked",
+            "type": "boolean"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "mode",
+          "status",
+          "client_order_id",
+          "order_id",
+          "ticker",
+          "production_ticker",
+          "stand_in",
+          "side",
+          "book_side",
+          "time_in_force",
+          "requested",
+          "limit_price",
+          "filled",
+          "avg_price",
+          "cost",
+          "fee",
+          "differs_from_booked",
+          "reason",
+          "at"
+        ],
+        "title": "VenueOrder",
         "type": "object"
       },
       "WeekIncome": {

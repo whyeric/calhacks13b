@@ -1,0 +1,13 @@
+{
+  "mode": "sandbox",
+  "environment": "sandbox",
+  "accounts": {
+    "taxi": "sandbox_account_taxi_example",
+    "restaurant": "sandbox_account_restaurant_example"
+  },
+  "bank_origin": "increase_sandbox",
+  "simulated": true,
+  "last_sync": "2026-10-24T19:05:00Z",
+  "last_rows": 4,
+  "last_error": null
+}

@@ -54,6 +54,7 @@ EXAMPLES: dict[str, str] = {
     "quickbooks_research.json": "QuickBooksResearch",
     "quickbooks_sync.json": "QboSyncReport",
     "quickbooks_sync_line.json": "QboSyncLine",
+    "increase_status.json": "IncreaseStatus",
     "cosign_request.json": "CosignRequest",
     "decision_receipt.json": "DecisionReceipt",
     "period_close_request.json": "PeriodCloseRequest",

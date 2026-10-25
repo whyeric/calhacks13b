@@ -164,10 +164,10 @@ describe("bottom panels", () => {
     fireEvent.click(screen.getByRole("tab", { name: /Books/ }));
     const card = await screen.findByTestId("recon-benchmark");
     expect(requests).toContain("GET /benchmarks/reconciliation");
-    expect(within(card).getByText("Caught 13 of 13")).toBeVisible();
-    expect(card).toHaveTextContent("0 false flags on 5 traps");
+    expect(within(card).getByText("Caught 17 of 17")).toBeVisible();
+    expect(card).toHaveTextContent("0 false flags on 7 traps");
     expect(within(card).getByText(/Simulated/)).toBeVisible();
-    expect(within(card).getAllByTestId("benchmark-case")).toHaveLength(18);
+    expect(within(card).getAllByTestId("benchmark-case")).toHaveLength(24);
     expect(within(card).getAllByText("Transposed digits")).toHaveLength(4);
   });
   it("C7-A16 switching business refetches backtest/ledger and clears chat", async () => {

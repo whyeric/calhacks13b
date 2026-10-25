@@ -590,9 +590,17 @@ class ReconMatch(Contract):
     expected: Money
     kalshi_ledger: Money
     bank: Money
+    # Three-way legs (additive; see "Three-way reconciliation" at the end of this module).
+    venue: Money | None = None  # what the venue says it paid; null when no venue record was read
+    venue_origin: "ReconVenueOrigin | None" = None
+    bank_origin: "ReconBankOrigin | None" = None
 
 
-SourcePair = Literal["expected_vs_kalshi_ledger", "kalshi_ledger_vs_bank", "expected_vs_bank"]
+SourcePair = Literal[
+    "expected_vs_kalshi_ledger", "kalshi_ledger_vs_bank", "expected_vs_bank",
+    # three-way pairs: the venue's own record against our books, and the venue's fee against ours
+    "expected_vs_venue", "venue_vs_kalshi_ledger", "ledger_fee_vs_venue_fee",
+]
 
 
 class ReconMismatch(Contract):
@@ -607,11 +615,22 @@ class ReconMismatch(Contract):
     likely_cause: str
     action: Literal["ask_owner"]
     question: str
+    # Three-way legs and which source to trust for the disputed fact (additive).
+    venue: Money | None = None
+    venue_fee: Money | None = None  # fee the venue says it charged on this position
+    ledger_fee: Money | None = None  # fee we booked (Expenses:Hedging:Fees on the premium entry)
+    system_of_record: "ReconLeg | None" = None  # venue: what was paid; bank: cash received; ledger: what we booked
+    record_reason: str | None = None  # why that source is trusted for this fact
+    venue_origin: "ReconVenueOrigin | None" = None
+    bank_origin: "ReconBankOrigin | None" = None
 
     @model_validator(mode="after")
     def _difference(self) -> "ReconMismatch":
         first, second = self.source_pair.split("_vs_")
-        if self.difference != getattr(self, second) - getattr(self, first):
+        a, b = getattr(self, first), getattr(self, second)
+        if a is None or b is None:
+            raise ValueError(f"source_pair {self.source_pair} needs both {first} and {second}")
+        if self.difference != b - a:
             raise ValueError("difference must be second source minus first")
         return self
 
@@ -620,6 +639,7 @@ class ReconSummary(Contract):
     n_matched: int
     n_mismatched: int
     total_difference: Money
+    n_in_transit: int = 0  # deposits still inside the posting window: not errors
 
 
 class ReconResult(Contract):
@@ -627,18 +647,24 @@ class ReconResult(Contract):
 
     business_id: str
     as_of: date
-    simulated: Literal[True]
+    simulated: bool  # true unless every leg (venue, ledger, bank) is a live system (I6)
     matches: list[ReconMatch]
     mismatches: list[ReconMismatch]
     summary: ReconSummary
+    in_transit: list["ReconInTransit"] = []  # timing differences, reported but not errors
+    sources: "ReconSources | None" = None  # where each leg was read from
 
     @model_validator(mode="after")
     def _summary(self) -> "ReconResult":
         s = self.summary
         if (s.n_matched, s.n_mismatched) != (len(self.matches), len(self.mismatches)):
             raise ValueError("summary counts must match the lists")
+        if s.n_in_transit != len(self.in_transit):
+            raise ValueError("n_in_transit must count in_transit")
         if s.total_difference != sum((m.difference for m in self.mismatches), Decimal("0")):
             raise ValueError("total_difference must sum the mismatches")
+        if self.sources is not None and not self.simulated and not self.sources.live:
+            raise ValueError("simulated must be true unless every leg is live")
         return self
 
 
@@ -793,6 +819,10 @@ class ReconBenchmarkCase(Contract):
     found_cause: str | None  # the reconciler's likely_cause; null when not flagged
     flagged: bool
     correct: bool
+    # Three-way additions: a trap may also require where the hedge lands (a deposit in transit
+    # must be reported `in_transit`, not just left unflagged). `found_status` is where it landed.
+    expected_status: Literal["matched", "in_transit"] | None = None
+    found_status: Literal["matched", "in_transit", "mismatched", "absent"] | None = None
 
     @model_validator(mode="after")
     def _consistent(self) -> "ReconBenchmarkCase":
@@ -800,7 +830,10 @@ class ReconBenchmarkCase(Contract):
             raise ValueError("traps have no expected_cause; planted rows need one")
         if self.flagged != (self.found_cause is not None):
             raise ValueError("found_cause is set iff the row was flagged")
-        want = self.found_cause == self.expected_cause if self.kind == "planted" else not self.flagged
+        if self.kind == "planted" and self.expected_status is not None:
+            raise ValueError("expected_status is for traps only")
+        want = (self.found_cause == self.expected_cause if self.kind == "planted"
+                else not self.flagged and self.expected_status in (None, self.found_status))
         if self.correct != want:
             raise ValueError("correct must reflect the expected outcome")
         return self
@@ -1074,6 +1107,57 @@ class QuickBooksResearch(Contract):
     synthetic: bool
 
 
+# --- Three-way reconciliation (venue / ledger / bank) ------------------------------
+# books/reconcile.py reads the venue (what the exchange paid) and the bank (what cash arrived)
+# through books/sources.py; the ledger is our Beancount books. Each fact has one system of record:
+# the venue for what was paid and the fee it charged, the bank for cash received, the ledger for
+# what we booked. `origin` labels say which legs are live and which are simulated (I6).
+
+ReconLeg = Literal["venue", "ledger", "bank"]
+ReconVenueOrigin = Literal["simulated", "kalshi_demo", "kalshi_live"]
+ReconBankOrigin = Literal["csv_simulated", "increase_sandbox", "increase_live"]
+
+
+class ReconInTransit(Contract):
+    """A payout the venue paid and we booked whose deposit hasn't posted yet, still inside the
+    posting window (or pending at the bank). A timing difference, not an error."""
+
+    hedge_id: str
+    ticker: str
+    expected: Money
+    venue: Money | None
+    kalshi_ledger: Money
+    bank_pending: Money  # amount the bank shows as pending (0.00 when nothing is visible yet)
+    settled_on: date
+    days_outstanding: int
+    window_days: int
+    explanation: str
+    venue_origin: ReconVenueOrigin | None = None
+    bank_origin: ReconBankOrigin | None = None
+
+
+class ReconSources(Contract):
+    venue_origin: ReconVenueOrigin
+    ledger_origin: Literal["beancount_simulated", "beancount"]  # simulated while settlements are
+    bank_origin: ReconBankOrigin
+    live: bool  # every leg is a live system (Kalshi live, real books, Increase production)
+    notes: list[str] = []
+
+
+class IncreaseStatus(Contract):
+    """GET /integrations/increase/status (integrations/increase.py). Reads no network: `last_sync`
+    is the last time reconciliation read the bank in this process."""
+
+    mode: Literal["demo", "sandbox", "live"]  # demo = the simulated bank CSV
+    environment: Literal["sandbox", "production"]
+    accounts: dict[str, str]  # business id ("*" = every business) -> Increase account id
+    bank_origin: ReconBankOrigin
+    simulated: bool  # true unless mode is live (sandbox money is not real money, I6)
+    last_sync: AwareDatetime | None
+    last_rows: int | None
+    last_error: str | None
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -1087,6 +1171,7 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         QuickBooksStatus, QuickBooksConnect, CommitmentLine, InventoryLine, Commitments, QuickBooksResearch,
     )
 }
+CONTRACT_MODELS["IncreaseStatus"] = IncreaseStatus  # Increase bank (three-way reconciliation block)
 
 
 # --- Kalshi demo trading (markets/trading.py, docs/KALSHI_DEMO.md) -------------------------
@@ -1199,3 +1284,6 @@ class QboSyncReport(Contract):
 
 
 CONTRACT_MODELS.update({m.__name__: m for m in (QboSyncLine, QboSyncReport)})
+
+for _m in (ReconMatch, ReconMismatch, ReconResult, LedgerResponse):
+    _m.model_rebuild()

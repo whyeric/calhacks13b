@@ -12,6 +12,10 @@ FIXTURES = Path(__file__).resolve().parents[1] / "fixtures"  # backend/fixtures
 os.environ.setdefault("BACKTEST_ON_STARTUP", "0")
 # Polymarket is a second network source; tests that cover it enable it with a mock transport.
 os.environ.setdefault("POLYMARKET_ENABLED", "0")
+# The bank leg reads the simulated CSV unless a test opts into Increase with a mock transport,
+# even when a developer's .env carries real Increase credentials.
+os.environ.setdefault("INCREASE_API_KEY", "")
+os.environ.setdefault("INCREASE_ACCOUNT_ID", "")
 
 
 @pytest.fixture(autouse=True)

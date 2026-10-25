@@ -1,12 +1,12 @@
 {
   "seed": 7,
   "simulated": true,
-  "n_hedges": 20,
-  "n_bank_rows": 20,
-  "n_planted": 13,
-  "n_caught": 13,
-  "n_cause_correct": 13,
-  "n_traps": 5,
+  "n_hedges": 26,
+  "n_bank_rows": 26,
+  "n_planted": 17,
+  "n_caught": 17,
+  "n_cause_correct": 17,
+  "n_traps": 7,
   "n_false_flags": 0,
   "precision": 1.0,
   "recall": 1.0,
@@ -19,7 +19,9 @@
       "expected_cause": "fee_deducted_from_deposit",
       "found_cause": "fee_deducted_from_deposit",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b02",
@@ -28,7 +30,9 @@
       "expected_cause": "fee_deducted_from_deposit",
       "found_cause": "fee_deducted_from_deposit",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b03",
@@ -37,7 +41,9 @@
       "expected_cause": "duplicate_deposit",
       "found_cause": "duplicate_deposit",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b04",
@@ -46,7 +52,9 @@
       "expected_cause": "transposed_digits",
       "found_cause": "transposed_digits",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b05",
@@ -55,7 +63,9 @@
       "expected_cause": "transposed_digits",
       "found_cause": "transposed_digits",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b06",
@@ -64,7 +74,9 @@
       "expected_cause": "reversed_sign",
       "found_cause": "reversed_sign",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b07",
@@ -73,7 +85,9 @@
       "expected_cause": "missing_deposit",
       "found_cause": "missing_deposit",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b08",
@@ -82,7 +96,9 @@
       "expected_cause": "missing_deposit",
       "found_cause": "missing_deposit",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b09",
@@ -91,7 +107,9 @@
       "expected_cause": "ledger_payout_differs",
       "found_cause": "ledger_payout_differs",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b10",
@@ -100,7 +118,9 @@
       "expected_cause": "ledger_payout_differs",
       "found_cause": "ledger_payout_differs",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b11",
@@ -109,7 +129,9 @@
       "expected_cause": "deposit_amount_differs",
       "found_cause": "deposit_amount_differs",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "hdg_b12",
@@ -118,7 +140,9 @@
       "expected_cause": null,
       "found_cause": null,
       "flagged": false,
-      "correct": true
+      "correct": true,
+      "expected_status": "matched",
+      "found_status": "matched"
     },
     {
       "subject": "hdg_b13",
@@ -127,7 +151,9 @@
       "expected_cause": null,
       "found_cause": null,
       "flagged": false,
-      "correct": true
+      "correct": true,
+      "expected_status": "matched",
+      "found_status": "matched"
     },
     {
       "subject": "hdg_b14",
@@ -136,7 +162,9 @@
       "expected_cause": null,
       "found_cause": null,
       "flagged": false,
-      "correct": true
+      "correct": true,
+      "expected_status": "matched",
+      "found_status": "matched"
     },
     {
       "subject": "hdg_b15",
@@ -145,7 +173,9 @@
       "expected_cause": null,
       "found_cause": null,
       "flagged": false,
-      "correct": true
+      "correct": true,
+      "expected_status": "matched",
+      "found_status": "matched"
     },
     {
       "subject": "hdg_b16",
@@ -154,7 +184,75 @@
       "expected_cause": null,
       "found_cause": null,
       "flagged": false,
-      "correct": true
+      "correct": true,
+      "expected_status": "matched",
+      "found_status": "matched"
+    },
+    {
+      "subject": "hdg_b21",
+      "kind": "trap",
+      "description": "Settled on the statement date; deposit not posted yet (in transit)",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true,
+      "expected_status": "in_transit",
+      "found_status": "in_transit"
+    },
+    {
+      "subject": "hdg_b22",
+      "kind": "planted",
+      "description": "No deposit 4 days after settlement: past the 3-day window",
+      "expected_cause": "missing_deposit",
+      "found_cause": "missing_deposit",
+      "flagged": true,
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
+    },
+    {
+      "subject": "hdg_b23",
+      "kind": "planted",
+      "description": "Kalshi paid $70.00 on 72 contracts we booked at $72.00; the bank got $70.00",
+      "expected_cause": "venue_paid_differs_from_booked",
+      "found_cause": "venue_paid_differs_from_booked",
+      "flagged": true,
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
+    },
+    {
+      "subject": "hdg_b24",
+      "kind": "planted",
+      "description": "Kalshi's fee is $0.50 more than the fee we booked",
+      "expected_cause": "fee_differs_from_venue",
+      "found_cause": "fee_differs_from_venue",
+      "flagged": true,
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
+    },
+    {
+      "subject": "hdg_b25",
+      "kind": "planted",
+      "description": "Paid in full, then paid again split across two rows",
+      "expected_cause": "duplicate_deposit",
+      "found_cause": "duplicate_deposit",
+      "flagged": true,
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
+    },
+    {
+      "subject": "hdg_b26",
+      "kind": "trap",
+      "description": "Deposit pending at the bank 5 days after settlement (in transit)",
+      "expected_cause": null,
+      "found_cause": null,
+      "flagged": false,
+      "correct": true,
+      "expected_status": "in_transit",
+      "found_status": "in_transit"
     },
     {
       "subject": "WIRE-7731",
@@ -163,7 +261,9 @@
       "expected_cause": "unexplained_bank_row",
       "found_cause": "unexplained_bank_row",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     },
     {
       "subject": "ACH-ADJ-0918",
@@ -172,7 +272,9 @@
       "expected_cause": "unexplained_bank_row",
       "found_cause": "unexplained_bank_row",
       "flagged": true,
-      "correct": true
+      "correct": true,
+      "expected_status": null,
+      "found_status": "mismatched"
     }
   ],
   "false_flags": []

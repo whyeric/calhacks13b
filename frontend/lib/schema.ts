@@ -456,6 +456,8 @@ export interface components {
       decision_note: string | null;
       /** @default null */
       owner_history: components["schemas"]["OwnerHistory"] | null;
+      /** @default null */
+      venue_order: components["schemas"]["VenueOrder"] | null;
     };
     /**
      * HedgeLite
@@ -508,6 +510,40 @@ export interface components {
       /** Note */
       note: string | null;
     };
+    /**
+     * IncreaseStatus
+     * @description GET /integrations/increase/status (integrations/increase.py). Reads no network: `last_sync`
+     *     is the last time reconciliation read the bank in this process.
+     */
+    IncreaseStatus: {
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "demo" | "sandbox" | "live";
+      /**
+       * Environment
+       * @enum {string}
+       */
+      environment: "sandbox" | "production";
+      /** Accounts */
+      accounts: {
+        [key: string]: string;
+      };
+      /**
+       * Bank Origin
+       * @enum {string}
+       */
+      bank_origin: "csv_simulated" | "increase_sandbox" | "increase_live";
+      /** Simulated */
+      simulated: boolean;
+      /** Last Sync */
+      last_sync: string | null;
+      /** Last Rows */
+      last_rows: number | null;
+      /** Last Error */
+      last_error: string | null;
+    };
     /** InventoryLine */
     InventoryLine: {
       /** Id */
@@ -522,6 +558,37 @@ export interface components {
       unit_cost: string;
       /** Value */
       value: string;
+    };
+    /**
+     * KalshiStatus
+     * @description GET /integrations/kalshi/status: whether approvals place demo orders, and why not.
+     */
+    KalshiStatus: {
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "off" | "demo";
+      /** Reason */
+      reason: string | null;
+      /** Trading Enabled */
+      trading_enabled: boolean;
+      /** Offline */
+      offline: boolean;
+      /** Key Id Present */
+      key_id_present: boolean;
+      /** Private Key Present */
+      private_key_present: boolean;
+      /** Base Url */
+      base_url: string;
+      /** Host Allowed */
+      host_allowed: boolean;
+      /** Reachable */
+      reachable: boolean | null;
+      /** Balance */
+      balance: string | null;
+      /** Error */
+      error: string | null;
     };
     /** LedgerEntry */
     LedgerEntry: {
@@ -613,7 +680,14 @@ export interface components {
         | "refusal"
         | "cosign"
         | "cosign_refused"
-        | "period_close";
+        | "period_close"
+        | "order_placed"
+        | "order_filled"
+        | "order_partial"
+        | "order_failed"
+        | "order_skipped"
+        | "qbo_posted"
+        | "qbo_post_failed";
       /**
        * Created At
        * Format: date-time
@@ -750,6 +824,72 @@ export interface components {
       /** Amount */
       amount: string;
     };
+    /** QboSyncLine */
+    QboSyncLine: {
+      /** Entry Id */
+      entry_id: string;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "premium" | "payout" | "withdrawal" | "opening_deposit";
+      /**
+       * Date
+       * Format: date
+       */
+      date: string;
+      /** Amount */
+      amount: string;
+      /** Simulated */
+      simulated: boolean;
+      /** Doc Number */
+      doc_number: string;
+      /** Qbo Id */
+      qbo_id: string | null;
+      /** Qbo Amount */
+      qbo_amount: string | null;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "posted" | "missing" | "amount_differs" | "failed" | "not_posted";
+      /** Detail */
+      detail: string;
+    };
+    /** QboSyncReport */
+    QboSyncReport: {
+      /** Business Id */
+      business_id: string;
+      /**
+       * Checked At
+       * Format: date-time
+       */
+      checked_at: string;
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "demo" | "live";
+      /** Realm Id */
+      realm_id: string;
+      /** Company Name */
+      company_name: string | null;
+      /** Synthetic */
+      synthetic: boolean;
+      /**
+       * System Of Record
+       * @constant
+       */
+      system_of_record: "beancount";
+      /** Explanation */
+      explanation: string;
+      /** Lines */
+      lines: components["schemas"]["QboSyncLine"][];
+      /** Counts */
+      counts: {
+        [key: string]: number;
+      };
+    };
     /**
      * QuickBooksConnect
      * @description POST /integrations/quickbooks/connect. Demo connects at once (`authorize_url` null); live
@@ -859,6 +999,57 @@ export interface components {
       flagged: boolean;
       /** Correct */
       correct: boolean;
+      /**
+       * Expected Status
+       * @default null
+       */
+      expected_status: ("matched" | "in_transit") | null;
+      /**
+       * Found Status
+       * @default null
+       */
+      found_status: ("matched" | "in_transit" | "mismatched" | "absent") | null;
+    };
+    /**
+     * ReconInTransit
+     * @description A payout the venue paid and we booked whose deposit hasn't posted yet, still inside the
+     *     posting window (or pending at the bank). A timing difference, not an error.
+     */
+    ReconInTransit: {
+      /** Hedge Id */
+      hedge_id: string;
+      /** Ticker */
+      ticker: string;
+      /** Expected */
+      expected: string;
+      /** Venue */
+      venue: string | null;
+      /** Kalshi Ledger */
+      kalshi_ledger: string;
+      /** Bank Pending */
+      bank_pending: string;
+      /**
+       * Settled On
+       * Format: date
+       */
+      settled_on: string;
+      /** Days Outstanding */
+      days_outstanding: number;
+      /** Window Days */
+      window_days: number;
+      /** Explanation */
+      explanation: string;
+      /**
+       * Venue Origin
+       * @default null
+       */
+      venue_origin: ("simulated" | "kalshi_demo" | "kalshi_live") | null;
+      /**
+       * Bank Origin
+       * @default null
+       */
+      bank_origin:
+        ("csv_simulated" | "increase_sandbox" | "increase_live") | null;
     };
     /** ReconMatch */
     ReconMatch: {
@@ -872,6 +1063,22 @@ export interface components {
       kalshi_ledger: string;
       /** Bank */
       bank: string;
+      /**
+       * Venue
+       * @default null
+       */
+      venue: string | null;
+      /**
+       * Venue Origin
+       * @default null
+       */
+      venue_origin: ("simulated" | "kalshi_demo" | "kalshi_live") | null;
+      /**
+       * Bank Origin
+       * @default null
+       */
+      bank_origin:
+        ("csv_simulated" | "increase_sandbox" | "increase_live") | null;
     };
     /** ReconMismatch */
     ReconMismatch: {
@@ -894,7 +1101,10 @@ export interface components {
       source_pair:
         | "expected_vs_kalshi_ledger"
         | "kalshi_ledger_vs_bank"
-        | "expected_vs_bank";
+        | "expected_vs_bank"
+        | "expected_vs_venue"
+        | "venue_vs_kalshi_ledger"
+        | "ledger_fee_vs_venue_fee";
       /** Explanation */
       explanation: string;
       /** Likely Cause */
@@ -906,6 +1116,42 @@ export interface components {
       action: "ask_owner";
       /** Question */
       question: string;
+      /**
+       * Venue
+       * @default null
+       */
+      venue: string | null;
+      /**
+       * Venue Fee
+       * @default null
+       */
+      venue_fee: string | null;
+      /**
+       * Ledger Fee
+       * @default null
+       */
+      ledger_fee: string | null;
+      /**
+       * System Of Record
+       * @default null
+       */
+      system_of_record: ("venue" | "ledger" | "bank") | null;
+      /**
+       * Record Reason
+       * @default null
+       */
+      record_reason: string | null;
+      /**
+       * Venue Origin
+       * @default null
+       */
+      venue_origin: ("simulated" | "kalshi_demo" | "kalshi_live") | null;
+      /**
+       * Bank Origin
+       * @default null
+       */
+      bank_origin:
+        ("csv_simulated" | "increase_sandbox" | "increase_live") | null;
     };
     /**
      * ReconResult
@@ -919,16 +1165,45 @@ export interface components {
        * Format: date
        */
       as_of: string;
-      /**
-       * Simulated
-       * @constant
-       */
-      simulated: true;
+      /** Simulated */
+      simulated: boolean;
       /** Matches */
       matches: components["schemas"]["ReconMatch"][];
       /** Mismatches */
       mismatches: components["schemas"]["ReconMismatch"][];
       summary: components["schemas"]["ReconSummary"];
+      /**
+       * In Transit
+       * @default []
+       */
+      in_transit: components["schemas"]["ReconInTransit"][];
+      /** @default null */
+      sources: components["schemas"]["ReconSources"] | null;
+    };
+    /** ReconSources */
+    ReconSources: {
+      /**
+       * Venue Origin
+       * @enum {string}
+       */
+      venue_origin: "simulated" | "kalshi_demo" | "kalshi_live";
+      /**
+       * Ledger Origin
+       * @enum {string}
+       */
+      ledger_origin: "beancount_simulated" | "beancount";
+      /**
+       * Bank Origin
+       * @enum {string}
+       */
+      bank_origin: "csv_simulated" | "increase_sandbox" | "increase_live";
+      /** Live */
+      live: boolean;
+      /**
+       * Notes
+       * @default []
+       */
+      notes: string[];
     };
     /** ReconSummary */
     ReconSummary: {
@@ -938,6 +1213,11 @@ export interface components {
       n_mismatched: number;
       /** Total Difference */
       total_difference: string;
+      /**
+       * N In Transit
+       * @default 0
+       */
+      n_in_transit: number;
     };
     /**
      * ResearchEstimate
@@ -1190,6 +1470,70 @@ export interface components {
       };
       /** Output */
       output: unknown;
+    };
+    /**
+     * VenueOrder
+     * @description The order placed on the venue when the owner approved a hedge (`Hedge.venue_order`).
+     *
+     *     Booking stays at the approved figures; this records what the venue actually did, so
+     *     reconciliation can flag a fill that differs from what was booked. Prices are in the hedge's
+     *     own side (a NO hedge's `avg_price` is the NO price), whatever book side carried the order.
+     *     `mode` "kalshi_demo" is Kalshi's demo exchange: fake money, labeled as such (I6).
+     */
+    VenueOrder: {
+      /**
+       * Mode
+       * @constant
+       */
+      mode: "kalshi_demo";
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "filled" | "partial" | "failed" | "skipped";
+      /** Client Order Id */
+      client_order_id: string;
+      /** Order Id */
+      order_id: string | null;
+      /** Ticker */
+      ticker: string | null;
+      /** Production Ticker */
+      production_ticker: string | null;
+      /** Stand In */
+      stand_in: boolean;
+      /**
+       * Side
+       * @enum {string}
+       */
+      side: "yes" | "no";
+      /** Book Side */
+      book_side: ("bid" | "ask") | null;
+      /**
+       * Time In Force
+       * @enum {string}
+       */
+      time_in_force: "immediate_or_cancel" | "fill_or_kill";
+      /** Requested */
+      requested: number;
+      /** Limit Price */
+      limit_price: string | null;
+      /** Filled */
+      filled: number;
+      /** Avg Price */
+      avg_price: string | null;
+      /** Cost */
+      cost: string | null;
+      /** Fee */
+      fee: string | null;
+      /** Differs From Booked */
+      differs_from_booked: boolean;
+      /** Reason */
+      reason: string | null;
+      /**
+       * At
+       * Format: date-time
+       */
+      at: string;
     };
     /** WeekIncome */
     WeekIncome: {

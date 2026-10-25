@@ -101,7 +101,8 @@ To get the bar's full analysis, put the raw export under `data/` and run `make s
 | Bar dollars (visits × an assumed $35 average check) | **Estimated**, labeled in the UI |
 | The "sample week" of hedges shown before the first desk run | **Example data**, labeled "sample week" |
 | Hedge settlements and the bank statement (with one planted short deposit) | **Simulated**, from real settled Kalshi results |
-| Reconciliation benchmark (`GET /benchmarks/reconciliation`, Books tab): 20 hedges, 13 planted errors of 8 kinds, 5 traps | **Simulated** world with an answer key; the real reconciler scores **13 of 13 caught, 13 with the right cause, 0 false flags** (`python -m app.books.benchmark`) |
+| Reconciliation benchmark (`GET /benchmarks/reconciliation`, Books tab): 26 hedges, 17 planted errors of 10 kinds across venue, ledger and bank, 7 traps (2 deposits in transit) | **Simulated** world with an answer key; the real three-way reconciler scores **17 of 17 caught, 17 with the right cause, 0 false flags, 7 of 7 traps** (`python -m app.books.benchmark`) |
+| Bank leg of reconciliation | **Simulated** CSV by default; **Increase sandbox** (real bank API, not real money) when `INCREASE_API_KEY` + `INCREASE_ACCOUNT_ID` are set ([docs/INCREASE.md](docs/INCREASE.md)) |
 | Hudson Bike Co. sample revenue | **Synthetic** (fictional shop, planted effects) on **real** NOAA Central Park weather |
 | The upload → research report | **Live**: `POST /research` runs the protocol on the uploaded file (nothing stored) |
 | The hedge card behind "Send to the desk" | **Live quote**: `POST /research/quote` prices it on the cached Kalshi and Polymarket books; not saved |

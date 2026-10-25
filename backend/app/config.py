@@ -164,6 +164,12 @@ class Settings(BaseSettings):
     kalshi_api_key_id: str | None = None
     kalshi_private_key_path: str | None = None  # PEM file; relative paths resolve from the repo root
 
+    # Increase bank (integrations/increase.py, docs/INCREASE.md): the bank leg of reconciliation.
+    # Used iff the key and account id are set and DEMO_OFFLINE is off; otherwise the simulated CSV.
+    increase_api_key: str | None = None
+    increase_account_id: str | None = None
+    increase_environment: Literal["sandbox", "production"] = "sandbox"
+
     @field_validator("demo_as_of", mode="before")
     @classmethod
     def _blank_as_of_is_unset(cls, v):
