@@ -109,6 +109,11 @@ def check_over_budget(premium: Decimal, remaining: Decimal) -> Check:
     })
 
 
+def _hedgeable(exposure: Any) -> bool:
+    # Contract Exposures always carry `hedgeable`; bare dicts used in unit tests may omit it.
+    return exposure.get("hedgeable", True) if isinstance(exposure, dict) else exposure.hedgeable
+
+
 def _skip(code: str, why: str) -> Check:
     return Check(code=code, passed=None, metric={"skipped": why})
 
@@ -116,12 +121,37 @@ def _skip(code: str, why: str) -> Check:
 # ---- composition
 
 
+class NotHedgeableError(ValueError):
+    """`evaluate` was handed an exposure the stats gates dropped (`hedgeable=false`).
+
+    Such an exposure is "measured, not hedged" and must never reach a market. It can't be a
+    declined Decision today: models.Decision.reasons is `list[CheckCode]` (the six market
+    checks) and must equal the failed checks. Contract change needed (C6): add a
+    `not_hedgeable` CheckCode ahead of `no_market`, whose metric carries the exposure's own
+    gate flags (`below_size`, `not_significant`, `thin_support` as booleans).
+    """
+
+    def __init__(self, exposure_id: str, reasons: list[str]):
+        super().__init__(
+            f"{exposure_id} is not hedgeable ({', '.join(reasons)}); it is shown as measured, "
+            "not hedged, and never matched. A declined Decision for it needs a `not_hedgeable` "
+            "CheckCode in app/models.py."
+        )
+        self.exposure_id = exposure_id
+        self.reasons = reasons
+
+
 def evaluate(
     exposure: Any, candidates: list[Candidate], sizing: Sizing | None,
     basis: BasisStat | None, remaining_budget: Decimal, th: Thresholds,
     *, decision_id: str | None = None,
 ) -> Decision:
-    """Run checks 1–6 in table order, always. Size with resolve_h's h first (G5)."""
+    """Run checks 1–6 in table order, always. Size with resolve_h's h first (G5).
+
+    Raises NotHedgeableError for an exposure the stats gates dropped, before any check runs.
+    """
+    if not _hedgeable(exposure):
+        raise NotHedgeableError(field(exposure, "id"), list(field(exposure, "reasons")))
     var = field(exposure, "settlement_var")
     if basis is None and var not in NO_BASIS_NEEDED:
         raise ValueError(f"{var} exposure needs a BasisStat for rule 4")

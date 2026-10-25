@@ -4,6 +4,8 @@ import json
 from datetime import date, datetime, timezone
 from decimal import Decimal as D
 
+import pytest
+
 from app.config import Thresholds
 from app.markets.kalshi import KalshiClient
 from app.markets.match import build_candidates, deterministic_pick
@@ -63,3 +65,29 @@ async def test_taxi_and_bar_rain_offline_and_deterministic():
 
     again = await desk(bar_exp)
     assert again.model_dump_json() == bar.model_dump_json()  # byte-identical replay
+
+
+async def test_dropped_taxi_exposures_are_refused_never_proposed():
+    """Taxi home_win and hot (fit on the CI feature table) fail the stats gates. Forced through
+    the full pipeline they are refused before any check runs, so they can never come out proposed."""
+    from app.markets.rules import NotHedgeableError
+    from app.markets.summary import not_hedged_summary
+
+    for name in ("exposure_taxi_home_win.json", "exposure_taxi_hot.json"):
+        exposure = Exposure.model_validate(load(f"markets_test/{name}"))
+        assert exposure.hedgeable is False and exposure.reasons == ["not_significant"]
+        async with KalshiClient(offline=True) as k:
+            cands = await build_candidates(k, exposure, T0)
+            pick = deterministic_pick(cands, exposure.hedge_side)
+            assert pick is not None  # a market exists, so only the gate stops it
+            p_hat = D(load("settlement_rates.json")["home_win"]["p_hat"]) if exposure.event == "home_win" else D("0.4082")
+            sizing = size_hedge(exposure, pick, await k.get_orderbook(pick.ticker), D(1), p_hat,
+                                await k.get_series(pick.series_ticker))
+        basis = None if exposure.event == "home_win" else BasisStat(r2=D("0.9233"), beta_s=D("-1273.68"), se=D("1473.67"))
+        with pytest.raises(NotHedgeableError, match="not_significant.*not_hedgeable"):
+            evaluate(exposure, cands, sizing, basis, BUDGET, TH)
+
+    home_win = Exposure.model_validate(load("markets_test/exposure_taxi_home_win.json"))
+    assert not_hedged_summary(home_win) == (
+        "Not hedged: the measured effect (+$517/day) isn't distinguishable from zero "
+        "(90% CI −$2,631 to +$3,665).")

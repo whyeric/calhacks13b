@@ -1,0 +1,22 @@
+{
+  "id": "exp_hot",
+  "business_id": "taxi",
+  "event": "hot",
+  "effect_usd": "-1243.62",
+  "ci90": [
+    "-3612.61",
+    "1125.37"
+  ],
+  "se": "1440.12",
+  "p_value": 0.38783189096826465,
+  "n_events_train": 154,
+  "direction": "negative",
+  "hedge_side": "yes",
+  "settlement_var": "hot",
+  "hedgeable": false,
+  "reasons": [
+    "not_significant"
+  ],
+  "strike": 71.0,
+  "beta_settlement": "-1273.68"
+}

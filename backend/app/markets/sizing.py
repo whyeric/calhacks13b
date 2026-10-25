@@ -16,6 +16,7 @@ from app.models import Agent, Decision, Headline, Hedge, Level, PayoffRow, Side
 from .kalshi import Orderbook, ask_levels
 from .match import Candidate
 from .shapes import Fill, Sizing, dec, field
+from .summary import fallback_summary
 
 ZERO = Decimal("0")
 ONE = Decimal("1")
@@ -160,7 +161,22 @@ def to_hedge(
     exposure: Any, sizing: Sizing | None, decision: Decision, *,
     hedge_id: str, week_of: date, created_at: datetime, agent: Agent, match_reason: str | None = None,
 ) -> Hedge:
-    """The contract Hedge. With no market (`sizing=None`) only `decision` carries information."""
+    """The contract Hedge. With no market (`sizing=None`) only `decision` carries information.
+
+    A null `decision.summary` gets the deterministic fallback sentence (summary.py)."""
+    hedge = _build_hedge(exposure, sizing, decision, hedge_id=hedge_id, week_of=week_of,
+                         created_at=created_at, agent=agent, match_reason=match_reason)
+    if hedge.decision.summary is None:
+        text = fallback_summary(hedge)
+        if text is not None:
+            hedge = hedge.model_copy(update={"decision": hedge.decision.model_copy(update={"summary": text})})
+    return hedge
+
+
+def _build_hedge(
+    exposure: Any, sizing: Sizing | None, decision: Decision, *,
+    hedge_id: str, week_of: date, created_at: datetime, agent: Agent, match_reason: str | None,
+) -> Hedge:
     base = dict(
         id=hedge_id, business_id=field(exposure, "business_id"), exposure_id=field(exposure, "id"),
         week_of=week_of, status=decision.status, side=field(exposure, "hedge_side"),
