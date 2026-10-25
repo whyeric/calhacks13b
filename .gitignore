@@ -24,7 +24,3 @@ node_modules/
 .next/
 next-env.d.ts
 *.tsbuildinfo
-
-# Dewey-derived daily series: built locally from data/ (make seed-data); license unclear, see #2
-backend/fixtures/restaurant_daily.parquet
-backend/fixtures/msg_visits_daily.parquet
