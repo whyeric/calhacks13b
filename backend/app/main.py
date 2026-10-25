@@ -5,7 +5,7 @@
 - `/desk/run` answers 202 and runs `agent.desk.run_week` in a background task, one run per
   business at a time (409 `run_in_progress`); poll `GET /runs/{id}` (R15).
 - Approve/reject are owner-only (403 `owner_only`, I4) from `proposed` or `pending_approval`
-  (D1 default). Approve books through `books.ledger.book_approval` before the hedge is stored,
+  (D1 default). Approve goes through `books.ledger.approve_hedge` (-> `book_approval`), which books before the hedge is stored,
   so a booking failure leaves the hedge unchanged (500 `ledger_write_failed`).
 - No route updates or deletes a decision-log row; state changes append entries (I5).
 
@@ -308,25 +308,17 @@ def approve(
     h = _hedge(hedge_id)
     _require_owner(body.actor if body else None, x_owner_token, "approve")
     _require_decidable(h)
-    decided = h.model_copy(update={"status": "approved", "decided_by": "owner", "decided_at": clock.now(),
-                                   "alternative": None})
     from app.books import ledger  # looked up at call time so tests can patch book_approval
 
-    try:
-        entry_ids = ledger.book_approval(decided, "owner")
+    try:  # validates the approved Hedge, books it (+ `booking` log event), then stores it
+        approved, _entries = ledger.approve_hedge(h, "owner", at=clock.now())
     except Exception as e:
         log.exception("booking %s failed", hedge_id)
         raise ApiError(500, "ledger_write_failed", "The ledger could not be written; the hedge is unchanged.",
                        {"type": type(e).__name__})
-    approved = Hedge.model_validate(decided.model_dump() | {"ledger_entry_ids": entry_ids})
-    db.put_hedge(approved)
-    n = _hedge_numbers(approved)
     _log({"business_id": h.business_id, "kind": "approval", "actor": "owner", "hedge_id": h.id,
-          "decision_id": h.decision.id, "status": "approved", "numbers": n,
+          "decision_id": h.decision.id, "status": "approved", "numbers": _hedge_numbers(approved),
           "summary": f"Owner approved {h.id}: {h.n_filled} {h.side.upper()} contracts for ${h.premium}."})
-    _log({"business_id": h.business_id, "kind": "booking", "actor": "system", "hedge_id": h.id,
-          "decision_id": h.decision.id, "status": "approved", "numbers": n,
-          "summary": f"Booked premium and fee for {h.id} to the ledger ({', '.join(entry_ids)})."})
     return approved
 
 
@@ -354,20 +346,28 @@ def reject(
 
 @app.get("/businesses/{business_id}/ledger", response_model=LedgerResponse, responses=ERRORS)
 def ledger_view(business_id: str) -> LedgerResponse:
+    """Entries plus the latest reconciliation: the one stored by POST /reconcile, else a
+    fresh read-only run when anything has settled (R10)."""
     _business(business_id)
+    from app.books import reconcile as recon
+
     raw = db.get_analysis(business_id, "reconciliation")
-    recon = ReconResult.model_validate(raw) if raw is not None else None
-    return LedgerResponse(entries=db.list_ledger_entries(business_id), reconciliation=recon, simulated=True)
+    result = ReconResult.model_validate(raw) if raw is not None else None
+    if result is None and recon.has_settlements(business_id):
+        result = recon.reconcile(business_id, log=False)
+    return LedgerResponse(entries=db.list_ledger_entries(business_id), reconciliation=result, simulated=True)
 
 
 @app.post("/businesses/{business_id}/reconcile", response_model=ReconResult, responses=ERRORS)
 def reconcile(business_id: str, _body: dict | None = Body(None)) -> ReconResult:
+    """Three-way reconciliation (C5, pure, no LLM); appends a `reconciliation` log event.
+    409 `nothing_to_reconcile` until some approved hedge has settled."""
     _business(business_id)
-    try:  # TODO(#4 part 3, cut-list): app.books.reconcile
-        from app.books.reconcile import reconcile as run_reconcile  # type: ignore[import-not-found]
-    except ImportError:
-        raise ApiError(409, "nothing_to_reconcile", "Reconciliation is not available yet for this business.")
-    result: ReconResult = run_reconcile(business_id)
+    from app.books import reconcile as recon
+
+    if not recon.has_settlements(business_id):
+        raise ApiError(409, "nothing_to_reconcile", "No hedge has settled yet, so there is nothing to reconcile.")
+    result = recon.reconcile(business_id)
     db.put_analysis(business_id, "reconciliation", result, clock.now().isoformat())
     return result
 

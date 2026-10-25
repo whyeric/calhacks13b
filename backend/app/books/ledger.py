@@ -20,15 +20,16 @@ Entry shapes (all amounts `Decimal`, 2 dp, postings sum to zero):
 Entry ids are derived from the hedge id, which is what makes booking idempotent.
 
 Public entry points:
-    book_approval(hedge) -> list[LedgerEntry]        # hedge.status == "approved"
-    approve_hedge(hedge, actor) -> (Hedge, entries)  # proposed/pending -> approved + booked
+    book_approval(hedge, actor) -> list[str]         # API contract (#15); hedge already approved
+    approve_hedge(hedge, actor, at=) -> (Hedge, entries)  # proposed/pending -> approved + booked
+    book_entries(hedge) -> list[LedgerEntry]         # same booking, returns the entries
     book_hedge(hedge, approval) -> list[str]         # ACCEPTANCE.md signature
 """
 
 from __future__ import annotations
 
 import hashlib
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from decimal import ROUND_CEILING, Decimal
 from pathlib import Path
 from typing import Any
@@ -37,10 +38,9 @@ from zoneinfo import ZoneInfo
 from sqlalchemy.engine import Engine
 
 from app import db
-from app.config import REPO_ROOT
+from app.config import get_settings
 from app.models import ApproveRequest, Hedge, LedgerEntry, LedgerMeta, LogEntry, Posting
 
-LEDGER_DIR = REPO_ROOT / "ledgers"
 CENT = Decimal("0.01")
 NY = ZoneInfo("America/New_York")
 
@@ -56,8 +56,11 @@ OPENING_DEPOSIT = Decimal("500.00")  # simulated funding of the Kalshi account (
 TAKER_FEE_RATE = Decimal("0.07")
 
 
-class BookingError(ValueError):
+class BookingRefused(ValueError):
     """Refused booking: not approved, not approved by the owner, or inconsistent amounts."""
+
+
+BookingError = BookingRefused  # older name
 
 
 # --- Small helpers -------------------------------------------------------------
@@ -150,16 +153,16 @@ def ensure_opening_deposit(
 
 def _check_bookable(hedge: Hedge) -> tuple[str, Decimal, Decimal, Decimal]:
     if hedge.status not in ("approved", "settled"):
-        raise BookingError(f"{hedge.id} is {hedge.status}; only approved hedges are booked")
+        raise BookingRefused(f"{hedge.id} is {hedge.status}; only approved hedges are booked")
     if hedge.decided_by != "owner":
-        raise BookingError(f"{hedge.id} was not approved by the owner (I4)")
+        raise BookingRefused(f"{hedge.id} was not approved by the owner (I4)")
     if hedge.ticker is None or hedge.cost is None or hedge.fee is None or hedge.premium is None:
-        raise BookingError(f"{hedge.id} has no market or sizing to book")
+        raise BookingRefused(f"{hedge.id} has no market or sizing to book")
     if hedge.n_filled <= 0:
-        raise BookingError(f"{hedge.id} has no filled contracts")
+        raise BookingRefused(f"{hedge.id} has no filled contracts")
     cost, fee, premium = cents(hedge.cost), cents(hedge.fee), cents(hedge.premium)
     if cost + fee != premium:
-        raise BookingError(f"{hedge.id}: cost {cost} + fee {fee} != premium {premium}")
+        raise BookingRefused(f"{hedge.id}: cost {cost} + fee {fee} != premium {premium}")
     return hedge.ticker, cost, fee, premium
 
 
@@ -169,7 +172,7 @@ def hedge_meta(hedge: Hedge) -> LedgerMeta:
     )
 
 
-def book_approval(
+def book_entries(
     hedge: Hedge,
     *,
     engine: Engine | None = None,
@@ -179,15 +182,16 @@ def book_approval(
 ) -> list[LedgerEntry]:
     """Book an owner-approved hedge: premium + fee debited, Kalshi cash credited.
 
-    `hedge.status` must be "approved" and `hedge.decided_by` "owner", else BookingError and
+    `hedge.status` must be "approved" and `hedge.decided_by` "owner", else BookingRefused and
     nothing is written. Books the filled N (partial fills book what filled). Dated the
     approval day in America/New_York unless `on` is given.
 
     Idempotent per hedge: if the premium entry already exists it is returned unchanged and
-    nothing is written. Returns the hedge's entries (one premium entry); use their ids for
-    `hedge.ledger_entry_ids` (they equal `[premium_entry_id(hedge.id)]`).
-    Persists via `db.put_ledger_entry`, appends a `booking` log event (I5), and rewrites
-    `ledgers/<business>.beancount`. `simulated=True` labels a demo stand-in hedge (I6).
+    nothing is written. Returns the hedge's entries (one premium entry, id
+    `premium_entry_id(hedge.id)`). Persists via `db.put_ledger_entry`, appends a `booking`
+    log event (I5, timed 1 s after the approval so it sorts after the route's `approval`
+    event), and rewrites `ledgers/<business>.beancount`. `simulated=True` labels a demo
+    stand-in hedge (I6).
     """
     ticker, cost, fee, premium = _check_bookable(hedge)
     existing = get_entry(hedge.business_id, premium_entry_id(hedge.id), engine)
@@ -211,12 +215,13 @@ def book_approval(
         simulated=simulated,
     )
     db.put_ledger_entry(entry, engine)
+    at = hedge.decided_at or datetime.combine(booked_on, datetime.min.time(), UTC)
     db.append_log(
         LogEntry(
             log_id=f"log_book_{hedge.id}",
             business_id=hedge.business_id,
             kind="booking",
-            created_at=hedge.decided_at or datetime.combine(booked_on, datetime.min.time(), UTC),
+            created_at=at + timedelta(seconds=1),
             actor="system",
             agent=None,
             hedge_id=hedge.id,
@@ -237,6 +242,25 @@ def book_approval(
     return [entry]
 
 
+def book_approval(
+    hedge: Hedge,
+    actor: str | None,
+    *,
+    engine: Engine | None = None,
+    ledger_dir: Path | None = None,
+    simulated: bool = False,
+) -> list[str]:
+    """The API contract (#15): book an approved hedge, return its ledger entry ids.
+
+    Raises BookingRefused unless `actor == "owner"` and the hedge is approved by the owner
+    (I4); nothing is written then. Idempotent per hedge. See `book_entries`.
+    """
+    if actor != "owner":
+        raise BookingRefused("only the owner can approve a hedge (I4)")
+    entries = book_entries(hedge, engine=engine, ledger_dir=ledger_dir, simulated=simulated)
+    return [e.id for e in entries]
+
+
 def approve_hedge(
     hedge: Hedge,
     actor: str | None,
@@ -246,30 +270,39 @@ def approve_hedge(
     ledger_dir: Path | None = None,
     simulated: bool = False,
 ) -> tuple[Hedge, list[LedgerEntry]]:
-    """Owner approval of a proposed/pending hedge: returns the approved Hedge (with
-    `ledger_entry_ids` filled in, saved via `db.put_hedge`) and its ledger entries.
+    """Owner approval of a proposed/pending hedge: returns the approved Hedge (status
+    approved, decided_by owner, `ledger_entry_ids` filled in, alternative cleared; saved via
+    `db.put_hedge`) and its ledger entries. Books through the module-level `book_approval`
+    (so tests can patch it); if booking raises, the stored hedge is unchanged.
 
-    Raises BookingError if `actor != "owner"` (I4) or the hedge is not awaiting approval.
+    Raises BookingRefused if `actor != "owner"` (I4) or the hedge is not awaiting approval.
     Already-approved hedges are re-booked idempotently. Does not write the `approval` log
     event; the route does that.
     """
     if actor != "owner":
-        raise BookingError("only the owner can approve a hedge (I4)")
+        raise BookingRefused("only the owner can approve a hedge (I4)")
+    kw: dict[str, Any] = {k: v for k, v in (("engine", engine), ("ledger_dir", ledger_dir)) if v is not None}
+    if simulated:
+        kw["simulated"] = True
     if hedge.status in ("approved", "settled"):
-        return hedge, book_approval(hedge, engine=engine, ledger_dir=ledger_dir, simulated=simulated)
-    if hedge.status not in ("proposed", "pending_approval"):
-        raise BookingError(f"{hedge.id} is {hedge.status}; it cannot be approved")
-    data: dict[str, Any] = hedge.model_dump()
-    data.update(
-        status="approved",
-        decided_by="owner",
-        decided_at=at or datetime.now(UTC),
-        ledger_entry_ids=[premium_entry_id(hedge.id)],
-    )
-    approved = Hedge.model_validate(data)
-    entries = book_approval(approved, engine=engine, ledger_dir=ledger_dir, simulated=simulated)
-    db.put_hedge(approved, engine)
-    return approved, entries
+        ids = book_approval(hedge, "owner", **kw)
+    elif hedge.status in ("proposed", "pending_approval"):
+        data: dict[str, Any] = hedge.model_dump()
+        data.update(
+            status="approved",
+            decided_by="owner",
+            decided_at=at or datetime.now(UTC),
+            alternative=None,
+            ledger_entry_ids=[premium_entry_id(hedge.id)],
+        )
+        hedge = Hedge.model_validate(data)
+        ids = book_approval(hedge, "owner", **kw)
+        hedge = hedge.model_copy(update={"ledger_entry_ids": ids})
+        db.put_hedge(hedge, engine)
+    else:
+        raise BookingRefused(f"{hedge.id} is {hedge.status}; it cannot be approved")
+    entries = [e for i in ids if (e := get_entry(hedge.business_id, i, engine)) is not None]
+    return hedge, entries
 
 
 def book_hedge(
@@ -280,9 +313,7 @@ def book_hedge(
     ledger_dir: Path | None = None,
 ) -> list[str]:
     """ACCEPTANCE.md signature: entry ids for an approved hedge; raises unless owner."""
-    if approval.actor != "owner":
-        raise BookingError("only the owner can approve a hedge (I4)")
-    return [e.id for e in book_approval(hedge, engine=engine, ledger_dir=ledger_dir)]
+    return book_approval(hedge, approval.actor, engine=engine, ledger_dir=ledger_dir)
 
 
 # --- Beancount text -----------------------------------------------------------------
@@ -344,7 +375,7 @@ def render_ledger(business_id: str, engine: Engine | None = None) -> str:
 
 
 def ledger_path(business_id: str, ledger_dir: Path | None = None) -> Path:
-    return (ledger_dir or LEDGER_DIR) / f"{business_id}.beancount"
+    return Path(ledger_dir or get_settings().ledgers_dir) / f"{business_id}.beancount"
 
 
 def write_ledger(business_id: str, *, engine: Engine | None = None, ledger_dir: Path | None = None) -> Path | None:
@@ -368,3 +399,6 @@ def load_ledger(business_id: str, ledger_dir: Path | None = None) -> list[Any]:
     if errors:
         raise ValueError("; ".join(str(getattr(e, "message", e)) for e in errors))
     return entries
+
+
+__all__ = ["BookingRefused", "approve_hedge", "book_approval", "book_entries", "ledger_path", "load_ledger"]

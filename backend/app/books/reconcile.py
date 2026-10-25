@@ -35,6 +35,11 @@ def statement_path(business_id: str) -> Path:
     return FIXTURES_DIR / f"bank_statement_{business_id}.csv"
 
 
+def has_settlements(business_id: str, engine: Engine | None = None) -> bool:
+    """True once any hedge of this business has a simulated settlement or expiry."""
+    return bool(_settled(business_id, engine))
+
+
 def _settled(business_id: str, engine: Engine | None) -> dict[str, dict[str, Any]]:
     out: dict[str, dict[str, Any]] = {}
     for log in db.list_log(business_id, engine=engine):

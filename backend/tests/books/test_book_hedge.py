@@ -6,7 +6,7 @@ import pytest
 
 from app import db
 from app.books import ledger
-from app.books.ledger import BookingError, book_approval, book_hedge
+from app.books.ledger import BookingError, book_approval, book_entries, book_hedge
 from app.models import ApproveRequest
 
 from .conftest import APPROVED_AT, make_hedge
@@ -45,7 +45,7 @@ def test_idempotent_rebooking(approve, engine, ledger_dir):  # C5-A7 (booking)
     approved, first = approve(make_hedge())
     path = ledger.ledger_path("taxi", ledger_dir)
     before = path.read_bytes()
-    again = book_approval(approved, engine=engine, ledger_dir=ledger_dir)
+    again = book_entries(approved, engine=engine, ledger_dir=ledger_dir)
     _, third = approve(approved)
     assert [e.id for e in again] == [e.id for e in third] == [e.id for e in first]
     assert path.read_bytes() == before
@@ -58,7 +58,7 @@ def test_idempotent_rebooking(approve, engine, ledger_dir):  # C5-A7 (booking)
 def test_rejected_never_booked(status, engine, ledger_dir):  # C5-A8
     hedge = make_hedge().model_copy(update={"status": status, "decided_by": "owner", "decided_at": APPROVED_AT})
     with pytest.raises(BookingError):
-        book_approval(hedge, engine=engine, ledger_dir=ledger_dir)
+        book_entries(hedge, engine=engine, ledger_dir=ledger_dir)
     assert db.list_ledger_entries("taxi", engine) == []
     assert not any(e.kind == "booking" for e in db.list_log("taxi", engine=engine))
     assert not ledger.ledger_path("taxi", ledger_dir).exists()
@@ -77,7 +77,7 @@ def test_non_owner_cannot_book(engine, ledger_dir):  # C5-A9
         ledger.approve_hedge(hedge, "desk", engine=engine, ledger_dir=ledger_dir)
     approved_by_desk = hedge.model_copy(update={"status": "approved", "decided_by": None})
     with pytest.raises(BookingError):
-        book_approval(approved_by_desk, engine=engine, ledger_dir=ledger_dir)
+        book_entries(approved_by_desk, engine=engine, ledger_dir=ledger_dir)
     with pytest.raises(BookingError):
         book_hedge(approved_by_desk, ApproveRequest(actor="desk"), engine=engine, ledger_dir=ledger_dir)
     assert db.list_ledger_entries("taxi", engine) == []
@@ -123,3 +123,13 @@ def test_opening_deposit_once(approve, engine):
     opening = [e for e in db.list_ledger_entries("taxi", engine) if e.kind == "opening_deposit"]
     assert len(opening) == 1 and opening[0].simulated
     assert opening[0].narration.startswith("[SIMULATED]")
+
+
+def test_book_approval_api_contract(engine, ledger_dir):
+    """#15 calls `book_approval(hedge, actor) -> list[str]` on a hedge already marked approved."""
+    hedge = make_hedge().model_copy(update={"status": "approved", "decided_by": "owner", "decided_at": APPROVED_AT})
+    ids = book_approval(hedge, "owner", engine=engine, ledger_dir=ledger_dir)
+    assert ids == [ledger.premium_entry_id("hdg_01")]
+    assert book_approval(hedge, "owner", engine=engine, ledger_dir=ledger_dir) == ids
+    with pytest.raises(ledger.BookingRefused):
+        book_approval(hedge, "desk", engine=engine, ledger_dir=ledger_dir)
