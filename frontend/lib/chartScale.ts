@@ -25,3 +25,14 @@ export function barSpan(
 export function position(value: string, domain: [number, number]): number {
   return ((Number(value) - domain[0]) / (domain[1] - domain[0])) * 100;
 }
+// Span between two decimal strings (a confidence interval), in percent of the
+// plot width (scripted upload demo's forest plot).
+export function intervalSpan(
+  low: string,
+  high: string,
+  domain: [number, number],
+): { x: number; width: number } {
+  const a = position(low, domain);
+  const b = position(high, domain);
+  return { x: Math.min(a, b), width: Math.abs(b - a) };
+}

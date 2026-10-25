@@ -25,12 +25,14 @@ export function Header({
   onSelect,
   onRun,
   running,
+  onUpload,
 }: {
   businesses: Business[];
   selectedId: string;
   onSelect: (id: string) => void;
   onRun: () => void;
   running: boolean;
+  onUpload?: () => void;
 }) {
   const business = businesses.find((row) => row.id === selectedId);
   return (
@@ -57,14 +59,19 @@ export function Header({
           {businesses.map((row) => (
             <option key={row.id} value={row.id}>
               {row.name}
+              {row.uploaded ? " · Uploaded" : ""}
             </option>
           ))}
         </select>
-        {business && (
-          <EstimatedBadge
-            kind={business.estimated ? "estimated" : "real"}
-            note={business.estimated ? "visits × average check" : undefined}
-          />
+        {business?.uploaded ? (
+          <span className="badge uploaded">Uploaded · sample</span>
+        ) : (
+          business && (
+            <EstimatedBadge
+              kind={business.estimated ? "estimated" : "real"}
+              note={business.estimated ? "visits × average check" : undefined}
+            />
+          )
         )}
       </div>
       {business && (
@@ -87,10 +94,11 @@ export function Header({
           </div>
         </dl>
       )}
+      {onUpload && <button onClick={onUpload}>Upload your revenue</button>}
       <button
         className="primary"
         onClick={onRun}
-        disabled={running || !business}
+        disabled={running || !business || business.scripted}
       >
         {running ? "Running…" : "Run desk →"}
       </button>
