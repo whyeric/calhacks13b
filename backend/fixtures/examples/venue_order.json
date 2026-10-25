@@ -1,0 +1,21 @@
+{
+  "mode": "kalshi_demo",
+  "status": "partial",
+  "client_order_id": "02aa5d01-a0b8-585c-9e47-23c3c27b2329",
+  "order_id": "3b23c1c7-f4ef-4f0d-8b9a-9e53c61f1a0d",
+  "ticker": "KXNBAGAME-26OCT28BOSNYK-NYK",
+  "production_ticker": "KXNBAGAME-26OCT28BOSNYK-NYK",
+  "stand_in": false,
+  "side": "no",
+  "book_side": "ask",
+  "time_in_force": "immediate_or_cancel",
+  "requested": 420,
+  "limit_price": "0.52",
+  "filled": 300,
+  "avg_price": "0.50",
+  "cost": "150.00",
+  "fee": "5.25",
+  "differs_from_booked": true,
+  "reason": "Kalshi demo filled 300 of 420 contracts; the rest was canceled (immediate-or-cancel).",
+  "at": "2026-10-24T19:00:02Z"
+}

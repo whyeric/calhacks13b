@@ -136,7 +136,8 @@
     "needs_controller": false,
     "controller": null,
     "decision_note": null,
-    "owner_history": null
+    "owner_history": null,
+    "venue_order": null
   },
   {
     "id": "hdg_01",
@@ -277,7 +278,8 @@
     "needs_controller": false,
     "controller": null,
     "decision_note": null,
-    "owner_history": null
+    "owner_history": null,
+    "venue_order": null
   },
   {
     "id": "hdg_02",
@@ -449,7 +451,8 @@
     "needs_controller": false,
     "controller": null,
     "decision_note": null,
-    "owner_history": null
+    "owner_history": null,
+    "venue_order": null
   },
   {
     "id": "hdg_03",
@@ -589,6 +592,7 @@
     "needs_controller": false,
     "controller": null,
     "decision_note": null,
-    "owner_history": null
+    "owner_history": null,
+    "venue_order": null
   }
 ]

@@ -168,5 +168,6 @@
   "needs_controller": false,
   "controller": null,
   "decision_note": null,
-  "owner_history": null
+  "owner_history": null,
+  "venue_order": null
 }

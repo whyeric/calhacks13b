@@ -62,6 +62,9 @@ EXAMPLES: dict[str, str] = {
     "run_status.json": "RunStatus",
     "settings.json": "Settings",
     "week_seed.json": "Hedge",
+    # Kalshi demo trading (markets/trading.py)
+    "venue_order.json": "VenueOrder",
+    "kalshi_status.json": "KalshiStatus",
 }
 
 

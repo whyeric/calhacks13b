@@ -155,6 +155,14 @@ class Settings(BaseSettings):
     qbo_redirect_uri: str = "http://localhost:8000/integrations/quickbooks/callback"
     qbo_environment: Literal["sandbox", "production"] = "sandbox"
     frontend_url: str = "http://localhost:3000"  # where the OAuth callback sends the browser back
+    # --- Kalshi DEMO trading (markets/trading.py, docs/KALSHI_DEMO.md) ---
+    # Off by default. When on, not offline, and both key settings are present, the owner's
+    # approval places one immediate-or-cancel order on Kalshi's demo exchange (fake money).
+    # The client refuses any host but the demo hosts (trading.DEMO_HOSTS); no real-money trading.
+    kalshi_trading_enabled: bool = False
+    kalshi_demo_base_url: str = "https://demo-api.kalshi.co/trade-api/v2"
+    kalshi_api_key_id: str | None = None
+    kalshi_private_key_path: str | None = None  # PEM file; relative paths resolve from the repo root
 
     @field_validator("demo_as_of", mode="before")
     @classmethod
