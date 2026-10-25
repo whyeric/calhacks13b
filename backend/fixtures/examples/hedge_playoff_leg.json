@@ -180,5 +180,9 @@
   "group_total_premium": "3059.50",
   "estimated": true,
   "venue": "kalshi",
-  "fee_rate": null
+  "fee_rate": null,
+  "needs_controller": false,
+  "controller": null,
+  "decision_note": null,
+  "owner_history": null
 }

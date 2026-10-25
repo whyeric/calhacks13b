@@ -125,5 +125,9 @@
   "decided_by": "owner",
   "decided_at": "2026-10-24T16:00:00Z",
   "venue": "kalshi",
-  "fee_rate": null
+  "fee_rate": null,
+  "needs_controller": false,
+  "controller": null,
+  "decision_note": null,
+  "owner_history": null
 }

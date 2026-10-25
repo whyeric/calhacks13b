@@ -24,7 +24,7 @@ from typing import Any
 from sqlalchemy.engine import Engine
 
 from app import db
-from app.books.ledger import CASH, cents, opening_entry_id, payout_entry_id, usd
+from app.books.ledger import CASH, VENUE_CASH, cents, opening_entry_id, payout_entry_id, usd
 from app.books.settlement import read_bank_statement
 from app.config import FIXTURES_DIR
 from app.models import LogEntry, ReconMatch, ReconMismatch, ReconResult, ReconSummary
@@ -165,7 +165,8 @@ def reconcile(
 
     def kalshi(hid: str) -> Decimal:
         e = entries.get(payout_entry_id(hid))
-        return next((p.amount for p in e.postings if p.account == CASH), ZERO) if e else ZERO
+        # The venue's cash leg of the payout (Kalshi or Polymarket).
+        return next((p.amount for p in e.postings if p.account in VENUE_CASH.values()), ZERO) if e else ZERO
 
     # Fallback: an unreferenced row matches a hedge with no bank row on amount, dated within
     # MATCH_WINDOW_DAYS of its settlement (bank postings lag); the closest date wins.

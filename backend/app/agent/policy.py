@@ -33,6 +33,10 @@ from app.models import Budget, Headline, Hedge, HedgeLite, PayoffRow
 
 OWNER = "owner"
 OWNER_ACTIONS = frozenset({"approve", "reject", "book"})
+# Segregation of duties: the controller co-signs material hedges, sets materiality and closes
+# the books; it can't approve. The owner can't do the controller's part, and the desk neither.
+CONTROLLER = "controller"
+CONTROLLER_ACTIONS = frozenset({"cosign", "set_materiality", "close_period"})
 DECIDABLE = ("proposed", "pending_approval")  # D1: every passing hedge waits for the owner
 
 
@@ -46,10 +50,18 @@ class PolicyError(PermissionError):
 
 
 def can_act(actor: object, action: str) -> bool:
-    """True only for the exact actor "owner" on approve/reject/book (I4)."""
+    """True only for the exact actor "owner" on approve/reject/book (I4), and the exact actor
+    "controller" on cosign/set_materiality/close_period. Every other pairing is refused."""
     if action in OWNER_ACTIONS:
         return isinstance(actor, str) and actor == OWNER
+    if action in CONTROLLER_ACTIONS:
+        return isinstance(actor, str) and actor == CONTROLLER
     return False
+
+
+def needs_controller(hedge: Hedge, thresholds) -> bool:
+    """A premium above the business's materiality threshold needs the controller's co-sign."""
+    return hedge.premium is not None and hedge.premium > thresholds.materiality_usd
 
 
 def week_start(d: date | datetime | None = None) -> date:

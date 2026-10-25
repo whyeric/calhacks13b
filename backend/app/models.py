@@ -107,7 +107,9 @@ Event = Literal["rain", "hot", "home_win", "playoff_home"]
 Side = Literal["yes", "no"]
 Venue = Literal["kalshi", "polymarket"]
 Agent = Literal["claude", "fallback"]
-Actor = Literal["desk", "owner", "system"]
+# "controller" co-signs hedges above materiality and closes the books (segregation of duties):
+# the owner can't co-sign or close, the controller can't approve, and the desk can do none of it.
+Actor = Literal["desk", "owner", "controller", "system"]
 CheckCode = Literal[
     "no_market", "illiquid", "overpriced", "basis_too_loose", "too_expensive", "unstable", "over_budget"
 ]
@@ -119,6 +121,7 @@ HedgeStatus = Literal[  # R5
 LogKind = Literal[
     "proposal", "decline", "approval", "rejection", "booking", "settlement", "expired",
     "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed", "refusal",
+    "cosign", "cosign_refused", "period_close",
 ]
 
 
@@ -411,6 +414,14 @@ class Hedge(Contract):
     # venue's taker rate in fee = rate x C x P x (1 - P); null means Kalshi's 0.07.
     venue: Venue = "kalshi"
     fee_rate: Price | None = None
+    # Segregation of duties: a premium above the business's materiality threshold needs the
+    # controller's co-sign before the owner's approval counts (`POST /hedges/{id}/cosign`).
+    needs_controller: bool = False
+    controller: "ControllerSignoff | None" = None
+    # The owner's note on approve or reason on reject, kept for the desk's memory.
+    decision_note: str | None = None
+    # What happened to this exposure's earlier hedges (the desk's memory across weeks).
+    owner_history: "OwnerHistory | None" = None
 
     @model_validator(mode="after")
     def _consistent(self) -> "Hedge":
@@ -432,6 +443,39 @@ class Hedge(Contract):
         if decided != (self.decided_by is not None) or decided != (self.decided_at is not None):
             raise ValueError("decided_by/decided_at are set iff the owner approved or rejected")
         return self
+
+
+class ControllerSignoff(Contract):
+    """The controller's co-sign (or refusal) on a hedge above materiality."""
+
+    decision: Literal["signed", "refused"]
+    at: AwareDatetime
+    note: str | None
+
+
+class HistoryOutcome(Contract):
+    hedge_id: str
+    week_of: Monday
+    status: HedgeStatus
+    premium: Money | None
+    payout: Money | None  # settled hedges only; 0.00 when the contracts expired worthless
+    note: str | None  # the owner's note or reason
+
+
+class OwnerHistory(Contract):
+    """The same exposure's earlier hedges for this business, newest first (at most 5 shown).
+
+    `pattern` is set when the owner's recent decisions should change how the desk asks:
+    "rejected_recently" when the last two decided hedges were both rejected."""
+
+    n_earlier: int
+    n_approved: int
+    n_rejected: int
+    n_expired_unapproved: int
+    total_premium: Money  # approved/settled only
+    total_payout: Money  # settled only
+    recent: list[HistoryOutcome]
+    pattern: Literal["rejected_recently"] | None
 
 
 # --- Decision log (C4) --------------------------------------------------------
@@ -618,6 +662,8 @@ class ThresholdSettings(Contract):
     # Defaults keep older clients (that PUT only the fields above) valid.
     decline_unstable: bool = True
     rain_size_multiplier: float = Field(default=1.0, ge=1.0, le=1.4)
+    # Premiums above this need the controller's co-sign; only the controller may change it.
+    materiality_usd: Money = Decimal("200.00")
 
 
 class Settings(Contract):
@@ -677,6 +723,14 @@ class ApproveRequest(Contract):
 class RejectRequest(Contract):
     actor: str | None = None
     reason: str | None = None
+
+
+class CosignRequest(Contract):
+    """POST /hedges/{id}/cosign. `approve=false` refuses: the owner can then only reject."""
+
+    actor: str | None = None
+    approve: bool = True
+    note: str | None = None
 
 
 class ChatRequest(Contract):
@@ -776,6 +830,66 @@ class ReconBenchmark(Contract):
         return self
 
 
+# --- Controls: receipts and period close ---------------------------------------
+# GET /hedges/{id}/receipt answers "why?" with the record, not with prose: the hedge and its
+# checks, the exposure it came from, the thresholds in force now, and every log entry about it.
+# POST /businesses/{id}/close locks the books through a date (controller only).
+
+
+class DecisionReceipt(Contract):
+    hedge: Hedge
+    exposure: Exposure | None  # null when the analysis is no longer cached for the business
+    thresholds: ThresholdSettings
+    trail: list[LogEntry]  # oldest first
+    approvals_required: list[Literal["owner", "controller"]]
+    sources: list[str]  # where each input came from, in plain words
+
+
+class TrialBalanceRow(Contract):
+    account: str
+    balance: Money
+
+
+class PeriodCloseRequest(Contract):
+    actor: str | None = None
+    through: date
+    # Close despite open reconciliation mismatches; they are carried as exceptions.
+    acknowledge_exceptions: bool = False
+    note: str | None = None
+
+
+class PeriodClose(Contract):
+    """The books are locked through `through`: later bookings dated on or before it are
+    moved to the next open day and say which closed period they belong to."""
+
+    business_id: str
+    through: date
+    previous_through: date | None
+    closed_at: AwareDatetime
+    closed_by: Literal["controller"]
+    n_entries: int  # ledger entries in (previous_through, through]
+    trial_balance: list[TrialBalanceRow]  # balances as of `through`
+    exceptions: list[str]  # reconciliation mismatches carried into the close
+    open_hedges: int  # proposed/pending hedges at close (they have no ledger entries yet)
+    simulated: bool  # any entry in the period is simulated (I6)
+    note: str | None
+
+    @model_validator(mode="after")
+    def _balanced(self) -> "PeriodClose":
+        if sum((r.balance for r in self.trial_balance), Decimal("0")) != 0:
+            raise ValueError("a trial balance sums to zero")
+        if self.previous_through is not None and self.previous_through >= self.through:
+            raise ValueError("a close moves the lock date forward")
+        return self
+
+
+class PeriodCloses(Contract):
+    """GET /businesses/{id}/closes: newest first, and the date the books are locked through."""
+
+    locked_through: date | None
+    closes: list[PeriodClose]
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -784,6 +898,9 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         LogEntry, BacktestResult, LedgerEntry, ReconResult, LedgerResponse, Settings,
         AnalyzeRequest, AnalyzeResponse, DeskRunRequest, RunAccepted, RunStatus,
         ApproveRequest, RejectRequest, ChatRequest, ChatReply, Health, ErrorBody,
-        ReconBenchmark,
+        ReconBenchmark, CosignRequest, DecisionReceipt, PeriodCloseRequest, PeriodClose, PeriodCloses,
     )
 }
+
+
+Hedge.model_rebuild()

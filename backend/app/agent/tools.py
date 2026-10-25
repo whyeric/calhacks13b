@@ -24,7 +24,7 @@ from typing import Any
 from sqlalchemy.engine import Engine
 
 from app import analysis, clock, db
-from app.agent import log, policy, prompts
+from app.agent import log, memory, policy, prompts
 from app.config import Thresholds
 from app.markets.port import MarketsPort, get_markets, no_market_hedge
 from app.models import Budget, Exposure, Hedge, LogEntry
@@ -275,11 +275,15 @@ class DeskContext:
         if hedge.decision.status == "pending_approval":
             alt = policy.within_budget_alternative(hedge, budget.remaining)
         biz = db.get_business(self.business_id, self.engine)
+        history = memory.owner_history(self.business_id, e.id, self.week_of, self.engine)
         hedge = Hedge.model_validate({
             **hedge.model_dump(), "agent": self.agent, "alternative": alt.model_dump() if alt else None,
             "decision": {**hedge.decision.model_dump(), "summary": None},
             # I6: estimated dollars (the business) or a pooled estimate (the exposure) stay labeled
             "estimated": bool(hedge.estimated or e.estimated or (biz is not None and biz.estimated)),
+            # The desk's memory across weeks, and whether this premium needs the controller too.
+            "owner_history": history.model_dump() if history else None,
+            "needs_controller": policy.needs_controller(hedge, self.thresholds),
         })
         db.put_hedge(hedge, self.engine)
         st = self.states.get(hedge.id) or HedgeState(exposure=e)
@@ -322,6 +326,8 @@ class DeskContext:
         """Append the proposal/decline entry (I5) and store the summary on the hedge."""
         h = st.hedge
         numbers = self.numbers_for(st)
+        if h.decision.status != "declined" and (first := memory.reminder(h.owner_history, st.exposure)):
+            summary = f"{first} {summary}"  # memory: say what the owner decided last time first
         if note:
             summary = f"{summary} {note}"
         if log.validate_summary(summary, numbers):  # templates are validated too; never write a bad number

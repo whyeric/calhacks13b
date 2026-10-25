@@ -124,7 +124,11 @@
     "decided_by": null,
     "decided_at": null,
     "venue": "kalshi",
-    "fee_rate": null
+    "fee_rate": null,
+    "needs_controller": false,
+    "controller": null,
+    "decision_note": null,
+    "owner_history": null
   },
   {
     "id": "hdg_03",
@@ -250,7 +254,11 @@
     "decided_by": null,
     "decided_at": null,
     "venue": "kalshi",
-    "fee_rate": null
+    "fee_rate": null,
+    "needs_controller": false,
+    "controller": null,
+    "decision_note": null,
+    "owner_history": null
   },
   {
     "id": "hdg_02",
@@ -408,6 +416,10 @@
     "decided_by": null,
     "decided_at": null,
     "venue": "kalshi",
-    "fee_rate": null
+    "fee_rate": null,
+    "needs_controller": false,
+    "controller": null,
+    "decision_note": null,
+    "owner_history": null
   }
 ]

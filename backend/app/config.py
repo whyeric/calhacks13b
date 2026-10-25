@@ -138,7 +138,8 @@ class Settings(BaseSettings):
     avg_check_usd: Decimal = Decimal("35")
     avg_check_label: str = "assumed"
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
-    owner_token: str | None = None  # G1: off unless set
+    owner_token: str | None = None  # G1: off unless set (`make demo` sets one)
+    controller_token: str | None = None  # same for the controller (co-sign, period close)
     # Markets backend for desk runs: "auto" uses app.markets (Kalshi, PR #48) when it is
     # importable and falls back to fixtures/examples/hedge_*.json otherwise.
     markets_backend: Literal["auto", "kalshi", "fixture"] = "auto"
@@ -197,6 +198,9 @@ class Thresholds:
     # was the worst hedged option). Recorded only: sizing still caps contracts at the measured
     # same-day exposure (I1), so values above 1.0 need the multi-day loss measured first.
     rain_size_multiplier: float = 1.0
+    # Materiality (segregation of duties): a premium above this needs the controller's co-sign
+    # before the owner's approval books it. The controller alone may change it.
+    materiality_usd: Decimal = Decimal("200.00")
 
 
 @lru_cache
