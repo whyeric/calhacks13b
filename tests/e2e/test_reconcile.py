@@ -4,8 +4,6 @@ which carries one planted short deposit (answer key in `app/books/seed.py`)."""
 
 import re
 
-import pytest
-
 from conftest import FIXTURES
 
 PLANTED = {"hedge_id": "hdg_s01", "difference": "-0.89", "likely_cause": "fee_deducted_from_deposit"}
@@ -46,12 +44,19 @@ def test_a8_restaurant_reconciles_clean(client):
     assert body["mismatches"] == [] and body["summary"]["n_mismatched"] == 0
 
 
-@pytest.mark.xfail(reason="bug (backend/fixtures/examples/decisions_seed.json, sample log_0003): the seeded "
-                          "reconciliation entry says $1.05 short on hdg_s02, but the books' answer key is "
-                          "$0.89 short on hdg_s01, so the dashboard log contradicts the ledger tab until "
-                          "someone clicks Reconcile", strict=False)
 def test_a8_seeded_log_agrees_with_answer_key(client):
+    """The seeded log (approval, booking, reconciliation) tells the same story as the ledger tab:
+    hdg_s01, $0.89 short (it used to say $1.05 short on hdg_s02)."""
     log = client.get("/businesses/taxi/decisions", params={"limit": 500}).json()
-    for e in (e for e in log if e["kind"] == "reconciliation"):
+    recon = [e for e in log if e["kind"] == "reconciliation"]
+    assert recon
+    for e in recon:
         amounts = set(re.findall(r"\$(\d+\.\d\d)", e["summary"]))
         assert amounts <= {"0.89"}, e["summary"]
+        assert e["hedge_id"] in (None, PLANTED["hedge_id"]) and "hdg_s02" not in e["summary"], e
+    ledger = client.get("/businesses/taxi/ledger").json()["entries"]
+    by_hedge = {(x.get("meta") or {}).get("hedge_id"): x for x in ledger if x["kind"] == "premium"}
+    for e in (e for e in log if e["kind"] in ("approval", "booking") and e["hedge_id"] in by_hedge):
+        booked = by_hedge[e["hedge_id"]]
+        cash = next(p["amount"] for p in booked["postings"] if p["account"] == "Assets:Kalshi:Cash")
+        assert f"${cash.lstrip('-')}" in e["summary"], (e["summary"], booked)
