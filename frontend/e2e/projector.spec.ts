@@ -1,4 +1,10 @@
 import { expect, test } from "@playwright/test";
+// These specs cover the dashboard: start past the first-run setup wizard.
+test.beforeEach(({ page }) =>
+  page.addInitScript(() =>
+    window.localStorage.setItem("hedge-desk:setup-done", "1"),
+  ),
+);
 test("C7-A31 projector dashboard fits and shows all regions above fold", async ({
   page,
 }) => {
@@ -21,7 +27,11 @@ test("C7-A31 projector dashboard fits and shows all regions above fold", async (
     expect(
       await el.evaluate((node) => node.scrollWidth <= node.clientWidth),
     ).toBe(true);
-  await expect(page).toHaveScreenshot("dashboard-1280.png", { fullPage: true });
+  // The freshness line shows the clock time, so it is masked.
+  await expect(page).toHaveScreenshot("dashboard-1280.png", {
+    fullPage: true,
+    mask: [page.getByTestId("freshness")],
+  });
   expect(errors).toEqual([]);
 });
 test("C7-A32 1024px stacks without horizontal scrolling", async ({ page }) => {

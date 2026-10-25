@@ -1379,3 +1379,82 @@ svg.forest-axis text {
   margin: 0 4px 0 10px;
   vertical-align: -1px;
 }
+
+/* Setup wizard and dashboard freshness line */
+.freshness {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 0;
+  color: #5b6d62;
+  font-size: 14px;
+}
+.link-button {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: #20583f;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.wizard {
+  max-width: 1100px;
+}
+.wizard-header {
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.wizard-step {
+  margin: 0;
+  font-size: 18px;
+}
+.wizard-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+}
+.wizard-progress li {
+  padding: 4px 12px;
+  border: 1px solid #cdd7cb;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #5b6d62;
+}
+.wizard-progress li.done {
+  color: #20583f;
+}
+.wizard-progress li.current {
+  border-color: #20583f;
+  background: #20583f;
+  color: #fff;
+}
+.wizard-body {
+  min-height: 320px;
+}
+.wizard-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 18px 0;
+}
+.wizard-picked {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.wizard-declines li {
+  margin: 8px 0;
+}
+.wizard-note {
+  font-weight: 600;
+}
+.wizard-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 0 32px;
+}
