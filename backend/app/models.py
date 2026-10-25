@@ -970,6 +970,19 @@ class ResearchReport(Contract):
     plot_max_usd: Money  # largest |CI end| across rows: forest-plot geometry only
 
 
+class ResearchQuote(Contract):
+    """POST /research/quote: a FOUND downside priced live on Kalshi and Polymarket (markets/quote.py).
+    A quote, not a proposal: nothing is stored, so there is nothing to approve or book."""
+
+    hypothesis_id: str
+    exposure: Exposure
+    hedge: Hedge
+    budget: Budget
+    p_hat: Price  # the event's train-year frequency, rule 3's fair price
+    window: ResearchPeriod  # days the quote looked for a market
+    basis_note: str
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -979,7 +992,7 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         AnalyzeRequest, AnalyzeResponse, DeskRunRequest, RunAccepted, RunStatus,
         ApproveRequest, RejectRequest, ChatRequest, ChatReply, Health, ErrorBody,
         ReconBenchmark, CosignRequest, DecisionReceipt, PeriodCloseRequest, PeriodClose, PeriodCloses,
-        ResearchReport,
+        ResearchReport, ResearchQuote,
     )
 }
 

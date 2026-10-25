@@ -674,7 +674,7 @@ def reconciliation_benchmark() -> ReconBenchmark:
 # CSV. Stateless: the file is read in memory and nothing is stored. The body is the raw CSV
 # (Content-Type text/csv), so no multipart dependency is needed offline.
 
-from app.models import ResearchReport  # noqa: E402
+from app.models import ResearchQuote, ResearchReport  # noqa: E402
 
 
 @app.post("/research", response_model=ResearchReport, responses={422: {"model": ErrorBody}})
@@ -690,3 +690,31 @@ async def research(request: Request, name: str | None = Query(None, max_length=6
         return await asyncio.to_thread(protocol.run, raw, name.strip() if name else None)
     except protocol.ResearchInputError as e:
         raise ApiError(422, e.code, e.message, e.detail)
+
+
+@app.post("/research/quote", response_model=ResearchQuote, responses={409: {"model": ErrorBody}, 422: {"model": ErrorBody}})
+async def research_quote(
+    request: Request, hypothesis: str = Query(..., max_length=40), name: str | None = Query(None, max_length=60),
+) -> ResearchQuote:
+    """Price one FOUND downside from an uploaded CSV (same raw body as POST /research): the protocol
+    re-runs on the file, then the desk's pipeline quotes it on Kalshi and Polymarket. Stores nothing."""
+    import asyncio
+
+    from app.markets import quote as research_quote_mod
+    from app.stats import research as protocol
+
+    raw = await request.body()
+    if not raw.strip():
+        raise ApiError(422, "bad_csv", "The upload is empty; send the CSV as the request body.")
+    try:
+        report = await asyncio.to_thread(protocol.run, raw, name.strip() if name else None)
+    except protocol.ResearchInputError as e:
+        raise ApiError(422, e.code, e.message, e.detail)
+    row = next((h for h in report.hypotheses if h.id == hypothesis), None)
+    if row is None:
+        raise ApiError(422, "unknown_hypothesis", f"No hypothesis {hypothesis!r} in the report.",
+                       {"allowed": [h.id for h in report.hypotheses]})
+    try:
+        return await research_quote_mod.quote(row)
+    except research_quote_mod.QuoteRefused as e:
+        raise ApiError(409, e.code, e.message, {"hypothesis": hypothesis})

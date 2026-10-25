@@ -51,6 +51,7 @@ EXAMPLES: dict[str, str] = {
     "period_close_request.json": "PeriodCloseRequest",
     "period_close.json": "PeriodClose",
     "period_closes.json": "PeriodCloses",
+    "research_quote.json": "ResearchQuote",
     "run_accepted.json": "RunAccepted",
     "run_status.json": "RunStatus",
     "settings.json": "Settings",
