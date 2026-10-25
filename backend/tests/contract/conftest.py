@@ -44,6 +44,7 @@ EXAMPLES: dict[str, str] = {
     "model_check.json": "ModelCheck",
     "reconciliation.json": "ReconResult",
     "reject_request.json": "RejectRequest",
+    "research_response.json": "ResearchResponse",
     "run_accepted.json": "RunAccepted",
     "run_status.json": "RunStatus",
     "settings.json": "Settings",

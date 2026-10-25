@@ -1,0 +1,198 @@
+{
+  "summary": "Rain and cold reliably cost you money; warm days help. Hot days, Knicks home games and Knicks wins make no measurable difference. The desk can protect rain days with Kalshi's daily NYC rain contract.",
+  "protocol_chips": [
+    "Training year: 2024",
+    "Unseen: 2025–26",
+    "Day-of-week + month controls",
+    "90% intervals",
+    "Placebo: flags shifted 7 days",
+    "Corrected for 6 tests",
+    "At least 10 event days"
+  ],
+  "n_days": 1004,
+  "first": "2024-01-01",
+  "last": "2026-09-30",
+  "rows": [
+    {
+      "id": "rain",
+      "label": "Rain day",
+      "mechanism": "Riders skip rentals when it rains.",
+      "train": {
+        "text": "−18.4% · −$1,955.68/day",
+        "ci": "90% CI −$2,171.00 to −$1,734.86",
+        "days": "124 days",
+        "plot": [
+          "-1955.68",
+          "-2171.00",
+          "-1734.86"
+        ]
+      },
+      "unseen": {
+        "text": "−20.4% · −$2,485.41/day",
+        "ci": "90% CI −$2,657.97 to −$2,309.72",
+        "days": "229 days",
+        "plot": [
+          "-2485.41",
+          "-2657.97",
+          "-2309.72"
+        ]
+      },
+      "placebo": "Not significant (p 0.38)",
+      "verdict": "FOUND",
+      "verdictNote": "hedgeable",
+      "kalshi": "KXRAIN · NYC daily rain (Central Park, The Weather Company)",
+      "sendable": true
+    },
+    {
+      "id": "cold",
+      "label": "Cold day <40°F",
+      "mechanism": "Few people ride in the cold.",
+      "train": {
+        "text": "−27.0% · −$2,861.35/day",
+        "ci": "90% CI −$3,233.31 to −$2,470.61",
+        "days": "28 days",
+        "plot": [
+          "-2861.35",
+          "-3233.31",
+          "-2470.61"
+        ]
+      },
+      "unseen": {
+        "text": "−26.4% · −$3,207.58/day",
+        "ci": "90% CI −$3,533.44 to −$2,869.42",
+        "days": "89 days",
+        "plot": [
+          "-3207.58",
+          "-3533.44",
+          "-2869.42"
+        ]
+      },
+      "placebo": "Not significant (p 0.11)",
+      "verdict": "FOUND",
+      "verdictNote": null,
+      "kalshi": "KXHIGHNY low strikes",
+      "sendable": false
+    },
+    {
+      "id": "warm",
+      "label": "Warm day >80°F",
+      "mechanism": "Nice weather brings casual riders.",
+      "train": {
+        "text": "+10.9% · +$1,159.56/day",
+        "ci": "90% CI +$706.87 to +$1,630.36",
+        "days": "84 days",
+        "plot": [
+          "1159.56",
+          "706.87",
+          "1630.36"
+        ]
+      },
+      "unseen": {
+        "text": "+15.5% · +$1,886.89/day",
+        "ci": "90% CI +$1,501.52 to +$2,283.13",
+        "days": "160 days",
+        "plot": [
+          "1886.89",
+          "1501.52",
+          "2283.13"
+        ]
+      },
+      "placebo": "Not significant (p 0.81)",
+      "verdict": "FOUND",
+      "verdictNote": "upside, no protection needed",
+      "kalshi": "KXHIGHNY",
+      "sendable": false
+    },
+    {
+      "id": "hot",
+      "label": "Hot day >90°F",
+      "mechanism": "Extreme heat might keep riders indoors.",
+      "train": {
+        "text": "+1.1% · +$112.43/day",
+        "ci": "90% CI −$472.81 to +$731.48",
+        "days": "15 days",
+        "plot": [
+          "112.43",
+          "-472.81",
+          "731.48"
+        ]
+      },
+      "unseen": {
+        "text": "−2.2% · −$267.65/day",
+        "ci": "90% CI −$1,000.13 to +$512.89",
+        "days": "19 days",
+        "plot": [
+          "-267.65",
+          "-1000.13",
+          "512.89"
+        ]
+      },
+      "placebo": "Not significant (p 0.15)",
+      "verdict": "NOT FOUND",
+      "verdictNote": "Not distinguishable from zero",
+      "kalshi": "KXHIGHNY",
+      "sendable": false
+    },
+    {
+      "id": "knicks_home",
+      "label": "Knicks home game",
+      "mechanism": "Game crowds near MSG might rent bikes.",
+      "train": {
+        "text": "+3.0% · +$322.69/day",
+        "ci": "90% CI −$673.58 to +$1,418.89",
+        "days": "14 days",
+        "plot": [
+          "322.69",
+          "-673.58",
+          "1418.89"
+        ]
+      },
+      "unseen": {
+        "text": "+2.9% · +$354.37/day",
+        "ci": "90% CI −$124.48 to +$852.25",
+        "days": "85 days",
+        "plot": [
+          "354.37",
+          "-124.48",
+          "852.25"
+        ]
+      },
+      "placebo": "Not significant (p 0.66)",
+      "verdict": "NOT FOUND",
+      "verdictNote": "Not distinguishable from zero",
+      "kalshi": "None (games are scheduled)",
+      "sendable": false
+    },
+    {
+      "id": "knicks_win",
+      "label": "Knicks win",
+      "mechanism": "Celebrations might bring extra riders.",
+      "train": {
+        "text": "+1.1% · +$121.56/day",
+        "ci": "90% CI −$2,362.83 to +$3,354.79",
+        "days": "10 days",
+        "plot": [
+          "121.56",
+          "-2362.83",
+          "3354.79"
+        ]
+      },
+      "unseen": {
+        "text": "+2.8% · +$337.78/day",
+        "ci": "90% CI −$568.06 to +$1,314.38",
+        "days": "58 days",
+        "plot": [
+          "337.78",
+          "-568.06",
+          "1314.38"
+        ]
+      },
+      "placebo": "Not significant (p 0.79)",
+      "verdict": "NOT FOUND",
+      "verdictNote": "Not distinguishable from zero",
+      "kalshi": "KXNBAGAME",
+      "sendable": false
+    }
+  ],
+  "source": "live"
+}

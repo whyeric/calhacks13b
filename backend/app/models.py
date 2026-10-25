@@ -712,6 +712,46 @@ class ErrorBody(Contract):
     error: ErrorDetail
 
 
+# --- Upload research (POST /research, docs/RESEARCH_CONTRACT.md) ------------------------------
+
+
+class ResearchSide(Contract):
+    """One period's fit (train or unseen), pre-formatted for display. `plot` is the forest-plot
+    geometry: [effect, ci_low, ci_high] in $/day, Decimal strings."""
+
+    text: str
+    ci: str
+    days: str
+    plot: tuple[Money, Money, Money]
+
+
+class ResearchRow(Contract):
+    """Field-for-field the frontend's `ResearchRow` (frontend/lib/demoScript.ts)."""
+
+    id: Literal["rain", "cold", "warm", "hot", "knicks_home", "knicks_win"]
+    label: str
+    mechanism: str
+    train: ResearchSide
+    unseen: ResearchSide
+    placebo: str
+    verdict: Literal["FOUND", "NOT FOUND"]
+    verdictNote: str | None
+    kalshi: str
+    sendable: bool
+
+
+class ResearchResponse(Contract):
+    """200 body of POST /research: the protocol run live on an uploaded daily-revenue CSV."""
+
+    summary: str
+    protocol_chips: list[str]
+    n_days: int
+    first: date
+    last: date
+    rows: list[ResearchRow]
+    source: Literal["live"]
+
+
 # Shared models that must each have an example in fixtures/examples/ (C6-A3).
 CONTRACT_MODELS: dict[str, type[Contract]] = {
     m.__name__: m
@@ -720,5 +760,6 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
         LogEntry, BacktestResult, LedgerEntry, ReconResult, LedgerResponse, Settings,
         AnalyzeRequest, AnalyzeResponse, DeskRunRequest, RunAccepted, RunStatus,
         ApproveRequest, RejectRequest, ChatRequest, ChatReply, Health, ErrorBody,
+        ResearchResponse,
     )
 }
