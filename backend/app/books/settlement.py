@@ -165,6 +165,8 @@ def book_settlement(
         engine,
     )
     write_ledger(hedge.business_id, engine=engine, ledger_dir=ledger_dir)
+    if entries:
+        _mirror(hedge.business_id, entries, engine)
     return entries
 
 
@@ -197,7 +199,16 @@ def book_withdrawal(
     )
     db.put_ledger_entry(entry, engine)
     write_ledger(business_id, engine=engine, ledger_dir=ledger_dir)
+    _mirror(business_id, [entry], engine)
     return entry
+
+
+def _mirror(business_id: str, entries: list[LedgerEntry], engine: Engine | None) -> None:
+    """Mirror new entries into QuickBooks when it's connected (integrations/quickbooks_sync.py).
+    Never raises: Beancount stays the record whatever QuickBooks does."""
+    from app.integrations import quickbooks_sync
+
+    quickbooks_sync.mirror_entries(business_id, entries, engine)
 
 
 # --- Simulated bank statement ----------------------------------------------------------

@@ -122,6 +122,7 @@ LogKind = Literal[
     "proposal", "decline", "approval", "rejection", "booking", "settlement", "expired",
     "reconciliation", "expired_unapproved", "nudge", "threshold_changed", "chat", "run_failed", "refusal",
     "cosign", "cosign_refused", "period_close",
+    "qbo_posted", "qbo_post_failed",  # QuickBooks write-back (integrations/quickbooks_sync.py)
 ]
 
 
@@ -1084,3 +1085,48 @@ CONTRACT_MODELS: dict[str, type[Contract]] = {
 
 
 Hedge.model_rebuild()
+
+
+# --- QuickBooks write-back and drift check (integrations/quickbooks_sync.py) ---------------
+# GET /integrations/quickbooks/sync: each desk ledger entry next to the QuickBooks JournalEntry
+# that mirrors it, read back from QuickBooks. Beancount is the system of record.
+
+QboSyncStatus = Literal["posted", "missing", "amount_differs", "failed", "not_posted"]
+
+
+class QboSyncLine(Contract):
+    entry_id: str  # our ledger entry id
+    kind: Literal["premium", "payout", "withdrawal", "opening_deposit"]
+    date: date
+    amount: Money  # total debits in our ledger (= total credits)
+    simulated: bool  # the ledger entry itself is simulated (I6)
+    doc_number: str  # the JournalEntry's DocNumber: our entry id, hashed to QBO's 21 characters if longer
+    qbo_id: str | None  # JournalEntry Id in QuickBooks (or the demo store)
+    qbo_amount: Money | None  # total debits on the JournalEntry as read back; null if not found
+    status: QboSyncStatus
+    detail: str  # why, in words: what differs, what failed, or why it was never posted
+
+
+class QboSyncReport(Contract):
+    business_id: str
+    checked_at: AwareDatetime
+    mode: Literal["demo", "live"]
+    realm_id: str
+    company_name: str | None
+    synthetic: bool  # demo mode: the JournalEntries live in the SYNTHETIC demo store, not QuickBooks
+    system_of_record: Literal["beancount"]
+    explanation: str
+    lines: list[QboSyncLine]
+    counts: dict[QboSyncStatus, int]
+
+    @model_validator(mode="after")
+    def _counts(self) -> "QboSyncReport":
+        want = {s: 0 for s in QboSyncStatus.__args__}
+        for line in self.lines:
+            want[line.status] += 1
+        if self.counts != want:
+            raise ValueError("counts tally the lines by status, every status listed")
+        return self
+
+
+CONTRACT_MODELS.update({m.__name__: m for m in (QboSyncLine, QboSyncReport)})

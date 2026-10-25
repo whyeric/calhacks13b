@@ -25,12 +25,21 @@ REALM = "9130350000000001"
 
 
 @pytest.fixture(autouse=True)
-def _fresh(monkeypatch):
+def _fresh(monkeypatch, tmp_path):
+    """A temp app DB (the connection is stored there), no network, a pinned clock."""
+    from app import config, db
+
+    monkeypatch.setenv("DATABASE_URL", f"sqlite:///{tmp_path / 'qbo.db'}")
+    config.get_settings.cache_clear()
+    db.get_engine.cache_clear()
+    db.create_schema()
     qbo.reset()
     monkeypatch.setattr(qbo, "TRANSPORT", None)
     monkeypatch.setattr(clock, "now", lambda: NOW)
     yield
     qbo.reset()
+    config.get_settings.cache_clear()
+    db.get_engine.cache_clear()
 
 
 @pytest.fixture(scope="module")
@@ -238,7 +247,8 @@ def test_live_refresh_on_401(monkeypatch):
     fake.expired.add("a1")
     assert q.source().query("Bill") == [{"Id": "1"}]
     assert fake.token_calls[-1] == {"grant_type": "refresh_token", "refresh_token": "r1"}
-    assert q._tokens.access_token == "a2" and q._tokens.refresh_token == "r2"  # kept for the next call
+    stored = q.load_tokens()
+    assert stored.access_token == "a2" and stored.refresh_token == "r2"  # saved for the next call
     q.source().query("Bill")
     assert len(fake.token_calls) == 2
 
