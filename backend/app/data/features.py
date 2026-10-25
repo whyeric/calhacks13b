@@ -2,7 +2,9 @@
 
 Built from tracked fixtures only: taxi or restaurant revenue, MSG weather, Knicks/Rangers schedule
 CSVs, and (when the Dewey build has produced it) MSG visit spikes. Gap G4: `msg_event = home_game OR
-spike`; without `msg_visits_daily.parquet` it is `home_game` alone. The restaurant table needs
+spike`; without `msg_visits_daily.parquet` it is `home_game` alone. Spikes are used for the restaurant
+only (it is the Dewey business): the taxi table is `home_game` alone either way, so its numbers don't
+depend on a gitignored file (rain was $2,080 on a fresh clone and $2,245 with it). The restaurant table needs
 `restaurant_daily.parquet` from the Dewey build and raises `FileNotFoundError` without it.
 
 The settlement flag for `fair` (CONTRACTS R17) comes from the settlement record, not the business's own
@@ -29,6 +31,7 @@ COLUMNS = [
 BUSINESSES = ("taxi", "restaurant")
 RESTAURANT_FIXTURE = "restaurant_daily.parquet"
 MSG_VISITS_FIXTURE = "msg_visits_daily.parquet"
+SPIKE_BUSINESSES = ("restaurant",)  # Dewey MSG-visit spikes feed msg_event only here (deterministic taxi)
 logger = logging.getLogger(__name__)
 
 
@@ -80,7 +83,7 @@ def build(
 
     df["revenue"] = df["revenue"].astype("float64")
     df = df.join(calendar(df["date"]))
-    spikes = _spikes(fixtures_dir)
+    spikes = _spikes(fixtures_dir) if business_id in SPIKE_BUSINESSES else None
     spike = df["date"].map(spikes).fillna(False).astype(bool) if spikes is not None else False
     df["msg_event"] = df["home_game"] | spike
     df["estimated"] = business_id == "restaurant"

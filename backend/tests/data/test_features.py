@@ -175,6 +175,22 @@ def test_rain_sign_sanity(taxi_df):  # C1-A30
         assert 0.7 <= ratio <= 1.5, (dow, ratio)
 
 
+def test_taxi_table_does_not_depend_on_the_gitignored_dewey_spikes(taxi_df, tmp_path):
+    """e2e: taxi rain was $2,080 on a fresh clone and $2,245 with msg_visits_daily.parquet. Spikes
+    feed msg_event for the restaurant only, so the taxi table is the same with or without the file."""
+    import shutil
+
+    for p in config.FIXTURES_DIR.iterdir():
+        if p.is_file() and p.name != features.MSG_VISITS_FIXTURE:
+            shutil.copy(p, tmp_path / p.name)
+    without = features.build("taxi", fixtures_dir=tmp_path)
+    days = pd.date_range(config.WINDOW_START, config.WINDOW_END, freq="D").date
+    pd.DataFrame({"date": days, "spike": True}).to_parquet(tmp_path / features.MSG_VISITS_FIXTURE)
+    assert_frame_equal(features.build("taxi", fixtures_dir=tmp_path), without)
+    assert_frame_equal(without, taxi_df)
+    assert features.SPIKE_BUSINESSES == ("restaurant",)
+
+
 def test_unknown_business():
     with pytest.raises(ValueError, match="unknown business_id"):
         features.build("bakery")
