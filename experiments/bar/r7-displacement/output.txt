@@ -1,0 +1,352 @@
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:237: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res = mod.fit(cov_type="HAC", cov_kwds={"maxlags": 7}, use_t=False)
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:238: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res.nr = mod.fit()
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:237: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res = mod.fit(cov_type="HAC", cov_kwds={"maxlags": 7}, use_t=False)
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:238: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res.nr = mod.fit()
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:237: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res = mod.fit(cov_type="HAC", cov_kwds={"maxlags": 7}, use_t=False)
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:238: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res.nr = mod.fit()
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:237: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res = mod.fit(cov_type="HAC", cov_kwds={"maxlags": 7}, use_t=False)
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:238: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res.nr = mod.fit()
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:237: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res = mod.fit(cov_type="HAC", cov_kwds={"maxlags": 7}, use_t=False)
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:238: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res.nr = mod.fit()
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:237: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res = mod.fit(cov_type="HAC", cov_kwds={"maxlags": 7}, use_t=False)
+/Users/main/calhacks13b/backend/../experiments/bar/r7-displacement/run.py:238: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  res.nr = mod.fit()
+split          holdout  train
+family                       
+election             1      1
+march_madness       12     24
+mets_ps              0     13
+nfl_prime            6      9
+superbowl            1      2
+wc_final             1      0
+wc_usa               5      0
+yankees_ps           7     14
+stores: {'bars_all': 976, 'fullsvc_all': 7819, 'bars_ys_le5km': 87, 'bars_ys_gt5km': 889}
+coverage: {'bars_all': ('2024-01-01', '2026-09-27'), 'fullsvc_all': ('2024-01-01', '2026-09-27'), 'bars_ys_le5km': ('2024-01-01', '2026-09-27'), 'bars_ys_gt5km': ('2024-01-01', '2026-09-27'), 'mta_eve': ('2024-01-01', '2026-09-27'), 'fhv_eve': ('2024-01-01', '2025-12-31')}
+
+BH tests (train, non-placebo): 84
+          model        outcome           term                train  train_n     bh               holdout  holdout_n  found
+0        family       bars_all     yankees_ps    +0.8 [-3.4, +5.0]       14  0.951     +1.7 [-3.1, +6.5]          7  False
+1        family       bars_all        mets_ps    +0.6 [-4.0, +5.2]       13  0.951                                0  False
+2        family       bars_all      nfl_prime    -1.0 [-5.0, +3.0]        9  0.951     +0.4 [-4.4, +5.3]          6  False
+3        family       bars_all      superbowl   -3.8 [-11.3, +3.7]        2  0.834   -14.6 [-25.7, -3.4]          1  False
+4        family       bars_all  march_madness    -0.8 [-3.1, +1.5]       24  0.951     +4.8 [+0.7, +8.8]         12  False
+5        family       bars_all       election   -7.8 [-18.4, +2.7]        1  0.733    -4.9 [-16.0, +6.2]          1  False
+6        stakes       bars_all    mlb_round_c    +2.3 [-0.5, +5.2]       22  0.733    +5.5 [-3.2, +14.3]          7  False
+7        stakes       bars_all     mm_stage_c    -0.4 [-3.5, +2.7]       24  0.951     -5.8 [-8.0, -3.7]         12  False
+8        pooled       bars_all          bigtv    -1.3 [-3.1, +0.4]       54  0.733     -0.2 [-2.2, +1.9]         33  False
+9        pooled       bars_all   bigtv_tier_c    +0.8 [-2.7, +4.3]       54  0.951     -5.4 [-9.2, -1.6]         33  False
+10     homeaway       bars_all       nyy_home    -2.5 [-7.3, +2.4]        7  0.834     -0.7 [-6.2, +4.9]          5  False
+11     homeaway       bars_all       nyy_away    +3.4 [-1.7, +8.6]        7  0.733    +7.1 [-1.0, +15.1]          2  False
+12     homeaway       bars_all       nym_home    +0.7 [-5.0, +6.3]        5  0.951                                0  False
+13     homeaway       bars_all       nym_away    -0.5 [-5.3, +4.3]        8  0.951                                0  False
+14  stakes_ctrl       bars_all    mlb_round_c    +2.3 [-0.6, +5.2]       22    NaN    +2.4 [-7.9, +12.8]          7  False
+15  stakes_ctrl       bars_all     mm_stage_c    -0.4 [-3.5, +2.7]       24    NaN     -5.8 [-8.0, -3.7]         12  False
+16       family    fullsvc_all     yankees_ps    -0.7 [-3.0, +1.5]       14  0.951     +0.6 [-3.1, +4.2]          7  False
+17       family    fullsvc_all        mets_ps    +1.6 [-0.8, +4.1]       13  0.733                                0  False
+18       family    fullsvc_all      nfl_prime    +1.0 [-1.6, +3.6]        9  0.951     -0.9 [-4.6, +2.8]          6  False
+19       family    fullsvc_all      superbowl    -3.3 [-8.2, +1.5]        2  0.733   -12.7 [-21.3, -4.1]          1  False
+20       family    fullsvc_all  march_madness    -0.1 [-2.1, +2.0]       24  0.962     +4.6 [+1.0, +8.1]         12  False
+21       family    fullsvc_all       election  -10.4 [-17.2, -3.5]        1  0.183    -5.7 [-14.3, +2.9]          1  False
+22       stakes    fullsvc_all    mlb_round_c    +0.1 [-1.8, +2.0]       22  0.962    +3.6 [-3.1, +10.4]          7  False
+23       stakes    fullsvc_all     mm_stage_c    -2.3 [-4.5, -0.2]       24  0.577     -5.5 [-6.6, -4.3]         12  False
+24       pooled    fullsvc_all          bigtv    -1.2 [-2.7, +0.3]       54  0.733     -0.7 [-2.4, +0.9]         33  False
+25       pooled    fullsvc_all   bigtv_tier_c    -1.5 [-4.1, +1.1]       54  0.795     -5.0 [-8.1, -1.9]         33  False
+26     homeaway    fullsvc_all       nyy_home    -2.1 [-5.3, +1.0]        7  0.733     -1.0 [-5.3, +3.3]          5  False
+27     homeaway    fullsvc_all       nyy_away    +1.0 [-2.4, +4.3]        7  0.951    +4.0 [-2.2, +10.2]          2  False
+28     homeaway    fullsvc_all       nym_home    +0.6 [-3.0, +4.3]        5  0.951                                0  False
+29     homeaway    fullsvc_all       nym_away    +1.9 [-1.3, +5.0]        8  0.795                                0  False
+30  stakes_ctrl    fullsvc_all    mlb_round_c    +0.0 [-2.1, +2.1]       22    NaN     +1.7 [-6.3, +9.6]          7  False
+31  stakes_ctrl    fullsvc_all     mm_stage_c    -2.3 [-4.5, -0.0]       24    NaN     -5.5 [-6.7, -4.3]         12  False
+32       family  bars_ys_le5km     yankees_ps    +2.8 [-0.7, +6.3]       14  0.733     +0.6 [-5.0, +6.2]          7  False
+33       family  bars_ys_le5km        mets_ps    +2.3 [-1.7, +6.2]       13  0.795                                0  False
+34       family  bars_ys_le5km      nfl_prime    -3.0 [-7.1, +1.1]        9  0.733     +3.3 [-2.4, +8.9]          6  False
+35       family  bars_ys_le5km      superbowl    -1.5 [-9.3, +6.2]        2  0.951   -22.0 [-35.1, -9.0]          1  False
+36       family  bars_ys_le5km  march_madness    -1.3 [-3.1, +0.5]       24  0.733     +4.0 [+0.4, +7.7]         12  False
+37       family  bars_ys_le5km       election   -6.2 [-17.1, +4.7]        1  0.795    +3.2 [-9.8, +16.3]          1  False
+38       stakes  bars_ys_le5km    mlb_round_c    +2.9 [+1.3, +4.6]       22  0.079    +2.0 [-8.3, +12.4]          7  False
+39       stakes  bars_ys_le5km     mm_stage_c    -3.7 [-4.9, -2.5]       24  0.000     -3.2 [-6.5, -0.0]         12   True
+40       pooled  bars_ys_le5km          bigtv    -1.6 [-3.1, -0.0]       54  0.577     -0.7 [-3.6, +2.2]         33  False
+41       pooled  bars_ys_le5km   bigtv_tier_c    -0.4 [-3.1, +2.2]       54  0.951     -5.2 [-9.4, -0.9]         33  False
+42     homeaway  bars_ys_le5km       nyy_home    +4.5 [-0.5, +9.5]        7  0.733     +0.1 [-6.4, +6.7]          5  False
+43     homeaway  bars_ys_le5km       nyy_away    +1.1 [-4.2, +6.5]        7  0.951    +1.8 [-7.6, +11.2]          2  False
+44     homeaway  bars_ys_le5km       nym_home    +2.9 [-3.0, +8.7]        5  0.834                                0  False
+45     homeaway  bars_ys_le5km       nym_away    +2.4 [-2.6, +7.4]        8  0.834                                0  False
+46  stakes_ctrl  bars_ys_le5km    mlb_round_c    +2.6 [+0.9, +4.3]       22    NaN   +1.7 [-10.5, +13.9]          7  False
+47  stakes_ctrl  bars_ys_le5km     mm_stage_c    -3.7 [-4.9, -2.5]       24    NaN     -3.3 [-6.4, -0.2]         12  False
+48       family  bars_ys_gt5km     yankees_ps    +0.6 [-3.7, +5.0]       14  0.951     +1.8 [-3.1, +6.7]          7  False
+49       family  bars_ys_gt5km        mets_ps    +0.5 [-4.2, +5.2]       13  0.951                                0  False
+50       family  bars_ys_gt5km      nfl_prime    -0.8 [-4.9, +3.2]        9  0.951     +0.2 [-4.7, +5.2]          6  False
+51       family  bars_ys_gt5km      superbowl   -3.9 [-11.6, +3.8]        2  0.834   -14.0 [-25.4, -2.6]          1  False
+52       family  bars_ys_gt5km  march_madness    -0.8 [-3.2, +1.6]       24  0.951     +4.8 [+0.6, +9.0]         12  False
+53       family  bars_ys_gt5km       election   -7.9 [-18.7, +3.0]        1  0.733    -5.4 [-16.8, +6.0]          1  False
+54       stakes  bars_ys_gt5km    mlb_round_c    +2.3 [-0.6, +5.2]       22  0.733    +5.8 [-3.2, +14.8]          7  False
+55       stakes  bars_ys_gt5km     mm_stage_c    -0.2 [-3.5, +3.1]       24  0.962     -6.0 [-8.2, -3.8]         12  False
+56       pooled  bars_ys_gt5km          bigtv    -1.3 [-3.2, +0.5]       54  0.733     -0.1 [-2.2, +2.0]         33  False
+57       pooled  bars_ys_gt5km   bigtv_tier_c    +0.9 [-2.7, +4.5]       54  0.951     -5.4 [-9.3, -1.6]         33  False
+58     homeaway  bars_ys_gt5km       nyy_home    -3.0 [-8.0, +2.0]        7  0.795     -0.7 [-6.4, +5.0]          5  False
+59     homeaway  bars_ys_gt5km       nyy_away    +3.6 [-1.8, +8.9]        7  0.733    +7.4 [-0.8, +15.7]          2  False
+60     homeaway  bars_ys_gt5km       nym_home    +0.5 [-5.3, +6.3]        5  0.951                                0  False
+61     homeaway  bars_ys_gt5km       nym_away    -0.7 [-5.6, +4.2]        8  0.951                                0  False
+62  stakes_ctrl  bars_ys_gt5km    mlb_round_c    +2.3 [-0.8, +5.3]       22    NaN    +2.5 [-8.1, +13.1]          7  False
+63  stakes_ctrl  bars_ys_gt5km     mm_stage_c    -0.1 [-3.4, +3.1]       24    NaN     -6.0 [-8.2, -3.8]         12  False
+64       family        mta_eve     yankees_ps    +6.3 [+3.6, +9.0]       14  0.003    -7.9 [-17.8, +2.0]          7  False
+65       family        mta_eve        mets_ps    -0.3 [-3.6, +3.1]       13  0.951                                0  False
+66       family        mta_eve      nfl_prime   +7.5 [+2.6, +12.3]        9  0.183    +3.6 [-6.4, +13.7]          6  False
+67       family        mta_eve      superbowl   -9.4 [-18.6, -0.2]        2  0.577  -12.7 [-35.7, +10.4]          1  False
+68       family        mta_eve  march_madness    -0.1 [-2.9, +2.7]       24  0.962     +0.2 [-1.8, +2.3]         12  False
+69       family        mta_eve       election  -18.7 [-31.7, -5.8]        1  0.185   -4.9 [-28.0, +18.1]          1  False
+70       stakes        mta_eve    mlb_round_c    +4.1 [+2.3, +5.9]       22  0.003   +4.3 [-14.0, +22.7]          7  False
+71       stakes        mta_eve     mm_stage_c    -0.6 [-4.3, +3.2]       24  0.951     -2.0 [-3.3, -0.7]         12  False
+72       pooled        mta_eve          bigtv    +0.2 [-2.8, +3.2]       54  0.951     +1.1 [-3.4, +5.6]         33  False
+73       pooled        mta_eve   bigtv_tier_c    +1.3 [-2.9, +5.6]       54  0.951    +5.0 [-2.3, +12.3]         33  False
+74     homeaway        mta_eve       nyy_home   +6.1 [+0.2, +12.1]        7  0.577    -7.5 [-19.0, +4.1]          5  False
+75     homeaway        mta_eve       nyy_away   +6.9 [+0.5, +13.3]        7  0.577    -8.9 [-25.6, +7.8]          2  False
+76     homeaway        mta_eve       nym_home    -1.0 [-8.0, +5.9]        5  0.951                                0  False
+77     homeaway        mta_eve       nym_away    +0.1 [-5.8, +6.1]        8  0.967                                0  False
+78  stakes_ctrl        mta_eve    mlb_round_c    +4.2 [+2.2, +6.1]       22    NaN   +7.0 [-14.6, +28.6]          7  False
+79  stakes_ctrl        mta_eve     mm_stage_c    -0.7 [-4.3, +2.9]       24    NaN     -2.0 [-3.4, -0.7]         12  False
+80       family        fhv_eve     yankees_ps    +4.8 [+1.3, +8.2]       14  0.222    -9.4 [-27.1, +8.3]          7  False
+81       family        fhv_eve        mets_ps    -1.3 [-7.4, +4.8]       13  0.951                                0  False
+82       family        fhv_eve      nfl_prime   +2.3 [-6.1, +10.6]        9  0.951   +3.1 [-19.7, +26.0]          4  False
+83       family        fhv_eve      superbowl  +14.0 [-1.8, +29.8]        2  0.733                                0  False
+84       family        fhv_eve  march_madness    -1.0 [-4.4, +2.5]       24  0.951                                0  False
+85       family        fhv_eve       election  -6.6 [-28.8, +15.6]        1  0.951   -1.8 [-43.1, +39.5]          1  False
+86       stakes        fhv_eve    mlb_round_c    +3.9 [+1.2, +6.5]       22  0.185   +6.9 [-26.0, +39.8]          7  False
+87       stakes        fhv_eve     mm_stage_c    -1.2 [-5.2, +2.8]       24  0.951                                0  False
+88       pooled        fhv_eve          bigtv    +0.6 [-2.5, +3.7]       54  0.951    +2.0 [-7.0, +11.0]         12  False
+89       pooled        fhv_eve   bigtv_tier_c    +2.1 [-2.0, +6.3]       54  0.834   +11.4 [+0.6, +22.3]         12  False
+90     homeaway        fhv_eve       nyy_home   +1.8 [-8.5, +12.0]        7  0.951  -10.2 [-31.3, +10.9]          5  False
+91     homeaway        fhv_eve       nyy_away   +7.2 [-3.7, +18.2]        7  0.733   -7.7 [-37.8, +22.3]          2  False
+92     homeaway        fhv_eve       nym_home  -1.2 [-13.1, +10.7]        5  0.951                                0  False
+93     homeaway        fhv_eve       nym_away   -2.3 [-12.4, +7.9]        8  0.951                                0  False
+94  stakes_ctrl        fhv_eve    mlb_round_c    +3.6 [+1.0, +6.2]       22    NaN   +7.8 [-30.8, +46.4]          7  False
+95  stakes_ctrl        fhv_eve     mm_stage_c    -1.0 [-4.8, +2.7]       24    NaN                                0  False
+
+PLACEBO (week-before same weekday)
+        model        outcome    split              term   n     pct      lo      hi      p         se  bh_train
+10   placebo       bars_all    train     pl_yankees_ps  12   3.620  -0.457   7.698  0.144        HAC       NaN
+11   placebo       bars_all    train        pl_mets_ps   5  -4.253  -9.295   0.790  0.166  classical       NaN
+12   placebo       bars_all    train      pl_nfl_prime   6  -1.994  -6.527   2.539  0.470  classical       NaN
+13   placebo       bars_all    train      pl_superbowl   2 -13.184 -20.645  -5.723  0.004  classical       NaN
+14   placebo       bars_all    train  pl_march_madness  14   2.068  -0.703   4.840  0.220        HAC       NaN
+15   placebo       bars_all    train          pl_bigtv  36  -1.144  -3.616   1.327  0.446        HAC       NaN
+22   placebo       bars_all    train    pl_mlb_stage_c  15   2.827  -0.400   6.053  0.150        HAC       NaN
+23   placebo       bars_all    train     pl_mm_stage_c  14  -3.928  -5.796  -2.061  0.001        HAC       NaN
+35   placebo       bars_all  holdout      pl_nfl_prime   4  -0.894  -6.647   4.860  0.798  classical       NaN
+36   placebo       bars_all  holdout      pl_superbowl   1  -5.494 -16.699   5.712  0.421  classical       NaN
+37   placebo       bars_all  holdout  pl_march_madness   7  -1.253  -6.218   3.712  0.678  classical       NaN
+38   placebo       bars_all  holdout       pl_election   1  -9.132 -20.344   2.081  0.181  classical       NaN
+39   placebo       bars_all  holdout         pl_wc_usa   3   1.124  -5.607   7.854  0.784  classical       NaN
+40   placebo       bars_all  holdout       pl_wc_final   1   3.638  -7.567  14.842  0.594  classical       NaN
+41   placebo       bars_all  holdout          pl_bigtv  17  -1.616  -3.489   0.257  0.156        HAC       NaN
+46   placebo       bars_all  holdout     pl_mm_stage_c   7  -0.326  -6.217   5.566  0.928  classical       NaN
+86   placebo    fullsvc_all    train     pl_yankees_ps  12   1.325  -0.920   3.571  0.332        HAC       NaN
+87   placebo    fullsvc_all    train        pl_mets_ps   5  -4.408  -7.670  -1.147  0.027  classical       NaN
+88   placebo    fullsvc_all    train      pl_nfl_prime   6  -0.325  -3.257   2.607  0.855  classical       NaN
+89   placebo    fullsvc_all    train      pl_superbowl   2  -9.267 -14.093  -4.441  0.002  classical       NaN
+90   placebo    fullsvc_all    train  pl_march_madness  14   2.322  -0.389   5.033  0.159        HAC       NaN
+91   placebo    fullsvc_all    train          pl_bigtv  36  -0.792  -2.721   1.138  0.500        HAC       NaN
+98   placebo    fullsvc_all    train    pl_mlb_stage_c  15   2.431   0.332   4.530  0.057        HAC       NaN
+99   placebo    fullsvc_all    train     pl_mm_stage_c  14  -5.073  -6.313  -3.833  0.000        HAC       NaN
+111  placebo    fullsvc_all  holdout      pl_nfl_prime   4   0.465  -3.939   4.870  0.862  classical       NaN
+112  placebo    fullsvc_all  holdout      pl_superbowl   1 -11.585 -20.163  -3.008  0.027  classical       NaN
+113  placebo    fullsvc_all  holdout  pl_march_madness   7  -0.139  -3.939   3.662  0.952  classical       NaN
+114  placebo    fullsvc_all  holdout       pl_election   1  -8.311 -16.894   0.272  0.112  classical       NaN
+115  placebo    fullsvc_all  holdout         pl_wc_usa   3   2.219  -2.933   7.371  0.479  classical       NaN
+116  placebo    fullsvc_all  holdout       pl_wc_final   1   0.749  -7.828   9.326  0.886  classical       NaN
+117  placebo    fullsvc_all  holdout          pl_bigtv  17  -1.271  -3.110   0.569  0.256        HAC       NaN
+122  placebo    fullsvc_all  holdout     pl_mm_stage_c   7   0.789  -3.740   5.319  0.775  classical       NaN
+162  placebo  bars_ys_le5km    train     pl_yankees_ps  12   3.264  -0.256   6.784  0.127        HAC       NaN
+163  placebo  bars_ys_le5km    train        pl_mets_ps   5  -5.716 -10.896  -0.535  0.070  classical       NaN
+164  placebo  bars_ys_le5km    train      pl_nfl_prime   6  -4.681  -9.338  -0.023  0.099  classical       NaN
+165  placebo  bars_ys_le5km    train      pl_superbowl   2 -15.515 -23.181  -7.850  0.001  classical       NaN
+166  placebo  bars_ys_le5km    train  pl_march_madness  14  -0.620  -3.023   1.784  0.672        HAC       NaN
+167  placebo  bars_ys_le5km    train          pl_bigtv  36  -2.970  -5.232  -0.707  0.031        HAC       NaN
+174  placebo  bars_ys_le5km    train    pl_mlb_stage_c  15   4.938   2.183   7.694  0.003        HAC       NaN
+175  placebo  bars_ys_le5km    train     pl_mm_stage_c  14  -4.530  -5.909  -3.152  0.000        HAC       NaN
+187  placebo  bars_ys_le5km  holdout      pl_nfl_prime   4  -0.096  -6.805   6.612  0.981  classical       NaN
+188  placebo  bars_ys_le5km  holdout      pl_superbowl   1 -16.372 -29.438  -3.307  0.040  classical       NaN
+189  placebo  bars_ys_le5km  holdout  pl_march_madness   7   3.300  -2.489   9.090  0.349  classical       NaN
+190  placebo  bars_ys_le5km  holdout       pl_election   1  -7.303 -20.377   5.770  0.359  classical       NaN
+191  placebo  bars_ys_le5km  holdout         pl_wc_usa   3  -5.273 -13.120   2.575  0.270  classical       NaN
+192  placebo  bars_ys_le5km  holdout       pl_wc_final   1   2.491 -10.573  15.555  0.754  classical       NaN
+193  placebo  bars_ys_le5km  holdout          pl_bigtv  17  -1.661  -5.169   1.847  0.436        HAC       NaN
+198  placebo  bars_ys_le5km  holdout     pl_mm_stage_c   7  -0.320  -7.270   6.631  0.940  classical       NaN
+238  placebo  bars_ys_gt5km    train     pl_yankees_ps  12   3.661  -0.546   7.869  0.152        HAC       NaN
+239  placebo  bars_ys_gt5km    train        pl_mets_ps   5  -4.165  -9.356   1.026  0.187  classical       NaN
+240  placebo  bars_ys_gt5km    train      pl_nfl_prime   6  -1.825  -6.491   2.842  0.520  classical       NaN
+241  placebo  bars_ys_gt5km    train      pl_superbowl   2 -12.950 -20.630  -5.269  0.006  classical       NaN
+242  placebo  bars_ys_gt5km    train  pl_march_madness  14   2.253  -0.559   5.064  0.187        HAC       NaN
+243  placebo  bars_ys_gt5km    train          pl_bigtv  36  -1.011  -3.533   1.512  0.510        HAC       NaN
+250  placebo  bars_ys_gt5km    train    pl_mlb_stage_c  15   2.705  -0.588   5.998  0.177        HAC       NaN
+251  placebo  bars_ys_gt5km    train     pl_mm_stage_c  14  -3.873  -5.790  -1.957  0.001        HAC       NaN
+263  placebo  bars_ys_gt5km  holdout      pl_nfl_prime   4  -0.930  -6.829   4.968  0.795  classical       NaN
+264  placebo  bars_ys_gt5km  holdout      pl_superbowl   1  -4.680 -16.169   6.809  0.503  classical       NaN
+265  placebo  bars_ys_gt5km  holdout  pl_march_madness   7  -1.572  -6.662   3.519  0.612  classical       NaN
+266  placebo  bars_ys_gt5km  holdout       pl_election   1  -9.233 -20.729   2.263  0.187  classical       NaN
+267  placebo  bars_ys_gt5km  holdout         pl_wc_usa   3   1.514  -5.387   8.415  0.718  classical       NaN
+268  placebo  bars_ys_gt5km  holdout       pl_wc_final   1   3.772  -7.716  15.260  0.589  classical       NaN
+269  placebo  bars_ys_gt5km  holdout          pl_bigtv  17  -1.607  -3.525   0.311  0.168        HAC       NaN
+274  placebo  bars_ys_gt5km  holdout     pl_mm_stage_c   7  -0.340  -6.378   5.698  0.926  classical       NaN
+314  placebo        mta_eve    train     pl_yankees_ps  12   2.198  -1.015   5.410  0.260        HAC       NaN
+315  placebo        mta_eve    train        pl_mets_ps   5  -0.574  -6.788   5.639  0.879  classical       NaN
+316  placebo        mta_eve    train      pl_nfl_prime   6  -0.272  -5.857   5.314  0.936  classical       NaN
+317  placebo        mta_eve    train      pl_superbowl   2 -13.775 -22.969  -4.582  0.014  classical       NaN
+318  placebo        mta_eve    train  pl_march_madness  14   3.232   0.440   6.024  0.057        HAC       NaN
+319  placebo        mta_eve    train          pl_bigtv  36  -0.247  -2.750   2.256  0.871        HAC       NaN
+326  placebo        mta_eve    train    pl_mlb_stage_c  15  -0.770  -2.933   1.394  0.558        HAC       NaN
+327  placebo        mta_eve    train     pl_mm_stage_c  14  -2.931  -4.928  -0.934  0.016        HAC       NaN
+339  placebo        mta_eve  holdout      pl_nfl_prime   4   6.950  -4.993  18.894  0.339  classical       NaN
+340  placebo        mta_eve  holdout      pl_superbowl   1  -7.024 -30.286  16.238  0.620  classical       NaN
+341  placebo        mta_eve  holdout  pl_march_madness   7   0.114 -10.194  10.421  0.986  classical       NaN
+342  placebo        mta_eve  holdout       pl_election   1   1.601 -21.675  24.877  0.910  classical       NaN
+343  placebo        mta_eve  holdout         pl_wc_usa   3  -6.399 -20.371   7.573  0.452  classical       NaN
+344  placebo        mta_eve  holdout       pl_wc_final   1  10.774 -12.485  34.033  0.447  classical       NaN
+345  placebo        mta_eve  holdout          pl_bigtv  17   0.761  -2.437   3.959  0.696        HAC       NaN
+350  placebo        mta_eve  holdout     pl_mm_stage_c   7   1.040 -11.280  13.361  0.890  classical       NaN
+390  placebo        fhv_eve    train     pl_yankees_ps  12  -1.387  -5.133   2.359  0.542        HAC       NaN
+391  placebo        fhv_eve    train        pl_mets_ps   5  -3.105 -13.810   7.600  0.633  classical       NaN
+392  placebo        fhv_eve    train      pl_nfl_prime   6   4.658  -4.966  14.281  0.426  classical       NaN
+393  placebo        fhv_eve    train      pl_superbowl   2  -9.004 -24.844   6.836  0.350  classical       NaN
+394  placebo        fhv_eve    train  pl_march_madness  14  -5.716  -9.484  -1.949  0.013        HAC       NaN
+395  placebo        fhv_eve    train          pl_bigtv  36  -3.810  -6.083  -1.538  0.006        HAC       NaN
+402  placebo        fhv_eve    train    pl_mlb_stage_c  15   0.348  -1.521   2.216  0.760        HAC       NaN
+403  placebo        fhv_eve    train     pl_mm_stage_c  14   0.511  -4.849   5.871  0.875        HAC       NaN
+410  placebo        fhv_eve  holdout      pl_nfl_prime   2  -2.728 -33.199  27.742  0.883  classical       NaN
+411  placebo        fhv_eve  holdout       pl_election   1  -3.687 -45.841  38.468  0.886  classical       NaN
+412  placebo        fhv_eve  holdout          pl_bigtv   3  -3.515 -27.756  20.725  0.812  classical       NaN
+
+ALL-PERIOD family fits
+            model        outcome split           term   n     pct      lo      hi      p         se  bh_train
+47        family       bars_all   all     yankees_ps  21   1.647  -1.040   4.334  0.313        HAC       NaN
+48        family       bars_all   all        mets_ps  13   1.215  -3.073   5.503  0.641        HAC       NaN
+49        family       bars_all   all      nfl_prime  15  -0.780  -3.106   1.547  0.581        HAC       NaN
+50        family       bars_all   all      superbowl   3  -7.069 -13.321  -0.816  0.063  classical       NaN
+51        family       bars_all   all  march_madness  36   1.173  -1.251   3.597  0.426        HAC       NaN
+52        family       bars_all   all       election   2  -6.185 -13.813   1.443  0.183  classical       NaN
+53        family       bars_all   all         wc_usa   5  -0.358  -5.312   4.596  0.905  classical       NaN
+54        family       bars_all   all       wc_final   1   3.860  -6.895  14.615  0.555  classical       NaN
+55        stakes       bars_all   all    mlb_round_c  29   1.780  -0.630   4.189  0.224        HAC       NaN
+56        stakes       bars_all   all     mm_stage_c  36  -2.147  -5.047   0.753  0.223        HAC       NaN
+57        pooled       bars_all   all          bigtv  87  -0.547  -1.932   0.838  0.516        HAC       NaN
+58        pooled       bars_all   all   bigtv_tier_c  87  -1.714  -4.747   1.319  0.353        HAC       NaN
+68      homeaway       bars_all   all       nyy_home  12  -0.536  -2.888   1.816  0.708        HAC       NaN
+69      homeaway       bars_all   all       nyy_away   9   4.817   0.470   9.164  0.069  classical       NaN
+70      homeaway       bars_all   all       nym_home   5   0.816  -4.815   6.446  0.812  classical       NaN
+71      homeaway       bars_all   all       nym_away   8   0.875  -3.830   5.580  0.760  classical       NaN
+72   stakes_ctrl       bars_all   all    mlb_round_c  29   1.876  -0.592   4.343  0.211        HAC       NaN
+73   stakes_ctrl       bars_all   all     mm_stage_c  36  -2.129  -5.025   0.767  0.226        HAC       NaN
+123       family    fullsvc_all   all     yankees_ps  21   0.221  -1.330   1.771  0.815        HAC       NaN
+124       family    fullsvc_all   all        mets_ps  13   2.234  -0.292   4.760  0.146        HAC       NaN
+125       family    fullsvc_all   all      nfl_prime  15  -0.014  -2.210   2.182  0.992        HAC       NaN
+126       family    fullsvc_all   all      superbowl   3  -6.428 -10.777  -2.079  0.015  classical       NaN
+127       family    fullsvc_all   all  march_madness  36   1.499  -0.573   3.572  0.234        HAC       NaN
+128       family    fullsvc_all   all       election   2  -8.009 -13.314  -2.703  0.013  classical       NaN
+129       family    fullsvc_all   all         wc_usa   5  -0.825  -4.270   2.621  0.694  classical       NaN
+130       family    fullsvc_all   all       wc_final   1  -0.729  -8.210   6.752  0.873  classical       NaN
+131       stakes    fullsvc_all   all    mlb_round_c  29   0.280  -1.505   2.065  0.796        HAC       NaN
+132       stakes    fullsvc_all   all     mm_stage_c  36  -3.365  -5.304  -1.427  0.004        HAC       NaN
+133       pooled    fullsvc_all   all          bigtv  87  -0.865  -1.981   0.251  0.202        HAC       NaN
+134       pooled    fullsvc_all   all   bigtv_tier_c  87  -2.835  -4.983  -0.687  0.030        HAC       NaN
+144     homeaway    fullsvc_all   all       nyy_home  12  -0.836  -2.424   0.752  0.386        HAC       NaN
+145     homeaway    fullsvc_all   all       nyy_away   9   2.219  -0.806   5.245  0.228  classical       NaN
+146     homeaway    fullsvc_all   all       nym_home   5   0.633  -3.286   4.552  0.790  classical       NaN
+147     homeaway    fullsvc_all   all       nym_away   8   2.993  -0.283   6.268  0.133  classical       NaN
+148  stakes_ctrl    fullsvc_all   all    mlb_round_c  29   0.322  -1.531   2.176  0.775        HAC       NaN
+149  stakes_ctrl    fullsvc_all   all     mm_stage_c  36  -3.317  -5.286  -1.347  0.006        HAC       NaN
+199       family  bars_ys_le5km   all     yankees_ps  21   2.240   0.125   4.354  0.081        HAC       NaN
+200       family  bars_ys_le5km   all        mets_ps  13   2.425  -1.230   6.079  0.275        HAC       NaN
+201       family  bars_ys_le5km   all      nfl_prime  15  -0.355  -3.378   2.669  0.847        HAC       NaN
+202       family  bars_ys_le5km   all      superbowl   3  -7.947 -14.933  -0.961  0.062  classical       NaN
+203       family  bars_ys_le5km   all  march_madness  36   0.593  -1.447   2.633  0.632        HAC       NaN
+204       family  bars_ys_le5km   all       election   2  -0.916  -9.440   7.607  0.860  classical       NaN
+205       family  bars_ys_le5km   all         wc_usa   5  -3.389  -8.925   2.146  0.314  classical       NaN
+206       family  bars_ys_le5km   all       wc_final   1  -3.203 -15.221   8.814  0.661  classical       NaN
+207       stakes  bars_ys_le5km   all    mlb_round_c  29   2.241   1.075   3.407  0.002        HAC       NaN
+208       stakes  bars_ys_le5km   all     mm_stage_c  36  -3.441  -5.515  -1.368  0.006        HAC       NaN
+209       pooled  bars_ys_le5km   all          bigtv  87  -1.037  -2.733   0.659  0.314        HAC       NaN
+210       pooled  bars_ys_le5km   all   bigtv_tier_c  87  -2.543  -5.311   0.226  0.131        HAC       NaN
+220     homeaway  bars_ys_le5km   all       nyy_home  12   3.308   1.511   5.105  0.002        HAC       NaN
+221     homeaway  bars_ys_le5km   all       nyy_away   9   0.787  -4.077   5.652  0.790  classical       NaN
+222     homeaway  bars_ys_le5km   all       nym_home   5   2.319  -3.981   8.620  0.545  classical       NaN
+223     homeaway  bars_ys_le5km   all       nym_away   8   2.789  -2.476   8.054  0.384  classical       NaN
+224  stakes_ctrl  bars_ys_le5km   all    mlb_round_c  29   2.037   0.995   3.078  0.001        HAC       NaN
+225  stakes_ctrl  bars_ys_le5km   all     mm_stage_c  36  -3.420  -5.503  -1.337  0.007        HAC       NaN
+275       family  bars_ys_gt5km   all     yankees_ps  21   1.605  -1.206   4.416  0.348        HAC       NaN
+276       family  bars_ys_gt5km   all        mets_ps  13   1.122  -3.248   5.492  0.673        HAC       NaN
+277       family  bars_ys_gt5km   all      nfl_prime  15  -0.792  -3.130   1.546  0.577        HAC       NaN
+278       family  bars_ys_gt5km   all      superbowl   3  -6.967 -13.378  -0.555  0.074  classical       NaN
+279       family  bars_ys_gt5km   all  march_madness  36   1.202  -1.299   3.703  0.429        HAC       NaN
+280       family  bars_ys_gt5km   all       election   2  -6.499 -14.322   1.324  0.172  classical       NaN
+281       family  bars_ys_gt5km   all         wc_usa   5  -0.156  -5.236   4.925  0.960  classical       NaN
+282       family  bars_ys_gt5km   all       wc_final   1   4.413  -6.617  15.443  0.511  classical       NaN
+283       stakes  bars_ys_gt5km   all    mlb_round_c  29   1.750  -0.777   4.277  0.255        HAC       NaN
+284       stakes  bars_ys_gt5km   all     mm_stage_c  36  -2.059  -5.077   0.960  0.262        HAC       NaN
+285       pooled  bars_ys_gt5km   all          bigtv  87  -0.507  -1.915   0.902  0.554        HAC       NaN
+286       pooled  bars_ys_gt5km   all   bigtv_tier_c  87  -1.647  -4.740   1.447  0.381        HAC       NaN
+296     homeaway  bars_ys_gt5km   all       nyy_home  12  -0.793  -3.286   1.700  0.601        HAC       NaN
+297     homeaway  bars_ys_gt5km   all       nyy_away   9   5.088   0.631   9.545  0.061  classical       NaN
+298     homeaway  bars_ys_gt5km   all       nym_home   5   0.683  -5.090   6.455  0.846  classical       NaN
+299     homeaway  bars_ys_gt5km   all       nym_away   8   0.748  -4.076   5.572  0.799  classical       NaN
+300  stakes_ctrl  bars_ys_gt5km   all    mlb_round_c  29   1.867  -0.733   4.467  0.238        HAC       NaN
+301  stakes_ctrl  bars_ys_gt5km   all     mm_stage_c  36  -2.041  -5.055   0.972  0.265        HAC       NaN
+351       family        mta_eve   all     yankees_ps  21   0.739  -3.839   5.317  0.791        HAC       NaN
+352       family        mta_eve   all        mets_ps  13  -0.292  -4.905   4.322  0.917        HAC       NaN
+353       family        mta_eve   all      nfl_prime  15   5.022   1.541   8.502  0.018        HAC       NaN
+354       family        mta_eve   all      superbowl   3  -9.735 -19.776   0.306  0.111  classical       NaN
+355       family        mta_eve   all  march_madness  36   0.365  -1.655   2.384  0.767        HAC       NaN
+356       family        mta_eve   all       election   2 -11.583 -23.834   0.668  0.120  classical       NaN
+357       family        mta_eve   all         wc_usa   5   0.858  -7.098   8.814  0.859  classical       NaN
+358       family        mta_eve   all       wc_final   1  29.899  12.626  47.172  0.005  classical       NaN
+359       stakes        mta_eve   all    mlb_round_c  29   4.943   3.496   6.391  0.000        HAC       NaN
+360       stakes        mta_eve   all     mm_stage_c  36  -0.867  -3.609   1.875  0.603        HAC       NaN
+361       pooled        mta_eve   all          bigtv  87   0.666  -1.989   3.321  0.680        HAC       NaN
+362       pooled        mta_eve   all   bigtv_tier_c  87   2.586  -1.255   6.426  0.268        HAC       NaN
+372     homeaway        mta_eve   all       nyy_home  12   0.348  -4.885   5.582  0.913        HAC       NaN
+373     homeaway        mta_eve   all       nyy_away   9   1.361  -5.633   8.355  0.749  classical       NaN
+374     homeaway        mta_eve   all       nym_home   5  -0.529  -9.587   8.530  0.924  classical       NaN
+375     homeaway        mta_eve   all       nym_away   8  -0.244  -7.814   7.326  0.958  classical       NaN
+376  stakes_ctrl        mta_eve   all    mlb_round_c  29   4.891   3.407   6.375  0.000        HAC       NaN
+377  stakes_ctrl        mta_eve   all     mm_stage_c  36  -0.894  -3.589   1.801  0.585        HAC       NaN
+416       family        fhv_eve   all     yankees_ps  21  -0.415  -5.215   4.384  0.887        HAC       NaN
+417       family        fhv_eve   all        mets_ps  13  -1.870  -8.440   4.700  0.640        HAC       NaN
+418       family        fhv_eve   all      nfl_prime  13   2.284  -2.517   7.084  0.434        HAC       NaN
+419       family        fhv_eve   all      superbowl   2  14.264  -3.396  31.924  0.184  classical       NaN
+420       family        fhv_eve   all  march_madness  24  -0.709  -4.155   2.737  0.735        HAC       NaN
+421       family        fhv_eve   all       election   2  -1.563 -19.214  16.089  0.884  classical       NaN
+422       stakes        fhv_eve   all    mlb_round_c  29   4.571   2.288   6.854  0.001        HAC       NaN
+423       stakes        fhv_eve   all     mm_stage_c  24  -1.107  -5.082   2.869  0.647        HAC       NaN
+424       pooled        fhv_eve   all          bigtv  66   0.596  -2.245   3.437  0.730        HAC       NaN
+425       pooled        fhv_eve   all   bigtv_tier_c  66   3.523  -0.318   7.364  0.131        HAC       NaN
+433     homeaway        fhv_eve   all       nyy_home  12  -3.053  -8.572   2.467  0.363        HAC       NaN
+434     homeaway        fhv_eve   all       nyy_away   9   2.955  -7.112  13.021  0.629  classical       NaN
+435     homeaway        fhv_eve   all       nym_home   5  -0.982 -14.013  12.048  0.901  classical       NaN
+436     homeaway        fhv_eve   all       nym_away   8  -3.212 -14.132   7.709  0.629  classical       NaN
+437  stakes_ctrl        fhv_eve   all    mlb_round_c  29   4.446   2.253   6.640  0.001        HAC       NaN
+438  stakes_ctrl        fhv_eve   all     mm_stage_c  24  -0.918  -4.654   2.818  0.686        HAC       NaN
+
+KALSHI NYY series YES prices: {'KXMLBSERIES-26BOSNYYWC-NYY': 0.61, 'KXMLBSERIES-26NYYTBALDS-NYY': 0.54}
+
+EXPOSURE
+        outcome      family  visits_per_store_day  R_usd_day  pct_per_night  usd_per_night  usd_lo  usd_hi  nights_2024  nights_2025  usd_run_2024
+0     bars_all  yankees_ps                391.66   13708.23           0.78         106.69 -470.46  683.85           14            7       1493.70
+1     bars_all     mets_ps                391.66   13708.23           0.60          81.80 -550.21  713.81           13            0       1063.34
+2  fullsvc_all  yankees_ps                174.47    6106.57          -0.72         -43.85 -181.57   93.88           14            7       -613.83
+3  fullsvc_all     mets_ps                174.47    6106.57           1.63          99.55  -51.33  250.42           13            0       1294.12
+
+HEDGE SIM
+      series    mean      sd      p5  a_per_night_pct  R_usd_day                  q_used
+0  unhedged  834.34  613.98  213.39             0.78   13708.23  [0.61, 0.54, 0.5, 0.5]
+1    hedged  821.11  282.91  474.35             0.78   13708.23  [0.61, 0.54, 0.5, 0.5]

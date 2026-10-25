@@ -1,0 +1,315 @@
+=== CATALOGUE ===
+league           series                                           pattern  seasons  events  markets  volume_total  volume_median_event  peak_oi_median_market first_open
+   NBA     KXNBAPLAYOFF                          KXNBAPLAYOFF-{YY}-{TEAM} 25,26,27     3.0       83    4584983.98         3.456112e+05               9184.000 2025-03-28
+   NBA      KXNBASERIES             KXNBASERIES-{YY}{AWAY}{HOME}R2-{TEAM}    25,26    24.0       48  338314485.55         9.696632e+06            1716304.145 2025-04-18
+   NBA KXNBASERIESGAMES          KXNBASERIESGAMES-{YY}{AWAY}{HOME}FIN-{N}       26    15.0       45    1952367.72         3.547367e+04               6832.690 2026-04-14
+   NBA KXNBASERIESSCORE KXNBASERIESSCORE-{YY}{AWAY}{HOME}FIN-{TEAM}{W}{L}       26    15.0      120   26274718.13         4.269769e+05              29658.315 2026-04-14
+   NBA       KXNBAGAME7                               KXNBAGAME7-{YY}-{N}       26     1.0        8     142434.17         1.424342e+05                    NaN 2026-04-18
+   NBA       KXNBASWEEP                             KXNBASWEEP-{YY}R2-{N}       26     2.0        8     205836.26         1.029181e+05                    NaN 2026-04-14
+   NBA  KXNBAHOMECLINCH                    KXNBAHOMECLINCH-{YY}{TEAM}-{N}       26     1.0        1      14882.87         1.488287e+04                    NaN 2026-06-04
+   NBA KXNBAPLAYOFFWINS                   KXNBAPLAYOFFWINS-{YY}{TEAM}-{N}       26     5.0       55    1516684.89         1.592588e+05               3304.130 2026-04-16
+   NBA     KXNBAECFQUAL                          KXNBAECFQUAL-{YY}-{TEAM}       27     1.0       15        396.62         3.966200e+02                  0.000 2026-09-17
+   NBA     KXNBAWCFQUAL                          KXNBAWCFQUAL-{YY}-{TEAM}       27     1.0       15       1019.19         1.019190e+03                  0.000 2026-09-17
+   NBA   KXTEAMSINNBAEF                           KXTEAMSINNBAEF-{YY}-{N}       26     1.0       45     473150.64         4.731506e+05                    NaN 2026-03-21
+   NBA   KXTEAMSINNBAWF                           KXTEAMSINNBAWF-{YY}-{N}       26     1.0       45     596326.51         5.963265e+05                    NaN 2026-03-21
+   NBA        KXNBAEAST                             KXNBAEAST-{YY}-{TEAM} 25,26,27     3.0       46   64999070.08         2.267411e+07             221643.500 2025-01-23
+   NBA        KXNBAWEST                             KXNBAWEST-{YY}-{TEAM} 25,26,27     3.0       45  148104238.34         2.073199e+07             322796.000 2025-01-23
+   NBA    KXTEAMSINNBAF                            KXTEAMSINNBAF-{YY}-{N}       26     1.0      100    7967284.22         7.967284e+06                    NaN 2026-03-18
+   NBA            KXNBA                                 KXNBA-{YY}-{TEAM} 25,26,27     3.0       90  492205774.55         1.302678e+08             827880.535 2025-01-23
+   NBA KXNBAFINALSEXACT                KXNBAFINALSEXACT-{YY}-{TEAM}{W}{L}       25     1.0        8    1893606.00         1.893606e+06             118945.500 2025-06-02
+   NBA        KXNBASEED                        KXNBASEED-{YY}WEST8-{TEAM}       27    14.0      210       5664.49         1.262450e+02                  0.000 2026-09-18
+   NHL     KXNHLPLAYOFF                          KXNHLPLAYOFF-{YY}-{TEAM} 25,26,27     3.0       94    2908631.56         1.159606e+05               5219.000 2025-03-28
+   NHL      KXNHLSERIES             KXNHLSERIES-{YY}{AWAY}{HOME}R2-{TEAM}    25,26    24.0       48   39804767.71         7.782625e+05             214048.390 2025-04-18
+   NHL KXNHLSERIESGAMES          KXNHLSERIESGAMES-{YY}{AWAY}{HOME}FIN-{N}       26    15.0       45      87705.25         2.580640e+03                485.380 2026-04-14
+   NHL KXNHLSERIESSCORE KXNHLSERIESSCORE-{YY}{AWAY}{HOME}FIN-{TEAM}{W}{L}       26    15.0      120    2016915.36         7.624263e+04               6693.400 2026-04-14
+   NHL        KXNHLEAST                             KXNHLEAST-{YY}-{TEAM} 25,26,27     3.0       48    7637584.76         2.102922e+06              32515.000 2025-03-28
+   NHL        KXNHLWEST                             KXNHLWEST-{YY}-{TEAM} 25,26,27     3.0       46    7923773.44         1.906497e+06              32732.775 2025-03-28
+   NHL      KXTEAMSINSC                              KXTEAMSINSC-{YY}-{N}    26,27     2.0      358    1342230.83         6.711154e+05                    NaN 2025-10-09
+   NHL            KXNHL                                 KXNHL-{YY}-{TEAM} 25,26,27     3.0       96   79783283.30         1.362716e+07             179211.000 2025-01-23
+   NHL KXNHLFINALSEXACT                KXNHLFINALSEXACT-{YY}-{TEAM}{W}{L}       25     1.0        8      57990.00         5.799000e+04               5113.500 2025-06-03
+   MLB    KXMLBPLAYOFFS                         KXMLBPLAYOFFS-{YY}-{TEAM}    25,26     2.0       60    7135691.82         3.567846e+06              17407.510 2025-07-02
+   MLB      KXMLBSERIES               KXMLBSERIES-{YY}{AWAY}{HOME}-{TEAM}    25,26    20.0       40   70093698.93         4.943509e+05             174697.720 2025-09-29
+   MLB KXMLBSERIESGAMES             KXMLBSERIESGAMES-{YY}{AWAY}{HOME}-{N}       26    11.0       21     124238.50         5.755900e+03               1691.520 2026-09-25
+   MLB KXMLBSERIESEXACT KXMLBSERIESEXACT-{YY}{MON}{DD}TORLAD-{TEAM}{W}{L}       25     7.0       48    1165707.00         6.643800e+04               3586.500 2025-10-04
+   MLB KXMLBSERIESSCORE    KXMLBSERIESSCORE-{YY}{AWAY}{HOME}-{TEAM}{W}{L}       26    11.0       64     670214.04         2.422102e+04               3181.880 2026-09-25
+   MLB KXMLBPLAYOFFHOST                   KXMLBPLAYOFFHOST-{YY}{TEAM}-{N}       26     5.0       23     230108.67         3.366797e+04               3753.560 2026-09-16
+   MLB    KXMLBALCSQUAL                         KXMLBALCSQUAL-{YY}-{TEAM}       26     1.0       10     251294.81         2.512948e+05                    NaN 2026-09-22
+   MLB    KXMLBNLCSQUAL                         KXMLBNLCSQUAL-{YY}-{TEAM}       26     1.0        7     240889.60         2.408896e+05                    NaN 2026-09-22
+   MLB          KXMLBAL                               KXMLBAL-{YY}-{TEAM}    25,26     2.0       30   35016607.75         1.750830e+07             218677.495 2025-02-13
+   MLB          KXMLBNL                               KXMLBNL-{YY}-{TEAM}    25,26     2.0       30   19074427.32         9.537214e+06             183787.190 2025-02-13
+   MLB      KXTEAMSINWS                              KXTEAMSINWS-{YY}-{N}       26     1.0      225    4319662.59         4.319663e+06                    NaN 2026-03-04
+   MLB            KXMLB                                 KXMLB-{YY}-{TEAM}    25,26     2.0       60  223585060.43         1.117925e+08            1201611.740 2025-02-13
+   MLB          KXMLBWS                                               NaN      NaN     NaN        0           NaN                  NaN                    NaN        NaN
+   MLB   KXMLBWSOUTCOME                           KXMLBWSOUTCOME-{YY}-{N}       26     1.0        8     236017.85         2.360179e+05                    NaN 2026-10-13
+   NFL     KXNFLPLAYOFF                          KXNFLPLAYOFF-{YY}-{TEAM}    26,27     2.0       64    8051356.13         4.025678e+06              62121.000 2025-07-10
+   NFL KXNFLPLAYOFFHOST                      KXNFLPLAYOFFHOST-{YY}-{TEAM}       26     1.0       32       4536.77         4.536770e+03                 30.040 2026-08-04
+   NFL   KXNFLROUNDQUAL                  KXNFLROUNDQUAL-{YY}{TEAM}-{TEAM}       27     2.0       64      48698.70         2.434935e+04               1501.045 2026-09-03
+   NFL KXNFLSTAGEOFELIM                KXNFLSTAGEOFELIM-{YY}{TEAM}-{TEAM}       27    32.0      192     182911.21         4.425845e+03                    NaN 2026-07-17
+   NFL        KXNFLSEED                         KXNFLSEED-{YY}NFC6-{TEAM}       27    12.0      192      57024.23         4.581005e+03                478.030 2026-08-04
+   NFL    KXNFLAFCCHAMP                         KXNFLAFCCHAMP-{YY}-{TEAM}    25,27     2.0       32   92590723.93         4.629536e+07             543521.000 2025-03-28
+   NFL    KXNFLNFCCHAMP                         KXNFLNFCCHAMP-{YY}-{TEAM}    25,27     2.0       32  122502798.08         6.125140e+07             587524.500 2025-03-28
+   NFL      KXTEAMSINSB                              KXTEAMSINSB-{YY}-{N}       26     1.0       93   23957794.00         2.395779e+07                    NaN 2025-10-09
+   NFL             KXSB                                  KXSB-{YY}-{TEAM} 25,26,27     3.0       68  583106143.43         1.973267e+08            2627731.000 2025-01-23
+   NFL         KXSBHOST                            KXSBHOST-{YY}31-{TEAM}       20     1.0       26       3387.59         3.387590e+03                 42.000 2026-06-17
+
+=== SERIES (ESPN) === 82 series, 81 complete
+
+=== FOCUS TEAM PRICES ===
+team league               ticker        when       date   mid  bid   ask          oi  vol_cum result
+ NYK    nba  KXNBAPLAYOFF-27-NYK        last 2026-10-25 0.890 0.88 0.900     3099.20     4530       
+ NYK    nba  KXNBAPLAYOFF-27-NYK       Jan 1 2026-10-25 0.890 0.88 0.900     3099.20     4530       
+ NYK    nba  KXNBAPLAYOFF-27-NYK       Mar 1 2026-10-25 0.890 0.88 0.900     3099.20     4530       
+ NYK    nba  KXNBAPLAYOFF-26-NYK        last 2026-04-06 0.970 0.97 0.970      567.00      844    yes
+ NYK    nba  KXNBAPLAYOFF-26-NYK       Jan 1 2025-12-31 0.920 0.92 0.920      204.00      323    yes
+ NYK    nba  KXNBAPLAYOFF-26-NYK       Mar 1 2026-02-21 0.985 0.98 0.990      503.00      717    yes
+ NYK    nba     KXNBAEAST-27-NYK        last 2026-10-25 0.195 0.19 0.200   174177.46   251132       
+ NYK    nba     KXNBAEAST-27-NYK       Jan 1 2026-10-25 0.195 0.19 0.200   174177.46   251132       
+ NYK    nba     KXNBAEAST-27-NYK       Mar 1 2026-10-25 0.195 0.19 0.200   174177.46   251132       
+ NYK    nba     KXNBAEAST-26-NYK        last 2026-05-26 0.990 0.98 1.000  4414452.01  9410186    yes
+ NYK    nba     KXNBAEAST-26-NYK       Jan 1 2025-12-31 0.300 0.29 0.310   193241.00   298433    yes
+ NYK    nba     KXNBAEAST-26-NYK       Mar 1 2026-02-28 0.145 0.14 0.150   332102.00   647711    yes
+ NYK    nba     KXNBAEAST-26-NYK playoff eve 2026-04-18 0.145 0.14 0.150   900593.06  1372755    yes
+ NYK    nba     KXNBAEAST-26-NYK      R1 eve 2026-04-18 0.145 0.14 0.150   900593.06  1372755    yes
+ NYK    nba     KXNBAEAST-26-NYK      R2 eve 2026-05-04 0.385 0.38 0.390  2458015.00  3757216    yes
+ NYK    nba     KXNBAEAST-26-NYK      CF eve 2026-05-19 0.705 0.70 0.710  3675693.51  6458240    yes
+ NYK    nba     KXNBAEAST-25-NYK       first 2025-01-24 0.125 0.12 0.130     2254.00     2254     no
+ NYK    nba     KXNBAEAST-25-NYK        last 2025-06-01 0.010 0.00 0.020  2126328.00  6891752     no
+ NYK    nba     KXNBAEAST-25-NYK       Mar 1 2025-02-28 0.105 0.10 0.110    15274.00    32100     no
+ NYK    nba     KXNBAEAST-25-NYK playoff eve 2025-04-19 0.065 0.06 0.070    28739.00    58061     no
+ NYK    nba     KXNBAEAST-25-NYK      R1 eve 2025-04-19 0.065 0.06 0.070    28739.00    58061     no
+ NYK    nba     KXNBAEAST-25-NYK      R2 eve 2025-05-05 0.045 0.04 0.050   268972.00   344958     no
+ NYK    nba     KXNBAEAST-25-NYK      CF eve 2025-05-21 0.595 0.59 0.600  1004007.00  2101697     no
+ NYK    nba         KXNBA-27-NYK       first 2026-06-15 0.145 0.14 0.150    39500.25    43562       
+ NYK    nba         KXNBA-27-NYK        last 2026-10-25 0.075 0.07 0.080  1148735.83  1418388       
+ NYK    nba         KXNBA-27-NYK       Jan 1 2026-10-25 0.075 0.07 0.080  1148735.83  1418388       
+ NYK    nba         KXNBA-27-NYK       Mar 1 2026-10-25 0.075 0.07 0.080  1148735.83  1418388       
+ NYK    nba         KXNBA-26-NYK       first 2025-07-13 0.130 0.06 0.200        0.00        0    yes
+ NYK    nba         KXNBA-26-NYK        last 2026-06-14 0.990 0.98 1.000 28095272.75 72136810    yes
+ NYK    nba         KXNBA-26-NYK       Jan 1 2025-12-31 0.070 0.06 0.080   501740.00   674785    yes
+ NYK    nba         KXNBA-26-NYK       Mar 1 2026-02-28 0.045 0.04 0.050  1184428.00  1610504    yes
+ NYK    nba         KXNBA-26-NYK playoff eve 2026-04-18 0.035 0.03 0.040  2782891.26  3619957    yes
+ NYK    nba         KXNBA-26-NYK      R1 eve 2026-04-18 0.035 0.03 0.040  2782891.26  3619957    yes
+ NYK    nba         KXNBA-26-NYK      R2 eve 2026-05-04 0.085 0.08 0.090  7369700.31  9426614    yes
+ NYK    nba         KXNBA-26-NYK      CF eve 2026-05-19 0.155 0.15 0.160 13002050.91 19240418    yes
+ NYK    nba         KXNBA-26-NYK       F eve 2026-06-03 0.365 0.36 0.370 24200173.70 41900271    yes
+ NYK    nba         KXNBA-25-NYK       first 2025-01-24 0.065 0.06 0.070      268.00      268     no
+ NYK    nba         KXNBA-25-NYK        last 2025-06-01 0.010 0.00 0.020  3801646.00  6742838     no
+ NYK    nba         KXNBA-25-NYK       Mar 1 2025-02-28 0.040 0.03 0.050    77190.00   109922     no
+ NYK    nba         KXNBA-25-NYK playoff eve 2025-04-19 0.025 0.02 0.030   151750.00   209031     no
+ NYK    nba         KXNBA-25-NYK      R1 eve 2025-04-19 0.025 0.02 0.030   151750.00   209031     no
+ NYK    nba         KXNBA-25-NYK      R2 eve 2025-05-05 0.015 0.01 0.020   591656.00   666933     no
+ NYK    nba         KXNBA-25-NYK      CF eve 2025-05-21 0.155 0.15 0.160  2265686.00  3565184     no
+ GSW    nba  KXNBAPLAYOFF-27-GSW        last 2026-10-25 0.305 0.30 0.310    16183.85    21342       
+ GSW    nba  KXNBAPLAYOFF-27-GSW       Jan 1 2026-10-25 0.305 0.30 0.310    16183.85    21342       
+ GSW    nba  KXNBAPLAYOFF-27-GSW       Mar 1 2026-10-25 0.305 0.30 0.310    16183.85    21342       
+ GSW    nba  KXNBAPLAYOFF-26-GSW       first 2025-07-11 0.795 0.61 0.980      131.00      131     no
+ GSW    nba  KXNBAPLAYOFF-26-GSW        last 2026-04-19 0.005 0.00 0.010   219965.61   465098     no
+ GSW    nba  KXNBAPLAYOFF-26-GSW       Jan 1 2025-12-31 0.805 0.77 0.840    27728.00    37877     no
+ GSW    nba  KXNBAPLAYOFF-26-GSW       Mar 1 2026-02-28 0.625 0.60 0.650    63888.00   108399     no
+ GSW    nba  KXNBAPLAYOFF-26-GSW playoff eve 2026-04-18 0.260 0.24 0.280   212360.09   447145     no
+ GSW    nba  KXNBAPLAYOFF-25-GSW        last 2025-04-17 0.910 0.91 0.910     5603.00     6199    yes
+ GSW    nba     KXNBAWEST-27-GSW        last 2026-10-25 0.025 0.02 0.030    85252.49   115288       
+ GSW    nba     KXNBAWEST-27-GSW       Jan 1 2026-10-25 0.025 0.02 0.030    85252.49   115288       
+ GSW    nba     KXNBAWEST-27-GSW       Mar 1 2026-10-25 0.025 0.02 0.030    85252.49   115288       
+ GSW    nba     KXNBAWEST-26-GSW        last 2026-04-19 0.005 0.00 0.010   578005.99   692617     no
+ GSW    nba     KXNBAWEST-26-GSW       Jan 1 2025-12-31 0.030 0.02 0.040   223932.00   285445     no
+ GSW    nba     KXNBAWEST-26-GSW       Mar 1 2026-02-28 0.015 0.01 0.020   305915.00   402870     no
+ GSW    nba     KXNBAWEST-26-GSW playoff eve 2026-04-18 0.005 0.00 0.010   577538.40   692149     no
+ GSW    nba     KXNBAWEST-25-GSW       first 2025-01-24 0.025 0.02 0.030      312.00      312     no
+ GSW    nba     KXNBAWEST-25-GSW        last 2025-05-16 0.010 0.00 0.020  1185522.00  2088234     no
+ GSW    nba     KXNBAWEST-25-GSW       Mar 1 2025-02-28 0.090 0.08 0.100   112982.00   147462     no
+ GSW    nba     KXNBAWEST-25-GSW playoff eve 2025-04-19 0.095 0.09 0.100   146248.00   328251     no
+ GSW    nba     KXNBAWEST-25-GSW      R1 eve 2025-04-20 0.095 0.09 0.100   223629.00   425705     no
+ GSW    nba     KXNBAWEST-25-GSW      R2 eve 2025-05-06 0.105 0.10 0.110   760103.00  1286274     no
+ GSW    nba         KXNBA-27-GSW       first 2026-06-15 0.055 0.04 0.070     2788.30     3085       
+ GSW    nba         KXNBA-27-GSW        last 2026-10-25 0.015 0.01 0.020  1638834.69  2600867       
+ GSW    nba         KXNBA-27-GSW       Jan 1 2026-10-25 0.015 0.01 0.020  1638834.69  2600867       
+ GSW    nba         KXNBA-27-GSW       Mar 1 2026-10-25 0.015 0.01 0.020  1638834.69  2600867       
+ GSW    nba         KXNBA-26-GSW        last 2026-04-19 0.005 0.00 0.010  2592744.08  2979837     no
+ GSW    nba         KXNBA-26-GSW       Jan 1 2025-12-31 0.020 0.01 0.030   727966.00   902859     no
+ GSW    nba         KXNBA-26-GSW       Mar 1 2026-02-28 0.005 0.00 0.010  1421963.00  1792404     no
+ GSW    nba         KXNBA-26-GSW playoff eve 2026-04-18 0.005 0.00 0.010  2590780.19  2977873     no
+ GSW    nba         KXNBA-25-GSW       first 2025-01-24 0.015 0.01 0.020        0.00        0     no
+ GSW    nba         KXNBA-25-GSW        last 2025-05-16 0.010 0.00 0.020  3755199.00  4843736     no
+ GSW    nba         KXNBA-25-GSW       Mar 1 2025-02-28 0.050 0.04 0.060   182565.00   214501     no
+ GSW    nba         KXNBA-25-GSW playoff eve 2025-04-19 0.055 0.05 0.060   539206.00   688712     no
+ GSW    nba         KXNBA-25-GSW      R1 eve 2025-04-20 0.065 0.06 0.070   581235.00   735520     no
+ GSW    nba         KXNBA-25-GSW      R2 eve 2025-05-06 0.045 0.04 0.050  2737200.00  3533238     no
+ NYR    nhl  KXNHLPLAYOFF-27-NYR        last 2026-10-25 0.425 0.41 0.440    14794.39    18180       
+ NYR    nhl  KXNHLPLAYOFF-27-NYR       Jan 1 2026-10-25 0.425 0.41 0.440    14794.39    18180       
+ NYR    nhl  KXNHLPLAYOFF-27-NYR       Mar 1 2026-10-25 0.425 0.41 0.440    14794.39    18180       
+ NYR    nhl  KXNHLPLAYOFF-26-NYR       first 2025-09-30 0.650 0.61 0.690        0.00        0     no
+ NYR    nhl  KXNHLPLAYOFF-26-NYR        last 2026-04-06 0.005 0.00 0.010    18547.00    25724     no
+ NYR    nhl  KXNHLPLAYOFF-26-NYR       Jan 1 2025-12-31 0.360 0.32 0.400     8744.00    12562     no
+ NYR    nhl  KXNHLPLAYOFF-26-NYR       Mar 1 2026-02-28 0.020 0.01 0.030    11735.00    18025     no
+ NYR    nhl     KXNHLEAST-27-NYR        last 2026-10-25 0.075 0.07 0.080    18648.65    24738       
+ NYR    nhl     KXNHLEAST-27-NYR       Jan 1 2026-10-25 0.075 0.07 0.080    18648.65    24738       
+ NYR    nhl     KXNHLEAST-27-NYR       Mar 1 2026-10-25 0.075 0.07 0.080    18648.65    24738       
+ NYR    nhl     KXNHLEAST-26-NYR       first 2025-09-27 0.060 0.04 0.080        0.00        0     no
+ NYR    nhl     KXNHLEAST-26-NYR        last 2026-04-10 0.005 0.00 0.010     5195.00     5394     no
+ NYR    nhl     KXNHLEAST-26-NYR       Jan 1 2025-12-31 0.035 0.02 0.050     3523.00     3676     no
+ NYR    nhl     KXNHLEAST-26-NYR       Mar 1 2026-02-28 0.005 0.00 0.010     4268.00     4467     no
+ NYR    nhl     KXNHLEAST-25-NYR       first 2025-03-29 0.035 0.01 0.060        0.00        0     no
+ NYR    nhl     KXNHLEAST-25-NYR        last 2025-04-15 0.005 0.00 0.010        4.00        4     no
+ NYR    nhl     KXNHLEAST-25-NYR playoff eve 2025-04-15 0.005 0.00 0.010        4.00        4     no
+ NYR    nhl         KXNHL-27-NYR        last 2026-10-25 0.015 0.01 0.020   200841.71   237719       
+ NYR    nhl         KXNHL-27-NYR       Jan 1 2026-10-25 0.015 0.01 0.020   200841.71   237719       
+ NYR    nhl         KXNHL-27-NYR       Mar 1 2026-10-25 0.015 0.01 0.020   200841.71   237719       
+ NYR    nhl         KXNHL-26-NYR        last 2026-04-10 0.005 0.00 0.010    99552.00   108842     no
+ NYR    nhl         KXNHL-26-NYR       Jan 1 2025-12-31 0.015 0.01 0.020    87831.00    90990     no
+ NYR    nhl         KXNHL-26-NYR       Mar 1 2026-02-28 0.005 0.00 0.010    98581.00   107871     no
+ NYR    nhl         KXNHL-25-NYR       first 2025-01-24 0.025 0.02 0.030     3401.00     3401     no
+ NYR    nhl         KXNHL-25-NYR        last 2025-04-15 0.005 0.00 0.010    17732.00    34554     no
+ NYR    nhl         KXNHL-25-NYR       Mar 1 2025-02-20 0.025 0.02 0.030    14793.00    14793     no
+ NYR    nhl         KXNHL-25-NYR playoff eve 2025-04-15 0.005 0.00 0.010    17732.00    34554     no
+  SF    mlb  KXMLBPLAYOFFS-26-SF        last 2026-09-15 0.010 0.00 0.020    37269.65    62775     no
+  SF    mlb  KXMLBPLAYOFFS-25-SF        last 2025-09-30 0.010 0.00 0.020    17189.00    19675     no
+  SF    mlb  KXMLBPLAYOFFS-25-SF playoff eve 2025-09-30 0.010 0.00 0.020    17189.00    19675     no
+  SF    mlb        KXMLBNL-26-SF        last 2026-09-19 0.010 0.00 0.020   121423.41   167346     no
+  SF    mlb        KXMLBNL-25-SF       first 2025-02-14 0.025 0.01 0.040        0.00        0     no
+  SF    mlb        KXMLBNL-25-SF        last 2025-09-30 0.010 0.00 0.020   279304.00   313796     no
+  SF    mlb        KXMLBNL-25-SF playoff eve 2025-09-30 0.010 0.00 0.020   279304.00   313796     no
+  SF    mlb          KXMLB-26-SF        last 2026-09-19 0.005 0.00 0.011  1244210.99  1298046     no
+  SF    mlb          KXMLB-25-SF       first 2025-02-14 0.015 0.01 0.020        0.00        0     no
+  SF    mlb          KXMLB-25-SF        last 2025-09-29 0.010 0.00 0.020   298934.00   329478     no
+  SF    mlb          KXMLB-25-SF playoff eve 2025-09-29 0.010 0.00 0.020   298934.00   329478     no
+ NYG    nfl  KXNFLPLAYOFF-27-NYG       first 2026-02-12 0.500 0.10 0.900       11.00       11       
+ NYG    nfl  KXNFLPLAYOFF-27-NYG        last 2026-10-25 0.305 0.30 0.310   169253.42   365786       
+ NYG    nfl  KXNFLPLAYOFF-26-NYG       first 2025-07-11 0.105 0.08 0.130        0.00        0     no
+ NYG    nfl  KXNFLPLAYOFF-26-NYG        last 2025-12-09 0.010 0.00 0.020    25781.00    50557     no
+ NYG    nfl KXNFLNFCCHAMP-27-NYG       first 2026-02-08 0.260 0.03 0.490       13.00       13       
+ NYG    nfl KXNFLNFCCHAMP-27-NYG        last 2026-10-25 0.015 0.01 0.020   907032.66  1114456       
+ NYG    nfl KXNFLNFCCHAMP-25-NYG        last 2025-12-09 0.010 0.00 0.020   238602.00   248602     no
+ NYG    nfl          KXSB-27-NYG       first 2026-02-09 0.015 0.01 0.020    21933.00    21938       
+ NYG    nfl          KXSB-27-NYG        last 2026-10-25 0.005 0.00 0.010  6551682.66  7698078       
+ NYG    nfl          KXSB-26-NYG       first 2025-02-13 0.015 0.01 0.020     1000.00     1007     no
+ NYG    nfl          KXSB-26-NYG        last 2025-12-09 0.010 0.00 0.020   550520.00   555850     no
+  SF    nfl   KXNFLPLAYOFF-27-SF        last 2026-10-25 0.965 0.96 0.970    37357.79    55871       
+  SF    nfl   KXNFLPLAYOFF-26-SF       first 2025-07-11 0.635 0.61 0.660        0.00        0    yes
+  SF    nfl   KXNFLPLAYOFF-26-SF        last 2025-12-23 0.970 0.96 0.980    40221.00   171177    yes
+  SF    nfl  KXNFLNFCCHAMP-27-SF       first 2026-02-08 0.210 0.03 0.390       13.00       13       
+  SF    nfl  KXNFLNFCCHAMP-27-SF        last 2026-10-25 0.255 0.25 0.260  1025947.09  1492915       
+  SF    nfl  KXNFLNFCCHAMP-25-SF       first 2025-03-29 0.065 0.01 0.120        0.00        0     no
+  SF    nfl  KXNFLNFCCHAMP-25-SF        last 2026-01-18 0.010 0.00 0.020  1666284.00  2333418     no
+  SF    nfl           KXSB-27-SF       first 2026-02-09 0.050 0.03 0.070     6449.00     6535       
+  SF    nfl           KXSB-27-SF        last 2026-10-25 0.160 0.15 0.170  8167956.21 11739082       
+  SF    nfl           KXSB-26-SF       first 2025-02-13 0.070 0.06 0.080     2957.00     2957     no
+  SF    nfl           KXSB-26-SF        last 2026-01-18 0.010 0.00 0.020  8195679.00 10700214     no
+
+=== PRE-SERIES WINNER PRICES === priced 79/81 series
+Brier market 0.207  vs coin-flip 0.250; favourite won 72%; mean |p-.5| 0.17
+Overround (askA+askB-1) median 0.020, mean 0.015; YES spread median 0.010
+unpriced: ['nhl2026 R1 COL-LAK', 'nhl2026 R1 TBL-MTL']
+median bid-ask spread at series eve: {'mlb winner': 0.01, 'mlb score': 0.02, 'mlb games': 0.05, 'nba winner': 0.01, 'nba score': 0.01, 'nba games': 0.03, 'nhl winner': 0.01, 'nhl score': 0.03, 'nhl games': 0.1}
+               games_priced  scores_priced
+league season                             
+mlb    2025               0              1
+       2026              10             10
+nba    2025               0              1
+       2026              15             15
+nhl    2025               0              1
+       2026              10             13
+
+=== SERIES-LENGTH MARKETS: market vs model vs realised ===
+           n  market  model  realised  spread
+league g                                     
+mlb    3   4   0.518  0.496     0.250   0.040
+       4   4   0.734  0.739     0.750   0.065
+       5   6   0.546  0.534     0.333   0.075
+       6   2   0.617  0.615     0.500   0.025
+       7   2   0.302  0.305     0.000   0.025
+nba    5  14   0.778  0.797     0.714   0.055
+       6  15   0.487  0.496     0.600   0.020
+       7  14   0.215  0.233     0.286   0.035
+nhl    5   5   0.841  0.860     0.800   0.100
+       6  10   0.624  0.605     0.600   0.075
+       7   8   0.284  0.299     0.125   0.105
+
+=== IN-SERIES HOME GAMES: hedge backtest (one row per team-series; U = 1 home game) ===
+G   n= 70  model var removed  95.3%  realised SD 0.557 -> 0.154 (ratio 0.28, 90% CI 0.18-0.36)  exp cost/series 0.071  realised cost/series 0.043  premium 0.65
+S   n= 82  model var removed  99.6%  realised SD 0.569 -> 0.106 (ratio 0.19, 90% CI 0.14-0.23)  exp cost/series 0.137  realised cost/series 0.117  premium 0.72
+W   n=158  model var removed   2.5%  realised SD 0.531 -> 0.529 (ratio 1.00, 90% CI 0.97-1.02)  exp cost/series 0.004  realised cost/series 0.008  premium 0.14
+WG  n= 70  model var removed  95.3%  realised SD 0.557 -> 0.154 (ratio 0.28, 90% CI 0.18-0.36)  exp cost/series 0.071  realised cost/series 0.043  premium 0.65
+  same sample (games+scores priced):
+  G   n=70  realised SD 0.557 -> 0.154  exp cost 0.071 realised cost 0.043
+  S   n=70  realised SD 0.557 -> 0.093  exp cost 0.122 realised cost 0.072
+  W   n=70  realised SD 0.557 -> 0.547  exp cost 0.005 realised cost 0.023
+  WG  n=70  realised SD 0.557 -> 0.154  exp cost 0.071 realised cost 0.043
+
+=== SEASON PLAYOFF HOME GAMES (team-seasons n=84) ===
+                n  home  E_pre  sd_model
+league season                           
+mlb    2025    12  3.92   3.77      2.63
+       2026    10  2.60   3.65      2.62
+nba    2025    16  5.25   5.24      2.39
+       2026    16  5.31   5.18      2.28
+nhl    2025    16  5.38   5.46      3.06
+       2026    14  5.43   5.43      2.99
+bias mean(home - E_pre) -0.09; corr(home, E_pre) 0.64; realised SD of surprise 2.37 vs model SD 2.72
+static ladder  SD 2.37 -> 1.12 (ratio 0.47, 90% CI 0.39-0.57); var removed 77.5%; 5th pct -3.20 -> -1.87; exp cost 0.142 realised cost 0.136 home games/season
+rolling W      SD 2.37 -> 0.86 (ratio 0.36, 90% CI 0.31-0.43); var removed 86.8%; 5th pct -3.20 -> -1.55; exp cost 0.147 realised cost 0.101 home games/season
+rolling W+G    SD 2.37 -> 0.78 (ratio 0.33, 90% CI 0.28-0.38); var removed 89.3%; 5th pct -3.20 -> -1.54; exp cost 0.210 realised cost 0.141 home games/season
+rolling W+S    SD 2.37 -> 0.72 (ratio 0.30, 90% CI 0.25-0.36); var removed 90.8%; 5th pct -3.20 -> -1.77; exp cost 0.279 realised cost 0.222 home games/season
+league  season team  rounds_played  home  E_pre  sd_model  static_pnl  static_cost  static_sd_after  roll_W_pnl  roll_WG_pnl  roll_WS_pnl  roll_W_cost  roll_WG_cost  roll_WS_cost
+   nba    2025  NYK              3     9  6.148     2.459      -0.433        0.104            1.407      -2.795       -2.795       -2.795        0.179         0.179         0.179
+   nba    2026  NYK              4     9  6.570     3.023      -5.620        0.111            1.396      -3.633       -0.793       -1.258        0.195         0.345         0.810
+league  season team  rounds_played  home  E_pre  sd_model  static_pnl  static_cost  static_sd_after  roll_W_pnl  roll_WG_pnl  roll_WS_pnl  roll_W_cost  roll_WG_cost  roll_WS_cost
+   nba    2025  GSW              2     5  5.356     2.894       -1.03        0.112             1.24      -0.487       -0.487       -0.487        0.149         0.149         0.149
+
+=== MAKE-PLAYOFFS PRICES AT SEASON OPENER (2025-26 / 2026 seasons) ===
+  KXNBAPLAYOFF-26: n=30 Brier 0.162 (base-rate 0.249); median spread 0.02; median volume/team 94,581; sum of mids 16.1 vs slots 16
+    focus: [{'team': 'NYK', 'p': 0.955, 'spread': 0.03, 'made': True, 'vol': 844.0}, {'team': 'GSW', 'p': 0.745, 'spread': 0.03, 'made': False, 'vol': 465111.24}]
+  KXNHLPLAYOFF-26: n=32 Brier 0.243 (base-rate 0.250); median spread 0.07; median volume/team 68,056; sum of mids 16.1 vs slots 16
+    focus: [{'team': 'NYR', 'p': 0.635, 'spread': 0.07, 'made': False, 'vol': 25724.0}]
+  KXMLBPLAYOFFS-26: n=30 Brier 0.213 (base-rate 0.240); median spread 0.03; median volume/team 202,228; sum of mids 12.9 vs slots 12
+    focus: [{'team': 'SF', 'p': 0.42, 'spread': 0.1, 'made': False, 'vol': 62774.72}]
+  KXNFLPLAYOFF-26: n=32 Brier 0.228 (base-rate 0.246); median spread 0.01; median volume/team 134,513; sum of mids 14.1 vs slots 14
+    focus: [{'team': 'SF', 'p': 0.65, 'spread': 0.02, 'made': True, 'vol': 171238.0}, {'team': 'NYG', 'p': 0.125, 'spread': 0.01, 'made': False, 'vol': 50674.0}]
+
+=== KXMLBPLAYOFFHOST (2026): price at playoff eve vs realised home games ===
+  KXMLBPLAYOFFHOST-26BOS-2     eve mid 0.360 spread 0.02 vol    8,226 result no  home so far 0
+  KXMLBPLAYOFFHOST-26BOS-4     eve mid 0.210 spread 0.02 vol    4,486 result no  home so far 0
+  KXMLBPLAYOFFHOST-26BOS-6     eve mid 0.145 spread 0.03 vol    2,929 result no  home so far 0
+  KXMLBPLAYOFFHOST-26BOS-8     eve mid 0.075 spread 0.01 vol    3,481 result no  home so far 0
+  KXMLBPLAYOFFHOST-26CHC-2     eve mid 0.425 spread 0.01 vol    8,929 result no  home so far 0
+  KXMLBPLAYOFFHOST-26CHC-4     eve mid 0.220 spread 0.02 vol    7,340 result no  home so far 0
+  KXMLBPLAYOFFHOST-26CHC-6     eve mid 0.095 spread 0.01 vol    4,356 result no  home so far 0
+  KXMLBPLAYOFFHOST-26CHC-8     eve mid 0.075 spread 0.01 vol    5,376 result no  home so far 0
+  KXMLBPLAYOFFHOST-26LAD-3     eve mid 0.815 spread 0.01 vol   11,427 result yes home so far 4
+  KXMLBPLAYOFFHOST-26LAD-5     eve mid 0.615 spread 0.03 vol   20,932 result no  home so far 4
+  KXMLBPLAYOFFHOST-26LAD-7     eve mid 0.380 spread 0.02 vol   11,732 result no  home so far 4
+  KXMLBPLAYOFFHOST-26LAD-9     eve mid 0.145 spread 0.05 vol    9,584 result no  home so far 4
+  KXMLBPLAYOFFHOST-26LAD-11    eve mid 0.015 spread 0.01 vol    7,356 result no  home so far 4
+  KXMLBPLAYOFFHOST-26MIL-3     eve mid 0.745 spread 0.09 vol    3,234 result yes home so far 5 (WS live)
+  KXMLBPLAYOFFHOST-26MIL-5     eve mid 0.580 spread 0.08 vol   25,741 result -   home so far 5 (WS live)
+  KXMLBPLAYOFFHOST-26MIL-7     eve mid 0.330 spread 0.06 vol   33,619 result -   home so far 5 (WS live)
+  KXMLBPLAYOFFHOST-26MIL-9     eve mid 0.140 spread 0.02 vol   24,331 result no  home so far 5 (WS live)
+  KXMLBPLAYOFFHOST-26MIL-11    eve mid 0.015 spread 0.01 vol    3,363 result no  home so far 5 (WS live)
+  KXMLBPLAYOFFHOST-26NYY-3     eve mid 0.825 spread 0.03 vol   14,111 result yes home so far 3
+  KXMLBPLAYOFFHOST-26NYY-5     eve mid 0.425 spread 0.07 vol   10,786 result no  home so far 3
+  KXMLBPLAYOFFHOST-26NYY-7     eve mid 0.340 spread 0.02 vol    2,746 result no  home so far 3
+  KXMLBPLAYOFFHOST-26NYY-9     eve mid 0.240 spread 0.02 vol    3,238 result no  home so far 3
+  KXMLBPLAYOFFHOST-26NYY-11    eve mid 0.085 spread 0.03 vol    2,786 result no  home so far 3
+
+=== MODEL WORLD: expected variance removed by contract set, a typical 4-round NBA run ===
+favourite (R1 p=0.75): E[home]=6.88, P(0 extra beyond R1)=0.25
+   R1 winner                  SD 3.09 -> 2.28  (45.7% removed)
+   ladder (all 4 advance)     SD 3.09 -> 0.96  (90.4% removed)
+   R1 games ladder            SD 3.09 -> 3.05  ( 2.4% removed)
+   R1 winner+games            SD 3.09 -> 2.19  (49.9% removed)
+   all rounds winner+games    SD 3.09 -> 0.43  (98.1% removed)
+   MLB-style 'hosts >= N'     SD 3.09 -> 0.00  (100.0% removed)
+even (R1 p=0.5): E[home]=5.71, P(0 extra beyond R1)=0.50
+   R1 winner                  SD 3.18 -> 1.89  (64.6% removed)
+   ladder (all 4 advance)     SD 3.18 -> 0.86  (92.7% removed)
+   R1 games ladder            SD 3.18 -> 3.07  ( 7.2% removed)
+   R1 winner+games            SD 3.18 -> 1.78  (68.5% removed)
+   all rounds winner+games    SD 3.18 -> 0.35  (98.8% removed)
+   MLB-style 'hosts >= N'     SD 3.18 -> 0.00  (100.0% removed)
+underdog (R1 p=0.3): E[home]=4.09, P(0 extra beyond R1)=0.70
+   R1 winner                  SD 2.80 -> 1.47  (72.6% removed)
+   ladder (all 4 advance)     SD 2.80 -> 0.66  (94.4% removed)
+   R1 games ladder            SD 2.80 -> 2.65  (10.1% removed)
+   R1 winner+games            SD 2.80 -> 1.38  (75.6% removed)
+   all rounds winner+games    SD 2.80 -> 0.27  (99.1% removed)
+   MLB-style 'hosts >= N'     SD 2.80 -> 0.00  (100.0% removed)

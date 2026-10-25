@@ -1,0 +1,2 @@
+strike_in,price,fee,contracts,months,yes_months_holdout,sd_unhedged,sd_hedged,p5_unhedged,p5_hedged,mean_cost,corr_resid_payout
+8,0.324348,0.0153402,1.50187e+06,71,27,6.56195e+06,6.58357e+06,-1.03099e+07,-1.05905e+07,60966.2,-0.0264573

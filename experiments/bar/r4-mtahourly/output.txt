@@ -1,0 +1,45 @@
+days 1096, evening MSG games 235 (Knicks 108, Rangers 127), matinee 37
+  train: evening games 152, wins 95, OT 24, median start 19.50; mean Penn post-window entries game 8458 vs no game 7345
+  holdout: evening games 83, wins 52, OT 7, median start 19.50; mean Penn post-window entries game 10670 vs no game 8735
+LCD coverage: 1095/1096 days with >= 20 hourly FM-15 reports
+basis: LCD any-hour rain vs GHCN KXRAIN flag agreement 0.993, phi 0.984
+  rain_AM: freq 0.133, phi with KXRAIN 0.550, P(KXRAIN | rain_AM) 1.000
+  rain_MID: freq 0.156, phi with KXRAIN 0.603, P(KXRAIN | rain_MID) 1.000
+  rain_PM: freq 0.140, phi with KXRAIN 0.565, P(KXRAIN | rain_PM) 1.000
+  rain_EVE: freq 0.133, phi with KXRAIN 0.550, P(KXRAIN | rain_EVE) 1.000
+
+30 tests, BH 10% on each period
+Q1 MSG game                     penn_pre   train +0.1% [-1.1%,+1.4%] n_ev 152 q 0.910 | hold +0.6% [-0.8%,+1.9%] n_ev 83 q 0.646 | -
+Q1 Knicks game                  penn_pre   train +0.7% [-1.3%,+2.7%] n_ev 65 q 0.808 | hold +0.3% [-1.6%,+2.3%] n_ev 43 q 0.856 | -
+Q1 Rangers game                 penn_pre   train -0.3% [-1.6%,+1.0%] n_ev 87 q 0.877 | hold +0.8% [-0.5%,+2.1%] n_ev 40 q 0.516 | -
+Q1 MSG game                     penn_post  train +28.8% [+25.6%,+32.2%] n_ev 152 q 0.000 | hold +31.9% [+27.3%,+36.6%] n_ev 83 q 0.000 | FOUND
+Q1 Knicks game                  penn_post  train +35.6% [+31.2%,+40.2%] n_ev 65 q 0.000 | hold +36.8% [+32.3%,+41.4%] n_ev 43 q 0.000 | FOUND
+Q1 Rangers game                 penn_post  train +24.3% [+21.3%,+27.4%] n_ev 87 q 0.000 | hold +26.8% [+22.0%,+31.8%] n_ev 40 q 0.000 | FOUND
+Q1 MSG win                      penn_post  train +0.9% [-1.6%,+3.3%] n_ev 95 q 0.808 | hold +1.0% [-2.1%,+4.3%] n_ev 52 q 0.679 | -
+Q1 Knicks win                   penn_post  train +1.3% [-3.2%,+6.0%] n_ev 39 q 0.877 | hold -3.7% [-10.6%,+3.6%] n_ev 29 q 0.565 | -
+Q1 Rangers win                  penn_post  train +2.9% [-0.3%,+6.2%] n_ev 56 q 0.306 | hold +3.5% [-2.6%,+10.0%] n_ev 23 q 0.565 | -
+Q1 MSG game                     penn_late  train -2.8% [-6.5%,+1.1%] n_ev 152 q 0.434 | hold -4.0% [-9.8%,+2.1%] n_ev 83 q 0.516 | -
+Q1 Knicks game                  penn_late  train -0.5% [-5.5%,+4.7%] n_ev 65 q 0.910 | hold -5.5% [-11.1%,+0.5%] n_ev 43 q 0.297 | -
+Q1 Rangers game                 penn_late  train -4.3% [-8.3%,-0.2%] n_ev 87 q 0.233 | hold -2.4% [-9.0%,+4.6%] n_ev 40 q 0.678 | -
+Q1 MSG win                      penn_late  train +0.8% [-4.9%,+6.9%] n_ev 95 q 0.910 | hold +4.2% [+0.1%,+8.5%] n_ev 52 q 0.260 | -
+Q1 Knicks win                   penn_late  train +2.2% [-6.3%,+11.5%] n_ev 39 q 0.877 | hold +4.3% [-4.1%,+13.4%] n_ev 29 q 0.565 | -
+Q1 Rangers win                  penn_late  train +1.1% [-8.8%,+12.0%] n_ev 56 q 0.910 | hold +8.2% [+0.7%,+16.3%] n_ev 23 q 0.210 | -
+Q1 MSG win                      late_share train -0.0029 [-0.0184,+0.0126] n_ev 95 q 0.910 | hold +0.0022 [-0.0183,+0.0226] n_ev 52 q 0.862 | -
+Q1 Knicks win                   late_share train -0.0011 [-0.0180,+0.0159] n_ev 39 q 0.917 | hold +0.0272 [-0.0276,+0.0819] n_ev 29 q 0.565 | -
+Q1 Rangers win                  late_share train -0.0092 [-0.0316,+0.0132] n_ev 56 q 0.787 | hold +0.0142 [-0.0373,+0.0657] n_ev 23 q 0.723 | -
+Q2 rain in AM bucket (own)      sys_AM     train -3.2% [-5.5%,-0.9%] n_ev 98 q 0.079 | hold -4.7% [-9.3%,+0.2%] n_ev 48 q 0.281 | -
+Q2 KXRAIN daily flag            sys_AM     train -1.9% [-4.0%,+0.3%] n_ev 245 q 0.315 | hold -1.1% [-4.0%,+1.8%] n_ev 124 q 0.656 | -
+Q2 rain in MID bucket (own)     sys_MID    train -4.7% [-6.0%,-3.3%] n_ev 116 q 0.000 | hold -3.6% [-5.8%,-1.4%] n_ev 55 q 0.041 | FOUND
+Q2 KXRAIN daily flag            sys_MID    train -3.0% [-4.0%,-2.0%] n_ev 245 q 0.000 | hold -1.9% [-3.6%,-0.2%] n_ev 124 q 0.210 | -
+Q2 rain in PM bucket (own)      sys_PM     train -1.4% [-3.3%,+0.6%] n_ev 104 q 0.434 | hold -2.8% [-5.3%,-0.3%] n_ev 49 q 0.210 | -
+Q2 rain in AM bucket (carry-over) sys_PM     train -2.3% [-3.9%,-0.6%] n_ev 98 q 0.079 | hold -3.0% [-5.3%,-0.7%] n_ev 48 q 0.149 | -
+Q2 KXRAIN daily flag            sys_PM     train -4.0% [-5.2%,-2.7%] n_ev 245 q 0.000 | hold -3.1% [-4.9%,-1.2%] n_ev 124 q 0.041 | FOUND
+Q2 rain in EVE bucket (own)     sys_EVE    train -1.0% [-2.8%,+0.9%] n_ev 97 q 0.625 | hold +1.9% [-0.5%,+4.5%] n_ev 49 q 0.431 | -
+Q2 rain in AM bucket (carry-over) sys_EVE    train -1.4% [-2.9%,+0.1%] n_ev 98 q 0.303 | hold -1.5% [-3.6%,+0.6%] n_ev 48 q 0.464 | -
+Q2 KXRAIN daily flag            sys_EVE    train -5.3% [-6.4%,-4.2%] n_ev 245 q 0.000 | hold -3.5% [-5.2%,-1.7%] n_ev 124 q 0.009 | FOUND
+Q2 rain 00-12 only              sys_day    train -1.6% [-3.1%,-0.0%] n_ev 80 q 0.233 | hold -1.6% [-4.7%,+1.5%] n_ev 46 q 0.565 | -
+Q2 rain 13-24 only              sys_day    train -1.7% [-2.7%,-0.7%] n_ev 76 q 0.022 | hold -0.3% [-2.8%,+2.3%] n_ev 41 q 0.862 | -
+
+hedge backtest (2024, sized from train):
+  {'event': 'KXRAIN daily flag', 'outcome': 'sys_PM', 'beta_usd_day': -104054, 'price': np.float64(0.356), 'sd_unhedged': 209242, 'sd_hedged': 208842, 'sd_change_pct': np.float64(-0.19), 'p5_unhedged': -301476, 'p5_hedged': -286525, 'mean_cost_day': -3323}
+  {'event': 'KXRAIN daily flag', 'outcome': 'sys_EVE', 'beta_usd_day': -49426, 'price': np.float64(0.356), 'sd_unhedged': 77968, 'sd_hedged': 76828, 'sd_change_pct': np.float64(-1.46), 'p5_unhedged': -148302, 'p5_hedged': -135828, 'mean_cost_day': -1578}

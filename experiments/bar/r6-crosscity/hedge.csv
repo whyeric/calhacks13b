@@ -1,0 +1,4 @@
+outcome,event,lag,beta,price,days,sd_unhedged,sd_hedged,p5_unhedged,p5_hedged
+dewey_0p5km,HUB_storm,0,-1584,0.4761,545,6241,6209,-9674,-9354
+dewey_msgzip,ORD_rain05,0,-6549,0.07921,545,1.027e+04,1.026e+04,-1.573e+04,-1.606e+04
+dewey_msgzip,HUB_storm,0,-3359,0.4761,545,1.027e+04,1.019e+04,-1.573e+04,-1.548e+04

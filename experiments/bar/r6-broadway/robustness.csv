@@ -1,0 +1,11 @@
+split,check,beta,lo,hi,perm_p
+train,baseline log_gross,-0.02163,-0.0359,-0.007356,
+train,+ log performances control,-0.02285,-0.03687,-0.008817,
+train,y = log performances,0.003474,-0.00392,0.01087,
+train,drop 3 snowiest weeks,-0.02265,-0.03837,-0.006937,
+train,"permutation placebo (500, within month)",0.000746,-0.01521,0.01705,0.02
+holdout,baseline log_gross,-0.02486,-0.04392,-0.005797,
+holdout,+ log performances control,-0.01665,-0.03268,-0.000616,
+holdout,y = log performances,-0.01008,-0.02074,0.0005884,
+holdout,drop 3 snowiest weeks,-0.03203,-0.05126,-0.01279,
+holdout,"permutation placebo (500, within month)",0.001446,-0.01495,0.01706,0.016

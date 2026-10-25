@@ -1,0 +1,127 @@
+daily rows 2830  2019-01-01..2026-09-30
+tests 64  FOUND 64
+load_ERCOT         AUS >95 | tr +10.93% [+9.59%,+12.28%] n=359 q=6.06e-40 pR2=0.100/spl 0.624 | ho +7.95% [+6.69%,+9.22%] n=236 pR2=0.101/spl 0.632 | mean tr 13.91 | FOUND
+load_ERCOT         AUS >100 | tr +7.76% [+6.44%,+9.07%] n=137 q=7.9e-22 pR2=0.033/spl 0.624 | ho +3.99% [+2.84%,+5.13%] n=47 pR2=0.009/spl 0.632 | mean tr 13.91 | FOUND
+peak_ERCOT         AUS >95 | tr +12.55% [+10.91%,+14.20%] n=359 q=1.69e-35 pR2=0.088/spl 0.584 | ho +9.42% [+7.83%,+11.00%] n=236 pR2=0.094/spl 0.605 | mean tr 10.89 | FOUND
+peak_ERCOT         AUS >100 | tr +7.94% [+6.64%,+9.25%] n=137 q=4.02e-23 pR2=0.023/spl 0.584 | ho +3.81% [+2.48%,+5.13%] n=47 pR2=0.005/spl 0.605 | mean tr 10.89 | FOUND
+price_HB_HUBAVG    AUS >95 | tr +22.34 [+13.38,+31.31] n=359 q=5.09e-05 pR2=0.000/spl 0.308 | ho +4.39 [+1.02,+7.77] n=236 pR2=0.001/spl 0.384 | mean tr 65.03 | FOUND
+price_HB_HUBAVG    AUS >100 | tr +77.61 [+45.46,+109.75] n=137 q=8.46e-05 pR2=0.002/spl 0.308 | ho +5.81 [+0.79,+10.83] n=47 pR2=0.001/spl 0.384 | mean tr 65.03 | FOUND
+load_ERCOT         HOU >95 | tr +7.67% [+6.56%,+8.78%] n=247 q=2.63e-29 pR2=0.059/spl 0.568 | ho +5.80% [+4.43%,+7.17%] n=98 pR2=0.035/spl 0.627 | mean tr 13.91 | FOUND
+load_ERCOT         HOU >100 | tr +5.72% [+3.87%,+7.57%] n=35 q=5.6e-07 pR2=0.005/spl 0.568 | ho +5.62% [+3.27%,+7.97%] n=4 pR2=0.002/spl 0.627 | mean tr 13.91 | FOUND
+peak_ERCOT         HOU >95 | tr +8.57% [+7.48%,+9.66%] n=247 q=8.48e-38 pR2=0.049/spl 0.552 | ho +6.55% [+5.10%,+8.00%] n=98 pR2=0.030/spl 0.594 | mean tr 10.89 | FOUND
+peak_ERCOT         HOU >100 | tr +6.01% [+4.30%,+7.72%] n=35 q=1.32e-08 pR2=0.004/spl 0.552 | ho +6.31% [+3.55%,+9.08%] n=4 pR2=0.002/spl 0.594 | mean tr 10.89 | FOUND
+price_HB_HUBAVG    HOU >95 | tr +33.21 [+20.39,+46.02] n=247 q=2.65e-05 pR2=0.001/spl 0.313 | ho +4.50 [+2.02,+6.97] n=98 pR2=0.001/spl 0.443 | mean tr 65.03 | FOUND
+price_HB_HUBAVG    HOU >100 | tr +140.09 [+68.78,+211.39] n=35 q=0.00127 pR2=0.001/spl 0.313 | ho +22.05 [+13.16,+30.94] n=4 pR2=0.002/spl 0.443 | mean tr 65.03 | FOUND
+load_ERCOT         DFW >95 | tr +9.06% [+8.14%,+9.98%] n=292 q=4.24e-58 pR2=0.091/spl 0.582 | ho +7.33% [+6.07%,+8.59%] n=176 pR2=0.063/spl 0.582 | mean tr 13.91 | FOUND
+load_ERCOT         DFW >100 | tr +8.72% [+7.49%,+9.96%] n=106 q=1.28e-30 pR2=0.038/spl 0.582 | ho +4.92% [+3.59%,+6.24%] n=57 pR2=0.013/spl 0.582 | mean tr 13.91 | FOUND
+peak_ERCOT         DFW >95 | tr +10.31% [+9.31%,+11.32%] n=292 q=1.34e-62 pR2=0.078/spl 0.551 | ho +8.12% [+6.69%,+9.55%] n=176 pR2=0.051/spl 0.561 | mean tr 10.89 | FOUND
+peak_ERCOT         DFW >100 | tr +8.67% [+7.44%,+9.90%] n=106 q=1.35e-30 pR2=0.025/spl 0.551 | ho +5.08% [+3.60%,+6.56%] n=57 pR2=0.009/spl 0.561 | mean tr 10.89 | FOUND
+price_HB_HUBAVG    DFW >95 | tr +26.47 [+14.85,+38.08] n=292 q=0.000196 pR2=0.000/spl 0.210 | ho +3.83 [+0.22,+7.44] n=176 pR2=0.001/spl 0.345 | mean tr 65.03 | FOUND
+price_HB_HUBAVG    DFW >100 | tr +50.12 [+22.88,+77.35] n=106 q=0.00247 pR2=0.001/spl 0.210 | ho +12.58 [+5.76,+19.40] n=57 pR2=0.004/spl 0.345 | mean tr 65.03 | FOUND
+load_ERCOT         SAT >95 | tr +9.37% [+7.94%,+10.80%] n=386 q=1.21e-26 pR2=0.079/spl 0.584 | ho +7.06% [+5.61%,+8.51%] n=222 pR2=0.075/spl 0.574 | mean tr 13.91 | FOUND
+load_ERCOT         SAT >100 | tr +7.09% [+5.68%,+8.51%] n=141 q=3.01e-16 pR2=0.031/spl 0.584 | ho +4.49% [+3.03%,+5.94%] n=37 pR2=0.011/spl 0.574 | mean tr 13.91 | FOUND
+peak_ERCOT         SAT >95 | tr +10.42% [+8.72%,+12.12%] n=386 q=1.77e-23 pR2=0.065/spl 0.544 | ho +8.10% [+6.38%,+9.82%] n=222 pR2=0.065/spl 0.539 | mean tr 10.89 | FOUND
+peak_ERCOT         SAT >100 | tr +7.26% [+5.80%,+8.72%] n=141 q=4.6e-16 pR2=0.022/spl 0.544 | ho +4.95% [+3.18%,+6.71%] n=37 pR2=0.009/spl 0.539 | mean tr 10.89 | FOUND
+price_HB_HUBAVG    SAT >95 | tr +19.50 [+10.58,+28.41] n=386 q=0.000347 pR2=0.000/spl 0.255 | ho +2.89 [+0.26,+5.52] n=222 pR2=0.001/spl 0.398 | mean tr 65.03 | FOUND
+price_HB_HUBAVG    SAT >100 | tr +48.20 [+28.82,+67.58] n=141 q=5.18e-05 pR2=0.001/spl 0.255 | ho +7.19 [+3.38,+10.99] n=37 pR2=0.001/spl 0.398 | mean tr 65.03 | FOUND
+load_COAST         HOU >95 | tr +8.83% [+7.76%,+9.90%] n=247 q=3.11e-41 pR2=0.086/spl 0.651 | ho +7.57% [+6.02%,+9.11%] n=98 pR2=0.051/spl 0.645 | mean tr 12.64 | FOUND
+load_COAST         HOU >100 | tr +5.62% [+4.24%,+6.99%] n=35 q=3.61e-11 pR2=0.005/spl 0.651 | ho +6.32% [+3.79%,+8.85%] n=4 pR2=0.003/spl 0.645 | mean tr 12.64 | FOUND
+peak_COAST         HOU >95 | tr +10.79% [+9.62%,+11.95%] n=247 q=1.83e-51 pR2=0.074/spl 0.757 | ho +9.54% [+7.84%,+11.24%] n=98 pR2=0.052/spl 0.759 | mean tr 9.61 | FOUND
+peak_COAST         HOU >100 | tr +6.36% [+4.92%,+7.80%] n=35 q=6.89e-13 pR2=0.004/spl 0.757 | ho +7.67% [+4.25%,+11.09%] n=4 pR2=0.002/spl 0.759 | mean tr 9.61 | FOUND
+price_HB_HOUSTON   HOU >95 | tr +33.93 [+21.11,+46.75] n=247 q=1.8e-05 pR2=0.001/spl 0.313 | ho +4.80 [+2.54,+7.06] n=98 pR2=0.001/spl 0.454 | mean tr 67.34 | FOUND
+price_HB_HOUSTON   HOU >100 | tr +140.74 [+69.24,+212.25] n=35 q=0.00126 pR2=0.001/spl 0.313 | ho +20.84 [+11.87,+29.82] n=4 pR2=0.002/spl 0.454 | mean tr 67.34 | FOUND
+billfix_COAST      HOU >95 | tr +20.10 [+17.71,+22.50] n=247 q=1.48e-42 pR2=0.123/spl 0.666 | ho +19.12 [+15.65,+22.59] n=98 pR2=0.074/spl 0.659 | mean tr 191.77 | FOUND
+billfix_COAST      HOU >100 | tr +13.65 [+10.10,+17.21] n=35 q=4.41e-10 pR2=0.009/spl 0.666 | ho +16.33 [+9.51,+23.15] n=4 pR2=0.004/spl 0.659 | mean tr 191.77 | FOUND
+billidx_HB_HOUSTON HOU >95 | tr +88.67 [+61.89,+115.46] n=247 q=7.84e-08 pR2=0.003/spl 0.292 | ho +23.24 [+17.74,+28.73] n=98 pR2=0.009/spl 0.515 | mean tr 181.94 | FOUND
+billidx_HB_HOUSTON HOU >100 | tr +332.96 [+172.77,+493.16] n=35 q=0.00067 pR2=0.006/spl 0.292 | ho +57.62 [+34.82,+80.41] n=4 pR2=0.004/spl 0.515 | mean tr 181.94 | FOUND
+load_NCENT         DFW >95 | tr +14.06% [+12.72%,+15.39%] n=292 q=2.77e-65 pR2=0.112/spl 0.724 | ho +12.52% [+10.83%,+14.22%] n=176 pR2=0.083/spl 0.702 | mean tr 12.70 | FOUND
+load_NCENT         DFW >100 | tr +13.81% [+11.83%,+15.79%] n=106 q=5.78e-30 pR2=0.049/spl 0.724 | ho +8.13% [+6.52%,+9.75%] n=57 pR2=0.016/spl 0.702 | mean tr 12.70 | FOUND
+peak_NCENT         DFW >95 | tr +15.90% [+14.42%,+17.37%] n=292 q=3.59e-68 pR2=0.103/spl 0.683 | ho +13.70% [+11.82%,+15.58%] n=176 pR2=0.070/spl 0.664 | mean tr 9.71 | FOUND
+peak_NCENT         DFW >100 | tr +13.55% [+11.55%,+15.55%] n=106 q=2.19e-28 pR2=0.034/spl 0.683 | ho +8.45% [+6.77%,+10.13%] n=57 pR2=0.012/spl 0.664 | mean tr 9.71 | FOUND
+price_HB_NORTH     DFW >95 | tr +27.24 [+15.64,+38.84] n=292 q=0.000128 pR2=0.000/spl 0.211 | ho +4.10 [+0.77,+7.43] n=176 pR2=0.001/spl 0.360 | mean tr 65.29 | FOUND
+price_HB_NORTH     DFW >100 | tr +52.16 [+24.78,+79.55] n=106 q=0.00176 pR2=0.001/spl 0.211 | ho +13.22 [+6.38,+20.06] n=57 pR2=0.004/spl 0.360 | mean tr 65.29 | FOUND
+billfix_NCENT      DFW >95 | tr +32.19 [+29.08,+35.29] n=292 q=6.08e-64 pR2=0.151/spl 0.749 | ho +31.50 [+27.44,+35.56] n=176 pR2=0.109/spl 0.739 | mean tr 191.80 | FOUND
+billfix_NCENT      DFW >100 | tr +35.18 [+30.33,+40.03] n=106 q=2.92e-32 pR2=0.082/spl 0.749 | ho +23.02 [+18.64,+27.39] n=57 pR2=0.027/spl 0.739 | mean tr 191.80 | FOUND
+billidx_HB_NORTH   DFW >95 | tr +91.15 [+63.83,+118.47] n=292 q=6.34e-08 pR2=0.001/spl 0.225 | ho +30.86 [+23.20,+38.53] n=176 pR2=0.008/spl 0.456 | mean tr 197.70 | FOUND
+billidx_HB_NORTH   DFW >100 | tr +168.30 [+98.42,+238.19] n=106 q=8.66e-05 pR2=0.002/spl 0.225 | ho +48.64 [+31.40,+65.88] n=57 pR2=0.009/spl 0.456 | mean tr 197.70 | FOUND
+load_SCENT         AUS >95 | tr +12.52% [+10.87%,+14.17%] n=359 q=4.14e-35 pR2=0.080/spl 0.674 | ho +10.34% [+8.83%,+11.86%] n=236 pR2=0.095/spl 0.695 | mean tr 12.07 | FOUND
+load_SCENT         AUS >100 | tr +8.49% [+7.01%,+9.97%] n=137 q=6.63e-21 pR2=0.024/spl 0.674 | ho +5.51% [+3.98%,+7.05%] n=47 pR2=0.009/spl 0.695 | mean tr 12.07 | FOUND
+peak_SCENT         AUS >95 | tr +14.98% [+13.09%,+16.87%] n=359 q=2.98e-38 pR2=0.079/spl 0.639 | ho +13.20% [+11.34%,+15.05%] n=236 pR2=0.106/spl 0.696 | mean tr 9.10 | FOUND
+peak_SCENT         AUS >100 | tr +8.94% [+7.46%,+10.42%] n=137 q=5.61e-23 pR2=0.018/spl 0.639 | ho +6.83% [+5.12%,+8.54%] n=47 pR2=0.010/spl 0.696 | mean tr 9.10 | FOUND/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+/Users/main/calhacks13b/backend/../experiments/bar/r4-ercot/ercot.py:139: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y, X).fit().ssr
+
+price_LZ_AEN       AUS >95 | tr +24.91 [+15.68,+34.14] n=359 q=1.23e-05 pR2=0.000/spl 0.310 | ho +7.72 [+3.70,+11.74] n=236 pR2=0.003/spl 0.383 | mean tr 67.22 | FOUND
+price_LZ_AEN       AUS >100 | tr +81.45 [+49.49,+113.41] n=137 q=3.47e-05 pR2=0.002/spl 0.310 | ho +7.45 [+1.58,+13.33] n=47 pR2=0.001/spl 0.383 | mean tr 67.22 | FOUND
+billfix_SCENT      AUS >95 | tr +27.40 [+24.01,+30.79] n=359 q=1.55e-39 pR2=0.104/spl 0.699 | ho +25.88 [+22.22,+29.55] n=236 pR2=0.112/spl 0.724 | mean tr 191.80 | FOUND
+billfix_SCENT      AUS >100 | tr +21.24 [+17.59,+24.90] n=137 q=2.84e-21 pR2=0.041/spl 0.699 | ho +16.45 [+12.32,+20.59] n=47 pR2=0.015/spl 0.724 | mean tr 191.80 | FOUND
+billidx_LZ_AEN     AUS >95 | tr +77.07 [+54.10,+100.04] n=359 q=5.42e-08 pR2=0.001/spl 0.329 | ho +36.29 [+26.00,+46.59] n=236 pR2=0.010/spl 0.456 | mean tr 200.06 | FOUND
+billidx_LZ_AEN     AUS >100 | tr +209.83 [+137.70,+281.96] n=137 q=2.43e-06 pR2=0.004/spl 0.329 | ho +32.47 [+15.85,+49.09] n=47 pR2=0.003/spl 0.456 | mean tr 200.06 | FOUND
+load_SCENT         SAT >95 | tr +11.91% [+10.29%,+13.53%] n=386 q=5.45e-33 pR2=0.078/spl 0.681 | ho +10.71% [+8.92%,+12.50%] n=222 pR2=0.096/spl 0.683 | mean tr 12.07 | FOUND
+load_SCENT         SAT >100 | tr +8.35% [+6.83%,+9.87%] n=141 q=3.18e-19 pR2=0.027/spl 0.681 | ho +6.30% [+4.41%,+8.19%] n=37 pR2=0.012/spl 0.683 | mean tr 12.07 | FOUND
+peak_SCENT         SAT >95 | tr +13.99% [+12.17%,+15.80%] n=386 q=4.19e-36 pR2=0.074/spl 0.648 | ho +13.68% [+11.66%,+15.70%] n=222 pR2=0.107/spl 0.687 | mean tr 9.10 | FOUND
+peak_SCENT         SAT >100 | tr +9.11% [+7.48%,+10.73%] n=141 q=5.65e-20 pR2=0.022/spl 0.648 | ho +7.97% [+5.80%,+10.15%] n=37 pR2=0.013/spl 0.687 | mean tr 9.10 | FOUND
+price_LZ_CPS       SAT >95 | tr +21.36 [+12.21,+30.51] n=386 q=0.000138 pR2=0.000/spl 0.256 | ho +5.14 [+2.07,+8.21] n=222 pR2=0.001/spl 0.396 | mean tr 66.98 | FOUND
+price_LZ_CPS       SAT >100 | tr +50.22 [+30.68,+69.75] n=141 q=3.01e-05 pR2=0.001/spl 0.256 | ho +11.82 [+7.43,+16.21] n=37 pR2=0.002/spl 0.396 | mean tr 66.98 | FOUND
+billfix_SCENT      SAT >95 | tr +26.12 [+22.55,+29.68] n=386 q=7.24e-33 pR2=0.101/spl 0.702 | ho +26.91 [+22.75,+31.07] n=222 pR2=0.113/spl 0.709 | mean tr 191.80 | FOUND
+billfix_SCENT      SAT >100 | tr +20.89 [+17.06,+24.72] n=141 q=6.09e-19 pR2=0.045/spl 0.702 | ho +17.53 [+12.60,+22.46] n=37 pR2=0.018/spl 0.709 | mean tr 191.80 | FOUND
+billidx_LZ_CPS     SAT >95 | tr +69.65 [+47.12,+92.17] n=386 q=5.42e-07 pR2=0.001/spl 0.291 | ho +31.21 [+22.77,+39.64] n=222 pR2=0.006/spl 0.466 | mean tr 199.22 | FOUND
+billidx_LZ_CPS     SAT >100 | tr +138.78 [+90.12,+187.44] n=141 q=3.77e-06 pR2=0.002/spl 0.291 | ho +43.76 [+32.16,+55.36] n=37 pR2=0.005/spl 0.466 | mean tr 199.22 | FOUND
+
+backtests (bill series, FOUND only), beta from train
+
+per-year refits (descriptive, not part of the BH family): beta [90% CI] n_ev, >95 F
+load_NCENT       DFW: 2019 +10.6 [+8.0,+13.2] 55 | 2020 +12.6 [+10.5,+14.7] 33 | 2021 +14.8 [+12.4,+17.1] 40 | 2022 +15.3 [+12.5,+18.2] 76 | 2023 +17.5 [+14.0,+21.0] 88 | 2024 +14.8 [+11.8,+17.7] 55 | 2025 +11.3 [+8.6,+14.0] 37 | 2026 +10.7 [+8.1,+13.3] 84
+billfix_NCENT    DFW: 2019 +24.0 [+18.3,+29.7] 55 | 2020 +28.3 [+23.5,+33.1] 33 | 2021 +33.1 [+28.1,+38.0] 40 | 2022 +35.3 [+28.5,+42.1] 76 | 2023 +41.6 [+33.4,+49.8] 88 | 2024 +35.9 [+28.9,+43.0] 55 | 2025 +28.2 [+21.8,+34.6] 37 | 2026 +28.9 [+22.0,+35.8] 84
+price_HB_NORTH   DFW: 2019 +50.4 [+15.2,+85.5] 55 | 2020 +15.2 [+3.8,+26.6] 33 | 2021 +36.7 [+5.5,+68.0] 40 | 2022 +20.2 [+9.7,+30.7] 76 | 2023 +31.1 [-8.2,+70.4] 88 | 2024 +7.2 [+0.1,+14.2] 55 | 2025 +0.9 [-4.2,+5.9] 37 | 2026 -0.3 [-6.0,+5.4] 84
+billfix_COAST    HOU: 2019 +14.7 [+11.4,+17.9] 27 | 2020 +21.2 [+15.0,+27.4] 39 | 2021 +20.2 [+16.0,+24.4] 37 | 2022 +18.1 [+14.5,+21.6] 55 | 2023 +27.1 [+20.8,+33.5] 89 | 2024 +24.7 [+19.1,+30.3] 47 | 2025 +15.9 [+12.2,+19.6] 16 | 2026 +14.7 [+10.4,+19.0] 35
+price_HB_HOUSTON HOU: 2019 +59.8 [+6.4,+113.2] 27 | 2020 +12.7 [+3.4,+22.0] 39 | 2021 +43.7 [+2.0,+85.4] 37 | 2022 +27.4 [+13.1,+41.7] 55 | 2023 +60.7 [+31.8,+89.6] 89 | 2024 +2.3 [-2.7,+7.2] 47 | 2025 +4.5 [-0.9,+9.8] 16 | 2026 +6.3 [+2.1,+10.6] 35
+price_LZ_AEN     AUS: 2019 +27.4 [+15.1,+39.7] 89 | 2020 +7.1 [+2.5,+11.7] 59 | 2021 -7.5 [-71.1,+56.1] 16 | 2022 +9.1 [-0.4,+18.6] 95 | 2023 +53.5 [+20.4,+86.6] 100 | 2024 +8.2 [+1.1,+15.3] 78 | 2025 +7.5 [+2.2,+12.8] 73 | 2026 +2.7 [-3.9,+9.2] 85
+           outcome station   K price  contracts  sd_raw  sd_raw_h  sd_within  sd_within_h  p95_within  p95_within_h  p95_raw  p95_raw_h   mean  mean_h
+     billfix_COAST     HOU  95 month      20.10   35.34     36.18      16.41        15.75       24.73         24.70   272.46     273.91 216.36  217.90
+     billfix_COAST     HOU  95  flat      20.10   35.34     32.96      16.41        15.75       24.73         24.70   272.46     267.55 216.36  217.71
+     billfix_COAST     HOU 100 month      13.65   35.34     35.62      16.41        16.39       24.73         24.73   272.46     273.36 216.36  216.90
+     billfix_COAST     HOU 100  flat      13.65   35.34     35.26      16.41        16.39       24.73         24.73   272.46     272.73 216.36  216.88
+billidx_HB_HOUSTON     HOU  95 month      88.67   62.72     66.79      55.90        57.46       39.10         43.14   205.43     226.98 146.26  153.07
+billidx_HB_HOUSTON     HOU  95  flat      88.67   62.72     62.42      55.90        57.46       39.10         43.14   205.43     208.02 146.26  152.19
+billidx_HB_HOUSTON     HOU 100 month     332.96   62.72     68.86      55.90        58.34       39.10         39.41   205.43     242.58 146.26  159.43
+billidx_HB_HOUSTON     HOU 100  flat     332.96   62.72     64.31      55.90        58.34       39.10         39.41   205.43     217.30 146.26  158.86
+     billfix_NCENT     DFW  95 month      32.19   45.79     44.17      23.42        22.12       35.55         31.55   298.96     289.47 214.19  215.01
+     billfix_NCENT     DFW  95  flat      32.19   45.79     38.39      23.42        22.12       35.55         31.55   298.96     279.53 214.19  214.67
+     billfix_NCENT     DFW 100 month      35.18   45.79     45.32      23.42        23.14       35.55         35.62   298.96     292.65 214.19  215.28
+     billfix_NCENT     DFW 100  flat      35.18   45.79     42.64      23.42        23.14       35.55         35.62   298.96     286.69 214.19  215.11
+  billidx_HB_NORTH     DFW  95 month      91.15   94.04     94.12      85.87        86.71       46.29         51.78   220.65     226.76 145.21  147.53
+  billidx_HB_NORTH     DFW  95  flat      91.15   94.04     91.73      85.87        86.71       46.29         51.78   220.65     206.01 145.21  146.57
+  billidx_HB_NORTH     DFW 100 month     168.30   94.04     96.94      85.87        87.71       46.29         50.98   220.65     236.11 145.21  150.45
+  billidx_HB_NORTH     DFW 100  flat     168.30   94.04     94.28      85.87        87.71       46.29         50.98   220.65     216.28 145.21  149.64
+     billfix_SCENT     AUS  95 month      27.40   43.46     42.31      22.18        20.93       30.40         28.46   301.91     296.95 229.15  229.26
+     billfix_SCENT     AUS  95  flat      27.40   43.46     36.66      22.18        20.93       30.40         28.46   301.91     288.26 229.15  228.97
+     billfix_SCENT     AUS 100 month      21.24   43.46     43.91      22.18        21.98       30.40         29.73   301.91     301.47 229.15  230.43
+     billfix_SCENT     AUS 100  flat      21.24   43.46     41.90      22.18        21.98       30.40         29.73   301.91     295.93 229.15  230.31
+    billidx_LZ_AEN     AUS  95 month      77.07  110.65    110.29     103.05       103.13       56.82         54.60   249.55     238.60 163.04  163.36
+    billidx_LZ_AEN     AUS  95  flat      77.07  110.65    108.03     103.05       103.13       56.82         54.60   249.55     222.93 163.04  162.54
+    billidx_LZ_AEN     AUS 100 month     209.83  110.65    117.66     103.05       106.73       56.82         80.73   249.55     288.14 163.04  175.67
+    billidx_LZ_AEN     AUS 100  flat     209.83  110.65    113.07     103.05       106.73       56.82         80.73   249.55     252.98 163.04  174.42
+     billfix_SCENT     SAT  95 month      26.12   43.46     43.15      22.18        20.89       30.40         28.23   301.91     300.58 229.15  230.09
+     billfix_SCENT     SAT  95  flat      26.12   43.46     37.48      22.18        20.89       30.40         28.23   301.91     292.13 229.15  229.75
+     billfix_SCENT     SAT 100 month      20.89   43.46     44.36      22.18        21.96       30.40         30.36   301.91     303.25 229.15  230.67
+     billfix_SCENT     SAT 100  flat      20.89   43.46     42.43      22.18        21.96       30.40         30.36   301.91     299.96 229.15  230.54
+    billidx_LZ_CPS     SAT  95 month      69.65  115.15    115.33     107.69       107.80       58.39         58.67   246.98     245.84 162.95  165.45
+    billidx_LZ_CPS     SAT  95  flat      69.65  115.15    112.92     107.69       107.80       58.39         58.67   246.98     224.94 162.95  164.53
+    billidx_LZ_CPS     SAT 100 month     138.78  115.15    118.04     107.69       108.61       58.39         56.08   246.98     262.04 162.95  173.05
+    billidx_LZ_CPS     SAT 100  flat     138.78  115.15    114.64     107.69       108.61       58.39         56.08   246.98     246.14 162.95  172.18

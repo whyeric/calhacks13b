@@ -1,0 +1,534 @@
+venues per basket: {'bars': 976, 'fullsvc': 7819, 'limited': 1394, 'outdoor': 1465, 'indoor': 1240, 'dining': 8795}
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+/Users/main/calhacks13b/backend/../experiments/bar/r7-deferral/run.py:121: SingularMatrixWarning: The design matrix is rank-deficient. The model parameters are not uniquely determined.
+  return sm.OLS(y[ok], X).fit(cov_type="HAC", cov_kwds={"maxlags": lags}, use_t=False), ok
+       split          series                                test        term  n_events    pct     lo     hi      p   q_bh  ci_excl0
+0      train            bars                       T0 daily rain        rain       150 -1.690 -2.876 -0.490  0.021    NaN      True
+1      train            bars                 T1 next-day rebound     rain_l1       149  0.131 -0.842  1.114  0.826  0.866     False
+2      train            bars       T1b day-before (anticipation)     rain_f1       150 -1.797 -2.788 -0.795  0.003  0.042      True
+3      train            bars                             placebo     rain_l7       150 -1.285 -2.362 -0.196  0.052    NaN      True
+4      train            bars                             placebo     rain_f7       153 -0.495 -1.719  0.744  0.509    NaN     False
+5      train            bars           T1c 3-day net (t-1,t,t+1)         sum       150 -3.116 -5.075 -1.118  0.011  0.065      True
+6      train            bars                  T2 Sat rain -> Sun  sat_to_sun        25  0.299 -1.897  2.545  0.824  0.866     False
+7      train            bars                  T2 Sun rain -> Sat  sun_to_sat        21 -2.782 -5.811  0.344  0.143  0.331     False
+8      train            bars              T3 weekly per rain day       nrain        65 -0.450 -0.961  0.063  0.149  0.332     False
+9      train            bars                             placebo  nrain_next        65  0.319 -0.277  0.920  0.379    NaN     False
+10     train            bars  T3b displaced (weekly - daily sum)         gap        65 -0.201 -0.806  0.592  0.640  0.773     False
+11     train         fullsvc                       T0 daily rain        rain       150 -1.970 -2.829 -1.103  0.000    NaN      True
+12     train         fullsvc                 T1 next-day rebound     rain_l1       149  0.673 -0.115  1.467  0.160  0.344     False
+13     train         fullsvc       T1b day-before (anticipation)     rain_f1       150 -1.359 -2.119 -0.593  0.004  0.042      True
+14     train         fullsvc                             placebo     rain_l7       150 -0.205 -0.998  0.593  0.671    NaN     False
+15     train         fullsvc                             placebo     rain_f7       153  0.054 -0.769  0.885  0.914    NaN     False
+16     train         fullsvc           T1c 3-day net (t-1,t,t+1)         sum       150 -2.551 -4.171 -0.904  0.011  0.065      True
+17     train         fullsvc                  T2 Sat rain -> Sun  sat_to_sun        25  1.142 -0.704  3.021  0.311  0.543     False
+18     train         fullsvc                  T2 Sun rain -> Sat  sun_to_sat        21 -2.644 -4.799 -0.439  0.049  0.203      True
+19     train         fullsvc              T3 weekly per rain day       nrain        65 -0.559 -1.129  0.014  0.108  0.299     False
+20     train         fullsvc                             placebo  nrain_next        65  0.278 -0.290  0.849  0.421    NaN     False
+21     train         fullsvc  T3b displaced (weekly - daily sum)         gap        65 -0.267 -0.871  0.359  0.500  0.674     False
+22     train         limited                       T0 daily rain        rain       150 -1.499 -2.287 -0.703  0.002    NaN      True
+23     train         limited                 T1 next-day rebound     rain_l1       149  0.492 -0.317  1.308  0.318  0.543     False
+24     train         limited       T1b day-before (anticipation)     rain_f1       150 -0.329 -1.089  0.436  0.478  0.661     False
+25     train         limited                             placebo     rain_l7       150 -0.360 -1.220  0.507  0.494    NaN     False
+26     train         limited                             placebo     rain_f7       153  0.106 -0.817  1.037  0.851    NaN     False
+27     train         limited           T1c 3-day net (t-1,t,t+1)         sum       150 -1.383 -2.802  0.056  0.114  0.300     False
+28     train         limited                  T2 Sat rain -> Sun  sat_to_sun        25  0.422 -1.647  2.534  0.739  0.850     False
+29     train         limited                  T2 Sun rain -> Sat  sun_to_sat        21 -1.531 -3.792  0.784  0.275  0.514     False
+30     train         limited              T3 weekly per rain day       nrain        65 -0.045 -0.426  0.338  0.848  0.866     False
+31     train         limited                             placebo  nrain_next        65  0.387 -0.328  1.108  0.374    NaN     False
+32     train         limited  T3b displaced (weekly - daily sum)         gap        65  0.177 -0.406  0.898  0.580  0.716     False
+33     train         outdoor                       T0 daily rain        rain       150 -1.869 -2.815 -0.915  0.001    NaN      True
+34     train         outdoor                 T1 next-day rebound     rain_l1       149  1.060 -0.019  2.151  0.106  0.299     False
+35     train         outdoor       T1b day-before (anticipation)     rain_f1       150 -1.250 -2.196 -0.293  0.032  0.142      True
+36     train         outdoor                             placebo     rain_l7       150 -0.132 -1.095  0.840  0.822    NaN     False
+37     train         outdoor                             placebo     rain_f7       153 -0.535 -1.497  0.435  0.363    NaN     False
+38     train         outdoor           T1c 3-day net (t-1,t,t+1)         sum       150 -2.065 -4.086 -0.000  0.100  0.299      True
+39     train         outdoor                  T2 Sat rain -> Sun  sat_to_sun        25  3.427  1.072  5.836  0.016  0.085      True
+40     train         outdoor                  T2 Sun rain -> Sat  sun_to_sat        21 -2.302 -4.730  0.188  0.128  0.323     False
+41     train         outdoor              T3 weekly per rain day       nrain        65 -0.228 -0.897  0.445  0.576  0.716     False
+42     train         outdoor                             placebo  nrain_next        65  0.106 -0.424  0.640  0.742    NaN     False
+43     train         outdoor  T3b displaced (weekly - daily sum)         gap        65  0.049 -0.612  0.850  0.993  0.993     False
+44     train          indoor                       T0 daily rain        rain       150 -1.730 -2.751 -0.699  0.006    NaN      True
+45     train          indoor                 T1 next-day rebound     rain_l1       149  0.485 -0.399  1.378  0.368  0.577     False
+46     train          indoor       T1b day-before (anticipation)     rain_f1       150 -1.350 -2.160 -0.533  0.007  0.059      True
+47     train          indoor                             placebo     rain_l7       150 -0.628 -1.537  0.290  0.260    NaN     False
+48     train          indoor                             placebo     rain_f7       153  0.033 -0.916  0.990  0.955    NaN     False
+49     train          indoor           T1c 3-day net (t-1,t,t+1)         sum       150 -2.458 -4.256 -0.628  0.028  0.134      True
+50     train          indoor                  T2 Sat rain -> Sun  sat_to_sun        25  1.212 -0.683  3.144  0.294  0.533     False
+51     train          indoor                  T2 Sun rain -> Sat  sun_to_sat        21 -2.680 -5.009 -0.295  0.065  0.236      True
+52     train          indoor              T3 weekly per rain day       nrain        65 -0.555 -1.080 -0.028  0.084  0.285      True
+53     train          indoor                             placebo  nrain_next        65  0.282 -0.215  0.780  0.351    NaN     False
+54     train          indoor  T3b displaced (weekly - daily sum)         gap        65 -0.299 -0.863  0.343  0.360  0.577     False
+55     train          dining                       T0 daily rain        rain       150 -1.912 -2.775 -1.040  0.000    NaN      True
+56     train          dining                 T1 next-day rebound     rain_l1       149  0.554 -0.222  1.337  0.241  0.481     False
+57     train          dining       T1b day-before (anticipation)     rain_f1       150 -1.454 -2.208 -0.694  0.002  0.033      True
+58     train          dining                             placebo     rain_l7       150 -0.451 -1.239  0.343  0.349    NaN     False
+59     train          dining                             placebo     rain_f7       153 -0.079 -0.924  0.773  0.879    NaN     False
+60     train          dining           T1c 3-day net (t-1,t,t+1)         sum       150 -2.677 -4.278 -1.049  0.007  0.059      True
+61     train          dining                  T2 Sat rain -> Sun  sat_to_sun        25  0.995 -0.690  2.708  0.333  0.552     False
+62     train          dining                  T2 Sun rain -> Sat  sun_to_sat        21 -2.639 -4.829 -0.398  0.053  0.206      True
+63     train          dining              T3 weekly per rain day       nrain        65 -0.535 -1.068  0.000  0.100  0.299     False
+64     train          dining                             placebo  nrain_next        65  0.278 -0.265  0.824  0.400    NaN     False
+65     train          dining  T3b displaced (weekly - daily sum)         gap        65 -0.252 -0.844  0.422  0.460  0.651     False
+66     train          subway                       T0 daily rain        rain       150 -1.772 -3.357 -0.161  0.071    NaN      True
+67     train          subway                 T1 next-day rebound     rain_l1       149  0.371 -0.632  1.383  0.544  0.716     False
+68     train          subway       T1b day-before (anticipation)     rain_f1       150  1.420  0.502  2.347  0.011  0.065      True
+69     train          subway                             placebo     rain_l7       150 -2.139 -3.779 -0.472  0.035    NaN      True
+70     train          subway                             placebo     rain_f7       153  0.891 -0.630  2.436  0.337    NaN     False
+71     train          subway           T1c 3-day net (t-1,t,t+1)         sum       150 -0.368 -2.468  1.778  0.776  0.850     False
+72     train          subway                  T2 Sat rain -> Sun  sat_to_sun        25 -0.413 -2.619  1.842  0.761  0.850     False
+73     train          subway                  T2 Sun rain -> Sat  sun_to_sat        21  1.017 -1.794  3.910  0.555  0.716     False
+74     train          subway              T3 weekly per rain day       nrain        65 -0.040 -0.392  0.312  0.851  0.866     False
+75     train          subway                             placebo  nrain_next        65  0.460  0.039  0.882  0.072    NaN      True
+76     train          subway  T3b displaced (weekly - daily sum)         gap        65  0.216 -0.216  0.734  0.433  0.628     False
+77     train             fhv                       T0 daily rain        rain       150  3.861  2.605  5.133  0.000    NaN      True
+78     train             fhv                 T1 next-day rebound     rain_l1       149  0.883 -0.096  1.872  0.138  0.331     False
+79     train             fhv       T1b day-before (anticipation)     rain_f1       150  0.759 -0.169  1.695  0.179  0.370     False
+80     train             fhv                             placebo     rain_l7       150 -1.414 -2.414 -0.404  0.022    NaN      True
+81     train             fhv                             placebo     rain_f7       153  0.200 -1.146  1.564  0.808    NaN     False
+82     train             fhv           T1c 3-day net (t-1,t,t+1)         sum       150  5.230  3.274  7.224  0.000  0.000      True
+83     train             fhv                  T2 Sat rain -> Sun  sat_to_sun        25 -1.155 -3.476  1.222  0.421  0.627     False
+84     train             fhv                  T2 Sun rain -> Sat  sun_to_sat        21 -0.431 -2.900  2.100  0.777  0.850     False
+85     train             fhv              T3 weekly per rain day       nrain        65  0.791  0.395  1.188  0.001  0.029      True
+86     train             fhv                             placebo  nrain_next        65  0.419 -0.051  0.892  0.143    NaN     False
+87     train             fhv  T3b displaced (weekly - daily sum)         gap        65  0.207 -0.183  0.763  0.380  0.580     False
+88     train  outdoor-indoor               T4 spatial (all days)        rain       150 -0.141 -0.759  0.480  0.708  0.838     False
+89     train  outdoor-indoor               T4 spatial (weekends)        rain        46  0.672 -0.313  1.668  0.263  0.508     False
+90   holdout            bars                       T0 daily rain        rain       202 -2.635 -3.621 -1.638  0.000    NaN      True
+91   holdout            bars                 T1 next-day rebound     rain_l1       202 -0.710 -1.635  0.224  0.211  0.382     False
+92   holdout            bars       T1b day-before (anticipation)     rain_f1       202 -0.700 -1.581  0.188  0.194  0.376     False
+93   holdout            bars                             placebo     rain_l7       201 -0.673 -1.649  0.312  0.260    NaN     False
+94   holdout            bars                             placebo     rain_f7       198  0.138 -0.737  1.020  0.796    NaN     False
+95   holdout            bars           T1c 3-day net (t-1,t,t+1)         sum       202 -3.765 -5.713 -1.778  0.002  0.016      True
+96   holdout            bars                  T2 Sat rain -> Sun  sat_to_sun        29  1.615 -0.683  3.965  0.249  0.410     False
+97   holdout            bars                  T2 Sun rain -> Sat  sun_to_sat        34  1.941 -0.722  4.675  0.232  0.408     False
+98   holdout            bars              T3 weekly per rain day       nrain        77 -1.048 -1.608 -0.484  0.002  0.016      True
+99   holdout            bars                             placebo  nrain_next        77  0.038 -0.442  0.520  0.898    NaN     False
+100  holdout            bars  T3b displaced (weekly - daily sum)         gap        77 -0.675 -1.283  0.015  0.107  0.326     False
+101  holdout         fullsvc                       T0 daily rain        rain       202 -1.631 -2.223 -1.036  0.000    NaN      True
+102  holdout         fullsvc                 T1 next-day rebound     rain_l1       202 -0.189 -0.764  0.389  0.590  0.684     False
+103  holdout         fullsvc       T1b day-before (anticipation)     rain_f1       202 -0.479 -1.043  0.088  0.164  0.367     False
+104  holdout         fullsvc                             placebo     rain_l7       201  0.143 -0.479  0.769  0.706    NaN     False
+105  holdout         fullsvc                             placebo     rain_f7       198  1.054  0.456  1.655  0.004    NaN      True
+106  holdout         fullsvc           T1c 3-day net (t-1,t,t+1)         sum       202 -2.175 -3.290 -1.048  0.002  0.015      True
+107  holdout         fullsvc                  T2 Sat rain -> Sun  sat_to_sun        29  1.107 -0.339  2.575  0.209  0.382     False
+108  holdout         fullsvc                  T2 Sun rain -> Sat  sun_to_sat        34  0.994 -0.577  2.591  0.299  0.460     False
+109  holdout         fullsvc              T3 weekly per rain day       nrain        77 -0.615 -0.959 -0.269  0.003  0.020      True
+110  holdout         fullsvc                             placebo  nrain_next        77  0.792 -0.196  1.791  0.188    NaN     False
+111  holdout         fullsvc  T3b displaced (weekly - daily sum)         gap        77 -0.383 -0.865  0.056  0.173  0.372     False
+112  holdout         limited                       T0 daily rain        rain       202 -0.951 -1.480 -0.420  0.003    NaN      True
+113  holdout         limited                 T1 next-day rebound     rain_l1       202  0.257 -0.230  0.747  0.385  0.535     False
+114  holdout         limited       T1b day-before (anticipation)     rain_f1       202  0.335 -0.302  0.975  0.387  0.535     False
+115  holdout         limited                             placebo     rain_l7       201  0.159 -0.460  0.782  0.673    NaN     False
+116  holdout         limited                             placebo     rain_f7       198  0.907  0.263  1.555  0.020    NaN      True
+117  holdout         limited           T1c 3-day net (t-1,t,t+1)         sum       202 -0.427 -1.462  0.618  0.500  0.617     False
+118  holdout         limited                  T2 Sat rain -> Sun  sat_to_sun        29  1.024 -0.693  2.771  0.328  0.488     False
+119  holdout         limited                  T2 Sun rain -> Sat  sun_to_sat        34  1.793 -0.070  3.691  0.113  0.326     False
+120  holdout         limited              T3 weekly per rain day       nrain        77 -0.130 -0.431  0.171  0.477  0.601     False
+121  holdout         limited                             placebo  nrain_next        77  0.943  0.012  1.883  0.096    NaN      True
+122  holdout         limited  T3b displaced (weekly - daily sum)         gap        77  0.005 -0.400  0.466  0.847  0.862     False
+123  holdout         outdoor                       T0 daily rain        rain       202 -2.288 -3.130 -1.439  0.000    NaN      True
+124  holdout         outdoor                 T1 next-day rebound     rain_l1       202 -0.278 -1.030  0.480  0.545  0.645     False
+125  holdout         outdoor       T1b day-before (anticipation)     rain_f1       202 -0.669 -1.367  0.035  0.118  0.326     False
+126  holdout         outdoor                             placebo     rain_l7       201 -0.356 -1.119  0.414  0.446    NaN     False
+127  holdout         outdoor                             placebo     rain_f7       198  0.995  0.269  1.726  0.024    NaN      True
+128  holdout         outdoor           T1c 3-day net (t-1,t,t+1)         sum       202 -3.055 -4.674 -1.408  0.002  0.016      True
+129  holdout         outdoor                  T2 Sat rain -> Sun  sat_to_sun        29  1.801 -0.167  3.807  0.132  0.334     False
+130  holdout         outdoor                  T2 Sun rain -> Sat  sun_to_sat        34  0.567 -1.345  2.515  0.628  0.714     False
+131  holdout         outdoor              T3 weekly per rain day       nrain        77 -0.902 -1.348 -0.455  0.001  0.015      True
+132  holdout         outdoor                             placebo  nrain_next        77  0.558 -0.451  1.577  0.364    NaN     False
+133  holdout         outdoor  T3b displaced (weekly - daily sum)         gap        77 -0.578 -1.164  0.075  0.160  0.367     False
+134  holdout          indoor                       T0 daily rain        rain       202 -1.787 -2.501 -1.068  0.000    NaN      True
+135  holdout          indoor                 T1 next-day rebound     rain_l1       202 -0.521 -1.159  0.121  0.182  0.376     False
+136  holdout          indoor       T1b day-before (anticipation)     rain_f1       202 -0.561 -1.145  0.026  0.116  0.326     False
+137  holdout          indoor                             placebo     rain_l7       201  0.371 -0.315  1.061  0.374    NaN     False
+138  holdout          indoor                             placebo     rain_f7       198  0.764  0.127  1.405  0.048    NaN      True
+139  holdout          indoor           T1c 3-day net (t-1,t,t+1)         sum       202 -2.646 -3.962 -1.313  0.001  0.015      True
+140  holdout          indoor                  T2 Sat rain -> Sun  sat_to_sun        29  1.243 -0.502  3.019  0.243  0.410     False
+141  holdout          indoor                  T2 Sun rain -> Sat  sun_to_sat        34  0.303 -1.431  2.068  0.775  0.818     False
+142  holdout          indoor              T3 weekly per rain day       nrain        77 -0.769 -1.130 -0.407  0.000  0.015      True
+143  holdout          indoor                             placebo  nrain_next        77  0.502 -0.380  1.392  0.350    NaN     False
+144  holdout          indoor  T3b displaced (weekly - daily sum)         gap        77 -0.516 -0.954  0.012  0.113  0.326     False
+145  holdout          dining                       T0 daily rain        rain       202 -1.860 -2.492 -1.223  0.000    NaN      True
+146  holdout          dining                 T1 next-day rebound     rain_l1       202 -0.302 -0.897  0.296  0.406  0.535     False
+147  holdout          dining       T1b day-before (anticipation)     rain_f1       202 -0.544 -1.126  0.042  0.127  0.334     False
+148  holdout          dining                             placebo     rain_l7       201 -0.035 -0.683  0.616  0.929    NaN     False
+149  holdout          dining                             placebo     rain_f7       198  0.846  0.260  1.435  0.017    NaN      True
+150  holdout          dining           T1c 3-day net (t-1,t,t+1)         sum       202 -2.545 -3.758 -1.316  0.001  0.015      True
+151  holdout          dining                  T2 Sat rain -> Sun  sat_to_sun        29  1.236 -0.216  2.710  0.162  0.367     False
+152  holdout          dining                  T2 Sun rain -> Sat  sun_to_sat        34  1.153 -0.507  2.842  0.254  0.410     False
+153  holdout          dining              T3 weekly per rain day       nrain        77 -0.708 -1.073 -0.342  0.001  0.015      True
+154  holdout          dining                             placebo  nrain_next        77  0.624 -0.212  1.466  0.220    NaN     False
+155  holdout          dining  T3b displaced (weekly - daily sum)         gap        77 -0.444 -0.940 -0.007  0.080  0.309      True
+156  holdout          subway                       T0 daily rain        rain       202 -3.474 -4.790 -2.141  0.000    NaN      True
+157  holdout          subway                 T1 next-day rebound     rain_l1       202 -0.900 -2.550  0.778  0.376  0.535     False
+158  holdout          subway       T1b day-before (anticipation)     rain_f1       202 -0.194 -1.466  1.095  0.804  0.832     False
+159  holdout          subway                             placebo     rain_l7       201 -1.935 -3.548 -0.294  0.053    NaN      True
+160  holdout          subway                             placebo     rain_f7       198  1.396 -0.167  2.984  0.142    NaN     False
+161  holdout          subway           T1c 3-day net (t-1,t,t+1)         sum       202 -4.437 -7.145 -1.650  0.009  0.050      True
+162  holdout          subway                  T2 Sat rain -> Sun  sat_to_sun        29  2.082 -1.967  6.298  0.402  0.535     False
+163  holdout          subway                  T2 Sun rain -> Sat  sun_to_sat        34  1.332 -1.600  4.351  0.459  0.591     False
+164  holdout          subway              T3 weekly per rain day       nrain        77 -0.681 -1.222 -0.138  0.039  0.175      True
+165  holdout          subway                             placebo  nrain_next        77  0.733  0.153  1.316  0.037    NaN      True
+166  holdout          subway  T3b displaced (weekly - daily sum)         gap        77 -0.198 -0.862  0.563  0.653  0.725     False
+167  holdout             fhv                       T0 daily rain        rain        96  2.976  1.985  3.977  0.000    NaN      True
+168  holdout             fhv                 T1 next-day rebound     rain_l1        97  0.471 -0.777  1.735  0.536  0.645     False
+169  holdout             fhv       T1b day-before (anticipation)     rain_f1        96 -0.921 -2.078  0.249  0.195  0.376     False
+170  holdout             fhv                             placebo     rain_l7        96 -0.745 -1.927  0.451  0.304    NaN     False
+171  holdout             fhv                             placebo     rain_f7        93  0.369 -0.454  1.199  0.462    NaN     False
+172  holdout             fhv           T1c 3-day net (t-1,t,t+1)         sum        96  2.589  0.431  4.794  0.048  0.199      True
+173  holdout             fhv                  T2 Sat rain -> Sun  sat_to_sun        17  0.944 -2.570  4.585  0.663  0.725     False
+174  holdout             fhv                  T2 Sun rain -> Sat  sun_to_sat        12 -0.684 -4.540  3.328  0.776  0.818     False
+175  holdout             fhv              T3 weekly per rain day       nrain        38  0.614 -0.361  1.599  0.301  0.460     False
+176  holdout             fhv                             placebo  nrain_next        38  0.153 -0.558  0.870  0.724    NaN     False
+177  holdout             fhv  T3b displaced (weekly - daily sum)         gap        38  0.173 -1.073  1.330  0.973  0.973     False
+178  holdout  outdoor-indoor               T4 spatial (all days)        rain       202 -0.510 -1.013 -0.005  0.097  0.326      True
+179  holdout  outdoor-indoor               T4 spatial (weekends)        rain        63 -0.878 -1.497 -0.255  0.021  0.100      True
+                                                              n_events_tr  pct_tr  lo_tr  hi_tr  q_bh_tr  pct_ho  lo_ho  hi_ho  q_bh_ho  found
+series         test                               term                                                                                        
+bars           T0 daily rain                      rain                150  -1.690 -2.876 -0.490      NaN  -2.635 -3.621 -1.638      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.131 -0.842  1.114    0.866  -0.710 -1.635  0.224    0.382  False
+               T1b day-before (anticipation)      rain_f1             150  -1.797 -2.788 -0.795    0.042  -0.700 -1.581  0.188    0.376  False
+               placebo                            rain_l7             150  -1.285 -2.362 -0.196      NaN  -0.673 -1.649  0.312      NaN    NaN
+                                                  rain_f7             153  -0.495 -1.719  0.744      NaN   0.138 -0.737  1.020      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -3.116 -5.075 -1.118    0.065  -3.765 -5.713 -1.778    0.016   True
+               T2 Sat rain -> Sun                 sat_to_sun           25   0.299 -1.897  2.545    0.866   1.615 -0.683  3.965    0.410  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -2.782 -5.811  0.344    0.331   1.941 -0.722  4.675    0.408  False
+               T3 weekly per rain day             nrain                65  -0.450 -0.961  0.063    0.332  -1.048 -1.608 -0.484    0.016  False
+               placebo                            nrain_next           65   0.319 -0.277  0.920      NaN   0.038 -0.442  0.520      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65  -0.201 -0.806  0.592    0.773  -0.675 -1.283  0.015    0.326  False
+fullsvc        T0 daily rain                      rain                150  -1.970 -2.829 -1.103      NaN  -1.631 -2.223 -1.036      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.673 -0.115  1.467    0.344  -0.189 -0.764  0.389    0.684  False
+               T1b day-before (anticipation)      rain_f1             150  -1.359 -2.119 -0.593    0.042  -0.479 -1.043  0.088    0.367  False
+               placebo                            rain_l7             150  -0.205 -0.998  0.593      NaN   0.143 -0.479  0.769      NaN    NaN
+                                                  rain_f7             153   0.054 -0.769  0.885      NaN   1.054  0.456  1.655      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -2.551 -4.171 -0.904    0.065  -2.175 -3.290 -1.048    0.015   True
+               T2 Sat rain -> Sun                 sat_to_sun           25   1.142 -0.704  3.021    0.543   1.107 -0.339  2.575    0.382  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -2.644 -4.799 -0.439    0.203   0.994 -0.577  2.591    0.460  False
+               T3 weekly per rain day             nrain                65  -0.559 -1.129  0.014    0.299  -0.615 -0.959 -0.269    0.020  False
+               placebo                            nrain_next           65   0.278 -0.290  0.849      NaN   0.792 -0.196  1.791      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65  -0.267 -0.871  0.359    0.674  -0.383 -0.865  0.056    0.372  False
+limited        T0 daily rain                      rain                150  -1.499 -2.287 -0.703      NaN  -0.951 -1.480 -0.420      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.492 -0.317  1.308    0.543   0.257 -0.230  0.747    0.535  False
+               T1b day-before (anticipation)      rain_f1             150  -0.329 -1.089  0.436    0.661   0.335 -0.302  0.975    0.535  False
+               placebo                            rain_l7             150  -0.360 -1.220  0.507      NaN   0.159 -0.460  0.782      NaN    NaN
+                                                  rain_f7             153   0.106 -0.817  1.037      NaN   0.907  0.263  1.555      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -1.383 -2.802  0.056    0.300  -0.427 -1.462  0.618    0.617  False
+               T2 Sat rain -> Sun                 sat_to_sun           25   0.422 -1.647  2.534    0.850   1.024 -0.693  2.771    0.488  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -1.531 -3.792  0.784    0.514   1.793 -0.070  3.691    0.326  False
+               T3 weekly per rain day             nrain                65  -0.045 -0.426  0.338    0.866  -0.130 -0.431  0.171    0.601  False
+               placebo                            nrain_next           65   0.387 -0.328  1.108      NaN   0.943  0.012  1.883      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65   0.177 -0.406  0.898    0.716   0.005 -0.400  0.466    0.862  False
+outdoor        T0 daily rain                      rain                150  -1.869 -2.815 -0.915      NaN  -2.288 -3.130 -1.439      NaN    NaN
+               T1 next-day rebound                rain_l1             149   1.060 -0.019  2.151    0.299  -0.278 -1.030  0.480    0.645  False
+               T1b day-before (anticipation)      rain_f1             150  -1.250 -2.196 -0.293    0.142  -0.669 -1.367  0.035    0.326  False
+               placebo                            rain_l7             150  -0.132 -1.095  0.840      NaN  -0.356 -1.119  0.414      NaN    NaN
+                                                  rain_f7             153  -0.535 -1.497  0.435      NaN   0.995  0.269  1.726      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -2.065 -4.086 -0.000    0.299  -3.055 -4.674 -1.408    0.016  False
+               T2 Sat rain -> Sun                 sat_to_sun           25   3.427  1.072  5.836    0.085   1.801 -0.167  3.807    0.334  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -2.302 -4.730  0.188    0.323   0.567 -1.345  2.515    0.714  False
+               T3 weekly per rain day             nrain                65  -0.228 -0.897  0.445    0.716  -0.902 -1.348 -0.455    0.015  False
+               placebo                            nrain_next           65   0.106 -0.424  0.640      NaN   0.558 -0.451  1.577      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65   0.049 -0.612  0.850    0.993  -0.578 -1.164  0.075    0.367  False
+indoor         T0 daily rain                      rain                150  -1.730 -2.751 -0.699      NaN  -1.787 -2.501 -1.068      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.485 -0.399  1.378    0.577  -0.521 -1.159  0.121    0.376  False
+               T1b day-before (anticipation)      rain_f1             150  -1.350 -2.160 -0.533    0.059  -0.561 -1.145  0.026    0.326  False
+               placebo                            rain_l7             150  -0.628 -1.537  0.290      NaN   0.371 -0.315  1.061      NaN    NaN
+                                                  rain_f7             153   0.033 -0.916  0.990      NaN   0.764  0.127  1.405      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -2.458 -4.256 -0.628    0.134  -2.646 -3.962 -1.313    0.015  False
+               T2 Sat rain -> Sun                 sat_to_sun           25   1.212 -0.683  3.144    0.533   1.243 -0.502  3.019    0.410  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -2.680 -5.009 -0.295    0.236   0.303 -1.431  2.068    0.818  False
+               T3 weekly per rain day             nrain                65  -0.555 -1.080 -0.028    0.285  -0.769 -1.130 -0.407    0.015  False
+               placebo                            nrain_next           65   0.282 -0.215  0.780      NaN   0.502 -0.380  1.392      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65  -0.299 -0.863  0.343    0.577  -0.516 -0.954  0.012    0.326  False
+dining         T0 daily rain                      rain                150  -1.912 -2.775 -1.040      NaN  -1.860 -2.492 -1.223      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.554 -0.222  1.337    0.481  -0.302 -0.897  0.296    0.535  False
+               T1b day-before (anticipation)      rain_f1             150  -1.454 -2.208 -0.694    0.033  -0.544 -1.126  0.042    0.334  False
+               placebo                            rain_l7             150  -0.451 -1.239  0.343      NaN  -0.035 -0.683  0.616      NaN    NaN
+                                                  rain_f7             153  -0.079 -0.924  0.773      NaN   0.846  0.260  1.435      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -2.677 -4.278 -1.049    0.059  -2.545 -3.758 -1.316    0.015   True
+               T2 Sat rain -> Sun                 sat_to_sun           25   0.995 -0.690  2.708    0.552   1.236 -0.216  2.710    0.367  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -2.639 -4.829 -0.398    0.206   1.153 -0.507  2.842    0.410  False
+               T3 weekly per rain day             nrain                65  -0.535 -1.068  0.000    0.299  -0.708 -1.073 -0.342    0.015  False
+               placebo                            nrain_next           65   0.278 -0.265  0.824      NaN   0.624 -0.212  1.466      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65  -0.252 -0.844  0.422    0.651  -0.444 -0.940 -0.007    0.309  False
+subway         T0 daily rain                      rain                150  -1.772 -3.357 -0.161      NaN  -3.474 -4.790 -2.141      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.371 -0.632  1.383    0.716  -0.900 -2.550  0.778    0.535  False
+               T1b day-before (anticipation)      rain_f1             150   1.420  0.502  2.347    0.065  -0.194 -1.466  1.095    0.832  False
+               placebo                            rain_l7             150  -2.139 -3.779 -0.472      NaN  -1.935 -3.548 -0.294      NaN    NaN
+                                                  rain_f7             153   0.891 -0.630  2.436      NaN   1.396 -0.167  2.984      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150  -0.368 -2.468  1.778    0.850  -4.437 -7.145 -1.650    0.050  False
+               T2 Sat rain -> Sun                 sat_to_sun           25  -0.413 -2.619  1.842    0.850   2.082 -1.967  6.298    0.535  False
+               T2 Sun rain -> Sat                 sun_to_sat           21   1.017 -1.794  3.910    0.716   1.332 -1.600  4.351    0.591  False
+               T3 weekly per rain day             nrain                65  -0.040 -0.392  0.312    0.866  -0.681 -1.222 -0.138    0.175  False
+               placebo                            nrain_next           65   0.460  0.039  0.882      NaN   0.733  0.153  1.316      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65   0.216 -0.216  0.734    0.628  -0.198 -0.862  0.563    0.725  False
+fhv            T0 daily rain                      rain                150   3.861  2.605  5.133      NaN   2.976  1.985  3.977      NaN    NaN
+               T1 next-day rebound                rain_l1             149   0.883 -0.096  1.872    0.331   0.471 -0.777  1.735    0.645  False
+               T1b day-before (anticipation)      rain_f1             150   0.759 -0.169  1.695    0.370  -0.921 -2.078  0.249    0.376  False
+               placebo                            rain_l7             150  -1.414 -2.414 -0.404      NaN  -0.745 -1.927  0.451      NaN    NaN
+                                                  rain_f7             153   0.200 -1.146  1.564      NaN   0.369 -0.454  1.199      NaN    NaN
+               T1c 3-day net (t-1,t,t+1)          sum                 150   5.230  3.274  7.224    0.000   2.589  0.431  4.794    0.199   True
+               T2 Sat rain -> Sun                 sat_to_sun           25  -1.155 -3.476  1.222    0.627   0.944 -2.570  4.585    0.725  False
+               T2 Sun rain -> Sat                 sun_to_sat           21  -0.431 -2.900  2.100    0.850  -0.684 -4.540  3.328    0.818  False
+               T3 weekly per rain day             nrain                65   0.791  0.395  1.188    0.029   0.614 -0.361  1.599    0.460  False
+               placebo                            nrain_next           65   0.419 -0.051  0.892      NaN   0.153 -0.558  0.870      NaN    NaN
+               T3b displaced (weekly - daily sum) gap                  65   0.207 -0.183  0.763    0.580   0.173 -1.073  1.330    0.973  False
+outdoor-indoor T4 spatial (all days)              rain                150  -0.141 -0.759  0.480    0.838  -0.510 -1.013 -0.005    0.326  False
+               T4 spatial (weekends)              rain                 46   0.672 -0.313  1.668    0.508  -0.878 -1.497 -0.255    0.100  False
+      split   series  daily_implied_pct_of_week  weekly_net_pct  net_over_daily  ratio_lo  ratio_hi  overhedge  gap_pp  gap_lo  gap_hi  p_gap    B  weeks
+0     train     bars                     -0.249          -0.450           1.809    -1.921     4.315      0.553  -0.201  -0.806   0.592  0.640  300     65
+1     train  fullsvc                     -0.292          -0.559           1.913    -0.976     4.109      0.523  -0.267  -0.871   0.359  0.500  300     65
+2     train  limited                     -0.221          -0.045           0.202    -5.801     2.712      4.952   0.177  -0.406   0.898  0.580  300     65
+3     train  outdoor                     -0.277          -0.228           0.824    -4.032     3.008      1.213   0.049  -0.612   0.850  0.993  300     65
+4     train   indoor                     -0.256          -0.555           2.169    -0.645     5.383      0.461  -0.299  -0.863   0.343  0.360  300     65
+5     train   dining                     -0.283          -0.535           1.891    -0.928     4.091      0.529  -0.252  -0.844   0.422  0.460  300     65
+6     train   subway                     -0.256          -0.040           0.157    -3.366     2.438      6.352   0.216  -0.216   0.734  0.433  300     65
+7     train      fhv                      0.583           0.791           1.355     0.621     2.471      0.738   0.207  -0.183   0.763  0.380  300     65
+8   holdout     bars                     -0.372          -1.048           2.813     0.904     4.937      0.355  -0.675  -1.283   0.015  0.107  300     77
+9   holdout  fullsvc                     -0.232          -0.615           2.653     0.734     5.244      0.377  -0.383  -0.865   0.056  0.173  300     77
+10  holdout  limited                     -0.135          -0.130           0.965    -2.687     4.606      1.036   0.005  -0.400   0.466  0.847  300     77
+11  holdout  outdoor                     -0.325          -0.902           2.779     0.704     5.003      0.360  -0.578  -1.164   0.075  0.160  300     77
+12  holdout   indoor                     -0.253          -0.769           3.034     0.956     5.652      0.330  -0.516  -0.954   0.012  0.113  300     77
+13  holdout   dining                     -0.264          -0.708           2.684     1.028     4.849      0.373  -0.444  -0.940  -0.007  0.080  300     77
+14  holdout   subway                     -0.483          -0.681           1.411    -0.278     2.861      0.709  -0.198  -0.862   0.563  0.653  300     77
+15  holdout      fhv                      0.442           0.614           1.391    -1.804     3.764      0.719   0.173  -1.073   1.330  0.973  300     38
+BH family size per split: 58
+hedge: train daily beta -1.91%, price 0.349, typical venue 8795 in basket
+                           k  daily_sd  weekly_sd  weekly_p5  weekly_mean
+none                     0.0     310.6     1364.9    -2677.0         -0.0
+same_day_beta (1.0x)     1.0     305.2     1330.4    -2635.0          5.0
+deferral haircut (0.5x)  0.5     306.1     1344.5    -2631.5          2.5
+3-day net (1.40x)        1.4     307.2     1323.6    -2615.8          7.0
+weekly net (1.89x)       1.9     312.7     1320.9    -2540.7          9.5
+corr(#rain days, weekly total): 0.523 {0.5: np.float64(0.538), 1.0: np.float64(0.459), 2.0: np.float64(0.268)}

@@ -1,0 +1,5 @@
+outcome,family,visits_per_store_day,R_usd_day,pct_per_night,usd_per_night,usd_lo,usd_hi,nights_2024,nights_2025,usd_run_2024
+bars_all,yankees_ps,391.7,1.371e+04,0.7783,106.7,-470.5,683.9,14,7,1494
+bars_all,mets_ps,391.7,1.371e+04,0.5967,81.8,-550.2,713.8,13,0,1063
+fullsvc_all,yankees_ps,174.5,6107,-0.718,-43.85,-181.6,93.88,14,7,-613.8
+fullsvc_all,mets_ps,174.5,6107,1.63,99.55,-51.33,250.4,13,0,1294

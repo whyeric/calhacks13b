@@ -1,0 +1,99 @@
+# Warriors post-season (play-in = stype 5, playoffs = 3) home games
+  2017: 17 games, 9 home (Oracle Arena); last: NBA FINALS - GAME 5
+  2018: 21 games, 11 home (Oracle Arena); last: NBA FINALS - GAME 4
+  2019: 22 games, 11 home (Oracle Arena); last: NBA FINALS - GAME 6
+  2021: 2 games, 1 home (Chase Center); last: NBA Play-In - West - 8th Seed Game
+  2022: 22 games, 12 home (Chase Center); last: NBA Finals - Game 6
+  2023: 13 games, 6 home (Chase Center); last: West Semifinals - Game 6
+  2024: 1 games, 0 home (); last: NBA Play-In - West - 9th Place vs 10th Place
+  2025: 13 games, 6 home (Chase Center); last: West Semifinals - Game 5
+  2026: 2 games, 0 home (); last: NBA Play-In - West - 8th Seed Game
+# Giants post-season games: 2021: 5 (3 home)
+
+# 1. Per-game uplift (log points; Mon-Sat; ym+DOW FE, holiday, all game dummies)
+series  event          period       beta             90% CI  n_ev       p
+chase   gsw_po         train      +0.351 [+0.146,+0.556]    11  0.0050  p_bh=0.0100
+chase   gsw_reg        train      +0.771 [+0.685,+0.856]    34  0.0000  p_bh=0.0000
+chase   po_minus_reg   train      -0.420 [-0.643,-0.196]     -  0.0019  p_bh=0.0042
+chase   gsw_po         holdout    +0.622 [+0.479,+0.765]    11  0.0000  p_bh=0.0000
+chase   gsw_reg        holdout    +0.669 [+0.616,+0.723]   125  0.0000  p_bh=0.0000
+chase   po_minus_reg   holdout    -0.048 [-0.197,+0.102]     -  0.5999  p_bh=0.6599
+chase   sfg_po         2021       +0.419 [+0.159,+0.679]     3  0.0086  p_bh=0.0145
+chase   sfg_reg        2021       +0.825 [+0.744,+0.907]    44  0.0000  p_bh=0.0000
+chase   sfg:po_minus_reg 2021       -0.407 [-0.671,-0.143]     -  0.0108  p_bh=0.0169
+chase   oak_po(placebo) 2017-19    -0.044 [-0.105,+0.016]    25  0.2254  p_bh=0.2755
+chase   oak_reg(placebo) 2017-19    -0.056 [-0.108,-0.003]    94  0.0808  p_bh=0.1111
+oracle  gsw_po         train      +0.209 [+0.080,+0.339]    11  0.0081  p_bh=0.0145
+oracle  gsw_reg        train      +0.250 [+0.183,+0.317]    34  0.0000  p_bh=0.0000
+oracle  po_minus_reg   train      -0.041 [-0.185,+0.103]     -  0.6394  p_bh=0.6698
+oracle  gsw_po         holdout    +0.227 [+0.110,+0.344]    11  0.0014  p_bh=0.0034
+oracle  gsw_reg        holdout    +0.165 [+0.127,+0.202]   124  0.0000  p_bh=0.0000
+oracle  po_minus_reg   holdout    +0.062 [-0.056,+0.181]     -  0.3858  p_bh=0.4468
+oracle  sfg_po         2021       +0.740 [+0.421,+1.058]     3  0.0002  p_bh=0.0005
+oracle  sfg_reg        2021       +1.025 [+0.936,+1.114]    44  0.0000  p_bh=0.0000
+oracle  sfg:po_minus_reg 2021       -0.285 [-0.609,+0.039]     -  0.1451  p_bh=0.1878
+oracle  oak_po(placebo) 2017-19    -0.008 [-0.046,+0.031]    25  0.7414  p_bh=0.7414
+oracle  oak_reg(placebo) 2017-19    -0.058 [-0.101,-0.015]    94  0.0262  p_bh=0.0384
+22 tests, BH at 10% over all of them.
+$ uplift chase train: playoff +$1,810 [+604,+3,016] per game, regular +$4,377 [+3,959,+4,795]
+$ uplift chase holdout: playoff +$4,496 [+3,439,+5,554] per game, regular +$4,468 [+4,064,+4,871]
+$ uplift oracle train: playoff +$1,194 [+263,+2,125] per game, regular +$1,046 [+703,+1,389]
+$ uplift oracle holdout: playoff +$1,061 [+518,+1,603] per game, regular +$744 [+477,+1,011]
+Pooled 2022-2026 chase-block $ uplift per playoff home game (Mon-Sat): $3,220 (se 615); regular $4,439. With Sundays + Sunday-game term: po $2,901, Sunday game extra $-83.
+Oracle-park blocks: Warriors playoff $1,140/game; Giants 2021 NLDS $5,215/game [+2,861,+7,569] (n=3) vs Giants reg $7,380
+
+Per-date excess on chase blocks (rev - same ym x DOW non-game median), by season:
+  2021: 1 home dates, excess $4,299 total, $4,299/game (min 4,299, max 4,299)
+  2022: 12 home dates, excess $22,919 total, $2,292/game (min -11,407, max 9,350)
+  2023: 6 home dates, excess $40,427 total, $6,738/game (min 4,806, max 11,747)
+  2025: 6 home dates, excess $49,914 total, $8,319/game (min 6,155, max 13,343)
+
+# 2. $ at stake per round (chase blocks, U = $3,220/home game)
+Series table, best-of-7 2-2-1-1-1: P(win), E[home games], E[home|win], E[home|lose]
+  wp 0.65 vs 0.55, HCA=True : P(win)=0.73  E[H]=3.13 (|win 3.09, |lose 3.25)  P(H=2,3,4)=0.15,0.57,0.28  -> $10,079 this round
+  wp 0.55 vs 0.65, HCA=False: P(win)=0.27  E[H]=2.57 (|win 2.73, |lose 2.51)  P(H=2,3,4)=0.43,0.57,0.00  -> $8,262 this round
+  wp 0.60 vs 0.60, HCA=True : P(win)=0.53  E[H]=3.20 (|win 3.24, |lose 3.16)  P(H=2,3,4)=0.12,0.56,0.32  -> $10,301 this round
+  wp 0.60 vs 0.60, HCA=False: P(win)=0.47  E[H]=2.63 (|win 2.65, |lose 2.61)  P(H=2,3,4)=0.37,0.63,0.00  -> $8,474 this round
+  wp 0.50 vs 0.70, HCA=False: P(win)=0.12  E[H]=2.43 (|win 2.78, |lose 2.38)  P(H=2,3,4)=0.57,0.43,0.00  -> $7,819 this round
+  team wp 0.50: $ at stake on winning R1 = $10,448, R2 = $9,561, WCF = $8,024, Finals = $0; whole run from R1 E=$12,265
+  team wp 0.60: $ at stake on winning R1 = $13,373, R2 = $11,440, WCF = $8,378, Finals = $0; whole run from R1 E=$18,712
+  team wp 0.70: $ at stake on winning R1 = $22,054, R2 = $16,847, WCF = $10,256, Finals = $0; whole run from R1 E=$27,974
+
+# 3-4. Kalshi markets and pre-round hedge backtest (Warriors, Chase era)
+2022 (GSW reg wp 0.646): realized playoff/play-in excess $22,919; hedge P&L $-18,755; hedged $4,165
+    R1 vs DEN (opp wp 0.585, HCA=True): P(yes) 0.66 [model], stake $17,557 -> buy 17,557 NO @ 0.36+fee 0.016; advanced=True; P&L $-6,607
+    R2 vs MEM (opp wp 0.683, HCA=False): P(yes) 0.39 [model], stake $12,417 -> buy 12,417 NO @ 0.63+fee 0.016; advanced=True; P&L $-8,053
+    R3 vs DAL (opp wp 0.634, HCA=True): P(yes) 0.55 [model], stake $8,463 -> buy 8,463 NO @ 0.47+fee 0.017; advanced=True; P&L $-4,094
+    R4 vs BOS (opp wp 0.622, HCA=True): P(yes) 0.58 [model], stake $0 -> buy 0 NO @ 0.44+fee 0.017; advanced=True; P&L $-0
+2023 (GSW reg wp 0.537): realized playoff/play-in excess $40,427; hedge P&L $-2,331; hedged $38,096
+    R1 vs SAC (opp wp 0.585, HCA=False): P(yes) 0.37 [model], stake $11,374 -> buy 11,374 NO @ 0.65+fee 0.016; advanced=True; P&L $-7,571
+    R2 vs LAL (opp wp 0.524, HCA=True): P(yes) 0.55 [model], stake $10,195 -> buy 10,195 NO @ 0.47+fee 0.017; advanced=False; P&L $+5,241
+2024 (GSW reg wp 0.561): realized playoff/play-in excess $0; hedge P&L $+2,650; hedged $2,650
+    make playoffs (seed 10, play-in): P(yes) 0.19 [model], stake $16,932 -> buy 16,932 NO @ 0.83+fee 0.010; advanced=False; P&L $+2,650
+2025 (GSW reg wp 0.585): realized playoff/play-in excess $49,914; hedge P&L $-2,936; hedged $46,978
+    make playoffs (seed 7, play-in): P(yes) 0.93 [Kalshi 2025-04-15 bid/ask 0.92/0.94 vol 1,175], stake $18,017 -> buy 18,017 NO @ 0.08+fee 0.005; advanced=True; P&L $-1,534
+    R1 vs HOU (opp wp 0.634, HCA=False): P(yes) 0.61 [Kalshi 2025-04-20 bid/ask 0.61/0.62 vol 91,844], stake $12,867 -> buy 12,867 NO @ 0.39+fee 0.017; advanced=True; P&L $-5,233
+    R2 vs MIN (opp wp 0.598, HCA=False): P(yes) 0.36 [Kalshi 2025-05-06 bid/ask 0.36/0.37 vol 255,545], stake $11,139 -> buy 11,139 NO @ 0.64+fee 0.016; advanced=False; P&L $+3,831
+2026 (GSW reg wp 0.451): realized playoff/play-in excess $0; hedge P&L $+1,431; hedged $1,431
+    make playoffs (seed 10, play-in): P(yes) 0.15 [Kalshi 2026-04-15 bid/ask 0.14/0.16 vol 19,926], stake $10,877 -> buy 10,877 NO @ 0.86+fee 0.008; advanced=False; P&L $+1,431
+Across 5 seasons: SD unhedged $22,833, hedged $22,039; min unhedged $0, hedged $1,431; mean hedge cost $3,988/season
+
+Simulation (20,000 seasons per profile; per-game $ ~ N(U, 4,415); generic opponents; hedge priced at fair p + $0.02 + fee)
+  wp 0.65, P(make) 0.97: mean $22,315 -> $20,754; SD $15,848 -> $12,010 (-24%); p5 $0 -> $939; p95 $50,851 -> $40,583
+  wp 0.57, P(make) 0.75: mean $12,837 -> $11,793; SD $13,434 -> $9,122 (-32%); p5 $0 -> $-3,751; p95 $38,219 -> $27,383
+  wp 0.52, P(make) 0.40: mean $5,250 -> $4,586; SD $9,593 -> $5,739 (-40%); p5 $0 -> $-5,465; p95 $25,663 -> $14,278
+
+# Kalshi coverage for Warriors / Giants (series fetched; settled + active)
+  KXNBASERIES: KXNBASERIES-25GSWMIN-MIN=yes; KXNBASERIES-25GSWMIN-GSW=no; KXNBASERIES-25GSWHOU-HOU=no; KXNBASERIES-25GSWHOU-GSW=yes
+  KXNBAWEST: KXNBAWEST-27-GSW=active; KXNBAWEST-26-GSW=no; KXNBAWEST-25-GSW=no
+  KXNBA: KXNBA-27-GSW=active; KXNBA-26-GSW=no; KXNBA-25-GSW=no
+  KXNBAPLAYOFF: KXNBAPLAYOFF-27-GSW=active; KXNBAPLAYOFF-26-GSW=no; KXNBAPLAYOFF-25-GSW=yes
+  KXNBAWCFQUAL: KXNBAWCFQUAL-27-GSW=active
+  KXTEAMSINNBAWF: KXTEAMSINNBAWF-26-SASGSW=no; KXTEAMSINNBAWF-26-PORGSW=no; KXTEAMSINNBAWF-26-PHXGSW=no; KXTEAMSINNBAWF-26-OKCGSW=no; KXTEAMSINNBAWF-26-MINGSW=no; KXTEAMSINNBAWF-26-LALGSW=no ...
+  KXTEAMSINNBAF: KXTEAMSINNBAF-26-GSWTOR=no; KXTEAMSINNBAF-26-GSWPHI=no; KXTEAMSINNBAF-26-GSWORL=no; KXTEAMSINNBAF-26-GSWNYK=no; KXTEAMSINNBAF-26-GSWMIA=no; KXTEAMSINNBAF-26-GSWDET=no ...
+  KXMLBPLAYOFFS: KXMLBPLAYOFFS-26-SF=no; KXMLBPLAYOFFS-25-SF=no
+  KXMLBNL: KXMLBNL-26-SF=no; KXMLBNL-25-SF=no
+  KXMLB: KXMLB-26-SF=no; KXMLB-25-SF=no
+  KXTEAMSINWS: KXTEAMSINWS-26-TORSF=no; KXTEAMSINWS-26-TEXSF=no; KXTEAMSINWS-26-TBSF=no; KXTEAMSINWS-26-SEASF=no; KXTEAMSINWS-26-NYYSF=no; KXTEAMSINWS-26-MINSF=no ...
+  KXMLBNLWEST: KXMLBNLWEST-26-SF=no
+  KXNBAPACIFIC: KXNBAPACIFIC-26-GSW=active
