@@ -6,7 +6,7 @@ spike`; without `msg_visits_daily.parquet` it is `home_game` alone. The restaura
 `restaurant_daily.parquet` from the Dewey build and raises `FileNotFoundError` without it.
 
 The settlement flag for `fair` (CONTRACTS R17) comes from the station series, not the business's own
-weather: `add_settlement(df, ...)` adds `settle_rain` (and `settle_hot` given a strike), then
+weather: `add_settlement(df, ...)` adds `settle_rain` (and `settle_hot` = station tmax > strike, given one), then
 `event_frequency(df, "settle_rain")` is p̂ on `train` only.
 """
 
@@ -139,7 +139,8 @@ def add_settlement(
     out = df.copy()
     out["settle_rain"] = out["date"].map(f["rain"]).astype(bool)
     if strike is not None:
-        out["settle_hot"] = out["date"].map(f["tmax"]) >= strike
+        # KXHIGHNY pays only when the high is strictly above the strike (same rule as app/stats).
+        out["settle_hot"] = out["date"].map(f["tmax"]) > strike
     return out
 
 

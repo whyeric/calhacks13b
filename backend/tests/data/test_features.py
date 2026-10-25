@@ -8,7 +8,7 @@ import pytest
 from pandas.testing import assert_frame_equal
 
 from app import config
-from app.data import features
+from app.data import features, weather
 
 RESTAURANT_MISSING = not (config.FIXTURES_DIR / features.RESTAURANT_FIXTURE).exists()
 skip_restaurant = pytest.mark.skipif(RESTAURANT_MISSING, reason="restaurant_daily.parquet not built yet (Dewey issue #23)")
@@ -97,6 +97,17 @@ def test_thresholds_from_config(taxi_df):  # C1-A27
     s = features.add_settlement(taxi_df, strike=90.0)
     assert {"settle_rain", "settle_hot"} <= set(s.columns)
     assert 0 < features.event_frequency(s, "settle_rain") < 1
+
+
+def test_settle_hot_is_strictly_above_strike(taxi_df):  # KXHIGHNY: high > strike
+    station = weather.load_weather(*config.SETTLEMENT_STATION_LATLON, offline=True).daily.set_index("date")
+    tmax = taxi_df["date"].map(station["temperature_2m_max"])
+    strike = float(tmax.iloc[0])  # a real station high, so some day sits exactly at the strike
+    s = features.add_settlement(taxi_df, strike=strike)
+    at = tmax == strike
+    assert at.any()
+    assert not s.loc[at, "settle_hot"].any()
+    assert s["settle_hot"].equals(tmax > strike)
 
 
 def test_offline_build_end_to_end(monkeypatch):  # C1-A28
