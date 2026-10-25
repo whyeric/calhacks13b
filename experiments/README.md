@@ -66,7 +66,7 @@ Lessons learned along the way, now applied to the product:
 
 - **Playoff home games.** Added as an exposure, with a season-level hedge on Kalshi advancement futures. Sizing uses the minimum-variance math from `bar/r5-markets/hedge.py`.
 - **"unstable" decline rule.** An exposure must hold up on the most recent window before the desk quotes it.
-- **Settlement data.** Weather settlement and fair prices use NOAA, the source Kalshi settles on.
+- **Settlement data.** Weather settlement and fair prices use NOAA's Central Park record, the station Kalshi's NYC contracts settle on (a close proxy since Kalshi switched to The Weather Company's reading in Aug 2026).
 - **Rain sizing.** Rain hedges are sized at 1.0–1.4× the same-day effect, never haircut for "deferral".
 - **Chat.** It declines to predict games or weather. The research shows outcomes aren't the exposure.
 
