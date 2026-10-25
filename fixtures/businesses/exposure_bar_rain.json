@@ -1,0 +1,6 @@
+{
+  "id": "exp_rain", "business_id": "restaurant", "event": "rain",
+  "effect_usd": "-900.00", "ci90": ["-1180.00", "-620.00"], "se": "170.00", "p_value": 0.002,
+  "n_events_train": 98, "direction": "negative", "hedge_side": "yes",
+  "settlement_var": "rain", "hedgeable": true, "reasons": []
+}

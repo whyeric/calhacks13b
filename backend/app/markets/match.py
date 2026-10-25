@@ -15,6 +15,7 @@ from typing import Any
 from pydantic import BaseModel
 
 from .kalshi import KalshiClient, Orderbook, Side, ask_levels, best_ask, best_bid
+from .shapes import field
 
 MAX_SLIP = Decimal("0.05")
 OPEN_STATUSES = {"open", "active"}  # the query param is "open"; markets report "active"
@@ -64,11 +65,6 @@ class OffListError(ValueError):
         self.allowed = allowed
 
 
-def _get(obj: Any, name: str) -> Any:
-    # Exposure may arrive as the shared pydantic model or as its JSON dict.
-    return obj[name] if isinstance(obj, dict) else getattr(obj, name)
-
-
 def _parse_time(s: str) -> datetime:
     return datetime.fromisoformat(s.replace("Z", "+00:00"))
 
@@ -97,7 +93,7 @@ def depth_within(book: Orderbook, side: Side, max_slip: Decimal = MAX_SLIP) -> i
 async def build_candidates(
     client: KalshiClient, exposure: Any, now: datetime, window_days: int = 8,
 ) -> list[Candidate]:
-    settlement_var = _get(exposure, "settlement_var")
+    settlement_var = field(exposure, "settlement_var")
     if now.tzinfo is None:
         raise ValueError("now must be timezone-aware")
     now = now.astimezone(timezone.utc)
