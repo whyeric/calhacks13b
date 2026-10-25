@@ -411,17 +411,99 @@ def compute_budget(business_id: str, week_start: date, engine: Engine | None = N
 # --- Seed --------------------------------------------------------------------
 
 
-def seed(engine: Engine | None = None, fixtures_dir: Path = FIXTURES_DIR) -> dict[str, int]:
-    """Load business fixtures, the week's hedges and the decision log. Idempotent:
-    businesses/hedges upsert by id, log entries are skipped when their log_id exists."""
+# The "sample week" (DEMO_SAMPLE_WEEK): example hedges and their log entries, identified by the
+# ids in these fixture files. Real desk runs write `hdg_{business}_{week}_{event}` ids and
+# `log_<hex>` ids, so the two never collide.
+SAMPLE_HEDGES_FILE = "week_seed.json"
+SAMPLE_LOG_FILE = "decisions_seed.json"
+# Sample hedges the owner already approved carry ledger entries; those are never dropped.
+KEEP_SAMPLE_STATUSES = SPENT_STATUSES
+
+
+def _sample_hedges(fixtures_dir: Path = FIXTURES_DIR) -> list[Hedge]:
+    return TypeAdapter(list[Hedge]).validate_json((fixtures_dir / "examples" / SAMPLE_HEDGES_FILE).read_text())
+
+
+def _sample_log(fixtures_dir: Path = FIXTURES_DIR) -> list[LogEntry]:
+    return TypeAdapter(list[LogEntry]).validate_json((fixtures_dir / "examples" / SAMPLE_LOG_FILE).read_text())
+
+
+@lru_cache
+def sample_hedge_ids(fixtures_dir: Path = FIXTURES_DIR) -> frozenset[str]:
+    return frozenset(h.id for h in _sample_hedges(fixtures_dir))
+
+
+@lru_cache
+def sample_log_ids(fixtures_dir: Path = FIXTURES_DIR) -> frozenset[str]:
+    return frozenset(e.log_id for e in _sample_log(fixtures_dir))
+
+
+def is_sample_hedge(hedge_id: str) -> bool:
+    return hedge_id in sample_hedge_ids()
+
+
+def list_sample_hedges(
+    business_id: str | None = None, week_of: date | None = None, engine: Engine | None = None
+) -> list[Hedge]:
+    """Stored hedges that came from the sample week fixture."""
+    return [h for h in list_hedges(business_id, week_of, engine=engine) if is_sample_hedge(h.id)]
+
+
+def sample_businesses(engine: Engine | None = None) -> list[str]:
+    """Businesses that still have sample hedges stored (sorted)."""
+    return sorted({h.business_id for h in list_sample_hedges(engine=engine)})
+
+
+def remove_sample_hedges(
+    business_id: str | None = None, week_of: date | None = None, engine: Engine | None = None
+) -> list[Hedge]:
+    """Delete stored sample hedges (all, or one business/week) so a real desk run starts clean.
+    Owner-approved/settled ones stay (they have ledger entries). Returns the removed hedges
+    (pass them to `put_hedge` to restore). The decision log is untouched (append-only);
+    `is_retired_sample_entry` hides the sample entries about removed hedges."""
+    drop = [h for h in list_sample_hedges(business_id, week_of, engine) if h.status not in KEEP_SAMPLE_STATUSES]
+    if drop:
+        with session(engine) as s:
+            for h in drop:
+                row = s.get(HedgeRow, h.id)
+                if row is not None:
+                    s.delete(row)
+    return drop
+
+
+def is_retired_sample_entry(entry: LogEntry, engine: Engine | None = None) -> bool:
+    """A sample log entry about a sample hedge that a real run has since replaced."""
+    return (
+        entry.log_id in sample_log_ids()
+        and entry.hedge_id is not None
+        and is_sample_hedge(entry.hedge_id)
+        and get_hedge(entry.hedge_id, engine) is None
+    )
+
+
+def seed(
+    engine: Engine | None = None, fixtures_dir: Path = FIXTURES_DIR, sample_week: bool | None = None
+) -> dict[str, int]:
+    """Load business fixtures and, in sample mode (default: DEMO_SAMPLE_WEEK), the sample week's
+    hedges and decision log. Idempotent: businesses/hedges upsert by id, log entries are skipped
+    when their log_id exists. A business/week that already has real (non-sample) hedges does not
+    get its sample hedges back. Without sample mode only log entries not about a sample hedge
+    (the ledger history that `app.books.seed` books) are loaded."""
+    if sample_week is None:
+        sample_week = get_settings().demo_sample_week
     create_schema(engine)
     for path in sorted((fixtures_dir / "businesses").glob("*.json")):
         put_business(Business.model_validate_json(path.read_text()), engine)
-    examples = fixtures_dir / "examples"
-    for h in TypeAdapter(list[Hedge]).validate_json((examples / "week_seed.json").read_text()):
-        put_hedge(h, engine)
-    for e in TypeAdapter(list[LogEntry]).validate_json((examples / "decisions_seed.json").read_text()):
-        append_log(e, engine)
+    hedges = _sample_hedges(fixtures_dir)
+    week_hedge_ids = {h.id for h in hedges}
+    if sample_week:
+        real = {(h.business_id, h.week_of) for h in list_hedges(engine=engine) if h.id not in week_hedge_ids}
+        for h in hedges:
+            if (h.business_id, h.week_of) not in real:
+                put_hedge(h, engine)
+    for e in _sample_log(fixtures_dir):
+        if sample_week or e.hedge_id not in week_hedge_ids:
+            append_log(e, engine)
     return row_counts(engine)
 
 
@@ -438,11 +520,13 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="cmd", required=True)
     p_seed = sub.add_parser("seed", help="create schema and load fixtures (idempotent)")
     p_seed.add_argument("--url", help="database URL (default: DATABASE_URL)")
+    p_seed.add_argument("--no-sample-week", dest="sample_week", action="store_false", default=None,
+                        help="skip the sample week hedges (default: DEMO_SAMPLE_WEEK)")
     args = parser.parse_args(argv)
 
     if args.cmd == "seed":
         engine = make_engine(args.url) if args.url else get_engine()
-        counts = seed(engine)
+        counts = seed(engine, sample_week=args.sample_week)
         print("seeded " + ", ".join(f"{k}={v}" for k, v in counts.items()))
     return 0
 

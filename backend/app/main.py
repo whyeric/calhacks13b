@@ -83,7 +83,11 @@ ERRORS = {
 async def lifespan(_app: FastAPI):
     db.create_schema()
     if not db.list_businesses():  # first start without `make seed`
-        db.seed()
+        db.seed()  # sample week only when DEMO_SAMPLE_WEEK is on
+    if not get_settings().demo_sample_week:
+        dropped = db.remove_sample_hedges()
+        if dropped:
+            log.info("DEMO_SAMPLE_WEEK off: removed sample hedges %s", [h.id for h in dropped])
     yield
 
 
@@ -197,7 +201,9 @@ def _require_decidable(h: Hedge) -> None:
 @app.get("/health", response_model=Health)
 def health() -> Health:
     s = get_settings()
-    return Health(status="ok", offline=s.demo_offline, anthropic="configured" if s.use_claude else "fallback")
+    sample = db.sample_businesses() if s.demo_sample_week else []
+    return Health(status="ok", offline=s.demo_offline, anthropic="configured" if s.use_claude else "fallback",
+                  sample_week=bool(sample), sample_businesses=sample)
 
 
 @app.get("/businesses", response_model=list[Business])
@@ -239,11 +245,22 @@ async def _run_desk(run_id: str, business_id: str, week_of: date) -> None:
     run = db.get_run(run_id)
     run = run.model_copy(update={"status": "running", "started_at": clock.now()})
     db.put_run(run)
+    # A real run replaces the sample week for this business/week instead of reusing its open
+    # hedges (G14 reuse is for real hedges only), so the dashboard matches /analyze.
+    # A failed run restores them, so the dashboard is never left empty by a crash.
+    replaced = db.remove_sample_hedges(business_id, week_of)
+    if replaced:
+        log.info("desk run %s replaced sample week hedges %s for %s week of %s",
+                 run_id, [h.id for h in replaced], business_id, week_of.isoformat())
     try:
         result = await desk.run_week(business_id, week_of, run_id=run_id)
         db.put_run(run.model_copy(update={"status": "done", "agent": result.agent, "finished_at": clock.now()}))
     except Exception as e:  # contained: the API stays up and the failure is logged (C6-A7)
         log.exception("desk run %s failed", run_id)
+        if replaced and not db.list_hedges(business_id, week_of):  # the run wrote nothing real
+            for h in replaced:
+                db.put_hedge(h)
+            log.info("desk run %s failed; restored sample week hedges for %s", run_id, business_id)
         err = f"{type(e).__name__}: {e}"[:500]
         db.put_run(run.model_copy(update={"status": "failed", "error": err, "finished_at": clock.now()}))
         _log({"business_id": business_id, "kind": "run_failed", "actor": "system", "run_id": run_id,
@@ -290,7 +307,8 @@ def decisions(
     before: str | None = Query(None, description="log_id cursor: entries older than this one"),
 ) -> list[LogEntry]:
     _business(business_id)
-    entries = list(reversed(db.list_log(business_id)))  # newest first
+    # newest first; sample-week entries about replaced sample hedges are hidden (still stored)
+    entries = [e for e in reversed(db.list_log(business_id)) if not db.is_retired_sample_entry(e)]
     if before is not None:
         ids = [e.log_id for e in entries]
         if before not in ids:

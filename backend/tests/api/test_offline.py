@@ -16,7 +16,8 @@ def test_sockets_blocked():
 
 def test_offline_no_key_end_to_end(client):
     h = client.get("/health").json()
-    assert h == {"status": "ok", "offline": True, "anthropic": "fallback"}
+    assert h == {"status": "ok", "offline": True, "anthropic": "fallback",
+                 "sample_week": True, "sample_businesses": ["restaurant", "taxi"]}
     assert client.post("/businesses/taxi/analyze", json={}).status_code == 200
     run_id = client.post("/businesses/taxi/desk/run", json={"week_of": "2026-11-02"}).json()["run_id"]
     assert poll(client, run_id, timeout=30)["status"] == "done"
