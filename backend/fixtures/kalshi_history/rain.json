@@ -1,0 +1,8317 @@
+{
+ "var": "rain",
+ "series": [
+  "KXRAINNYC",
+  "KXRAIN"
+ ],
+ "window": [
+  "2024-10-01",
+  "2026-08-31"
+ ],
+ "fetched_at": "2026-10-25T02:58:01+00:00",
+ "markets": {
+  "2025-01-04": {
+   "ticker": "KXRAINNYC-25JAN04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-05": {
+   "ticker": "KXRAINNYC-25JAN05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-06": {
+   "ticker": "KXRAINNYC-25JAN06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-01-07": {
+   "ticker": "KXRAINNYC-25JAN07-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-10": {
+   "ticker": "KXRAINNYC-25JAN10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-11": {
+   "ticker": "KXRAINNYC-25JAN11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-01-12": {
+   "ticker": "KXRAINNYC-25JAN12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-14": {
+   "ticker": "KXRAINNYC-25JAN14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-15": {
+   "ticker": "KXRAINNYC-25JAN15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-27": {
+   "ticker": "KXRAINNYC-25JAN27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-01-30": {
+   "ticker": "KXRAINNYC-25JAN30-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-10": {
+   "ticker": "KXRAINNYC-25FEB10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-11": {
+   "ticker": "KXRAINNYC-25FEB11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-12": {
+   "ticker": "KXRAINNYC-25FEB12-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-13": {
+   "ticker": "KXRAINNYC-25FEB13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-14": {
+   "ticker": "KXRAINNYC-25FEB14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-15": {
+   "ticker": "KXRAINNYC-25FEB15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-16": {
+   "ticker": "KXRAINNYC-25FEB16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-17": {
+   "ticker": "KXRAINNYC-25FEB17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-18": {
+   "ticker": "KXRAINNYC-25FEB18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-19": {
+   "ticker": "KXRAINNYC-25FEB19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-20": {
+   "ticker": "KXRAINNYC-25FEB20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-21": {
+   "ticker": "KXRAINNYC-25FEB21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-22": {
+   "ticker": "KXRAINNYC-25FEB22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-23": {
+   "ticker": "KXRAINNYC-25FEB23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-24": {
+   "ticker": "KXRAINNYC-25FEB24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-25": {
+   "ticker": "KXRAINNYC-25FEB25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-26": {
+   "ticker": "KXRAINNYC-25FEB26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-02-27": {
+   "ticker": "KXRAINNYC-25FEB27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-02-28": {
+   "ticker": "KXRAINNYC-25FEB28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-01": {
+   "ticker": "KXRAINNYC-25MAR01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-02": {
+   "ticker": "KXRAINNYC-25MAR02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-03": {
+   "ticker": "KXRAINNYC-25MAR03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-04": {
+   "ticker": "KXRAINNYC-25MAR04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-05": {
+   "ticker": "KXRAINNYC-25MAR05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-06": {
+   "ticker": "KXRAINNYC-25MAR06-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-07": {
+   "ticker": "KXRAINNYC-25MAR07-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-08": {
+   "ticker": "KXRAINNYC-25MAR08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-09": {
+   "ticker": "KXRAINNYC-25MAR09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-10": {
+   "ticker": "KXRAINNYC-25MAR10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-11": {
+   "ticker": "KXRAINNYC-25MAR11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-12": {
+   "ticker": "KXRAINNYC-25MAR12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-13": {
+   "ticker": "KXRAINNYC-25MAR13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-14": {
+   "ticker": "KXRAINNYC-25MAR14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-15": {
+   "ticker": "KXRAINNYC-25MAR15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-16": {
+   "ticker": "KXRAINNYC-25MAR16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-17": {
+   "ticker": "KXRAINNYC-25MAR17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-18": {
+   "ticker": "KXRAINNYC-25MAR18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-19": {
+   "ticker": "KXRAINNYC-25MAR19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-20": {
+   "ticker": "KXRAINNYC-25MAR20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-21": {
+   "ticker": "KXRAINNYC-25MAR21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-22": {
+   "ticker": "KXRAINNYC-25MAR22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-23": {
+   "ticker": "KXRAINNYC-25MAR23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-24": {
+   "ticker": "KXRAINNYC-25MAR24-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-25": {
+   "ticker": "KXRAINNYC-25MAR25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-26": {
+   "ticker": "KXRAINNYC-25MAR26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-27": {
+   "ticker": "KXRAINNYC-25MAR27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-03-28": {
+   "ticker": "KXRAINNYC-25MAR28-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-29": {
+   "ticker": "KXRAINNYC-25MAR29-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-30": {
+   "ticker": "KXRAINNYC-25MAR30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-03-31": {
+   "ticker": "KXRAINNYC-25MAR31-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-01": {
+   "ticker": "KXRAINNYC-25APR01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-02": {
+   "ticker": "KXRAINNYC-25APR02-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-03": {
+   "ticker": "KXRAINNYC-25APR03-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-04": {
+   "ticker": "KXRAINNYC-25APR04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-05": {
+   "ticker": "KXRAINNYC-25APR05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-06": {
+   "ticker": "KXRAINNYC-25APR06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-07": {
+   "ticker": "KXRAINNYC-25APR07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-08": {
+   "ticker": "KXRAINNYC-25APR08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-09": {
+   "ticker": "KXRAINNYC-25APR09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-10": {
+   "ticker": "KXRAINNYC-25APR10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-11": {
+   "ticker": "KXRAINNYC-25APR11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-12": {
+   "ticker": "KXRAINNYC-25APR12-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-13": {
+   "ticker": "KXRAINNYC-25APR13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-14": {
+   "ticker": "KXRAINNYC-25APR14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-15": {
+   "ticker": "KXRAINNYC-25APR15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-16": {
+   "ticker": "KXRAINNYC-25APR16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-17": {
+   "ticker": "KXRAINNYC-25APR17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-18": {
+   "ticker": "KXRAINNYC-25APR18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-19": {
+   "ticker": "KXRAINNYC-25APR19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-20": {
+   "ticker": "KXRAINNYC-25APR20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-21": {
+   "ticker": "KXRAINNYC-25APR21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-22": {
+   "ticker": "KXRAINNYC-25APR22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-23": {
+   "ticker": "KXRAINNYC-25APR23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-24": {
+   "ticker": "KXRAINNYC-25APR24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-25": {
+   "ticker": "KXRAINNYC-25APR25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-26": {
+   "ticker": "KXRAINNYC-25APR26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-04-27": {
+   "ticker": "KXRAINNYC-25APR27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-28": {
+   "ticker": "KXRAINNYC-25APR28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-29": {
+   "ticker": "KXRAINNYC-25APR29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-04-30": {
+   "ticker": "KXRAINNYC-25APR30-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-01": {
+   "ticker": "KXRAINNYC-25MAY01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-02": {
+   "ticker": "KXRAINNYC-25MAY02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-03": {
+   "ticker": "KXRAINNYC-25MAY03-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-04": {
+   "ticker": "KXRAINNYC-25MAY04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-05": {
+   "ticker": "KXRAINNYC-25MAY05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-06": {
+   "ticker": "KXRAINNYC-25MAY06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-07": {
+   "ticker": "KXRAINNYC-25MAY07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-08": {
+   "ticker": "KXRAINNYC-25MAY08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-09": {
+   "ticker": "KXRAINNYC-25MAY09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-10": {
+   "ticker": "KXRAINNYC-25MAY10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-11": {
+   "ticker": "KXRAINNYC-25MAY11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-12": {
+   "ticker": "KXRAINNYC-25MAY12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-13": {
+   "ticker": "KXRAINNYC-25MAY13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-14": {
+   "ticker": "KXRAINNYC-25MAY14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-15": {
+   "ticker": "KXRAINNYC-25MAY15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-16": {
+   "ticker": "KXRAINNYC-25MAY16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-17": {
+   "ticker": "KXRAINNYC-25MAY17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-18": {
+   "ticker": "KXRAINNYC-25MAY18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-19": {
+   "ticker": "KXRAINNYC-25MAY19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-20": {
+   "ticker": "KXRAINNYC-25MAY20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-21": {
+   "ticker": "KXRAINNYC-25MAY21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-22": {
+   "ticker": "KXRAINNYC-25MAY22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-23": {
+   "ticker": "KXRAINNYC-25MAY23-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-24": {
+   "ticker": "KXRAINNYC-25MAY24-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-25": {
+   "ticker": "KXRAINNYC-25MAY25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-26": {
+   "ticker": "KXRAINNYC-25MAY26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-27": {
+   "ticker": "KXRAINNYC-25MAY27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-05-28": {
+   "ticker": "KXRAINNYC-25MAY28-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-29": {
+   "ticker": "KXRAINNYC-25MAY29-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-30": {
+   "ticker": "KXRAINNYC-25MAY30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-05-31": {
+   "ticker": "KXRAINNYC-25MAY31-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-01": {
+   "ticker": "KXRAINNYC-25JUN01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-02": {
+   "ticker": "KXRAINNYC-25JUN02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-03": {
+   "ticker": "KXRAINNYC-25JUN03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-04": {
+   "ticker": "KXRAINNYC-25JUN04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-05": {
+   "ticker": "KXRAINNYC-25JUN05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-06": {
+   "ticker": "KXRAINNYC-25JUN06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-07": {
+   "ticker": "KXRAINNYC-25JUN07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-08": {
+   "ticker": "KXRAINNYC-25JUN08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-09": {
+   "ticker": "KXRAINNYC-25JUN09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-10": {
+   "ticker": "KXRAINNYC-25JUN10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-11": {
+   "ticker": "KXRAINNYC-25JUN11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-12": {
+   "ticker": "KXRAINNYC-25JUN12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-13": {
+   "ticker": "KXRAINNYC-25JUN13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-14": {
+   "ticker": "KXRAINNYC-25JUN14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-15": {
+   "ticker": "KXRAINNYC-25JUN15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-16": {
+   "ticker": "KXRAINNYC-25JUN16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-17": {
+   "ticker": "KXRAINNYC-25JUN17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-18": {
+   "ticker": "KXRAINNYC-25JUN18-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-19": {
+   "ticker": "KXRAINNYC-25JUN19-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-20": {
+   "ticker": "KXRAINNYC-25JUN20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-21": {
+   "ticker": "KXRAINNYC-25JUN21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-22": {
+   "ticker": "KXRAINNYC-25JUN22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-23": {
+   "ticker": "KXRAINNYC-25JUN23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-24": {
+   "ticker": "KXRAINNYC-25JUN24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-25": {
+   "ticker": "KXRAINNYC-25JUN25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-26": {
+   "ticker": "KXRAINNYC-25JUN26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-27": {
+   "ticker": "KXRAINNYC-25JUN27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-28": {
+   "ticker": "KXRAINNYC-25JUN28-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-06-29": {
+   "ticker": "KXRAINNYC-25JUN29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-06-30": {
+   "ticker": "KXRAINNYC-25JUN30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-01": {
+   "ticker": "KXRAINNYC-25JUL01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-02": {
+   "ticker": "KXRAINNYC-25JUL02-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-03": {
+   "ticker": "KXRAINNYC-25JUL03-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-04": {
+   "ticker": "KXRAINNYC-25JUL04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-05": {
+   "ticker": "KXRAINNYC-25JUL05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-06": {
+   "ticker": "KXRAINNYC-25JUL06-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-07": {
+   "ticker": "KXRAINNYC-25JUL07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-08": {
+   "ticker": "KXRAINNYC-25JUL08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-09": {
+   "ticker": "KXRAINNYC-25JUL09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-10": {
+   "ticker": "KXRAINNYC-25JUL10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-11": {
+   "ticker": "KXRAINNYC-25JUL11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-12": {
+   "ticker": "KXRAINNYC-25JUL12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-13": {
+   "ticker": "KXRAINNYC-25JUL13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-14": {
+   "ticker": "KXRAINNYC-25JUL14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-15": {
+   "ticker": "KXRAINNYC-25JUL15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-16": {
+   "ticker": "KXRAINNYC-25JUL16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-17": {
+   "ticker": "KXRAINNYC-25JUL17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-18": {
+   "ticker": "KXRAINNYC-25JUL18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-19": {
+   "ticker": "KXRAINNYC-25JUL19-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-20": {
+   "ticker": "KXRAINNYC-25JUL20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-21": {
+   "ticker": "KXRAINNYC-25JUL21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-22": {
+   "ticker": "KXRAINNYC-25JUL22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-23": {
+   "ticker": "KXRAINNYC-25JUL23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-24": {
+   "ticker": "KXRAINNYC-25JUL24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-25": {
+   "ticker": "KXRAINNYC-25JUL25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-26": {
+   "ticker": "KXRAINNYC-25JUL26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-27": {
+   "ticker": "KXRAINNYC-25JUL27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-28": {
+   "ticker": "KXRAINNYC-25JUL28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-29": {
+   "ticker": "KXRAINNYC-25JUL29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-07-30": {
+   "ticker": "KXRAINNYC-25JUL30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-07-31": {
+   "ticker": "KXRAINNYC-25JUL31-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-01": {
+   "ticker": "KXRAINNYC-25AUG01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-02": {
+   "ticker": "KXRAINNYC-25AUG02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-03": {
+   "ticker": "KXRAINNYC-25AUG03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-04": {
+   "ticker": "KXRAINNYC-25AUG04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-05": {
+   "ticker": "KXRAINNYC-25AUG05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-06": {
+   "ticker": "KXRAINNYC-25AUG06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-07": {
+   "ticker": "KXRAINNYC-25AUG07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-08": {
+   "ticker": "KXRAINNYC-25AUG08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-09": {
+   "ticker": "KXRAINNYC-25AUG09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-10": {
+   "ticker": "KXRAINNYC-25AUG10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-11": {
+   "ticker": "KXRAINNYC-25AUG11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-12": {
+   "ticker": "KXRAINNYC-25AUG12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-13": {
+   "ticker": "KXRAINNYC-25AUG13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-14": {
+   "ticker": "KXRAINNYC-25AUG14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-15": {
+   "ticker": "KXRAINNYC-25AUG15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-16": {
+   "ticker": "KXRAINNYC-25AUG16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-17": {
+   "ticker": "KXRAINNYC-25AUG17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-18": {
+   "ticker": "KXRAINNYC-25AUG18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-19": {
+   "ticker": "KXRAINNYC-25AUG19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-20": {
+   "ticker": "KXRAINNYC-25AUG20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-21": {
+   "ticker": "KXRAINNYC-25AUG21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-08-22": {
+   "ticker": "KXRAINNYC-25AUG22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-23": {
+   "ticker": "KXRAINNYC-25AUG23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-24": {
+   "ticker": "KXRAINNYC-25AUG24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-25": {
+   "ticker": "KXRAINNYC-25AUG25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-26": {
+   "ticker": "KXRAINNYC-25AUG26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-27": {
+   "ticker": "KXRAINNYC-25AUG27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-28": {
+   "ticker": "KXRAINNYC-25AUG28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-29": {
+   "ticker": "KXRAINNYC-25AUG29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-30": {
+   "ticker": "KXRAINNYC-25AUG30-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-08-31": {
+   "ticker": "KXRAINNYC-25AUG31-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-01": {
+   "ticker": "KXRAINNYC-25SEP01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-02": {
+   "ticker": "KXRAINNYC-25SEP02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-03": {
+   "ticker": "KXRAINNYC-25SEP03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-04": {
+   "ticker": "KXRAINNYC-25SEP04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-05": {
+   "ticker": "KXRAINNYC-25SEP05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-06": {
+   "ticker": "KXRAINNYC-25SEP06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-07": {
+   "ticker": "KXRAINNYC-25SEP07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-08": {
+   "ticker": "KXRAINNYC-25SEP08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-09": {
+   "ticker": "KXRAINNYC-25SEP09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-10": {
+   "ticker": "KXRAINNYC-25SEP10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-11": {
+   "ticker": "KXRAINNYC-25SEP11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-12": {
+   "ticker": "KXRAINNYC-25SEP12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-13": {
+   "ticker": "KXRAINNYC-25SEP13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-14": {
+   "ticker": "KXRAINNYC-25SEP14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-15": {
+   "ticker": "KXRAINNYC-25SEP15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-16": {
+   "ticker": "KXRAINNYC-25SEP16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-17": {
+   "ticker": "KXRAINNYC-25SEP17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-18": {
+   "ticker": "KXRAINNYC-25SEP18-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-19": {
+   "ticker": "KXRAINNYC-25SEP19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-20": {
+   "ticker": "KXRAINNYC-25SEP20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-21": {
+   "ticker": "KXRAINNYC-25SEP21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-22": {
+   "ticker": "KXRAINNYC-25SEP22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-23": {
+   "ticker": "KXRAINNYC-25SEP23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-24": {
+   "ticker": "KXRAINNYC-25SEP24-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-25": {
+   "ticker": "KXRAINNYC-25SEP25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-26": {
+   "ticker": "KXRAINNYC-25SEP26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-27": {
+   "ticker": "KXRAINNYC-25SEP27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-28": {
+   "ticker": "KXRAINNYC-25SEP28-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": []
+  },
+  "2025-09-29": {
+   "ticker": "KXRAINNYC-25SEP29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-09-30": {
+   "ticker": "KXRAINNYC-25SEP30-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": []
+  },
+  "2025-10-01": {
+   "ticker": "KXRAINNYC-25OCT01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759291200,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "270.00"
+    },
+    {
+     "end_period_ts": 1759377600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "553.00"
+    }
+   ]
+  },
+  "2025-10-02": {
+   "ticker": "KXRAINNYC-25OCT02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759377600,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1759464000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1568.00"
+    }
+   ]
+  },
+  "2025-10-03": {
+   "ticker": "KXRAINNYC-25OCT03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759464000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1759550400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1783.00"
+    }
+   ]
+  },
+  "2025-10-04": {
+   "ticker": "KXRAINNYC-25OCT04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759550400,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1759636800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1704.00"
+    }
+   ]
+  },
+  "2025-10-05": {
+   "ticker": "KXRAINNYC-25OCT05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759636800,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "209.00"
+    },
+    {
+     "end_period_ts": 1759723200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "698.00"
+    }
+   ]
+  },
+  "2025-10-06": {
+   "ticker": "KXRAINNYC-25OCT06-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759723200,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "135.00"
+    },
+    {
+     "end_period_ts": 1759809600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "870.00"
+    }
+   ]
+  },
+  "2025-10-07": {
+   "ticker": "KXRAINNYC-25OCT07-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759809600,
+     "yes_ask_close": "0.6700",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5000",
+     "volume": "1345.00"
+    },
+    {
+     "end_period_ts": 1759896000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5128.00"
+    }
+   ]
+  },
+  "2025-10-08": {
+   "ticker": "KXRAINNYC-25OCT08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1759896000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.8100",
+     "price_close": "0.7400",
+     "volume": "1736.00"
+    },
+    {
+     "end_period_ts": 1759982400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "20722.00"
+    }
+   ]
+  },
+  "2025-10-09": {
+   "ticker": "KXRAINNYC-25OCT09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1759982400,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0600",
+     "volume": "10.00"
+    },
+    {
+     "end_period_ts": 1760068800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1619.00"
+    }
+   ]
+  },
+  "2025-10-10": {
+   "ticker": "KXRAINNYC-25OCT10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760068800,
+     "yes_ask_close": "0.2600",
+     "yes_bid_close": "0.1800",
+     "price_close": "0.2600",
+     "volume": "749.00"
+    },
+    {
+     "end_period_ts": 1760155200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1523.00"
+    }
+   ]
+  },
+  "2025-10-11": {
+   "ticker": "KXRAINNYC-25OCT11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1760155200,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.6300",
+     "price_close": "0.6300",
+     "volume": "2222.00"
+    },
+    {
+     "end_period_ts": 1760241600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "6832.00"
+    }
+   ]
+  },
+  "2025-10-12": {
+   "ticker": "KXRAINNYC-25OCT12-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1760241600,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9300",
+     "price_close": "0.9200",
+     "volume": "2556.00"
+    },
+    {
+     "end_period_ts": 1760328000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4153.00"
+    }
+   ]
+  },
+  "2025-10-13": {
+   "ticker": "KXRAINNYC-25OCT13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1760328000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9300",
+     "price_close": "0.9900",
+     "volume": "1750.00"
+    },
+    {
+     "end_period_ts": 1760414400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2531.00"
+    }
+   ]
+  },
+  "2025-10-14": {
+   "ticker": "KXRAINNYC-25OCT14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760414400,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.4000",
+     "price_close": "0.4600",
+     "volume": "1797.00"
+    },
+    {
+     "end_period_ts": 1760500800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "3950.00"
+    }
+   ]
+  },
+  "2025-10-15": {
+   "ticker": "KXRAINNYC-25OCT15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760500800,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1760587200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1034.00"
+    }
+   ]
+  },
+  "2025-10-16": {
+   "ticker": "KXRAINNYC-25OCT16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760587200,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1760673600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "1900.00"
+    }
+   ]
+  },
+  "2025-10-17": {
+   "ticker": "KXRAINNYC-25OCT17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760673600,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1760760000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0600",
+     "volume": "183.00"
+    }
+   ]
+  },
+  "2025-10-18": {
+   "ticker": "KXRAINNYC-25OCT18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760760000,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1760846400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1800",
+     "volume": "50.00"
+    }
+   ]
+  },
+  "2025-10-19": {
+   "ticker": "KXRAINNYC-25OCT19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1760846400,
+     "yes_ask_close": "0.3600",
+     "yes_bid_close": "0.2600",
+     "price_close": "0.2600",
+     "volume": "662.00"
+    },
+    {
+     "end_period_ts": 1760932800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "5975.00"
+    }
+   ]
+  },
+  "2025-10-20": {
+   "ticker": "KXRAINNYC-25OCT20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1760932800,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.8600",
+     "price_close": "0.9800",
+     "volume": "1591.00"
+    },
+    {
+     "end_period_ts": 1761019200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "338878.00"
+    }
+   ]
+  },
+  "2025-10-21": {
+   "ticker": "KXRAINNYC-25OCT21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1761019200,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.4600",
+     "volume": "5197.00"
+    },
+    {
+     "end_period_ts": 1761105600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "40705.00"
+    }
+   ]
+  },
+  "2025-10-22": {
+   "ticker": "KXRAINNYC-25OCT22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1761105600,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9600",
+     "price_close": "0.9700",
+     "volume": "1922.00"
+    },
+    {
+     "end_period_ts": 1761192000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "297288.00"
+    }
+   ]
+  },
+  "2025-10-23": {
+   "ticker": "KXRAINNYC-25OCT23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761192000,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.1100",
+     "volume": "163.00"
+    },
+    {
+     "end_period_ts": 1761278400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3685.00"
+    }
+   ]
+  },
+  "2025-10-24": {
+   "ticker": "KXRAINNYC-25OCT24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761278400,
+     "yes_ask_close": "0.1700",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0800",
+     "volume": "855.00"
+    },
+    {
+     "end_period_ts": 1761364800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1135.00"
+    }
+   ]
+  },
+  "2025-10-25": {
+   "ticker": "KXRAINNYC-25OCT25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761364800,
+     "yes_ask_close": "0.1000",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0900",
+     "volume": "3.00"
+    },
+    {
+     "end_period_ts": 1761451200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.6000",
+     "volume": "1836.00"
+    }
+   ]
+  },
+  "2025-10-26": {
+   "ticker": "KXRAINNYC-25OCT26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761451200,
+     "yes_ask_close": "0.1500",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.1600",
+     "volume": "349.00"
+    },
+    {
+     "end_period_ts": 1761537600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "1532.00"
+    }
+   ]
+  },
+  "2025-10-27": {
+   "ticker": "KXRAINNYC-25OCT27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761537600,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0000",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1761624000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "1263.00"
+    }
+   ]
+  },
+  "2025-10-28": {
+   "ticker": "KXRAINNYC-25OCT28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761624000,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.1400",
+     "volume": "476.00"
+    },
+    {
+     "end_period_ts": 1761710400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "9886.00"
+    }
+   ]
+  },
+  "2025-10-29": {
+   "ticker": "KXRAINNYC-25OCT29-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1761710400,
+     "yes_ask_close": "0.3800",
+     "yes_bid_close": "0.2900",
+     "price_close": "0.3800",
+     "volume": "516.00"
+    },
+    {
+     "end_period_ts": 1761796800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "38232.00"
+    }
+   ]
+  },
+  "2025-10-30": {
+   "ticker": "KXRAINNYC-25OCT30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1761796800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9800",
+     "price_close": "0.9800",
+     "volume": "1640.00"
+    },
+    {
+     "end_period_ts": 1761883200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3117.00"
+    }
+   ]
+  },
+  "2025-10-31": {
+   "ticker": "KXRAINNYC-25OCT31-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761883200,
+     "yes_ask_close": "0.4500",
+     "yes_bid_close": "0.2500",
+     "price_close": "0.4500",
+     "volume": "5062.00"
+    },
+    {
+     "end_period_ts": 1761969600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "10560.00"
+    }
+   ]
+  },
+  "2025-11-01": {
+   "ticker": "KXRAINNYC-25NOV01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1761969600,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0100",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1762056000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3275.00"
+    }
+   ]
+  },
+  "2025-11-02": {
+   "ticker": "KXRAINNYC-25NOV02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1762056000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "93.00"
+    },
+    {
+     "end_period_ts": 1762142400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "11938.00"
+    }
+   ]
+  },
+  "2025-11-05": {
+   "ticker": "KXRAINNYC-25NOV05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762318800,
+     "yes_ask_close": "0.2500",
+     "yes_bid_close": "0.1500",
+     "price_close": "0.1500",
+     "volume": "1455.00"
+    },
+    {
+     "end_period_ts": 1762405200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "41486.00"
+    }
+   ]
+  },
+  "2025-11-06": {
+   "ticker": "KXRAINNYC-25NOV06-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1762405200,
+     "yes_ask_close": "0.3600",
+     "yes_bid_close": "0.2700",
+     "price_close": "0.2600",
+     "volume": "378.00"
+    },
+    {
+     "end_period_ts": 1762491600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.4500",
+     "volume": "14115.00"
+    }
+   ]
+  },
+  "2025-11-07": {
+   "ticker": "KXRAINNYC-25NOV07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762491600,
+     "yes_ask_close": "0.7800",
+     "yes_bid_close": "0.5300",
+     "price_close": "0.6300",
+     "volume": "1875.00"
+    },
+    {
+     "end_period_ts": 1762578000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.2400",
+     "volume": "17343.00"
+    }
+   ]
+  },
+  "2025-11-08": {
+   "ticker": "KXRAINNYC-25NOV08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762578000,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.7300",
+     "volume": "1677.00"
+    },
+    {
+     "end_period_ts": 1762664400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "21971.00"
+    }
+   ]
+  },
+  "2025-11-09": {
+   "ticker": "KXRAINNYC-25NOV09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762664400,
+     "yes_ask_close": "0.9500",
+     "yes_bid_close": "0.8200",
+     "price_close": "0.8200",
+     "volume": "2638.00"
+    },
+    {
+     "end_period_ts": 1762750800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "6255.00"
+    }
+   ]
+  },
+  "2025-11-10": {
+   "ticker": "KXRAINNYC-25NOV10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762750800,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9800",
+     "price_close": "0.9900",
+     "volume": "3017.00"
+    },
+    {
+     "end_period_ts": 1762837200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "16663.00"
+    }
+   ]
+  },
+  "2025-11-11": {
+   "ticker": "KXRAINNYC-25NOV11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1762837200,
+     "yes_ask_close": "0.2800",
+     "yes_bid_close": "0.1800",
+     "price_close": "0.1800",
+     "volume": "321.00"
+    },
+    {
+     "end_period_ts": 1762923600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "66909.00"
+    }
+   ]
+  },
+  "2025-11-12": {
+   "ticker": "KXRAINNYC-25NOV12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1762923600,
+     "yes_ask_close": "0.9700",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.0600",
+     "volume": "29.00"
+    },
+    {
+     "end_period_ts": 1763010000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "7785.00"
+    }
+   ]
+  },
+  "2025-11-13": {
+   "ticker": "KXRAINNYC-25NOV13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763010000,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0700",
+     "volume": "30.00"
+    },
+    {
+     "end_period_ts": 1763096400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "29021.00"
+    }
+   ]
+  },
+  "2025-11-14": {
+   "ticker": "KXRAINNYC-25NOV14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763096400,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0700",
+     "volume": "30.00"
+    },
+    {
+     "end_period_ts": 1763182800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "2669.00"
+    }
+   ]
+  },
+  "2025-11-15": {
+   "ticker": "KXRAINNYC-25NOV15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763182800,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.9200",
+     "price_close": "0.9900",
+     "volume": "33.00"
+    },
+    {
+     "end_period_ts": 1763269200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "696.00"
+    }
+   ]
+  },
+  "2025-11-16": {
+   "ticker": "KXRAINNYC-25NOV16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763269200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.8000",
+     "volume": "139.00"
+    },
+    {
+     "end_period_ts": 1763355600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "48527.00"
+    }
+   ]
+  },
+  "2025-11-17": {
+   "ticker": "KXRAINNYC-25NOV17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763355600,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0600",
+     "volume": "30.00"
+    },
+    {
+     "end_period_ts": 1763442000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5255.00"
+    }
+   ]
+  },
+  "2025-11-18": {
+   "ticker": "KXRAINNYC-25NOV18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763442000,
+     "yes_ask_close": "0.1800",
+     "yes_bid_close": "0.1100",
+     "price_close": "0.0800",
+     "volume": "735.00"
+    },
+    {
+     "end_period_ts": 1763528400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "23130.00"
+    }
+   ]
+  },
+  "2025-11-19": {
+   "ticker": "KXRAINNYC-25NOV19-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763528400,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.9200",
+     "price_close": "0.9800",
+     "volume": "309.00"
+    },
+    {
+     "end_period_ts": 1763614800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "49841.00"
+    }
+   ]
+  },
+  "2025-11-20": {
+   "ticker": "KXRAINNYC-25NOV20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763614800,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "100.00"
+    },
+    {
+     "end_period_ts": 1763701200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1684.00"
+    }
+   ]
+  },
+  "2025-11-21": {
+   "ticker": "KXRAINNYC-25NOV21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763701200,
+     "yes_ask_close": "0.3900",
+     "yes_bid_close": "0.3500",
+     "price_close": "0.3500",
+     "volume": "2791.00"
+    },
+    {
+     "end_period_ts": 1763787600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0900",
+     "volume": "9265.00"
+    }
+   ]
+  },
+  "2025-11-22": {
+   "ticker": "KXRAINNYC-25NOV22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1763787600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9300",
+     "price_close": "0.9100",
+     "volume": "169.00"
+    },
+    {
+     "end_period_ts": 1763874000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4327.00"
+    }
+   ]
+  },
+  "2025-11-23": {
+   "ticker": "KXRAINNYC-25NOV23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763874000,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.0400",
+     "volume": "245.00"
+    },
+    {
+     "end_period_ts": 1763960400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "435.00"
+    }
+   ]
+  },
+  "2025-11-24": {
+   "ticker": "KXRAINNYC-25NOV24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1763960400,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0500",
+     "volume": "185.00"
+    },
+    {
+     "end_period_ts": 1764046800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "985.00"
+    }
+   ]
+  },
+  "2025-11-25": {
+   "ticker": "KXRAINNYC-25NOV25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764046800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.7100",
+     "price_close": "0.7100",
+     "volume": "1697.00"
+    },
+    {
+     "end_period_ts": 1764133200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "804.00"
+    }
+   ]
+  },
+  "2025-11-26": {
+   "ticker": "KXRAINNYC-25NOV26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764133200,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.9300",
+     "price_close": "0.9100",
+     "volume": "309.00"
+    },
+    {
+     "end_period_ts": 1764219600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "35579.00"
+    }
+   ]
+  },
+  "2025-11-27": {
+   "ticker": "KXRAINNYC-25NOV27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764219600,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1300",
+     "volume": "468.00"
+    },
+    {
+     "end_period_ts": 1764306000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1300",
+     "volume": "625.00"
+    }
+   ]
+  },
+  "2025-11-28": {
+   "ticker": "KXRAINNYC-25NOV28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764306000,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.1400",
+     "volume": "50.00"
+    },
+    {
+     "end_period_ts": 1764392400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "7282.00"
+    }
+   ]
+  },
+  "2025-11-29": {
+   "ticker": "KXRAINNYC-25NOV29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764392400,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0600",
+     "volume": "30.00"
+    },
+    {
+     "end_period_ts": 1764478800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "1488.00"
+    }
+   ]
+  },
+  "2025-11-30": {
+   "ticker": "KXRAINNYC-25NOV30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764478800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9100",
+     "price_close": "0.9900",
+     "volume": "73.00"
+    },
+    {
+     "end_period_ts": 1764565200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1833.00"
+    }
+   ]
+  },
+  "2025-12-01": {
+   "ticker": "KXRAINNYC-25DEC01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764565200,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "326.00"
+    },
+    {
+     "end_period_ts": 1764651600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "4599.00"
+    }
+   ]
+  },
+  "2025-12-02": {
+   "ticker": "KXRAINNYC-25DEC02-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764651600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1764738000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "372.00"
+    }
+   ]
+  },
+  "2025-12-03": {
+   "ticker": "KXRAINNYC-25DEC03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764738000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.2300",
+     "volume": "67.00"
+    },
+    {
+     "end_period_ts": 1764824400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "2740.00"
+    }
+   ]
+  },
+  "2025-12-04": {
+   "ticker": "KXRAINNYC-25DEC04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1764824400,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.1500",
+     "price_close": "0.1500",
+     "volume": "94.00"
+    },
+    {
+     "end_period_ts": 1764910800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "6328.00"
+    }
+   ]
+  },
+  "2025-12-06": {
+   "ticker": "KXRAINNYC-25DEC06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1764997200,
+     "yes_ask_close": "0.9400",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.9500",
+     "volume": "1897.00"
+    },
+    {
+     "end_period_ts": 1765083600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "188786.00"
+    }
+   ]
+  },
+  "2025-12-07": {
+   "ticker": "KXRAINNYC-25DEC07-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765083600,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0300",
+     "volume": "31.00"
+    },
+    {
+     "end_period_ts": 1765170000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "4248.00"
+    }
+   ]
+  },
+  "2025-12-08": {
+   "ticker": "KXRAINNYC-25DEC08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765170000,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.5000",
+     "volume": "54.00"
+    },
+    {
+     "end_period_ts": 1765256400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "618.00"
+    }
+   ]
+  },
+  "2025-12-09": {
+   "ticker": "KXRAINNYC-25DEC09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765256400,
+     "yes_ask_close": "0.2900",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.2900",
+     "volume": "383.00"
+    },
+    {
+     "end_period_ts": 1765342800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "816.00"
+    }
+   ]
+  },
+  "2025-12-10": {
+   "ticker": "KXRAINNYC-25DEC10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1765342800,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.8300",
+     "price_close": "0.8100",
+     "volume": "359.00"
+    },
+    {
+     "end_period_ts": 1765429200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "11106.00"
+    }
+   ]
+  },
+  "2025-12-11": {
+   "ticker": "KXRAINNYC-25DEC11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765429200,
+     "yes_ask_close": "0.2200",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0500",
+     "volume": "300.00"
+    },
+    {
+     "end_period_ts": 1765515600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "9230.00"
+    }
+   ]
+  },
+  "2025-12-13": {
+   "ticker": "KXRAINNYC-25DEC13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1765602000,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.8900",
+     "volume": "2712.00"
+    },
+    {
+     "end_period_ts": 1765688400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "9481.00"
+    }
+   ]
+  },
+  "2025-12-14": {
+   "ticker": "KXRAINNYC-25DEC14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1765688400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.8700",
+     "price_close": "0.8700",
+     "volume": "1951.00"
+    },
+    {
+     "end_period_ts": 1765774800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "44038.00"
+    }
+   ]
+  },
+  "2025-12-15": {
+   "ticker": "KXRAINNYC-25DEC15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765774800,
+     "yes_ask_close": "0.2200",
+     "yes_bid_close": "0.1200",
+     "price_close": "0.2200",
+     "volume": "1167.00"
+    },
+    {
+     "end_period_ts": 1765861200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7586.00"
+    }
+   ]
+  },
+  "2025-12-16": {
+   "ticker": "KXRAINNYC-25DEC16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765861200,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0700",
+     "volume": "188.00"
+    },
+    {
+     "end_period_ts": 1765947600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "351.00"
+    }
+   ]
+  },
+  "2025-12-17": {
+   "ticker": "KXRAINNYC-25DEC17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1765947600,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0500",
+     "volume": "218.00"
+    },
+    {
+     "end_period_ts": 1766034000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1105.00"
+    }
+   ]
+  },
+  "2025-12-18": {
+   "ticker": "KXRAINNYC-25DEC18-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766034000,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.4200",
+     "volume": "2526.00"
+    },
+    {
+     "end_period_ts": 1766120400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "7638.00"
+    }
+   ]
+  },
+  "2025-12-19": {
+   "ticker": "KXRAINNYC-25DEC19-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766120400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9600",
+     "volume": "1713.00"
+    },
+    {
+     "end_period_ts": 1766206800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "21431.00"
+    }
+   ]
+  },
+  "2025-12-20": {
+   "ticker": "KXRAINNYC-25DEC20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1766206800,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0700",
+     "volume": "121.00"
+    },
+    {
+     "end_period_ts": 1766293200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "2443.00"
+    }
+   ]
+  },
+  "2025-12-21": {
+   "ticker": "KXRAINNYC-25DEC21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1766293200,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0600",
+     "volume": "256.00"
+    },
+    {
+     "end_period_ts": 1766379600,
+     "yes_ask_close": "0.0200",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "668.00"
+    }
+   ]
+  },
+  "2025-12-22": {
+   "ticker": "KXRAINNYC-25DEC22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1766379600,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.0400",
+     "volume": "304.00"
+    },
+    {
+     "end_period_ts": 1766466000,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0300",
+     "volume": "2877.00"
+    }
+   ]
+  },
+  "2025-12-23": {
+   "ticker": "KXRAINNYC-25DEC23-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766466000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.8700",
+     "price_close": "0.8000",
+     "volume": "1769.00"
+    },
+    {
+     "end_period_ts": 1766552400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "9287.00"
+    }
+   ]
+  },
+  "2025-12-24": {
+   "ticker": "KXRAINNYC-25DEC24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1766552400,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0100",
+     "volume": "796.00"
+    },
+    {
+     "end_period_ts": 1766638800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "2684.00"
+    }
+   ]
+  },
+  "2025-12-25": {
+   "ticker": "KXRAINNYC-25DEC25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1766638800,
+     "yes_ask_close": "0.1000",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.1100",
+     "volume": "406.00"
+    },
+    {
+     "end_period_ts": 1766725200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1706.00"
+    }
+   ]
+  },
+  "2025-12-26": {
+   "ticker": "KXRAINNYC-25DEC26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766725200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9500",
+     "price_close": "0.9500",
+     "volume": "2467.00"
+    },
+    {
+     "end_period_ts": 1766811600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "17093.00"
+    }
+   ]
+  },
+  "2025-12-27": {
+   "ticker": "KXRAINNYC-25DEC27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766811600,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.8600",
+     "price_close": "0.8300",
+     "volume": "1716.00"
+    },
+    {
+     "end_period_ts": 1766898000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "76915.00"
+    }
+   ]
+  },
+  "2025-12-28": {
+   "ticker": "KXRAINNYC-25DEC28-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766898000,
+     "yes_ask_close": "0.9700",
+     "yes_bid_close": "0.8200",
+     "price_close": "0.8100",
+     "volume": "2020.00"
+    },
+    {
+     "end_period_ts": 1766984400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "13292.00"
+    }
+   ]
+  },
+  "2025-12-29": {
+   "ticker": "KXRAINNYC-25DEC29-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1766984400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9200",
+     "price_close": "0.9200",
+     "volume": "2710.00"
+    },
+    {
+     "end_period_ts": 1767070800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "18444.00"
+    }
+   ]
+  },
+  "2025-12-30": {
+   "ticker": "KXRAINNYC-25DEC30-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767070800,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0300",
+     "volume": "205.00"
+    },
+    {
+     "end_period_ts": 1767157200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1673.00"
+    }
+   ]
+  },
+  "2025-12-31": {
+   "ticker": "KXRAINNYC-25DEC31-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767157200,
+     "yes_ask_close": "0.3600",
+     "yes_bid_close": "0.2600",
+     "price_close": "0.2500",
+     "volume": "1765.00"
+    },
+    {
+     "end_period_ts": 1767243600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "65098.00"
+    }
+   ]
+  },
+  "2026-01-01": {
+   "ticker": "KXRAINNYC-26JAN01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767243600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.6300",
+     "price_close": "0.5300",
+     "volume": "1680.00"
+    },
+    {
+     "end_period_ts": 1767330000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "464211.00"
+    }
+   ]
+  },
+  "2026-01-02": {
+   "ticker": "KXRAINNYC-26JAN02-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767330000,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.6300",
+     "price_close": "0.2800",
+     "volume": "2249.00"
+    },
+    {
+     "end_period_ts": 1767416400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4486159.00"
+    }
+   ]
+  },
+  "2026-01-03": {
+   "ticker": "KXRAINNYC-26JAN03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767416400,
+     "yes_ask_close": "0.2200",
+     "yes_bid_close": "0.1900",
+     "price_close": "0.1900",
+     "volume": "2210.00"
+    },
+    {
+     "end_period_ts": 1767502800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0500",
+     "volume": "22254.00"
+    }
+   ]
+  },
+  "2026-01-04": {
+   "ticker": "KXRAINNYC-26JAN04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767502800,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.4000",
+     "price_close": "0.4800",
+     "volume": "2052.00"
+    },
+    {
+     "end_period_ts": 1767589200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "5374184.00"
+    }
+   ]
+  },
+  "2026-01-05": {
+   "ticker": "KXRAINNYC-26JAN05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767589200,
+     "yes_ask_close": "0.4000",
+     "yes_bid_close": "0.3300",
+     "price_close": "0.3900",
+     "volume": "1711.00"
+    },
+    {
+     "end_period_ts": 1767675600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "64077.00"
+    }
+   ]
+  },
+  "2026-01-06": {
+   "ticker": "KXRAINNYC-26JAN06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767675600,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.5500",
+     "price_close": "0.5700",
+     "volume": "2596.00"
+    },
+    {
+     "end_period_ts": 1767762000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "119981.00"
+    }
+   ]
+  },
+  "2026-01-07": {
+   "ticker": "KXRAINNYC-26JAN07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767762000,
+     "yes_ask_close": "0.9600",
+     "yes_bid_close": "0.7400",
+     "price_close": "0.9600",
+     "volume": "4933.00"
+    },
+    {
+     "end_period_ts": 1767848400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1613366.00"
+    }
+   ]
+  },
+  "2026-01-08": {
+   "ticker": "KXRAINNYC-26JAN08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1767848400,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0400",
+     "volume": "3336.00"
+    },
+    {
+     "end_period_ts": 1767934800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "98860.00"
+    }
+   ]
+  },
+  "2026-01-09": {
+   "ticker": "KXRAINNYC-26JAN09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1767934800,
+     "yes_ask_close": "0.9500",
+     "yes_bid_close": "0.9000",
+     "price_close": "0.9400",
+     "volume": "3377.00"
+    },
+    {
+     "end_period_ts": 1768021200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "108248.00"
+    }
+   ]
+  },
+  "2026-01-10": {
+   "ticker": "KXRAINNYC-26JAN10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1768021200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "7635.00"
+    },
+    {
+     "end_period_ts": 1768107600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "22377.00"
+    }
+   ]
+  },
+  "2026-01-11": {
+   "ticker": "KXRAINNYC-26JAN11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1768107600,
+     "yes_ask_close": "0.9700",
+     "yes_bid_close": "0.7400",
+     "price_close": "0.9300",
+     "volume": "5458.00"
+    },
+    {
+     "end_period_ts": 1768194000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1060974.00"
+    }
+   ]
+  },
+  "2026-01-12": {
+   "ticker": "KXRAINNYC-26JAN12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768194000,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0100",
+     "volume": "6652.00"
+    },
+    {
+     "end_period_ts": 1768280400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "101005.00"
+    }
+   ]
+  },
+  "2026-01-13": {
+   "ticker": "KXRAINNYC-26JAN13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768280400,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.0900",
+     "volume": "3224.00"
+    },
+    {
+     "end_period_ts": 1768366800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1700",
+     "volume": "47571.00"
+    }
+   ]
+  },
+  "2026-01-14": {
+   "ticker": "KXRAINNYC-26JAN14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768366800,
+     "yes_ask_close": "0.9400",
+     "yes_bid_close": "0.8600",
+     "price_close": "0.7900",
+     "volume": "3402.00"
+    },
+    {
+     "end_period_ts": 1768453200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "45141.00"
+    }
+   ]
+  },
+  "2026-01-15": {
+   "ticker": "KXRAINNYC-26JAN15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768453200,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.4800",
+     "volume": "3081.00"
+    },
+    {
+     "end_period_ts": 1768539600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "31955.00"
+    }
+   ]
+  },
+  "2026-01-16": {
+   "ticker": "KXRAINNYC-26JAN16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768539600,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3561.00"
+    },
+    {
+     "end_period_ts": 1768626000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "18179.00"
+    }
+   ]
+  },
+  "2026-01-17": {
+   "ticker": "KXRAINNYC-26JAN17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1768626000,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.8100",
+     "price_close": "0.9200",
+     "volume": "2219.00"
+    },
+    {
+     "end_period_ts": 1768712400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "127833.00"
+    }
+   ]
+  },
+  "2026-01-18": {
+   "ticker": "KXRAINNYC-26JAN18-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1768712400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9800",
+     "price_close": "0.9900",
+     "volume": "4007.00"
+    },
+    {
+     "end_period_ts": 1768798800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "391344.00"
+    }
+   ]
+  },
+  "2026-01-19": {
+   "ticker": "KXRAINNYC-26JAN19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768798800,
+     "yes_ask_close": "0.1900",
+     "yes_bid_close": "0.1400",
+     "price_close": "0.1900",
+     "volume": "3550.00"
+    },
+    {
+     "end_period_ts": 1768885200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "27243.00"
+    }
+   ]
+  },
+  "2026-01-20": {
+   "ticker": "KXRAINNYC-26JAN20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768885200,
+     "yes_ask_close": "0.0200",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "2426.00"
+    },
+    {
+     "end_period_ts": 1768971600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "6902.00"
+    }
+   ]
+  },
+  "2026-01-21": {
+   "ticker": "KXRAINNYC-26JAN21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1768971600,
+     "yes_ask_close": "0.1600",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.0300",
+     "volume": "792.00"
+    },
+    {
+     "end_period_ts": 1769058000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "13893.00"
+    }
+   ]
+  },
+  "2026-01-22": {
+   "ticker": "KXRAINNYC-26JAN22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769058000,
+     "yes_ask_close": "0.1700",
+     "yes_bid_close": "0.1100",
+     "price_close": "0.1000",
+     "volume": "995.00"
+    },
+    {
+     "end_period_ts": 1769144400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "28981.00"
+    }
+   ]
+  },
+  "2026-01-23": {
+   "ticker": "KXRAINNYC-26JAN23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769144400,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0900",
+     "volume": "777.00"
+    },
+    {
+     "end_period_ts": 1769230800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "11662.00"
+    }
+   ]
+  },
+  "2026-01-24": {
+   "ticker": "KXRAINNYC-26JAN24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769230800,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.1400",
+     "volume": "746.00"
+    },
+    {
+     "end_period_ts": 1769317200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "27758.00"
+    }
+   ]
+  },
+  "2026-01-25": {
+   "ticker": "KXRAINNYC-26JAN25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769317200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "8238.00"
+    },
+    {
+     "end_period_ts": 1769403600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "692408.00"
+    }
+   ]
+  },
+  "2026-01-26": {
+   "ticker": "KXRAINNYC-26JAN26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769403600,
+     "yes_ask_close": "0.7800",
+     "yes_bid_close": "0.5300",
+     "price_close": "0.5400",
+     "volume": "5470.00"
+    },
+    {
+     "end_period_ts": 1769490000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1076647.00"
+    }
+   ]
+  },
+  "2026-01-27": {
+   "ticker": "KXRAINNYC-26JAN27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769490000,
+     "yes_ask_close": "0.2600",
+     "yes_bid_close": "0.1700",
+     "price_close": "0.1700",
+     "volume": "1994.00"
+    },
+    {
+     "end_period_ts": 1769576400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "17730.00"
+    }
+   ]
+  },
+  "2026-01-28": {
+   "ticker": "KXRAINNYC-26JAN28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769576400,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.1000",
+     "volume": "1532.00"
+    },
+    {
+     "end_period_ts": 1769662800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "22841.00"
+    }
+   ]
+  },
+  "2026-01-29": {
+   "ticker": "KXRAINNYC-26JAN29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769662800,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.1100",
+     "volume": "498.00"
+    },
+    {
+     "end_period_ts": 1769749200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "12351.00"
+    }
+   ]
+  },
+  "2026-01-30": {
+   "ticker": "KXRAINNYC-26JAN30-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769749200,
+     "yes_ask_close": "0.0200",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3793.00"
+    },
+    {
+     "end_period_ts": 1769835600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3588.00"
+    }
+   ]
+  },
+  "2026-01-31": {
+   "ticker": "KXRAINNYC-26JAN31-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1769835600,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0300",
+     "volume": "445.00"
+    },
+    {
+     "end_period_ts": 1769922000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3783.00"
+    }
+   ]
+  },
+  "2026-02-01": {
+   "ticker": "KXRAINNYC-26FEB01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1769922000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0400",
+     "volume": "196.00"
+    },
+    {
+     "end_period_ts": 1770008400,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9700",
+     "volume": "56081.00"
+    }
+   ]
+  },
+  "2026-02-02": {
+   "ticker": "KXRAINNYC-26FEB02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770008400,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0300",
+     "volume": "44.00"
+    },
+    {
+     "end_period_ts": 1770094800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "11050.00"
+    }
+   ]
+  },
+  "2026-02-03": {
+   "ticker": "KXRAINNYC-26FEB03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770094800,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.1200",
+     "volume": "1032.00"
+    },
+    {
+     "end_period_ts": 1770181200,
+     "yes_ask_close": "0.1600",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "15226.00"
+    }
+   ]
+  },
+  "2026-02-04": {
+   "ticker": "KXRAINNYC-26FEB04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770181200,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0700",
+     "volume": "212.00"
+    },
+    {
+     "end_period_ts": 1770267600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "13460.00"
+    }
+   ]
+  },
+  "2026-02-05": {
+   "ticker": "KXRAINNYC-26FEB05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770267600,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "701.00"
+    },
+    {
+     "end_period_ts": 1770354000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "15001.00"
+    }
+   ]
+  },
+  "2026-02-06": {
+   "ticker": "KXRAINNYC-26FEB06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1770354000,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.5100",
+     "volume": "2952.00"
+    },
+    {
+     "end_period_ts": 1770440400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "106636.00"
+    }
+   ]
+  },
+  "2026-02-07": {
+   "ticker": "KXRAINNYC-26FEB07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1770440400,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.7600",
+     "price_close": "0.8100",
+     "volume": "4814.00"
+    },
+    {
+     "end_period_ts": 1770526800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "1704528.00"
+    }
+   ]
+  },
+  "2026-02-08": {
+   "ticker": "KXRAINNYC-26FEB08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770526800,
+     "yes_ask_close": "0.2900",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "1687.00"
+    },
+    {
+     "end_period_ts": 1770613200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "35563.00"
+    }
+   ]
+  },
+  "2026-02-09": {
+   "ticker": "KXRAINNYC-26FEB09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770613200,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0200",
+     "volume": "1555.00"
+    },
+    {
+     "end_period_ts": 1770699600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "14141.00"
+    }
+   ]
+  },
+  "2026-02-10": {
+   "ticker": "KXRAINNYC-26FEB10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770699600,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.6300",
+     "price_close": "0.7200",
+     "volume": "2371.00"
+    },
+    {
+     "end_period_ts": 1770786000,
+     "yes_ask_close": "0.1300",
+     "yes_bid_close": "0.1200",
+     "price_close": "0.1200",
+     "volume": "25942.00"
+    }
+   ]
+  },
+  "2026-02-11": {
+   "ticker": "KXRAINNYC-26FEB11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1770786000,
+     "yes_ask_close": "0.8500",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.7500",
+     "volume": "1399.00"
+    },
+    {
+     "end_period_ts": 1770872400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1281439.00"
+    }
+   ]
+  },
+  "2026-02-12": {
+   "ticker": "KXRAINNYC-26FEB12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770872400,
+     "yes_ask_close": "0.1000",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.1000",
+     "volume": "4102.00"
+    },
+    {
+     "end_period_ts": 1770958800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "16410.00"
+    }
+   ]
+  },
+  "2026-02-13": {
+   "ticker": "KXRAINNYC-26FEB13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1770958800,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.1000",
+     "volume": "321.00"
+    },
+    {
+     "end_period_ts": 1771045200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "10182.00"
+    }
+   ]
+  },
+  "2026-02-14": {
+   "ticker": "KXRAINNYC-26FEB14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771045200,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.4500",
+     "volume": "2790.00"
+    },
+    {
+     "end_period_ts": 1771131600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "964389.00"
+    }
+   ]
+  },
+  "2026-02-15": {
+   "ticker": "KXRAINNYC-26FEB15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771131600,
+     "yes_ask_close": "0.8500",
+     "yes_bid_close": "0.7800",
+     "price_close": "0.7600",
+     "volume": "4351.00"
+    },
+    {
+     "end_period_ts": 1771218000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "66473.00"
+    }
+   ]
+  },
+  "2026-02-16": {
+   "ticker": "KXRAINNYC-26FEB16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771218000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "8406.00"
+    },
+    {
+     "end_period_ts": 1771304400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "232466.00"
+    }
+   ]
+  },
+  "2026-02-17": {
+   "ticker": "KXRAINNYC-26FEB17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1771304400,
+     "yes_ask_close": "0.3400",
+     "yes_bid_close": "0.3300",
+     "price_close": "0.3400",
+     "volume": "2351.00"
+    },
+    {
+     "end_period_ts": 1771390800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "17203.00"
+    }
+   ]
+  },
+  "2026-02-18": {
+   "ticker": "KXRAINNYC-26FEB18-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771390800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "2166.00"
+    },
+    {
+     "end_period_ts": 1771477200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3352.00"
+    }
+   ]
+  },
+  "2026-02-19": {
+   "ticker": "KXRAINNYC-26FEB19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1771477200,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.4200",
+     "price_close": "0.4900",
+     "volume": "1939.00"
+    },
+    {
+     "end_period_ts": 1771563600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "14166.00"
+    }
+   ]
+  },
+  "2026-02-20": {
+   "ticker": "KXRAINNYC-26FEB20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771563600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1673.00"
+    },
+    {
+     "end_period_ts": 1771650000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "24807.00"
+    }
+   ]
+  },
+  "2026-02-21": {
+   "ticker": "KXRAINNYC-26FEB21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1771650000,
+     "yes_ask_close": "0.4400",
+     "yes_bid_close": "0.1500",
+     "price_close": "0.1700",
+     "volume": "1304.00"
+    },
+    {
+     "end_period_ts": 1771736400,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3773.00"
+    }
+   ]
+  },
+  "2026-02-22": {
+   "ticker": "KXRAINNYC-26FEB22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771736400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "2515.00"
+    },
+    {
+     "end_period_ts": 1771822800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "29219.00"
+    }
+   ]
+  },
+  "2026-02-23": {
+   "ticker": "KXRAINNYC-26FEB23-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771822800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "6145.00"
+    },
+    {
+     "end_period_ts": 1771909200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "125161.00"
+    }
+   ]
+  },
+  "2026-02-24": {
+   "ticker": "KXRAINNYC-26FEB24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1771909200,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0600",
+     "volume": "2044.00"
+    },
+    {
+     "end_period_ts": 1771995600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "32325.00"
+    }
+   ]
+  },
+  "2026-02-25": {
+   "ticker": "KXRAINNYC-26FEB25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1771995600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "5528.00"
+    },
+    {
+     "end_period_ts": 1772082000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "204031.00"
+    }
+   ]
+  },
+  "2026-02-26": {
+   "ticker": "KXRAINNYC-26FEB26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772082000,
+     "yes_ask_close": "0.3100",
+     "yes_bid_close": "0.2300",
+     "price_close": "0.2500",
+     "volume": "1854.00"
+    },
+    {
+     "end_period_ts": 1772168400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "9253.00"
+    }
+   ]
+  },
+  "2026-02-27": {
+   "ticker": "KXRAINNYC-26FEB27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772168400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "774.00"
+    },
+    {
+     "end_period_ts": 1772254800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4587.00"
+    }
+   ]
+  },
+  "2026-02-28": {
+   "ticker": "KXRAINNYC-26FEB28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772254800,
+     "yes_ask_close": "0.1300",
+     "yes_bid_close": "0.1200",
+     "price_close": "0.1200",
+     "volume": "656.00"
+    },
+    {
+     "end_period_ts": 1772341200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4827.00"
+    }
+   ]
+  },
+  "2026-03-01": {
+   "ticker": "KXRAINNYC-26MAR01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772341200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "2531.00"
+    },
+    {
+     "end_period_ts": 1772427600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "66482.00"
+    }
+   ]
+  },
+  "2026-03-02": {
+   "ticker": "KXRAINNYC-26MAR02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772427600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4346.00"
+    },
+    {
+     "end_period_ts": 1772514000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "26004.00"
+    }
+   ]
+  },
+  "2026-03-03": {
+   "ticker": "KXRAINNYC-26MAR03-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772514000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "2347.00"
+    },
+    {
+     "end_period_ts": 1772600400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "11876.00"
+    }
+   ]
+  },
+  "2026-03-04": {
+   "ticker": "KXRAINNYC-26MAR04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772600400,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.8900",
+     "price_close": "0.8800",
+     "volume": "5384.00"
+    },
+    {
+     "end_period_ts": 1772686800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "81990.00"
+    }
+   ]
+  },
+  "2026-03-05": {
+   "ticker": "KXRAINNYC-26MAR05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772686800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1009.00"
+    },
+    {
+     "end_period_ts": 1772773200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3589.00"
+    }
+   ]
+  },
+  "2026-03-06": {
+   "ticker": "KXRAINNYC-26MAR06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772773200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "7275.00"
+    },
+    {
+     "end_period_ts": 1772859600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "43400.00"
+    }
+   ]
+  },
+  "2026-03-07": {
+   "ticker": "KXRAINNYC-26MAR07-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1772859600,
+     "yes_ask_close": "0.3800",
+     "yes_bid_close": "0.2600",
+     "price_close": "0.3800",
+     "volume": "1490.00"
+    },
+    {
+     "end_period_ts": 1772946000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0700",
+     "volume": "6469.00"
+    }
+   ]
+  },
+  "2026-03-08": {
+   "ticker": "KXRAINNYC-26MAR08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1772946000,
+     "yes_ask_close": "0.9200",
+     "yes_bid_close": "0.7700",
+     "price_close": "0.9100",
+     "volume": "931.00"
+    }
+   ]
+  },
+  "2026-03-09": {
+   "ticker": "KXRAINNYC-26MAR09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773032400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1142.00"
+    },
+    {
+     "end_period_ts": 1773115200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5467.00"
+    }
+   ]
+  },
+  "2026-03-10": {
+   "ticker": "KXRAINNYC-26MAR10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773115200,
+     "yes_ask_close": "0.1200",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0400",
+     "volume": "2086.00"
+    },
+    {
+     "end_period_ts": 1773201600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "9381.00"
+    }
+   ]
+  },
+  "2026-03-11": {
+   "ticker": "KXRAINNYC-26MAR11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773201600,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.6100",
+     "price_close": "0.7400",
+     "volume": "3063.00"
+    },
+    {
+     "end_period_ts": 1773288000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "11454.00"
+    }
+   ]
+  },
+  "2026-03-12": {
+   "ticker": "KXRAINNYC-26MAR12-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773288000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1148.00"
+    },
+    {
+     "end_period_ts": 1773374400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "10588.00"
+    }
+   ]
+  },
+  "2026-03-13": {
+   "ticker": "KXRAINNYC-26MAR13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773374400,
+     "yes_ask_close": "0.5900",
+     "yes_bid_close": "0.3600",
+     "price_close": "0.3600",
+     "volume": "695.00"
+    },
+    {
+     "end_period_ts": 1773460800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "4785.00"
+    }
+   ]
+  },
+  "2026-03-14": {
+   "ticker": "KXRAINNYC-26MAR14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773460800,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.4000",
+     "volume": "321.00"
+    },
+    {
+     "end_period_ts": 1773547200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "6336.00"
+    }
+   ]
+  },
+  "2026-03-15": {
+   "ticker": "KXRAINNYC-26MAR15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773547200,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.2400",
+     "price_close": "0.2400",
+     "volume": "599.00"
+    },
+    {
+     "end_period_ts": 1773633600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.4700",
+     "volume": "3833.00"
+    }
+   ]
+  },
+  "2026-03-16": {
+   "ticker": "KXRAINNYC-26MAR16-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773633600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "4223.00"
+    },
+    {
+     "end_period_ts": 1773720000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "2395.00"
+    }
+   ]
+  },
+  "2026-03-17": {
+   "ticker": "KXRAINNYC-26MAR17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773720000,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9200",
+     "price_close": "0.9800",
+     "volume": "974.00"
+    },
+    {
+     "end_period_ts": 1773806400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "69807.00"
+    }
+   ]
+  },
+  "2026-03-18": {
+   "ticker": "KXRAINNYC-26MAR18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773806400,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "502.00"
+    },
+    {
+     "end_period_ts": 1773892800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "12587.00"
+    }
+   ]
+  },
+  "2026-03-19": {
+   "ticker": "KXRAINNYC-26MAR19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1773892800,
+     "yes_ask_close": "0.1800",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.2100",
+     "volume": "1117.00"
+    },
+    {
+     "end_period_ts": 1773979200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3432.00"
+    }
+   ]
+  },
+  "2026-03-20": {
+   "ticker": "KXRAINNYC-26MAR20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1773979200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1655.00"
+    },
+    {
+     "end_period_ts": 1774065600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "26565.00"
+    }
+   ]
+  },
+  "2026-03-21": {
+   "ticker": "KXRAINNYC-26MAR21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774065600,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.5100",
+     "price_close": "0.5400",
+     "volume": "1371.00"
+    },
+    {
+     "end_period_ts": 1774152000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "23961.00"
+    }
+   ]
+  },
+  "2026-03-22": {
+   "ticker": "KXRAINNYC-26MAR22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774152000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1703.00"
+    },
+    {
+     "end_period_ts": 1774238400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "17941.00"
+    }
+   ]
+  },
+  "2026-03-23": {
+   "ticker": "KXRAINNYC-26MAR23-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774238400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1135.00"
+    },
+    {
+     "end_period_ts": 1774324800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "15309.00"
+    }
+   ]
+  },
+  "2026-03-24": {
+   "ticker": "KXRAINNYC-26MAR24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774324800,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "404.00"
+    },
+    {
+     "end_period_ts": 1774411200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "8420.00"
+    }
+   ]
+  },
+  "2026-03-25": {
+   "ticker": "KXRAINNYC-26MAR25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774411200,
+     "yes_ask_close": "0.1600",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.0700",
+     "volume": "618.00"
+    },
+    {
+     "end_period_ts": 1774497600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0500",
+     "volume": "2689.00"
+    }
+   ]
+  },
+  "2026-03-26": {
+   "ticker": "KXRAINNYC-26MAR26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774497600,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.6400",
+     "price_close": "0.6500",
+     "volume": "619.00"
+    },
+    {
+     "end_period_ts": 1774584000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3730.00"
+    }
+   ]
+  },
+  "2026-03-27": {
+   "ticker": "KXRAINNYC-26MAR27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774584000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1440.00"
+    },
+    {
+     "end_period_ts": 1774670400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "81261.00"
+    }
+   ]
+  },
+  "2026-03-28": {
+   "ticker": "KXRAINNYC-26MAR28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774670400,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0300",
+     "volume": "402.00"
+    },
+    {
+     "end_period_ts": 1774756800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4176.00"
+    }
+   ]
+  },
+  "2026-03-29": {
+   "ticker": "KXRAINNYC-26MAR29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1774756800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1903.00"
+    },
+    {
+     "end_period_ts": 1774843200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5611.00"
+    }
+   ]
+  },
+  "2026-03-30": {
+   "ticker": "KXRAINNYC-26MAR30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774843200,
+     "yes_ask_close": "0.7700",
+     "yes_bid_close": "0.3000",
+     "price_close": "0.2600",
+     "volume": "1023.00"
+    },
+    {
+     "end_period_ts": 1774929600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1000",
+     "volume": "80966.00"
+    }
+   ]
+  },
+  "2026-03-31": {
+   "ticker": "KXRAINNYC-26MAR31-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1774929600,
+     "yes_ask_close": "0.8700",
+     "yes_bid_close": "0.8600",
+     "price_close": "0.8700",
+     "volume": "1300.00"
+    },
+    {
+     "end_period_ts": 1775016000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "139512.00"
+    }
+   ]
+  },
+  "2026-04-01": {
+   "ticker": "KXRAINNYC-26APR01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775016000,
+     "yes_ask_close": "0.9700",
+     "yes_bid_close": "0.9600",
+     "price_close": "0.9600",
+     "volume": "1069.00"
+    },
+    {
+     "end_period_ts": 1775102400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "13795.00"
+    }
+   ]
+  },
+  "2026-04-02": {
+   "ticker": "KXRAINNYC-26APR02-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775102400,
+     "yes_ask_close": "0.9700",
+     "yes_bid_close": "0.9600",
+     "price_close": "0.9100",
+     "volume": "906.00"
+    },
+    {
+     "end_period_ts": 1775188800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "15754.00"
+    }
+   ]
+  },
+  "2026-04-03": {
+   "ticker": "KXRAINNYC-26APR03-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775188800,
+     "yes_ask_close": "0.5800",
+     "yes_bid_close": "0.1200",
+     "price_close": "0.1200",
+     "volume": "469.00"
+    },
+    {
+     "end_period_ts": 1775275200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "141845.00"
+    }
+   ]
+  },
+  "2026-04-04": {
+   "ticker": "KXRAINNYC-26APR04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775275200,
+     "yes_ask_close": "0.8500",
+     "yes_bid_close": "0.8100",
+     "price_close": "0.8500",
+     "volume": "417.00"
+    },
+    {
+     "end_period_ts": 1775361600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "8861.00"
+    }
+   ]
+  },
+  "2026-04-05": {
+   "ticker": "KXRAINNYC-26APR05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775361600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1527.00"
+    },
+    {
+     "end_period_ts": 1775448000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "6399.00"
+    }
+   ]
+  },
+  "2026-04-06": {
+   "ticker": "KXRAINNYC-26APR06-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775448000,
+     "yes_ask_close": "0.3400",
+     "yes_bid_close": "0.2800",
+     "price_close": "0.2800",
+     "volume": "669.00"
+    },
+    {
+     "end_period_ts": 1775534400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "1494.00"
+    }
+   ]
+  },
+  "2026-04-07": {
+   "ticker": "KXRAINNYC-26APR07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1775534400,
+     "yes_ask_close": "0.8600",
+     "yes_bid_close": "0.5100",
+     "price_close": "0.8600",
+     "volume": "729.00"
+    },
+    {
+     "end_period_ts": 1775620800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "419656.00"
+    }
+   ]
+  },
+  "2026-04-08": {
+   "ticker": "KXRAINNYC-26APR08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775620800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3341.00"
+    },
+    {
+     "end_period_ts": 1775707200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "21811.00"
+    }
+   ]
+  },
+  "2026-04-09": {
+   "ticker": "KXRAINNYC-26APR09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775707200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1536.00"
+    },
+    {
+     "end_period_ts": 1775793600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "18034.06"
+    }
+   ]
+  },
+  "2026-04-10": {
+   "ticker": "KXRAINNYC-26APR10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775793600,
+     "yes_ask_close": "0.1000",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.2800",
+     "volume": "114.28"
+    },
+    {
+     "end_period_ts": 1775880000,
+     "yes_ask_close": "0.7400",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0300",
+     "volume": "983.07"
+    }
+   ]
+  },
+  "2026-04-11": {
+   "ticker": "KXRAINNYC-26APR11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775880000,
+     "yes_ask_close": "0.4500",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.2700",
+     "volume": "132.00"
+    },
+    {
+     "end_period_ts": 1775966400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4218.00"
+    }
+   ]
+  },
+  "2026-04-12": {
+   "ticker": "KXRAINNYC-26APR12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1775966400,
+     "yes_ask_close": "0.1800",
+     "yes_bid_close": "0.1700",
+     "price_close": "0.1500",
+     "volume": "392.00"
+    },
+    {
+     "end_period_ts": 1776052800,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "27371.00"
+    }
+   ]
+  },
+  "2026-04-13": {
+   "ticker": "KXRAINNYC-26APR13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776052800,
+     "yes_ask_close": "0.2800",
+     "yes_bid_close": "0.2100",
+     "price_close": "0.2100",
+     "volume": "347.00"
+    },
+    {
+     "end_period_ts": 1776139200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "28226.00"
+    }
+   ]
+  },
+  "2026-04-14": {
+   "ticker": "KXRAINNYC-26APR14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776139200,
+     "yes_ask_close": "0.6200",
+     "yes_bid_close": "0.4500",
+     "price_close": "0.6500",
+     "volume": "1673.00"
+    },
+    {
+     "end_period_ts": 1776225600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "19146.00"
+    }
+   ]
+  },
+  "2026-04-15": {
+   "ticker": "KXRAINNYC-26APR15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1776225600,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.8800",
+     "price_close": "0.8800",
+     "volume": "302.00"
+    },
+    {
+     "end_period_ts": 1776312000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0600",
+     "volume": "2716.00"
+    }
+   ]
+  },
+  "2026-04-16": {
+   "ticker": "KXRAINNYC-26APR16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1776312000,
+     "yes_ask_close": "0.5600",
+     "yes_bid_close": "0.2200",
+     "price_close": "0.5200",
+     "volume": "144.00"
+    },
+    {
+     "end_period_ts": 1776398400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.4400",
+     "volume": "2486.42"
+    }
+   ]
+  },
+  "2026-04-17": {
+   "ticker": "KXRAINNYC-26APR17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776398400,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.2200",
+     "price_close": "0.7200",
+     "volume": "563.37"
+    },
+    {
+     "end_period_ts": 1776484800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "31834.07"
+    }
+   ]
+  },
+  "2026-04-18": {
+   "ticker": "KXRAINNYC-26APR18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1776484800,
+     "yes_ask_close": "0.2200",
+     "yes_bid_close": "0.1700",
+     "price_close": "0.2200",
+     "volume": "694.78"
+    },
+    {
+     "end_period_ts": 1776571200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3140.75"
+    }
+   ]
+  },
+  "2026-04-19": {
+   "ticker": "KXRAINNYC-26APR19-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776571200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "3367.33"
+    },
+    {
+     "end_period_ts": 1776657600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "9385.14"
+    }
+   ]
+  },
+  "2026-04-20": {
+   "ticker": "KXRAINNYC-26APR20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1776657600,
+     "yes_ask_close": "0.8300",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7000",
+     "volume": "1631.51"
+    },
+    {
+     "end_period_ts": 1776744000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "9496.82"
+    }
+   ]
+  },
+  "2026-04-21": {
+   "ticker": "KXRAINNYC-26APR21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776744000,
+     "yes_ask_close": "0.2200",
+     "yes_bid_close": "0.2000",
+     "price_close": "0.2100",
+     "volume": "2554.47"
+    },
+    {
+     "end_period_ts": 1776830400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "8772.84"
+    }
+   ]
+  },
+  "2026-04-22": {
+   "ticker": "KXRAINNYC-26APR22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1776830400,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9600",
+     "price_close": "0.9900",
+     "volume": "1706.64"
+    },
+    {
+     "end_period_ts": 1776916800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "45897.55"
+    }
+   ]
+  },
+  "2026-04-23": {
+   "ticker": "KXRAINNYC-26APR23-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1776916800,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0300",
+     "volume": "1809.59"
+    },
+    {
+     "end_period_ts": 1777003200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "27160.54"
+    }
+   ]
+  },
+  "2026-04-24": {
+   "ticker": "KXRAINNYC-26APR24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1777003200,
+     "yes_ask_close": "0.3600",
+     "yes_bid_close": "0.1600",
+     "price_close": "0.1600",
+     "volume": "1117.79"
+    },
+    {
+     "end_period_ts": 1777089600,
+     "yes_ask_close": "0.1000",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0600",
+     "volume": "11708.37"
+    }
+   ]
+  },
+  "2026-04-25": {
+   "ticker": "KXRAINNYC-26APR25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777089600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "2374.00"
+    },
+    {
+     "end_period_ts": 1777176000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "8475.58"
+    }
+   ]
+  },
+  "2026-04-26": {
+   "ticker": "KXRAINNYC-26APR26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777176000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1205.00"
+    },
+    {
+     "end_period_ts": 1777262400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "130056.37"
+    }
+   ]
+  },
+  "2026-04-27": {
+   "ticker": "KXRAINNYC-26APR27-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1777262400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "486.75"
+    },
+    {
+     "end_period_ts": 1777348800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7488.96"
+    }
+   ]
+  },
+  "2026-04-28": {
+   "ticker": "KXRAINNYC-26APR28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1777348800,
+     "yes_ask_close": "0.2400",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.1000",
+     "volume": "604.70"
+    },
+    {
+     "end_period_ts": 1777435200,
+     "yes_ask_close": "0.0200",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0100",
+     "volume": "11028.14"
+    }
+   ]
+  },
+  "2026-04-29": {
+   "ticker": "KXRAINNYC-26APR29-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777435200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "3763.94"
+    },
+    {
+     "end_period_ts": 1777521600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "24738.05"
+    }
+   ]
+  },
+  "2026-04-30": {
+   "ticker": "KXRAINNYC-26APR30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777521600,
+     "yes_ask_close": "0.9700",
+     "yes_bid_close": "0.9600",
+     "price_close": "0.9700",
+     "volume": "1455.56"
+    },
+    {
+     "end_period_ts": 1777608000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "16998.79"
+    }
+   ]
+  },
+  "2026-05-01": {
+   "ticker": "KXRAINNYC-26MAY01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777608000,
+     "yes_ask_close": "0.5500",
+     "yes_bid_close": "0.2400",
+     "price_close": "0.5600",
+     "volume": "1265.47"
+    },
+    {
+     "end_period_ts": 1777694400,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.1400",
+     "volume": "3724.28"
+    }
+   ]
+  },
+  "2026-05-02": {
+   "ticker": "KXRAINNYC-26MAY02-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1777694400,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.8800",
+     "price_close": "0.7300",
+     "volume": "768.15"
+    },
+    {
+     "end_period_ts": 1777780800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "299921.34"
+    }
+   ]
+  },
+  "2026-05-03": {
+   "ticker": "KXRAINNYC-26MAY03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1777780800,
+     "yes_ask_close": "0.1200",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.1200",
+     "volume": "5000.28"
+    },
+    {
+     "end_period_ts": 1777867200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "8597.10"
+    }
+   ]
+  },
+  "2026-05-04": {
+   "ticker": "KXRAINNYC-26MAY04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1777867200,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0200",
+     "volume": "560.04"
+    },
+    {
+     "end_period_ts": 1777953600,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3712.80"
+    }
+   ]
+  },
+  "2026-05-05": {
+   "ticker": "KXRAINNYC-26MAY05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1777953600,
+     "yes_ask_close": "0.2900",
+     "yes_bid_close": "0.1400",
+     "price_close": "0.1400",
+     "volume": "410.20"
+    },
+    {
+     "end_period_ts": 1778040000,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0600",
+     "volume": "29145.00"
+    }
+   ]
+  },
+  "2026-05-06": {
+   "ticker": "KXRAINNYC-26MAY06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778040000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1199.68"
+    },
+    {
+     "end_period_ts": 1778126400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "22139.89"
+    }
+   ]
+  },
+  "2026-05-07": {
+   "ticker": "KXRAINNYC-26MAY07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778126400,
+     "yes_ask_close": "0.9500",
+     "yes_bid_close": "0.8200",
+     "price_close": "0.9000",
+     "volume": "1258.08"
+    },
+    {
+     "end_period_ts": 1778212800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "74850.99"
+    }
+   ]
+  },
+  "2026-05-08": {
+   "ticker": "KXRAINNYC-26MAY08-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778212800,
+     "yes_ask_close": "0.8600",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.8500",
+     "volume": "910.76"
+    },
+    {
+     "end_period_ts": 1778299200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "140811.82"
+    }
+   ]
+  },
+  "2026-05-09": {
+   "ticker": "KXRAINNYC-26MAY09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778299200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "3192.59"
+    },
+    {
+     "end_period_ts": 1778385600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "31022.54"
+    }
+   ]
+  },
+  "2026-05-10": {
+   "ticker": "KXRAINNYC-26MAY10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778385600,
+     "yes_ask_close": "0.6400",
+     "yes_bid_close": "0.6000",
+     "price_close": "0.6100",
+     "volume": "257.40"
+    },
+    {
+     "end_period_ts": 1778472000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "8453.23"
+    }
+   ]
+  },
+  "2026-05-11": {
+   "ticker": "KXRAINNYC-26MAY11-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1778472000,
+     "yes_ask_close": "0.7300",
+     "yes_bid_close": "0.3000",
+     "price_close": "0.3700",
+     "volume": "972.39"
+    },
+    {
+     "end_period_ts": 1778558400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0400",
+     "volume": "2738.20"
+    }
+   ]
+  },
+  "2026-05-12": {
+   "ticker": "KXRAINNYC-26MAY12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1778558400,
+     "yes_ask_close": "0.2000",
+     "yes_bid_close": "0.0900",
+     "price_close": "0.2000",
+     "volume": "34.00"
+    },
+    {
+     "end_period_ts": 1778644800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7409.39"
+    }
+   ]
+  },
+  "2026-05-13": {
+   "ticker": "KXRAINNYC-26MAY13-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778644800,
+     "yes_ask_close": "0.8300",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.8600",
+     "volume": "538.76"
+    },
+    {
+     "end_period_ts": 1778731200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "57877.24"
+    }
+   ]
+  },
+  "2026-05-14": {
+   "ticker": "KXRAINNYC-26MAY14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1778731200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9800",
+     "volume": "218.33"
+    },
+    {
+     "end_period_ts": 1778817600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "166663.97"
+    }
+   ]
+  },
+  "2026-05-15": {
+   "ticker": "KXRAINNYC-26MAY15-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1778817600,
+     "yes_ask_close": "0.2400",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.1600",
+     "volume": "386.54"
+    },
+    {
+     "end_period_ts": 1778904000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "13252.36"
+    }
+   ]
+  },
+  "2026-05-16": {
+   "ticker": "KXRAINNYC-26MAY16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1778904000,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "20.88"
+    },
+    {
+     "end_period_ts": 1778990400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3019.56"
+    }
+   ]
+  },
+  "2026-05-17": {
+   "ticker": "KXRAINNYC-26MAY17-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1778990400,
+     "yes_ask_close": "0.3000",
+     "yes_bid_close": "0.2200",
+     "price_close": "0.3400",
+     "volume": "102.16"
+    },
+    {
+     "end_period_ts": 1779076800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "10391.56"
+    }
+   ]
+  },
+  "2026-05-18": {
+   "ticker": "KXRAINNYC-26MAY18-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1779076800,
+     "yes_ask_close": "0.1800",
+     "yes_bid_close": "0.0900",
+     "price_close": "0.1900",
+     "volume": "65.61"
+    },
+    {
+     "end_period_ts": 1779163200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "2326.59"
+    }
+   ]
+  },
+  "2026-05-19": {
+   "ticker": "KXRAINNYC-26MAY19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1779163200,
+     "yes_ask_close": "0.3900",
+     "yes_bid_close": "0.1600",
+     "price_close": "0.1600",
+     "volume": "282.94"
+    },
+    {
+     "end_period_ts": 1779249600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4916.49"
+    }
+   ]
+  },
+  "2026-05-20": {
+   "ticker": "KXRAINNYC-26MAY20-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779249600,
+     "yes_ask_close": "0.9500",
+     "yes_bid_close": "0.8200",
+     "price_close": "0.8200",
+     "volume": "378.05"
+    },
+    {
+     "end_period_ts": 1779336000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "6579.69"
+    }
+   ]
+  },
+  "2026-05-21": {
+   "ticker": "KXRAINNYC-26MAY21-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779336000,
+     "yes_ask_close": "0.9600",
+     "yes_bid_close": "0.8900",
+     "price_close": "0.9500",
+     "volume": "719.27"
+    },
+    {
+     "end_period_ts": 1779422400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "6959.06"
+    }
+   ]
+  },
+  "2026-05-22": {
+   "ticker": "KXRAINNYC-26MAY22-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1779422400,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.0800",
+     "volume": "482.16"
+    },
+    {
+     "end_period_ts": 1779508800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "19775.21"
+    }
+   ]
+  },
+  "2026-05-23": {
+   "ticker": "KXRAINNYC-26MAY23-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779508800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "1696.93"
+    },
+    {
+     "end_period_ts": 1779595200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4441.84"
+    }
+   ]
+  },
+  "2026-05-24": {
+   "ticker": "KXRAINNYC-26MAY24-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779595200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "512.00"
+    },
+    {
+     "end_period_ts": 1779681600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "579.53"
+    }
+   ]
+  },
+  "2026-05-25": {
+   "ticker": "KXRAINNYC-26MAY25-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779681600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "517.00"
+    },
+    {
+     "end_period_ts": 1779768000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3261.95"
+    }
+   ]
+  },
+  "2026-05-26": {
+   "ticker": "KXRAINNYC-26MAY26-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1779768000,
+     "yes_ask_close": "0.2000",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.2000",
+     "volume": "185.53"
+    },
+    {
+     "end_period_ts": 1779854400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1837.23"
+    }
+   ]
+  },
+  "2026-05-27": {
+   "ticker": "KXRAINNYC-26MAY27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1779854400,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.3300",
+     "price_close": "0.8500",
+     "volume": "71.70"
+    },
+    {
+     "end_period_ts": 1779940800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "21432.56"
+    }
+   ]
+  },
+  "2026-05-28": {
+   "ticker": "KXRAINNYC-26MAY28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1779940800,
+     "yes_ask_close": "0.3000",
+     "yes_bid_close": "0.1800",
+     "price_close": "0.3000",
+     "volume": "442.83"
+    },
+    {
+     "end_period_ts": 1780027200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3778.29"
+    }
+   ]
+  },
+  "2026-05-29": {
+   "ticker": "KXRAINNYC-26MAY29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780027200,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.2000",
+     "volume": "14.14"
+    },
+    {
+     "end_period_ts": 1780113600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3753.36"
+    }
+   ]
+  },
+  "2026-05-30": {
+   "ticker": "KXRAINNYC-26MAY30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1780113600,
+     "yes_ask_close": "0.1700",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.1700",
+     "volume": "27.76"
+    },
+    {
+     "end_period_ts": 1780200000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "132904.16"
+    }
+   ]
+  },
+  "2026-05-31": {
+   "ticker": "KXRAINNYC-26MAY31-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780200000,
+     "yes_ask_close": "0.1900",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.0400",
+     "volume": "141.90"
+    },
+    {
+     "end_period_ts": 1780286400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3101.55"
+    }
+   ]
+  },
+  "2026-06-01": {
+   "ticker": "KXRAINNYC-26JUN01-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1780286400,
+     "yes_ask_close": "0.4400",
+     "yes_bid_close": "0.1100",
+     "price_close": "0.4700",
+     "volume": "92.98"
+    },
+    {
+     "end_period_ts": 1780372800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "490337.77"
+    }
+   ]
+  },
+  "2026-06-02": {
+   "ticker": "KXRAINNYC-26JUN02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780372800,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.1000",
+     "volume": "171.08"
+    },
+    {
+     "end_period_ts": 1780459200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4100.03"
+    }
+   ]
+  },
+  "2026-06-03": {
+   "ticker": "KXRAINNYC-26JUN03-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780459200,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.1000",
+     "volume": "137.00"
+    },
+    {
+     "end_period_ts": 1780545600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7263.92"
+    }
+   ]
+  },
+  "2026-06-04": {
+   "ticker": "KXRAINNYC-26JUN04-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780545600,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.0700",
+     "volume": "699.69"
+    },
+    {
+     "end_period_ts": 1780632000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5515.73"
+    }
+   ]
+  },
+  "2026-06-05": {
+   "ticker": "KXRAINNYC-26JUN05-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780632000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0600",
+     "volume": "171.34"
+    },
+    {
+     "end_period_ts": 1780718400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5027.91"
+    }
+   ]
+  },
+  "2026-06-06": {
+   "ticker": "KXRAINNYC-26JUN06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1780718400,
+     "yes_ask_close": "0.7900",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5200",
+     "volume": "479.38"
+    },
+    {
+     "end_period_ts": 1780804800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "28764.04"
+    }
+   ]
+  },
+  "2026-06-07": {
+   "ticker": "KXRAINNYC-26JUN07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1780804800,
+     "yes_ask_close": "0.7000",
+     "yes_bid_close": "0.3000",
+     "price_close": "0.5500",
+     "volume": "480.48"
+    },
+    {
+     "end_period_ts": 1780891200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "37012.86"
+    }
+   ]
+  },
+  "2026-06-08": {
+   "ticker": "KXRAINNYC-26JUN08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780891200,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0300",
+     "volume": "26297.38"
+    },
+    {
+     "end_period_ts": 1780977600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "15417.28"
+    }
+   ]
+  },
+  "2026-06-09": {
+   "ticker": "KXRAINNYC-26JUN09-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1780977600,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.1800",
+     "volume": "149.04"
+    },
+    {
+     "end_period_ts": 1781064000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3492.41"
+    }
+   ]
+  },
+  "2026-06-10": {
+   "ticker": "KXRAINNYC-26JUN10-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781064000,
+     "yes_ask_close": "0.9600",
+     "yes_bid_close": "0.8500",
+     "price_close": "0.8500",
+     "volume": "1124.57"
+    },
+    {
+     "end_period_ts": 1781150400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "79948.12"
+    }
+   ]
+  },
+  "2026-06-11": {
+   "ticker": "KXRAINNYC-26JUN11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781150400,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.7600",
+     "price_close": "0.7600",
+     "volume": "804.38"
+    },
+    {
+     "end_period_ts": 1781236800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "24341.55"
+    }
+   ]
+  },
+  "2026-06-12": {
+   "ticker": "KXRAINNYC-26JUN12-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781236800,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.8900",
+     "price_close": "0.9000",
+     "volume": "823.73"
+    },
+    {
+     "end_period_ts": 1781323200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "40256.33"
+    }
+   ]
+  },
+  "2026-06-13": {
+   "ticker": "KXRAINNYC-26JUN13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1781323200,
+     "yes_ask_close": "0.2000",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.2000",
+     "volume": "150.30"
+    },
+    {
+     "end_period_ts": 1781409600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "9837.19"
+    }
+   ]
+  },
+  "2026-06-14": {
+   "ticker": "KXRAINNYC-26JUN14-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781409600,
+     "yes_ask_close": "0.9300",
+     "yes_bid_close": "0.8500",
+     "price_close": "0.9200",
+     "volume": "1266.67"
+    },
+    {
+     "end_period_ts": 1781496000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "9441.45"
+    }
+   ]
+  },
+  "2026-06-15": {
+   "ticker": "KXRAINNYC-26JUN15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781496000,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9900",
+     "volume": "1286.57"
+    },
+    {
+     "end_period_ts": 1781582400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "815076.98"
+    }
+   ]
+  },
+  "2026-06-16": {
+   "ticker": "KXRAINNYC-26JUN16-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1781582400,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.0500",
+     "volume": "359.19"
+    },
+    {
+     "end_period_ts": 1781668800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "17266.35"
+    }
+   ]
+  },
+  "2026-06-17": {
+   "ticker": "KXRAINNYC-26JUN17-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781668800,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.8000",
+     "price_close": "0.8900",
+     "volume": "1042.48"
+    },
+    {
+     "end_period_ts": 1781755200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "55701.03"
+    }
+   ]
+  },
+  "2026-06-18": {
+   "ticker": "KXRAINNYC-26JUN18-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1781755200,
+     "yes_ask_close": "0.9400",
+     "yes_bid_close": "0.9200",
+     "price_close": "0.9400",
+     "volume": "657.88"
+    },
+    {
+     "end_period_ts": 1781841600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "71845.61"
+    }
+   ]
+  },
+  "2026-06-19": {
+   "ticker": "KXRAINNYC-26JUN19-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1781841600,
+     "yes_ask_close": "0.0800",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0800",
+     "volume": "169.09"
+    },
+    {
+     "end_period_ts": 1781928000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "14492.26"
+    }
+   ]
+  },
+  "2026-06-20": {
+   "ticker": "KXRAINNYC-26JUN20-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1781928000,
+     "yes_ask_close": "0.8600",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0600",
+     "volume": "222.56"
+    },
+    {
+     "end_period_ts": 1782014400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3004.10"
+    }
+   ]
+  },
+  "2026-06-21": {
+   "ticker": "KXRAINNYC-26JUN21-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782014400,
+     "yes_ask_close": "0.3700",
+     "yes_bid_close": "0.3000",
+     "price_close": "0.3600",
+     "volume": "405.94"
+    },
+    {
+     "end_period_ts": 1782100800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4180.55"
+    }
+   ]
+  },
+  "2026-06-22": {
+   "ticker": "KXRAINNYC-26JUN22-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1782100800,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9900",
+     "volume": "2453.44"
+    },
+    {
+     "end_period_ts": 1782187200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3713.60"
+    }
+   ]
+  },
+  "2026-06-23": {
+   "ticker": "KXRAINNYC-26JUN23-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1782187200,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9800",
+     "volume": "1994.18"
+    },
+    {
+     "end_period_ts": 1782273600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "4112.69"
+    }
+   ]
+  },
+  "2026-06-24": {
+   "ticker": "KXRAINNYC-26JUN24-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782273600,
+     "yes_ask_close": "0.1600",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.0900",
+     "volume": "1583.09"
+    },
+    {
+     "end_period_ts": 1782360000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4884.50"
+    }
+   ]
+  },
+  "2026-06-25": {
+   "ticker": "KXRAINNYC-26JUN25-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782360000,
+     "yes_ask_close": "0.4200",
+     "yes_bid_close": "0.4100",
+     "price_close": "0.4000",
+     "volume": "750.14"
+    },
+    {
+     "end_period_ts": 1782446400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1807.53"
+    }
+   ]
+  },
+  "2026-06-26": {
+   "ticker": "KXRAINNYC-26JUN26-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1782446400,
+     "yes_ask_close": "0.9500",
+     "yes_bid_close": "0.9100",
+     "price_close": "0.9200",
+     "volume": "707.27"
+    },
+    {
+     "end_period_ts": 1782532800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "19205.66"
+    }
+   ]
+  },
+  "2026-06-27": {
+   "ticker": "KXRAINNYC-26JUN27-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1782532800,
+     "yes_ask_close": "0.8200",
+     "yes_bid_close": "0.5700",
+     "price_close": "0.8200",
+     "volume": "208.61"
+    },
+    {
+     "end_period_ts": 1782619200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "6029.20"
+    }
+   ]
+  },
+  "2026-06-28": {
+   "ticker": "KXRAINNYC-26JUN28-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782619200,
+     "yes_ask_close": "0.8300",
+     "yes_bid_close": "0.7500",
+     "price_close": "0.6700",
+     "volume": "861.46"
+    },
+    {
+     "end_period_ts": 1782705600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "6772.77"
+    }
+   ]
+  },
+  "2026-06-29": {
+   "ticker": "KXRAINNYC-26JUN29-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782705600,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0800",
+     "price_close": "0.0800",
+     "volume": "366.22"
+    },
+    {
+     "end_period_ts": 1782792000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "3330.90"
+    }
+   ]
+  },
+  "2026-06-30": {
+   "ticker": "KXRAINNYC-26JUN30-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1782792000,
+     "yes_ask_close": "0.1300",
+     "yes_bid_close": "0.1100",
+     "price_close": "0.0900",
+     "volume": "191.40"
+    },
+    {
+     "end_period_ts": 1782878400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.7800",
+     "volume": "61150.41"
+    }
+   ]
+  },
+  "2026-07-01": {
+   "ticker": "KXRAINNYC-26JUL01-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782878400,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.5500",
+     "volume": "1026.38"
+    },
+    {
+     "end_period_ts": 1782964800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0800",
+     "volume": "2631.97"
+    }
+   ]
+  },
+  "2026-07-02": {
+   "ticker": "KXRAINNYC-26JUL02-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1782964800,
+     "yes_ask_close": "0.4300",
+     "yes_bid_close": "0.1300",
+     "price_close": "0.1300",
+     "volume": "50.96"
+    },
+    {
+     "end_period_ts": 1783051200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1488.57"
+    }
+   ]
+  },
+  "2026-07-03": {
+   "ticker": "KXRAINNYC-26JUL03-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783051200,
+     "yes_ask_close": "0.3100",
+     "yes_bid_close": "0.1900",
+     "price_close": "0.1900",
+     "volume": "14.60"
+    },
+    {
+     "end_period_ts": 1783137600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "8119.76"
+    }
+   ]
+  },
+  "2026-07-04": {
+   "ticker": "KXRAINNYC-26JUL04-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783137600,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.7700",
+     "price_close": "0.9000",
+     "volume": "394.37"
+    },
+    {
+     "end_period_ts": 1783224000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "5921.35"
+    }
+   ]
+  },
+  "2026-07-05": {
+   "ticker": "KXRAINNYC-26JUL05-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783224000,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9800",
+     "volume": "753.21"
+    },
+    {
+     "end_period_ts": 1783310400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "5979.72"
+    }
+   ]
+  },
+  "2026-07-06": {
+   "ticker": "KXRAINNYC-26JUL06-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783310400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "515.75"
+    },
+    {
+     "end_period_ts": 1783396800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3082.24"
+    }
+   ]
+  },
+  "2026-07-07": {
+   "ticker": "KXRAINNYC-26JUL07-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783396800,
+     "yes_ask_close": "0.9600",
+     "yes_bid_close": "0.8400",
+     "price_close": "0.8700",
+     "volume": "1305.00"
+    },
+    {
+     "end_period_ts": 1783483200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "22377.45"
+    }
+   ]
+  },
+  "2026-07-08": {
+   "ticker": "KXRAINNYC-26JUL08-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1783483200,
+     "yes_ask_close": "0.1600",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.0900",
+     "volume": "298.51"
+    },
+    {
+     "end_period_ts": 1783569600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3983.97"
+    }
+   ]
+  },
+  "2026-07-09": {
+   "ticker": "KXRAINNYC-26JUL09-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783569600,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.8900",
+     "price_close": "0.9000",
+     "volume": "359.38"
+    },
+    {
+     "end_period_ts": 1783656000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "3984.02"
+    }
+   ]
+  },
+  "2026-07-10": {
+   "ticker": "KXRAINNYC-26JUL10-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1783656000,
+     "yes_ask_close": "0.9400",
+     "yes_bid_close": "0.8500",
+     "price_close": "0.9400",
+     "volume": "459.51"
+    },
+    {
+     "end_period_ts": 1783742400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0700",
+     "volume": "2115.01"
+    }
+   ]
+  },
+  "2026-07-11": {
+   "ticker": "KXRAINNYC-26JUL11-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1783742400,
+     "yes_ask_close": "0.8200",
+     "yes_bid_close": "0.7000",
+     "price_close": "0.7100",
+     "volume": "601.16"
+    },
+    {
+     "end_period_ts": 1783828800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "7305.18"
+    }
+   ]
+  },
+  "2026-07-12": {
+   "ticker": "KXRAINNYC-26JUL12-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1783828800,
+     "yes_ask_close": "0.0900",
+     "yes_bid_close": "0.0700",
+     "price_close": "0.0700",
+     "volume": "407.18"
+    },
+    {
+     "end_period_ts": 1783915200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "1323.94"
+    }
+   ]
+  },
+  "2026-07-13": {
+   "ticker": "KXRAINNYC-26JUL13-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1783915200,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0200",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1784001600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1104.12"
+    }
+   ]
+  },
+  "2026-07-14": {
+   "ticker": "KXRAINNYC-26JUL14-T0",
+   "series": "KXRAINNYC",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1784001600,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0100",
+     "volume": "8.04"
+    },
+    {
+     "end_period_ts": 1784088000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "4354.11"
+    }
+   ]
+  },
+  "2026-07-15": {
+   "ticker": "KXRAINNYC-26JUL15-T0",
+   "series": "KXRAINNYC",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1784088000,
+     "yes_ask_close": "0.2100",
+     "yes_bid_close": "0.1300",
+     "price_close": "0.3000",
+     "volume": "3261.60"
+    },
+    {
+     "end_period_ts": 1784174400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.9900",
+     "volume": "66948.59"
+    }
+   ]
+  },
+  "2026-07-17": {
+   "ticker": "KXRAIN-26JUL17-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1784260800,
+     "yes_ask_close": "0.4900",
+     "yes_bid_close": "0.0100",
+     "price_close": null,
+     "volume": "0.00"
+    },
+    {
+     "end_period_ts": 1784347200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "12.00"
+    }
+   ]
+  },
+  "2026-07-22": {
+   "ticker": "KXRAIN-26JUL22-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1784692800,
+     "yes_ask_close": "0.8900",
+     "yes_bid_close": "0.6500",
+     "price_close": "0.6500",
+     "volume": "189.09"
+    },
+    {
+     "end_period_ts": 1784779200,
+     "yes_ask_close": "0.2500",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.2900",
+     "volume": "194.46"
+    }
+   ]
+  },
+  "2026-07-23": {
+   "ticker": "KXRAIN-26JUL23-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1784779200,
+     "yes_ask_close": "0.1700",
+     "yes_bid_close": "0.1200",
+     "price_close": "0.2200",
+     "volume": "30.00"
+    },
+    {
+     "end_period_ts": 1784865600,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "767.83"
+    }
+   ]
+  },
+  "2026-07-24": {
+   "ticker": "KXRAIN-26JUL24-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1784865600,
+     "yes_ask_close": "0.1400",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1200",
+     "volume": "13.00"
+    },
+    {
+     "end_period_ts": 1784952000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "153.97"
+    }
+   ]
+  },
+  "2026-07-25": {
+   "ticker": "KXRAIN-26JUL25-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1784952000,
+     "yes_ask_close": "0.7500",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.1200",
+     "volume": "4.00"
+    },
+    {
+     "end_period_ts": 1785038400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "1992.11"
+    }
+   ]
+  },
+  "2026-07-26": {
+   "ticker": "KXRAIN-26JUL26-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1785038400,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0500",
+     "volume": "13.00"
+    },
+    {
+     "end_period_ts": 1785124800,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "5302.07"
+    }
+   ]
+  },
+  "2026-07-27": {
+   "ticker": "KXRAIN-26JUL27-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785124800,
+     "yes_ask_close": "0.5000",
+     "yes_bid_close": "0.4700",
+     "price_close": "0.5300",
+     "volume": "1501.90"
+    },
+    {
+     "end_period_ts": 1785211200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "32202.98"
+    }
+   ]
+  },
+  "2026-07-28": {
+   "ticker": "KXRAIN-26JUL28-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785211200,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9800",
+     "volume": "456.22"
+    },
+    {
+     "end_period_ts": 1785297600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "11709.71"
+    }
+   ]
+  },
+  "2026-07-29": {
+   "ticker": "KXRAIN-26JUL29-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785297600,
+     "yes_ask_close": "0.9900",
+     "yes_bid_close": "0.9800",
+     "price_close": "0.9800",
+     "volume": "1421.41"
+    },
+    {
+     "end_period_ts": 1785384000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "18355.77"
+    }
+   ]
+  },
+  "2026-07-30": {
+   "ticker": "KXRAIN-26JUL30-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785384000,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.9500",
+     "price_close": "0.9500",
+     "volume": "911.18"
+    },
+    {
+     "end_period_ts": 1785470400,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "6871.55"
+    }
+   ]
+  },
+  "2026-07-31": {
+   "ticker": "KXRAIN-26JUL31-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785470400,
+     "yes_ask_close": "0.1100",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.1000",
+     "volume": "268.38"
+    },
+    {
+     "end_period_ts": 1785556800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "40954.77"
+    }
+   ]
+  },
+  "2026-08-01": {
+   "ticker": "KXRAIN-26AUG01-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1785556800,
+     "yes_ask_close": "0.1700",
+     "yes_bid_close": "0.1600",
+     "price_close": "0.1400",
+     "volume": "150.43"
+    },
+    {
+     "end_period_ts": 1785643200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "3279.08"
+    }
+   ]
+  },
+  "2026-08-02": {
+   "ticker": "KXRAIN-26AUG02-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785643200,
+     "yes_ask_close": "0.5300",
+     "yes_bid_close": "0.5200",
+     "price_close": "0.5200",
+     "volume": "2023.52"
+    },
+    {
+     "end_period_ts": 1785729600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "25307.75"
+    }
+   ]
+  },
+  "2026-08-03": {
+   "ticker": "KXRAIN-26AUG03-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785729600,
+     "yes_ask_close": "0.9800",
+     "yes_bid_close": "0.9700",
+     "price_close": "0.9700",
+     "volume": "1052.88"
+    },
+    {
+     "end_period_ts": 1785816000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "5963.16"
+    }
+   ]
+  },
+  "2026-08-04": {
+   "ticker": "KXRAIN-26AUG04-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1785816000,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0300",
+     "volume": "1225.85"
+    },
+    {
+     "end_period_ts": 1785902400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0200",
+     "volume": "8694.87"
+    }
+   ]
+  },
+  "2026-08-05": {
+   "ticker": "KXRAIN-26AUG05-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785902400,
+     "yes_ask_close": "0.4500",
+     "yes_bid_close": "0.3600",
+     "price_close": "0.4500",
+     "volume": "1048.10"
+    },
+    {
+     "end_period_ts": 1785988800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "34601.86"
+    }
+   ]
+  },
+  "2026-08-06": {
+   "ticker": "KXRAIN-26AUG06-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1785988800,
+     "yes_ask_close": "0.7400",
+     "yes_bid_close": "0.6800",
+     "price_close": "0.7000",
+     "volume": "3074.21"
+    },
+    {
+     "end_period_ts": 1786075200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "56673.14"
+    }
+   ]
+  },
+  "2026-08-07": {
+   "ticker": "KXRAIN-26AUG07-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1786075200,
+     "yes_ask_close": "0.8000",
+     "yes_bid_close": "0.7900",
+     "price_close": "0.8000",
+     "volume": "1956.57"
+    },
+    {
+     "end_period_ts": 1786161600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "13814.66"
+    }
+   ]
+  },
+  "2026-08-08": {
+   "ticker": "KXRAIN-26AUG08-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1786161600,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.4300",
+     "price_close": "0.3700",
+     "volume": "2175.76"
+    },
+    {
+     "end_period_ts": 1786248000,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0500",
+     "volume": "29086.05"
+    }
+   ]
+  },
+  "2026-08-09": {
+   "ticker": "KXRAIN-26AUG09-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1786248000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0400",
+     "volume": "503.86"
+    },
+    {
+     "end_period_ts": 1786334400,
+     "yes_ask_close": "0.0200",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "13554.79"
+    }
+   ]
+  },
+  "2026-08-10": {
+   "ticker": "KXRAIN-26AUG10-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1786334400,
+     "yes_ask_close": "0.7100",
+     "yes_bid_close": "0.6300",
+     "price_close": "0.6900",
+     "volume": "478.06"
+    },
+    {
+     "end_period_ts": 1786420800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "31893.56"
+    }
+   ]
+  },
+  "2026-08-11": {
+   "ticker": "KXRAIN-26AUG11-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1786420800,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.5000",
+     "price_close": "0.5100",
+     "volume": "1031.70"
+    },
+    {
+     "end_period_ts": 1786507200,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0300",
+     "volume": "50221.55"
+    }
+   ]
+  },
+  "2026-08-12": {
+   "ticker": "KXRAIN-26AUG12-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1786507200,
+     "yes_ask_close": "0.1700",
+     "yes_bid_close": "0.1500",
+     "price_close": "0.1300",
+     "volume": "1853.30"
+    },
+    {
+     "end_period_ts": 1786593600,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "12940.20"
+    }
+   ]
+  },
+  "2026-08-13": {
+   "ticker": "KXRAIN-26AUG13-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1786593600,
+     "yes_ask_close": "0.8200",
+     "yes_bid_close": "0.8100",
+     "price_close": "0.8100",
+     "volume": "1447.12"
+    },
+    {
+     "end_period_ts": 1786680000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "174947.54"
+    }
+   ]
+  },
+  "2026-08-14": {
+   "ticker": "KXRAIN-26AUG14-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1786680000,
+     "yes_ask_close": "0.0500",
+     "yes_bid_close": "0.0400",
+     "price_close": "0.0500",
+     "volume": "657.33"
+    },
+    {
+     "end_period_ts": 1786766400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "25790.99"
+    }
+   ]
+  },
+  "2026-08-15": {
+   "ticker": "KXRAIN-26AUG15-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1786766400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7539.30"
+    },
+    {
+     "end_period_ts": 1786852800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "12606.10"
+    }
+   ]
+  },
+  "2026-08-16": {
+   "ticker": "KXRAIN-26AUG16-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1786852800,
+     "yes_ask_close": "0.4800",
+     "yes_bid_close": "0.4600",
+     "price_close": "0.4800",
+     "volume": "204.22"
+    },
+    {
+     "end_period_ts": 1786939200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "63939.12"
+    }
+   ]
+  },
+  "2026-08-17": {
+   "ticker": "KXRAIN-26AUG17-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1786939200,
+     "yes_ask_close": "0.9100",
+     "yes_bid_close": "0.9000",
+     "price_close": "0.8900",
+     "volume": "9880.97"
+    },
+    {
+     "end_period_ts": 1787025600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "35986.12"
+    }
+   ]
+  },
+  "2026-08-18": {
+   "ticker": "KXRAIN-26AUG18-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1787025600,
+     "yes_ask_close": "0.5100",
+     "yes_bid_close": "0.4400",
+     "price_close": "0.5500",
+     "volume": "2553.94"
+    },
+    {
+     "end_period_ts": 1787112000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "79038.25"
+    }
+   ]
+  },
+  "2026-08-19": {
+   "ticker": "KXRAIN-26AUG19-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787112000,
+     "yes_ask_close": "0.0600",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "445.07"
+    },
+    {
+     "end_period_ts": 1787198400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "7967.53"
+    }
+   ]
+  },
+  "2026-08-20": {
+   "ticker": "KXRAIN-26AUG20-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1787198400,
+     "yes_ask_close": "0.9000",
+     "yes_bid_close": "0.8900",
+     "price_close": "0.9000",
+     "volume": "1459.62"
+    },
+    {
+     "end_period_ts": 1787284800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "7537.77"
+    }
+   ]
+  },
+  "2026-08-21": {
+   "ticker": "KXRAIN-26AUG21-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787284800,
+     "yes_ask_close": "0.3900",
+     "yes_bid_close": "0.3800",
+     "price_close": "0.3900",
+     "volume": "5167.71"
+    },
+    {
+     "end_period_ts": 1787371200,
+     "yes_ask_close": "0.0300",
+     "yes_bid_close": "0.0200",
+     "price_close": "0.0200",
+     "volume": "14986.30"
+    }
+   ]
+  },
+  "2026-08-22": {
+   "ticker": "KXRAIN-26AUG22-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787371200,
+     "yes_ask_close": "0.6000",
+     "yes_bid_close": "0.5600",
+     "price_close": "0.6000",
+     "volume": "1578.22"
+    },
+    {
+     "end_period_ts": 1787457600,
+     "yes_ask_close": "0.0200",
+     "yes_bid_close": "0.0100",
+     "price_close": "0.0200",
+     "volume": "30038.80"
+    }
+   ]
+  },
+  "2026-08-23": {
+   "ticker": "KXRAIN-26AUG23-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1787457600,
+     "yes_ask_close": "0.9200",
+     "yes_bid_close": "0.9000",
+     "price_close": "0.9000",
+     "volume": "5998.56"
+    },
+    {
+     "end_period_ts": 1787544000,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "31552.70"
+    }
+   ]
+  },
+  "2026-08-24": {
+   "ticker": "KXRAIN-26AUG24-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787544000,
+     "yes_ask_close": "0.1500",
+     "yes_bid_close": "0.1000",
+     "price_close": "0.1500",
+     "volume": "949.05"
+    },
+    {
+     "end_period_ts": 1787630400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "15089.38"
+    }
+   ]
+  },
+  "2026-08-25": {
+   "ticker": "KXRAIN-26AUG25-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787630400,
+     "yes_ask_close": "0.1300",
+     "yes_bid_close": "0.0600",
+     "price_close": "0.3900",
+     "volume": "131.03"
+    },
+    {
+     "end_period_ts": 1787716800,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "22232.56"
+    }
+   ]
+  },
+  "2026-08-26": {
+   "ticker": "KXRAIN-26AUG26-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787716800,
+     "yes_ask_close": "0.0700",
+     "yes_bid_close": "0.0500",
+     "price_close": "0.0700",
+     "volume": "668.56"
+    },
+    {
+     "end_period_ts": 1787803200,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "21675.70"
+    }
+   ]
+  },
+  "2026-08-27": {
+   "ticker": "KXRAIN-26AUG27-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1787803200,
+     "yes_ask_close": "0.7900",
+     "yes_bid_close": "0.7600",
+     "price_close": "0.7600",
+     "volume": "1909.71"
+    },
+    {
+     "end_period_ts": 1787889600,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "18504.12"
+    }
+   ]
+  },
+  "2026-08-28": {
+   "ticker": "KXRAIN-26AUG28-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787889600,
+     "yes_ask_close": "0.6500",
+     "yes_bid_close": "0.6200",
+     "price_close": "0.6500",
+     "volume": "3540.28"
+    },
+    {
+     "end_period_ts": 1787976000,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "16192.87"
+    }
+   ]
+  },
+  "2026-08-29": {
+   "ticker": "KXRAIN-26AUG29-NYC",
+   "series": "KXRAIN",
+   "result": "no",
+   "candles": [
+    {
+     "end_period_ts": 1787976000,
+     "yes_ask_close": "0.0400",
+     "yes_bid_close": "0.0300",
+     "price_close": "0.0400",
+     "volume": "423.75"
+    },
+    {
+     "end_period_ts": 1788062400,
+     "yes_ask_close": "0.0100",
+     "yes_bid_close": "0.0000",
+     "price_close": "0.0100",
+     "volume": "22725.12"
+    }
+   ]
+  },
+  "2026-08-30": {
+   "ticker": "KXRAIN-26AUG30-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1788062400,
+     "yes_ask_close": "0.7000",
+     "yes_bid_close": "0.6700",
+     "price_close": "0.6500",
+     "volume": "2390.02"
+    },
+    {
+     "end_period_ts": 1788148800,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "45737.82"
+    }
+   ]
+  },
+  "2026-08-31": {
+   "ticker": "KXRAIN-26AUG31-NYC",
+   "series": "KXRAIN",
+   "result": "yes",
+   "candles": [
+    {
+     "end_period_ts": 1788148800,
+     "yes_ask_close": "0.7200",
+     "yes_bid_close": "0.6900",
+     "price_close": "0.7200",
+     "volume": "1354.60"
+    },
+    {
+     "end_period_ts": 1788235200,
+     "yes_ask_close": "1.0000",
+     "yes_bid_close": "0.9900",
+     "price_close": "0.9900",
+     "volume": "89675.13"
+    }
+   ]
+  }
+ }
+}
