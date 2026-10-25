@@ -5,6 +5,34 @@ on:
   pull_request:
 
 jobs:
+  frontend:
+    # Keep the browser snapshot on the same platform as the reviewed baseline.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pydantic
+      - run: python frontend/scripts/validate-fixtures.py
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run lint && npm run typecheck && npm test && npm run build
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npx playwright test
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: frontend-browser-results
+          path: frontend/test-results
   test:
     runs-on: ubuntu-latest
     steps:

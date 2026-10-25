@@ -1,0 +1,124 @@
+{
+  "id": "hdg_03",
+  "business_id": "restaurant",
+  "exposure_id": "exp_rain",
+  "week_of": "2026-10-26",
+  "status": "declined",
+  "ticker": "KXRAINNYC-26OCT28",
+  "market_title": "Will it rain in NYC on Oct 28, 2026?",
+  "market_url": "https://kalshi.com/markets/kxrainnyc",
+  "close_time": "2026-10-29T04:59:00Z",
+  "side": "yes",
+  "match_reason": "NYC daily rain market for Oct 28; settles on Central Park.",
+  "h": "1",
+  "n_target": 900,
+  "n_filled": 900,
+  "n_unfilled": 0,
+  "partial": false,
+  "resized": false,
+  "fills": [
+    {
+      "price": "0.62",
+      "count": 900
+    }
+  ],
+  "avg_price": "0.62",
+  "cost": "558.00",
+  "fee": "14.85",
+  "premium": "572.85",
+  "fair": "0.27",
+  "expected_cost": "329.85",
+  "fee_unverified": false,
+  "payoff": [
+    {
+      "outcome": "event",
+      "revenue_vs_base": "-900.00",
+      "contract_payout": "900.00",
+      "premium": "-572.85",
+      "net_vs_base": "-572.85"
+    },
+    {
+      "outcome": "no_event",
+      "revenue_vs_base": "0.00",
+      "contract_payout": "0.00",
+      "premium": "-572.85",
+      "net_vs_base": "-572.85"
+    }
+  ],
+  "headline": {
+    "unhedged_swing": "900.00",
+    "hedged_swing": "0.00",
+    "cost": "572.85"
+  },
+  "decision": {
+    "id": "dec_03",
+    "status": "declined",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": true,
+        "metric": {
+          "n_candidates": 2
+        }
+      },
+      {
+        "code": "illiquid",
+        "passed": true,
+        "metric": {
+          "n_target": 900,
+          "n_filled": 900,
+          "fill_ratio": "1",
+          "partial": false
+        }
+      },
+      {
+        "code": "overpriced",
+        "passed": false,
+        "metric": {
+          "avg_price": "0.62",
+          "fair": "0.27",
+          "overpay": "0.35"
+        }
+      },
+      {
+        "code": "basis_too_loose",
+        "passed": true,
+        "metric": {
+          "r2": "0.55",
+          "beta_s": "-930.00",
+          "beta": "-900.00",
+          "h": "1",
+          "resized": false
+        }
+      },
+      {
+        "code": "too_expensive",
+        "passed": false,
+        "metric": {
+          "expected_cost": "329.85",
+          "swing": "900.00",
+          "ratio": "0.3665"
+        }
+      },
+      {
+        "code": "over_budget",
+        "passed": false,
+        "metric": {
+          "premium": "572.85",
+          "remaining": "250.00"
+        }
+      }
+    ],
+    "reasons": [
+      "overpriced",
+      "too_expensive"
+    ],
+    "summary": "Declined: the rain contract costs 62¢ against a 27% historical rain rate, and the hedge would cost 37% of the swing it removes."
+  },
+  "alternative": null,
+  "agent": "claude",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T15:00:00Z",
+  "decided_by": null,
+  "decided_at": null
+}

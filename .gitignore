@@ -24,3 +24,6 @@ node_modules/
 .next/
 next-env.d.ts
 *.tsbuildinfo
+.python-tools/
+playwright-report/
+test-results/

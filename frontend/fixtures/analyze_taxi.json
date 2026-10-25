@@ -1,0 +1,110 @@
+{
+  "exposures": [
+    {
+      "id": "exp_rain",
+      "business_id": "taxi",
+      "event": "rain",
+      "effect_usd": "1240.00",
+      "ci90": [
+        "880.00",
+        "1600.00"
+      ],
+      "se": "219.00",
+      "p_value": 0.001,
+      "n_events_train": 112,
+      "direction": "positive",
+      "hedge_side": "no",
+      "settlement_var": "rain",
+      "hedgeable": true,
+      "reasons": [],
+      "strike": null,
+      "beta_settlement": "1265.00"
+    },
+    {
+      "id": "exp_hot",
+      "business_id": "taxi",
+      "event": "hot",
+      "effect_usd": "-210.00",
+      "ci90": [
+        "-318.00",
+        "-102.00"
+      ],
+      "se": "65.65",
+      "p_value": 0.0014,
+      "n_events_train": 58,
+      "direction": "negative",
+      "hedge_side": "yes",
+      "settlement_var": "hot",
+      "hedgeable": true,
+      "reasons": [],
+      "strike": 65.0,
+      "beta_settlement": "-180.00"
+    }
+  ],
+  "dropped": [
+    {
+      "id": "exp_home_win",
+      "business_id": "taxi",
+      "event": "home_win",
+      "effect_usd": "95.00",
+      "ci90": [
+        "-60.00",
+        "250.00"
+      ],
+      "se": "94.22",
+      "p_value": 0.31,
+      "n_events_train": 27,
+      "direction": "positive",
+      "hedge_side": "no",
+      "settlement_var": "home_win",
+      "hedgeable": false,
+      "reasons": [
+        "below_size",
+        "not_significant"
+      ],
+      "strike": null,
+      "beta_settlement": null
+    },
+    {
+      "id": "exp_hot_dropped",
+      "business_id": "taxi",
+      "event": "hot",
+      "effect_usd": "95.00",
+      "ci90": [
+        "-60.00",
+        "250.00"
+      ],
+      "se": "94.22",
+      "p_value": 0.31,
+      "n_events_train": 27,
+      "direction": "positive",
+      "hedge_side": "no",
+      "settlement_var": "home_win",
+      "hedgeable": false,
+      "reasons": [
+        "below_size",
+        "not_significant"
+      ],
+      "strike": null,
+      "beta_settlement": null
+    }
+  ],
+  "model_check": {
+    "planted_usd": "500.00",
+    "frac": 0.15,
+    "n_seeds": 50,
+    "example": {
+      "seed": 7,
+      "recovered": "512.40",
+      "ci90": [
+        "371.80",
+        "653.00"
+      ],
+      "contains_truth": true
+    },
+    "coverage": 0.9,
+    "mean_recovered": "497.85",
+    "target": 0.9
+  },
+  "r2_holdout": 0.58
+}

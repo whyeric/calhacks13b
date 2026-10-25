@@ -1,0 +1,65 @@
+{
+  "proposed|pending_approval": {
+    "budget": "250.00",
+    "spent": "0.00",
+    "pending": "1009.27",
+    "remaining": "-759.27",
+    "week_start": "2026-10-26"
+  },
+  "proposed|approved": {
+    "budget": "250.00",
+    "spent": "942.80",
+    "pending": "66.47",
+    "remaining": "-759.27",
+    "week_start": "2026-10-26"
+  },
+  "proposed|rejected": {
+    "budget": "250.00",
+    "spent": "0.00",
+    "pending": "66.47",
+    "remaining": "183.53",
+    "week_start": "2026-10-26"
+  },
+  "approved|pending_approval": {
+    "budget": "250.00",
+    "spent": "66.47",
+    "pending": "942.80",
+    "remaining": "-759.27",
+    "week_start": "2026-10-26"
+  },
+  "approved|approved": {
+    "budget": "250.00",
+    "spent": "1009.27",
+    "pending": "0.00",
+    "remaining": "-759.27",
+    "week_start": "2026-10-26"
+  },
+  "approved|rejected": {
+    "budget": "250.00",
+    "spent": "66.47",
+    "pending": "0.00",
+    "remaining": "183.53",
+    "week_start": "2026-10-26"
+  },
+  "rejected|pending_approval": {
+    "budget": "250.00",
+    "spent": "0.00",
+    "pending": "942.80",
+    "remaining": "-692.80",
+    "week_start": "2026-10-26"
+  },
+  "rejected|approved": {
+    "budget": "250.00",
+    "spent": "942.80",
+    "pending": "0.00",
+    "remaining": "-692.80",
+    "week_start": "2026-10-26"
+  },
+  "rejected|rejected": {
+    "budget": "250.00",
+    "spent": "0.00",
+    "pending": "0.00",
+    "remaining": "250.00",
+    "week_start": "2026-10-26"
+  }
+}

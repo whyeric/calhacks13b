@@ -1,0 +1,52 @@
+{
+  "id": "hdg_no_market",
+  "business_id": "restaurant",
+  "exposure_id": "exp_rain",
+  "week_of": "2026-10-26",
+  "status": "declined",
+  "ticker": null,
+  "market_title": null,
+  "market_url": null,
+  "close_time": null,
+  "side": "yes",
+  "match_reason": null,
+  "h": null,
+  "n_target": 0,
+  "n_filled": 0,
+  "n_unfilled": 0,
+  "partial": false,
+  "resized": false,
+  "fills": null,
+  "avg_price": null,
+  "cost": null,
+  "fee": null,
+  "premium": null,
+  "fair": null,
+  "expected_cost": null,
+  "fee_unverified": false,
+  "payoff": null,
+  "headline": null,
+  "decision": {
+    "id": "dec_no_market",
+    "status": "declined",
+    "checks": [
+      {
+        "code": "no_market",
+        "passed": false,
+        "metric": {
+          "n_candidates": 0
+        }
+      }
+    ],
+    "reasons": [
+      "no_market"
+    ],
+    "summary": "No open market matches this measured exposure."
+  },
+  "alternative": null,
+  "agent": "claude",
+  "ledger_entry_ids": [],
+  "created_at": "2026-10-24T15:00:00Z",
+  "decided_by": null,
+  "decided_at": null
+}
